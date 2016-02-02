@@ -15,7 +15,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // Grab the initial view controller set up by the storyboard
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let homeViewController = storyboard.instantiateInitialViewController() as! HomeViewController
+        
+        // Wrap initial view controller in a command bar controller
+        let commandBarController = SAYCommandBarController()
+        commandBarController.contentViewController = homeViewController
+        
+        window?.rootViewController = commandBarController
+        window?.makeKeyAndVisible()
+        
+        // Initial setup of the SAYConversationManager, with a Conversation Topic as
+        // command registry and main audio source.
+        let rootTopic = HomeConversationTopic()
+        let systemManager = SAYConversationManager.systemManager()
+        systemManager.commandRegistry = rootTopic
+        systemManager.addAudioSource(rootTopic, forTrack:SAYAudioTrackMainIdentifier)
+        
+        // Optional optimization
+        SAYAPIKeyManager.sharedInstance().prefetchAPIKeys()
+        
         return true
     }
 
