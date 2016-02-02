@@ -1,0 +1,6 @@
+framework module SayKit {
+  umbrella header "SayKit.h"
+
+  export *
+  module * { export * }
+}
