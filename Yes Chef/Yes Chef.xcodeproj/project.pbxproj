@@ -8,12 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECB1C6146870009C7DF /* AppDelegate.swift */; };
-		8348DECE1C6146870009C7DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECD1C6146870009C7DF /* ViewController.swift */; };
+		8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECD1C6146870009C7DF /* HomeViewController.swift */; };
 		8348DED11C6146870009C7DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8348DECF1C6146870009C7DF /* Main.storyboard */; };
 		8348DED31C6146870009C7DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8348DED21C6146870009C7DF /* Assets.xcassets */; };
 		8348DED61C6146870009C7DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8348DED41C6146870009C7DF /* LaunchScreen.storyboard */; };
 		8348DEDF1C6146EF0009C7DF /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8348DEDD1C6146DB0009C7DF /* SayKit.framework */; };
 		8348DEE01C6146EF0009C7DF /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8348DEDD1C6146DB0009C7DF /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE51C61489B0009C7DF /* SavedRecipesViewController.swift */; };
+		8348DEE81C6148D50009C7DF /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE71C6148D50009C7DF /* SearchResultsViewController.swift */; };
+		8348DEEA1C6148FC0009C7DF /* RecipeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE91C6148FC0009C7DF /* RecipeTabBarController.swift */; };
+		8348DEEC1C6149230009C7DF /* RecipeOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEEB1C6149230009C7DF /* RecipeOverviewViewController.swift */; };
+		8348DEEE1C6149520009C7DF /* RecipeIngredientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEED1C6149520009C7DF /* RecipeIngredientsViewController.swift */; };
+		8348DEF01C61496A0009C7DF /* RecipePreparationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEEF1C61496A0009C7DF /* RecipePreparationViewController.swift */; };
+		8348DEF81C614A3D0009C7DF /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEF71C614A3D0009C7DF /* Recipe.swift */; };
+		8348DEFA1C614A5F0009C7DF /* BigOvenAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEF91C614A5F0009C7DF /* BigOvenAPIManager.swift */; };
+		8348DEFC1C614A6D0009C7DF /* BigOvenAPIFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEFB1C614A6D0009C7DF /* BigOvenAPIFetcher.swift */; };
+		8348DEFE1C614ABC0009C7DF /* SavedRecipesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEFD1C614ABC0009C7DF /* SavedRecipesManager.swift */; };
+		8348DF001C614ADE0009C7DF /* HomeConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */; };
+		8348DF021C614AFE0009C7DF /* SavedRecipesConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF011C614AFE0009C7DF /* SavedRecipesConversationTopic.swift */; };
+		8348DF041C614B330009C7DF /* ListConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF031C614B330009C7DF /* ListConversationTopic.swift */; };
+		8348DF061C614B510009C7DF /* SearchResultsConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF051C614B510009C7DF /* SearchResultsConversationTopic.swift */; };
+		8348DF081C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF071C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift */; };
+		8348DF0A1C614BC20009C7DF /* RecipeOverviewConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF091C614BC20009C7DF /* RecipeOverviewConversationTopic.swift */; };
+		8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */; };
+		8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,13 +51,31 @@
 /* Begin PBXFileReference section */
 		8348DEC81C6146870009C7DF /* Yes Chef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yes Chef.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8348DECB1C6146870009C7DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8348DECD1C6146870009C7DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8348DECD1C6146870009C7DF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8348DED01C6146870009C7DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8348DED21C6146870009C7DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8348DED51C6146870009C7DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8348DED71C6146870009C7DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8348DEDD1C6146DB0009C7DF /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		8348DEE21C6147620009C7DF /* Yes Chef-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yes Chef-Bridging-Header.h"; sourceTree = "<group>"; };
+		8348DEE51C61489B0009C7DF /* SavedRecipesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesViewController.swift; sourceTree = "<group>"; };
+		8348DEE71C6148D50009C7DF /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		8348DEE91C6148FC0009C7DF /* RecipeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeTabBarController.swift; sourceTree = "<group>"; };
+		8348DEEB1C6149230009C7DF /* RecipeOverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeOverviewViewController.swift; sourceTree = "<group>"; };
+		8348DEED1C6149520009C7DF /* RecipeIngredientsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeIngredientsViewController.swift; sourceTree = "<group>"; };
+		8348DEEF1C61496A0009C7DF /* RecipePreparationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationViewController.swift; sourceTree = "<group>"; };
+		8348DEF71C614A3D0009C7DF /* Recipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		8348DEF91C614A5F0009C7DF /* BigOvenAPIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigOvenAPIManager.swift; sourceTree = "<group>"; };
+		8348DEFB1C614A6D0009C7DF /* BigOvenAPIFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigOvenAPIFetcher.swift; sourceTree = "<group>"; };
+		8348DEFD1C614ABC0009C7DF /* SavedRecipesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesManager.swift; sourceTree = "<group>"; };
+		8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeConversationTopic.swift; sourceTree = "<group>"; };
+		8348DF011C614AFE0009C7DF /* SavedRecipesConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesConversationTopic.swift; sourceTree = "<group>"; };
+		8348DF031C614B330009C7DF /* ListConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListConversationTopic.swift; sourceTree = "<group>"; };
+		8348DF051C614B510009C7DF /* SearchResultsConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsConversationTopic.swift; sourceTree = "<group>"; };
+		8348DF071C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeNavigationConversationTopic.swift; sourceTree = "<group>"; };
+		8348DF091C614BC20009C7DF /* RecipeOverviewConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeOverviewConversationTopic.swift; sourceTree = "<group>"; };
+		8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeIngredientsConversationTopic.swift; sourceTree = "<group>"; };
+		8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationConversationTopic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +111,11 @@
 			isa = PBXGroup;
 			children = (
 				8348DECB1C6146870009C7DF /* AppDelegate.swift */,
-				8348DECD1C6146870009C7DF /* ViewController.swift */,
+				8348DEF11C6149810009C7DF /* Home Scene */,
+				8348DEF31C6149990009C7DF /* Saved Recipes Scene */,
+				8348DEF41C6149A00009C7DF /* Search Results Scene */,
+				8348DEF51C6149AB0009C7DF /* Recipe Details Scene */,
+				8348DEF61C6149E50009C7DF /* Data */,
 				8348DECF1C6146870009C7DF /* Main.storyboard */,
 				8348DED21C6146870009C7DF /* Assets.xcassets */,
 				8348DED41C6146870009C7DF /* LaunchScreen.storyboard */,
@@ -83,6 +123,60 @@
 				8348DEE21C6147620009C7DF /* Yes Chef-Bridging-Header.h */,
 			);
 			path = "Yes Chef";
+			sourceTree = "<group>";
+		};
+		8348DEF11C6149810009C7DF /* Home Scene */ = {
+			isa = PBXGroup;
+			children = (
+				8348DECD1C6146870009C7DF /* HomeViewController.swift */,
+				8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */,
+			);
+			name = "Home Scene";
+			sourceTree = "<group>";
+		};
+		8348DEF31C6149990009C7DF /* Saved Recipes Scene */ = {
+			isa = PBXGroup;
+			children = (
+				8348DEE51C61489B0009C7DF /* SavedRecipesViewController.swift */,
+				8348DF011C614AFE0009C7DF /* SavedRecipesConversationTopic.swift */,
+				8348DF031C614B330009C7DF /* ListConversationTopic.swift */,
+			);
+			name = "Saved Recipes Scene";
+			sourceTree = "<group>";
+		};
+		8348DEF41C6149A00009C7DF /* Search Results Scene */ = {
+			isa = PBXGroup;
+			children = (
+				8348DEE71C6148D50009C7DF /* SearchResultsViewController.swift */,
+				8348DF051C614B510009C7DF /* SearchResultsConversationTopic.swift */,
+			);
+			name = "Search Results Scene";
+			sourceTree = "<group>";
+		};
+		8348DEF51C6149AB0009C7DF /* Recipe Details Scene */ = {
+			isa = PBXGroup;
+			children = (
+				8348DEE91C6148FC0009C7DF /* RecipeTabBarController.swift */,
+				8348DF071C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift */,
+				8348DEEB1C6149230009C7DF /* RecipeOverviewViewController.swift */,
+				8348DF091C614BC20009C7DF /* RecipeOverviewConversationTopic.swift */,
+				8348DEED1C6149520009C7DF /* RecipeIngredientsViewController.swift */,
+				8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */,
+				8348DEEF1C61496A0009C7DF /* RecipePreparationViewController.swift */,
+				8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */,
+			);
+			name = "Recipe Details Scene";
+			sourceTree = "<group>";
+		};
+		8348DEF61C6149E50009C7DF /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				8348DEF71C614A3D0009C7DF /* Recipe.swift */,
+				8348DEF91C614A5F0009C7DF /* BigOvenAPIManager.swift */,
+				8348DEFB1C614A6D0009C7DF /* BigOvenAPIFetcher.swift */,
+				8348DEFD1C614ABC0009C7DF /* SavedRecipesManager.swift */,
+			);
+			name = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,8 +251,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8348DECE1C6146870009C7DF /* ViewController.swift in Sources */,
+				8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */,
+				8348DF061C614B510009C7DF /* SearchResultsConversationTopic.swift in Sources */,
+				8348DEEE1C6149520009C7DF /* RecipeIngredientsViewController.swift in Sources */,
+				8348DF021C614AFE0009C7DF /* SavedRecipesConversationTopic.swift in Sources */,
+				8348DEE81C6148D50009C7DF /* SearchResultsViewController.swift in Sources */,
+				8348DEEC1C6149230009C7DF /* RecipeOverviewViewController.swift in Sources */,
+				8348DF081C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift in Sources */,
+				8348DEF01C61496A0009C7DF /* RecipePreparationViewController.swift in Sources */,
+				8348DEFE1C614ABC0009C7DF /* SavedRecipesManager.swift in Sources */,
+				8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */,
+				8348DEFC1C614A6D0009C7DF /* BigOvenAPIFetcher.swift in Sources */,
 				8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */,
+				8348DF041C614B330009C7DF /* ListConversationTopic.swift in Sources */,
+				8348DEF81C614A3D0009C7DF /* Recipe.swift in Sources */,
+				8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */,
+				8348DF0A1C614BC20009C7DF /* RecipeOverviewConversationTopic.swift in Sources */,
+				8348DF001C614ADE0009C7DF /* HomeConversationTopic.swift in Sources */,
+				8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */,
+				8348DEEA1C6148FC0009C7DF /* RecipeTabBarController.swift in Sources */,
+				8348DEFA1C614A5F0009C7DF /* BigOvenAPIManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
