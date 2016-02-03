@@ -51,20 +51,26 @@ class HomeViewController: UIViewController, UISearchBarDelegate
     {
         if let savedRecipesVC = storyboard?.instantiateViewControllerWithIdentifier("SavedRecipesViewController") as? SavedRecipesViewController {
             savedRecipesVC.selectionBlock = { selectedRecipe in
-                self.presentRecipe(selectedRecipe)
+                self.presentRecipeDetails(selectedRecipe, shouldPopViewController: true)
             }
+            
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.pushViewController(savedRecipesVC, animated: true)
             }
         }
     }
     
-    private func presentRecipe(recipe: Recipe)
+    private func presentRecipeDetails(recipe: Recipe, shouldPopViewController: Bool)
     {
         if let recipeTabBarController = storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
             recipeTabBarController.recipe = recipe
             dispatch_async(dispatch_get_main_queue()) {
-                self.navigationController?.pushViewController(recipeTabBarController, animated: true)
+                if shouldPopViewController {
+                    self.navigationController?.popThenPushViewController(recipeTabBarController, animated: true)
+                }
+                else {
+                    self.navigationController?.pushViewController(recipeTabBarController, animated: true)
+                }
             }
         }
     }
@@ -83,8 +89,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate
     
     private func searchUsingQuery(query: String, category: String)
     {
-        // TODO: Ask BigOvenAPIManager to do a search, async, and on finish:
-        self.presentSearchResults([], forQuery: query)
-        // TODO: else handle error
+        BigOvenAPIManager.sharedManager.search(query, category: category) { (results, error) -> Void in
+            if error == nil {
+                self.presentSearchResults(results, forQuery: query)
+            }
+            else {
+                // TODO: Handle error
+            }
+        }
     }
 }

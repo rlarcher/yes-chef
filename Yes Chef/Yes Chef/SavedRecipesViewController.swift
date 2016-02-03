@@ -15,8 +15,9 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     override func viewDidLoad()
     {
         searchController = UISearchController(searchResultsController: nil)
-        
         tableView.tableHeaderView = searchController?.searchBar
+        
+        savedRecipes = SavedRecipesManager.sharedManager.loadSavedRecipes()
     }
     
     deinit {
@@ -30,14 +31,59 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
         // TODO
     }
     
+    // MARK: UITableViewDelegate Protocol Methods
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let index = indexPath.row
+        if index < savedRecipes.count {
+            selectionBlock?(savedRecipes[index])
+        }
+    }
+    
+    // MARK: UITableViewDataSource Protocol Methods
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let index = indexPath.row
+        if
+            let cell = tableView.dequeueReusableCellWithIdentifier("RecipeCell") as? RecipeCell
+            where index < savedRecipes.count
+        {
+            let recipe = savedRecipes[index]
+            cell.recipeNameLabel.text = recipe.name
+            cell.thumbnailImageView.image = recipe.thumbnail
+            cell.ratingLabel.text = String(recipe.rating)
+            cell.preparationTimeLabel.text = String(recipe.preparationTime) // TODO: Format this
+            cell.ingredientCountLabel.text = String(recipe.ingredients.count)
+            cell.caloriesLabel.text = String(recipe.calories)
+            
+            return cell
+        }
+        else {
+            return UITableViewCell()
+        }
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return savedRecipes.count
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return 1
+    }
+    
+    private var savedRecipes = [Recipe]()
     private var searchController: UISearchController?
 }
 
 class RecipeCell: UITableViewCell
 {
+    @IBOutlet var recipeNameLabel: UILabel!    
     @IBOutlet var thumbnailImageView: UIImageView!
     @IBOutlet var ratingLabel: UILabel!
-    @IBOutlet var recipeNameLabel: UILabel!
     @IBOutlet var preparationTimeLabel: UILabel!
     @IBOutlet var ingredientCountLabel: UILabel!
     @IBOutlet var caloriesLabel: UILabel!
