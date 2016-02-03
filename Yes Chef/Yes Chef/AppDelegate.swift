@@ -19,11 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Grab the initial view controller set up by the storyboard
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let homeViewController = storyboard.instantiateInitialViewController() as! HomeViewController
+        let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
         
         // Wrap initial view controller in a command bar controller
         let commandBarController = SAYCommandBarController()
-        commandBarController.contentViewController = homeViewController
+        commandBarController.contentViewController = navigationController
         
         window?.rootViewController = commandBarController
         window?.makeKeyAndVisible()

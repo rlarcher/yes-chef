@@ -10,5 +10,5 @@ import UIKit
 
 class RecipeTabBarController: UITabBarController
 {
-    
+    var recipe: Recipe?
 }

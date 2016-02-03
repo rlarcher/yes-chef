@@ -19,13 +19,16 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
         tableView.tableHeaderView = searchController?.searchBar
     }
     
+    deinit {
+        searchController?.view.removeFromSuperview() // Required to avoid warning when dismissing this VC: "Attempting to load the view of a view controller while it is deallocating is not allowed and may result in undefined behavior"
+    }
+    
     // MARK: UISearchResultsUpdating Protocol Methods
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
         // TODO
     }
-    
     
     private var searchController: UISearchController?
 }
