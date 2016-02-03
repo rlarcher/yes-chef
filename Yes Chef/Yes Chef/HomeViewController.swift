@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UISearchBarDelegate
+class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler
 {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var categoryButton: UIButton!
@@ -17,6 +17,30 @@ class HomeViewController: UIViewController, UISearchBarDelegate
     {
         searchBar.delegate = self
     }
+    
+    // MARK: HomeConversationTopicEventHandler Protocol Methods
+    
+    func handleAvailableCommands()
+    {
+        print("handleAvailableCommands!")
+    }
+    
+    func handleSearchCommand(command: SAYCommand)
+    {
+        print("handleSearchCommand: \(command)")
+    }
+    
+    func handleHomeCommand()
+    {
+        print("handleHomeCommand!")
+    }
+    
+    func handleBackCommand()
+    {
+        print("handleBackCommand")
+    }
+    
+    // MARK: IBAction Methods
     
     @IBAction func categoryButtonTapped(sender: AnyObject)
     {
