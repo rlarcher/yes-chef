@@ -13,31 +13,38 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var categoryButton: UIButton!
 
+    var homeConversationTopic: HomeConversationTopic?
+    
     override func viewDidLoad()
     {
         searchBar.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        homeConversationTopic?.removeAllSubtopics() // TODO: Think of a better way to clean up popped subtopics. Override navigation methods? Independent navigation management?
     }
     
     // MARK: HomeConversationTopicEventHandler Protocol Methods
     
     func handleAvailableCommands()
     {
-        print("handleAvailableCommands!")
+        print("HomeVC handleAvailableCommands!")
     }
     
     func handleSearchCommand(command: SAYCommand)
     {
-        print("handleSearchCommand: \(command)")
+        print("HomeVC handleSearchCommand: \(command)")
     }
     
     func handleHomeCommand()
     {
-        print("handleHomeCommand!")
+        print("HomeVC handleHomeCommand!")
     }
     
     func handleBackCommand()
     {
-        print("handleBackCommand")
+        print("HomeVC handleBackCommand")
     }
     
     // MARK: IBAction Methods
@@ -80,6 +87,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
             
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.pushViewController(savedRecipesVC, animated: true)
+                let savedRecipesCT = SavedRecipesConversationTopic(eventHandler: savedRecipesVC)
+                savedRecipesVC.savedRecipesConversationTopic = savedRecipesCT
+                self.homeConversationTopic?.addSubtopic(savedRecipesCT) // TODO: BLEHHH. Gross initialization.
             }
         }
     }
@@ -95,6 +105,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
                 else {
                     self.navigationController?.pushViewController(recipeTabBarController, animated: true)
                 }
+                self.homeConversationTopic?.addSubtopic(RecipeNavigationConversationTopic())
             }
         }
     }
@@ -105,6 +116,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
             searchResultsVC.setRecipes(results, forSearchQuery: query)
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.pushViewController(searchResultsVC, animated: true)
+                self.homeConversationTopic?.addSubtopic(SearchResultsConversationTopic())
             }
         }
     }

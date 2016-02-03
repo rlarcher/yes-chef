@@ -8,9 +8,10 @@
 
 import UIKit
 
-class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
+class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating, ListConversationTopicEventHandler, SavedRecipesConversationTopicEventHandler
 {
     var selectionBlock: (Recipe -> ())?
+    var savedRecipesConversationTopic: SavedRecipesConversationTopic?
     
     override func viewDidLoad()
     {
@@ -20,8 +21,52 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
         savedRecipes = SavedRecipesManager.sharedManager.loadSavedRecipes()
     }
     
+    override func viewDidAppear(animated: Bool)
+    {
+        self.savedRecipesConversationTopic?.speakSavedRecipes(savedRecipes)
+    }
+    
     deinit {
         searchController?.view.removeFromSuperview() // Required to avoid warning when dismissing this VC: "Attempting to load the view of a view controller while it is deallocating is not allowed and may result in undefined behavior"
+    }
+    
+    // MARK: ListConversationTopicEventHandler Protocol Methods
+    
+    func handleSelectCommand(command: SAYCommand)
+    {
+        print("SavedRecipesVC handleSelectCommand")
+    }
+    
+    func handleSearchCommand(command: SAYCommand)
+    {
+        print("SavedRecipesVC handleSearchCommand")
+    }
+    
+    func handlePlayCommand()
+    {
+        print("SavedRecipesVC handlePlayCommand")
+    }
+    
+    func handlePauseCommand()
+    {
+        print("SavedRecipesVC handlePauseCommand")
+    }
+    
+    func handleNextCommand()
+    {
+        print("SavedRecipesVC handleNextCommand")
+    }
+    
+    func handlePreviousCommand()
+    {
+        print("SavedRecipesVC handlePreviousCommand")
+    }
+    
+    // MARK: SavedRecipesConversationTopicEventHandler Protocol Methods
+    
+    func handleRemoveRecipeCommand(command: SAYCommand)
+    {
+        print("SavedRecipesVC handleRemoveRecipeCommand")
     }
     
     // MARK: UISearchResultsUpdating Protocol Methods
