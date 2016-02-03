@@ -10,5 +10,18 @@ import Foundation
 
 struct Recipe
 {
-    
+    let name: String
+    let rating: Int
+    let ingredients: [Ingredient]
+    let preparationSteps: [String]
+    let preparationTime: NSTimeInterval
+    let calories: Int
+    let thumbnail: UIImage
+}
+
+struct Ingredient
+{
+    let name: String
+    let quantityString: String
+    let units: String
 }
