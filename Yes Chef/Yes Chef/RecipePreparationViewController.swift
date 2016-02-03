@@ -10,5 +10,11 @@ import UIKit
 
 class RecipePreparationViewController: UITableViewController
 {
-    
+    @IBOutlet var activeTimeLabel: UILabel!
+}
+
+class PreparationStepCell: UITableViewCell
+{
+    @IBOutlet var stepNumberLabel: UILabel!
+    @IBOutlet var instructionsTextView: UITextView!
 }

@@ -8,7 +8,17 @@
 
 import UIKit
 
-class HomeViewController: UIViewController
+class HomeViewController: UIViewController, UISearchBarDelegate
 {
+    @IBOutlet var searchBar: UISearchBar!
 
+    @IBAction func categoryButtonTapped(sender: AnyObject)
+    {
+        // TODO
+    }
+    
+    @IBAction func savedRecipesButtonTapped(sender: AnyObject)
+    {
+        // TODO
+    }
 }

@@ -10,5 +10,6 @@ import UIKit
 
 class RecipeOverviewViewController: UIViewController
 {
-    
+    @IBOutlet var recipeImageView: UIImageView!
+    @IBOutlet var ratingLabel: UILabel!
 }

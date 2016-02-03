@@ -8,7 +8,34 @@
 
 import UIKit
 
-class SavedRecipesViewController: UITableViewController
+class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
 {
+    var selectionBlock: (Recipe -> ())?
     
+    override func viewDidLoad()
+    {
+        searchController = UISearchController(searchResultsController: nil)
+        
+        tableView.tableHeaderView = searchController?.searchBar
+    }
+    
+    // MARK: UISearchResultsUpdating Protocol Methods
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+        // TODO
+    }
+    
+    
+    private var searchController: UISearchController?
+}
+
+class RecipeCell: UITableViewCell
+{
+    @IBOutlet var thumbnailImageView: UIImageView!
+    @IBOutlet var ratingLabel: UILabel!
+    @IBOutlet var recipeNameLabel: UILabel!
+    @IBOutlet var preparationTimeLabel: UILabel!
+    @IBOutlet var ingredientCountLabel: UILabel!
+    @IBOutlet var caloriesLabel: UILabel!
 }

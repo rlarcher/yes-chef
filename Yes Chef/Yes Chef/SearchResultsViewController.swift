@@ -10,5 +10,11 @@ import UIKit
 
 class SearchResultsViewController: UITableViewController
 {
+    func setRecipes(recipes: [Recipe], forSearchQuery query: String)
+    {
+        // TODO
+    }
     
+    private var recipes = [Recipe]()
+    private var query: String = ""
 }

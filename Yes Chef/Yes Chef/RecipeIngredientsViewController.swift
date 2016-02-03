@@ -10,5 +10,16 @@ import UIKit
 
 class RecipeIngredientsViewController: UITableViewController
 {
+    @IBOutlet var servingsCountLabel: UILabel!
+}
+
+class IngredientCell: UITableViewCell
+{
+    @IBOutlet var quantityUnitsLabel: UILabel!
+    @IBOutlet var ingredientNameLabel: UILabel!
     
+    @IBAction func addToGroceryListButtonTapped(sender: AnyObject)
+    {
+        // TODO
+    }
 }
