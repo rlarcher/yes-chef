@@ -11,7 +11,6 @@ import Foundation
 class ListConversationTopic: SAYConversationTopic
 {
     let eventHandler: ListConversationTopicEventHandler
-    var itemCount: Int?
     
     init(eventHandler: ListConversationTopicEventHandler)
     {
@@ -30,8 +29,6 @@ class ListConversationTopic: SAYConversationTopic
     
     func speakItems(items: [String])
     {
-        itemCount = items.count     // TODO: Better way to make this information accessible to SavedRecipesConversationTopic's prefix event?
-        
         let sequence = SAYAudioEventSequence()
         for item in items {
             sequence.addEvent(SAYSpeechEvent(utteranceString: item))

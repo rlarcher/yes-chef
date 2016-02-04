@@ -25,6 +25,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     func speakSavedRecipes(recipes: [Recipe])
     {
+        self.recipes = recipes  // Hold on to the recipes for the upcoming `subtopic:didPostEventSequence`
         if let listSubtopic = self.subtopics.first as? ListConversationTopic {
             listSubtopic.speakItems(recipes.map { $0.speakableString })
         }
@@ -38,10 +39,10 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
-        if let listSubtopic = subtopic as? ListConversationTopic {
+        if subtopic is ListConversationTopic {
             let prefixEvent: SAYSpeechEvent
-            if let itemCount = listSubtopic.itemCount {
-                prefixEvent = SAYSpeechEvent(utteranceString: "You have \(itemCount) saved items:") // TODO: Better way to get the itemCount here?
+            if let itemCount = recipes?.count {
+                prefixEvent = SAYSpeechEvent(utteranceString: "You have \(itemCount) saved items:")
             }
             else {
                 prefixEvent = SAYSpeechEvent(utteranceString: "Here are your saved items:")
@@ -89,6 +90,8 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     {
         eventHandler.handlePreviousCommand()
     }
+    
+    private var recipes: [Recipe]?
 }
 
 protocol SavedRecipesConversationTopicEventHandler: class

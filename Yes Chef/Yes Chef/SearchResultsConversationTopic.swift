@@ -10,7 +10,6 @@ import Foundation
 
 class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopicEventHandler
 {
-    var searchQuery: String!
     let eventHandler: SearchResultsConversationTopicEventHandler
     
     init(eventHandler: SearchResultsConversationTopicEventHandler)
@@ -20,13 +19,12 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         super.init()
         
         self.addSubtopic(ListConversationTopic(eventHandler: self))
-        
-        // TODO: Add command recognizer for "Remove __recipe__".
     }
     
-    func speakResults(recipes: [Recipe], forQuery query: String)    // TODO: Better way to persist `query`?
+    func speakResults(recipes: [Recipe], forQuery query: String)
     {
-        self.searchQuery = query
+        self.searchQuery = query    // Hold on to these for upcoming `subtopic:didPostEventSequence:`
+        self.recipes = recipes
         if let listSubtopic = self.subtopics.first as? ListConversationTopic {
             listSubtopic.speakItems(recipes.map { $0.speakableString })
         }
@@ -40,13 +38,13 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
-        if let listSubtopic = subtopic as? ListConversationTopic {
+        if let query = self.searchQuery where subtopic is ListConversationTopic {
             let prefixEvent: SAYSpeechEvent
-            if let itemCount = listSubtopic.itemCount {
-                prefixEvent = SAYSpeechEvent(utteranceString: "I found \(itemCount) results for \"\(searchQuery)\":") // TODO: Better way to get the itemCount here?
+            if let itemCount = recipes?.count {
+                prefixEvent = SAYSpeechEvent(utteranceString: "I found \(itemCount) results for \"\(query)\":")
             }
             else {
-                prefixEvent = SAYSpeechEvent(utteranceString: "Here are the results for \"\(searchQuery)\":")
+                prefixEvent = SAYSpeechEvent(utteranceString: "Here are the results for \"\(query)\":")
             }
             
             let outgoingSequence = SAYAudioEventSequence(events: [prefixEvent])
@@ -91,6 +89,9 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     {
         eventHandler.handlePreviousCommand()
     }
+    
+    private var recipes: [Recipe]?
+    private var searchQuery: String?
 }
 
 protocol SearchResultsConversationTopicEventHandler: class
