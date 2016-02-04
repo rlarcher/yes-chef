@@ -32,10 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initial setup of the SAYConversationManager, with a Conversation Topic as
         // command registry and main audio source.
         let systemManager = SAYConversationManager.systemManager()
-        let rootTopic = HomeConversationTopic(eventHandler: homeViewController)
+        let rootTopic = homeViewController.homeConversationTopic
         systemManager.commandRegistry = rootTopic
         systemManager.addAudioSource(rootTopic, forTrack:SAYAudioTrackMainIdentifier)
-        homeViewController.homeConversationTopic = rootTopic
         
         // Optional optimization
         SAYAPIKeyManager.sharedInstance().prefetchAPIKeys()

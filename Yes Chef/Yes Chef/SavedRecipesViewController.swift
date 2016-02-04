@@ -11,7 +11,13 @@ import UIKit
 class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating, ListConversationTopicEventHandler, SavedRecipesConversationTopicEventHandler
 {
     var selectionBlock: (Recipe -> ())?
-    var savedRecipesConversationTopic: SavedRecipesConversationTopic?
+    var savedRecipesConversationTopic: SavedRecipesConversationTopic!
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        self.savedRecipesConversationTopic = SavedRecipesConversationTopic(eventHandler: self)
+    }
     
     override func viewDidLoad()
     {
@@ -23,6 +29,7 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     
     override func viewDidAppear(animated: Bool)
     {
+        // TODO: More appropriate place for this?
         self.savedRecipesConversationTopic?.speakSavedRecipes(savedRecipes)
     }
     
