@@ -54,11 +54,11 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     {
         if subtopic is ListConversationTopic {
             let prefixEvent: SAYSpeechEvent
-            if let itemCount = recipes?.count {
-                prefixEvent = SAYSpeechEvent(utteranceString: "You have \(itemCount) saved items:")
+            if recipes.count > 0 {
+                prefixEvent = SAYSpeechEvent(utteranceString: "You have \(recipes.count) saved items:")
             }
             else {
-                prefixEvent = SAYSpeechEvent(utteranceString: "Here are your saved items:")
+                prefixEvent = SAYSpeechEvent(utteranceString: "You have no saved items.")
             }
             
             let outgoingSequence = SAYAudioEventSequence(events: [prefixEvent])

@@ -29,12 +29,18 @@ class ListConversationTopic: SAYConversationTopic
     
     func speakItems(items: [String])
     {
-        let sequence = SAYAudioEventSequence()
-        for item in items {
-            sequence.addEvent(SAYSpeechEvent(utteranceString: item))
+        if items.count > 0 {
+            let sequence = SAYAudioEventSequence()
+            
+            for item in items {
+                sequence.addEvent(SAYSpeechEvent(utteranceString: item))
+            }
+            
+            self.postEvents(sequence)
         }
-        
-        self.postEvents(sequence)
+        else {
+            // TODO: Do nothing?
+        }
     }
 }
 

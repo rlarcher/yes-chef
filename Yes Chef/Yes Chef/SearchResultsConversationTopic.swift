@@ -59,11 +59,11 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     {
         if subtopic is ListConversationTopic {
             let prefixEvent: SAYSpeechEvent
-            if let itemCount = recipes?.count {
-                prefixEvent = SAYSpeechEvent(utteranceString: "I found \(itemCount) results for \"\(query)\":")
+            if recipes.count > 0 {
+                prefixEvent = SAYSpeechEvent(utteranceString: "I found \(recipes.count) results for \"\(searchQuery)\":")
             }
             else {
-                prefixEvent = SAYSpeechEvent(utteranceString: "Here are the results for \"\(query)\":")
+                prefixEvent = SAYSpeechEvent(utteranceString: "There were no results for \"\(searchQuery)\".")
             }
             
             let outgoingSequence = SAYAudioEventSequence(events: [prefixEvent])
