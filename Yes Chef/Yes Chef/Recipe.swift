@@ -17,6 +17,16 @@ struct Recipe
     let preparationTime: NSTimeInterval
     let calories: Int
     let thumbnail: UIImage
+    
+    var preparationTimeMinutes: Int
+    {
+        return Int(ceil(preparationTime / 60.0))
+    }
+    
+    var speakableString: String
+    {
+        return "\(name). \(rating) stars. Requires \(preparationTimeMinutes) minutes of preparation and \(ingredients.count) different ingredients."
+    }
 }
 
 struct Ingredient

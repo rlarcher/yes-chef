@@ -26,8 +26,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     func speakSavedRecipes(recipes: [Recipe])
     {
         if let listSubtopic = self.subtopics.first as? ListConversationTopic {
-            // TODO: Parse out each Recipe into a single speakable string.
-            listSubtopic.speakItems(recipes.map { "\($0.name). \($0.rating) stars. Requires \(String($0.preparationTime)) minutes of preparation and \($0.ingredients.count) different ingredients." }) // TODO: Format prepTime.
+            listSubtopic.speakItems(recipes.map { $0.speakableString })
         }
     }
     
