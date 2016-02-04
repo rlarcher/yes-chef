@@ -8,12 +8,65 @@
 
 import UIKit
 
-class SearchResultsViewController: UITableViewController
+class SearchResultsViewController: UITableViewController, SearchResultsConversationTopicEventHandler
 {
+    var searchResultsConversationTopic: SearchResultsConversationTopic!
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        self.searchResultsConversationTopic = SearchResultsConversationTopic(eventHandler: self)
+    }
+    
+    // Must be called immediately after instantiating the VC
     func setRecipes(recipes: [Recipe], forSearchQuery query: String)
     {
         self.recipes = recipes
         self.query = query
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        // TODO: More appropriate place for this?
+        self.searchResultsConversationTopic.speakResults(recipes, forQuery: query)
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        // TODO: Better way to interrupt speech on transitioning back?
+        self.searchResultsConversationTopic.stopSpeaking()
+    }
+    
+    // MARK: ListConversationTopicEventHandler Protocol Methods
+    
+    func handleSelectCommand(command: SAYCommand)
+    {
+        print("SearchResultsVC handleSelectCommand")
+    }
+    
+    func handleSearchCommand(command: SAYCommand)
+    {
+        print("SearchResultsVC handleSearchCommand")
+    }
+    
+    func handlePlayCommand()
+    {
+        print("SearchResultsVC handlePlayCommand")
+    }
+    
+    func handlePauseCommand()
+    {
+        print("SearchResultsVC handlePauseCommand")
+    }
+    
+    func handleNextCommand()
+    {
+        print("SearchResultsVC handleNextCommand")
+    }
+    
+    func handlePreviousCommand()
+    {
+        print("SearchResultsVC handlePreviousCommand")
     }
     
     // MARK: UITableViewDelegate Protocol Methods
@@ -40,9 +93,9 @@ class SearchResultsViewController: UITableViewController
             cell.recipeNameLabel.text = recipe.name
             cell.thumbnailImageView.image = recipe.thumbnail
             cell.ratingLabel.text = String(recipe.rating)
-            cell.preparationTimeLabel.text = String(recipe.preparationTime) // TODO: Format this
-            cell.ingredientCountLabel.text = String(recipe.ingredients.count)
-            cell.caloriesLabel.text = String(recipe.calories)
+            cell.preparationTimeLabel.text = String(recipe.preparationTimeMinutes) + " minutes"
+            cell.ingredientCountLabel.text = String(recipe.ingredients.count) + " ingredients"
+            cell.caloriesLabel.text = String(recipe.calories) + " calories"
             
             return cell
         }
@@ -74,5 +127,5 @@ class SearchResultsViewController: UITableViewController
     }
     
     private var recipes = [Recipe]()
-    private var query: String = ""
+    private var query: String!
 }

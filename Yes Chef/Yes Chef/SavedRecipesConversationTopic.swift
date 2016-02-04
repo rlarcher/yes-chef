@@ -89,7 +89,6 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     {
         eventHandler.handlePreviousCommand()
     }
-    
 }
 
 protocol SavedRecipesConversationTopicEventHandler: class

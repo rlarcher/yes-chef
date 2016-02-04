@@ -121,7 +121,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
             searchResultsVC.setRecipes(results, forSearchQuery: query)
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.pushViewController(searchResultsVC, animated: true)
-                self.homeConversationTopic.addSubtopic(SearchResultsConversationTopic())
+                self.homeConversationTopic.addSubtopic(searchResultsVC.searchResultsConversationTopic)
             }
         }
     }
