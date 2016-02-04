@@ -102,7 +102,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     private func presentRecipeDetails(recipe: Recipe, shouldPopViewController: Bool)
     {
         if let recipeTabBarController = storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
-            recipeTabBarController.recipe = recipe
+            recipeTabBarController.setRecipe(recipe)
             dispatch_async(dispatch_get_main_queue()) {
                 if shouldPopViewController {
                     self.navigationController?.popThenPushViewController(recipeTabBarController, animated: true)
@@ -110,7 +110,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
                 else {
                     self.navigationController?.pushViewController(recipeTabBarController, animated: true)
                 }
-                self.homeConversationTopic.addSubtopic(RecipeNavigationConversationTopic())
+                self.homeConversationTopic.addSubtopic(recipeTabBarController.recipeNavigationConversationTopic)
             }
         }
     }

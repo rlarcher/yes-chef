@@ -38,7 +38,6 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         }
     }
     
-    
     // MARK: Lifecycle
     
     func topicDidGainFocus()

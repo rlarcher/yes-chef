@@ -119,9 +119,10 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     private func presentRecipe(recipe: Recipe)
     {
         if let recipeTabBarController = storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
-            recipeTabBarController.recipe = recipe
+            recipeTabBarController.setRecipe(recipe)
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.pushViewController(recipeTabBarController, animated: true)
+                self.searchResultsConversationTopic.addSubtopic(recipeTabBarController.recipeNavigationConversationTopic)
             }
         }
     }

@@ -8,7 +8,32 @@
 
 import UIKit
 
-class RecipeTabBarController: UITabBarController
+class RecipeTabBarController: UITabBarController, RecipeNavigationConversationTopicEventHandler
 {
-    var recipe: Recipe?
+    var recipeNavigationConversationTopic: RecipeNavigationConversationTopic!
+    
+    // MARK: Lifecycle
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        self.recipeNavigationConversationTopic = RecipeNavigationConversationTopic(eventHandler: self)
+    }
+    
+    override func viewDidLoad()
+    {
+        navigationItem.title = recipe.name
+    }
+    
+    // Must be called immediately after instantiating the VC
+    func setRecipe(recipe: Recipe)
+    {
+        self.recipe = recipe
+    }
+    
+    private var recipe: Recipe! {
+        didSet {
+            // TODO: Update CT
+        }
+    }
 }
