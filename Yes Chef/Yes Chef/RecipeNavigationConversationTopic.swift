@@ -10,5 +10,9 @@ import Foundation
 
 class RecipeNavigationConversationTopic: SAYConversationTopic
 {
-    
+    func stopSpeaking()
+    {
+        // TODO: Better way to interrupt speech on transitioning?
+        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+    }
 }

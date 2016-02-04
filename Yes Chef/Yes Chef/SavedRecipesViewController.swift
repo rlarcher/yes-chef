@@ -33,6 +33,12 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
         self.savedRecipesConversationTopic.speakSavedRecipes(savedRecipes)
     }
     
+    override func viewWillDisappear(animated: Bool)
+    {
+        // TODO: Better way to interrupt speech on transitioning back?
+        self.savedRecipesConversationTopic.stopSpeaking()
+    }
+    
     deinit {
         searchController?.view.removeFromSuperview() // Required to avoid warning when dismissing this VC: "Attempting to load the view of a view controller while it is deallocating is not allowed and may result in undefined behavior"
     }
