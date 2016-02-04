@@ -29,7 +29,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     override func viewDidAppear(animated: Bool)
     {
-        homeConversationTopic.removeAllSubtopics() // TODO: Think of a better way to clean up popped subtopics. Override navigation methods? Independent navigation management?
+        homeConversationTopic.topicDidGainFocus() 
     }
     
     // MARK: HomeConversationTopicEventHandler Protocol Methods

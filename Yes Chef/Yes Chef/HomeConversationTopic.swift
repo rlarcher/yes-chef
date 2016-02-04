@@ -27,7 +27,17 @@ class HomeConversationTopic: SAYConversationTopic
         // TODO: Add recognizer for "What is __feature__?"
         // TODO: Add recognizer for "What are the categories?"
     }
-        
+    
+    func topicDidGainFocus()
+    {
+        removeAllSubtopics() // TODO: Think of a better way to clean up popped subtopics. Override navigation methods? Independent navigation management?
+    }
+    
+    func topicDidLoseFocus()
+    {
+        // Do nothing
+    }
+    
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
         let outgoingSequence = sequence

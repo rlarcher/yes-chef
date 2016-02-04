@@ -17,28 +17,47 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         self.eventHandler = eventHandler
         
         super.init()
-        
-        self.addSubtopic(ListConversationTopic(eventHandler: self))
     }
     
-    func speakResults(recipes: [Recipe], forQuery query: String)
+    // This must be called before attempting to speak.
+    func updateResults(results: [Recipe])
     {
-        self.searchQuery = query    // Hold on to these for upcoming `subtopic:didPostEventSequence:`
-        self.recipes = recipes
+        self.recipes = results
+    }
+
+    // This must be called before attempting to speak.
+    func updateSearchQuery(query: String)
+    {
+        self.searchQuery = query
+    }
+    
+    func speakResults()
+    {
         if let listSubtopic = self.subtopics.first as? ListConversationTopic {
             listSubtopic.speakItems(recipes.map { $0.speakableString })
         }
     }
     
-    func stopSpeaking()
+    
+    // MARK: Lifecycle
+    
+    func topicDidGainFocus()
     {
-        // TODO: Better way to interrupt speech on transitioning?
-        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+        addSubtopic(ListConversationTopic(eventHandler: self))
+        speakResults()
     }
+    
+    func topicDidLoseFocus()
+    {
+        stopSpeaking()
+        removeAllSubtopics()
+    }
+
+    // MARK: Subtopic Handling
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
-        if let query = self.searchQuery where subtopic is ListConversationTopic {
+        if subtopic is ListConversationTopic {
             let prefixEvent: SAYSpeechEvent
             if let itemCount = recipes?.count {
                 prefixEvent = SAYSpeechEvent(utteranceString: "I found \(itemCount) results for \"\(query)\":")
@@ -90,8 +109,16 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         eventHandler.handlePreviousCommand()
     }
     
-    private var recipes: [Recipe]?
-    private var searchQuery: String?
+    // MARK: Helpers
+    
+    private func stopSpeaking()
+    {
+        // TODO: Better way to interrupt speech on transitioning?
+        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+    }
+    
+    private var recipes: [Recipe]!
+    private var searchQuery: String!
 }
 
 protocol SearchResultsConversationTopicEventHandler: class

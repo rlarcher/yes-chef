@@ -18,24 +18,37 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
         
         super.init()
         
-        self.addSubtopic(ListConversationTopic(eventHandler: self))
-        
         // TODO: Add command recognizer for "Remove __recipe__".
     }
     
-    func speakSavedRecipes(recipes: [Recipe])
+    // This must be called before attempting to speak.
+    func updateSavedRecipes(recipes: [Recipe])
     {
-        self.recipes = recipes  // Hold on to the recipes for the upcoming `subtopic:didPostEventSequence`
+        self.recipes = recipes
+    }
+    
+    func speakSavedRecipes()
+    {
         if let listSubtopic = self.subtopics.first as? ListConversationTopic {
             listSubtopic.speakItems(recipes.map { $0.speakableString })
         }
     }
     
-    func stopSpeaking()
+    // MARK: Lifecycle
+    
+    func topicDidGainFocus()
     {
-        // TODO: Better way to interrupt speech on transitioning?
-        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+        addSubtopic(ListConversationTopic(eventHandler: self))
+        speakSavedRecipes()
     }
+    
+    func topicDidLoseFocus()
+    {
+        stopSpeaking()
+        removeAllSubtopics()
+    }
+    
+    // MARK: Subtopic Handling
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
@@ -91,7 +104,15 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
         eventHandler.handlePreviousCommand()
     }
     
-    private var recipes: [Recipe]?
+    // MARK: Helpers
+    
+    private func stopSpeaking()
+    {
+        // TODO: Better way to interrupt speech on transitioning?
+        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+    }
+    
+    private var recipes: [Recipe]!
 }
 
 protocol SavedRecipesConversationTopicEventHandler: class

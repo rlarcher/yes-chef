@@ -13,6 +13,8 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     var selectionBlock: (Recipe -> ())?
     var savedRecipesConversationTopic: SavedRecipesConversationTopic!
     
+    // MARK: Lifecycle
+    
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
@@ -22,21 +24,19 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     override func viewDidLoad()
     {
         searchController = UISearchController(searchResultsController: nil)
-        tableView.tableHeaderView = searchController?.searchBar
-        
         savedRecipes = SavedRecipesManager.sharedManager.loadSavedRecipes()
+        
+        tableView.tableHeaderView = searchController?.searchBar
     }
     
     override func viewDidAppear(animated: Bool)
     {
-        // TODO: More appropriate place for this?
-        self.savedRecipesConversationTopic.speakSavedRecipes(savedRecipes)
+        savedRecipesConversationTopic.topicDidGainFocus()
     }
     
     override func viewWillDisappear(animated: Bool)
     {
-        // TODO: Better way to interrupt speech on transitioning back?
-        self.savedRecipesConversationTopic.stopSpeaking()
+        savedRecipesConversationTopic.topicDidLoseFocus()
     }
     
     deinit {
@@ -133,7 +133,12 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
         return 1
     }
     
-    private var savedRecipes = [Recipe]()
+    private var savedRecipes: [Recipe]! {
+        didSet {
+            // Keeps savedRecipesCT's recipes in sync with savedRecipesVC's recipes.
+            savedRecipesConversationTopic.updateSavedRecipes(savedRecipes)
+        }
+    }
     private var searchController: UISearchController?
 }
 

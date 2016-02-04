@@ -12,6 +12,8 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
 {
     var searchResultsConversationTopic: SearchResultsConversationTopic!
     
+    // MARK: Lifecycle
+    
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
@@ -27,14 +29,12 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     override func viewDidAppear(animated: Bool)
     {
-        // TODO: More appropriate place for this?
-        self.searchResultsConversationTopic.speakResults(recipes, forQuery: query)
+        searchResultsConversationTopic.topicDidGainFocus()
     }
     
     override func viewWillDisappear(animated: Bool)
     {
-        // TODO: Better way to interrupt speech on transitioning back?
-        self.searchResultsConversationTopic.stopSpeaking()
+        searchResultsConversationTopic.topicDidLoseFocus()
     }
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
@@ -126,6 +126,16 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         }
     }
     
-    private var recipes = [Recipe]()
-    private var query: String!
+    private var recipes: [Recipe]! {
+        didSet {
+            // Keeps searchResultsCT's recipes in sync with searchResultsVC's recipes.
+            searchResultsConversationTopic.updateResults(recipes)
+        }
+    }
+    private var query: String! {
+        didSet {
+            // Keeps searchResultsCT's query in sync with searchResultsVC's query.
+            searchResultsConversationTopic.updateSearchQuery(query)
+        }
+    }
 }
