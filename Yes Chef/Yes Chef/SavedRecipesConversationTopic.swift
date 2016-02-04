@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SavedRecipesConversationTopic: SAYConversationTopic
+class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopicEventHandler
 {
     let eventHandler: SavedRecipesConversationTopicEventHandler
     
@@ -17,6 +17,8 @@ class SavedRecipesConversationTopic: SAYConversationTopic
         self.eventHandler = eventHandler
         
         super.init()
+        
+        self.addSubtopic(ListConversationTopic(eventHandler: self))
         
         // TODO: Add command recognizer for "Remove __recipe__".
     }
@@ -49,9 +51,50 @@ class SavedRecipesConversationTopic: SAYConversationTopic
             self.postEvents(sequence)
         }
     }
+    
+    // MARK: ListConversationTopicEventHandler Protocol Methods 
+    // TODO: Using these as pass-through only. Better way?
+    
+    func handleSelectCommand(command: SAYCommand)
+    {
+        eventHandler.handleSelectCommand(command)
+    }
+    
+    func handleSearchCommand(command: SAYCommand)
+    {
+        eventHandler.handleSearchCommand(command)
+    }
+    
+    func handlePlayCommand()
+    {
+        eventHandler.handlePlayCommand()
+    }
+    
+    func handlePauseCommand()
+    {
+        eventHandler.handlePauseCommand()
+    }
+    
+    func handleNextCommand()
+    {
+        eventHandler.handleNextCommand()
+    }
+    
+    func handlePreviousCommand()
+    {
+        eventHandler.handlePreviousCommand()
+    }
+    
 }
 
 protocol SavedRecipesConversationTopicEventHandler: class
 {
     func handleRemoveRecipeCommand(command: SAYCommand)
+    
+    func handleSelectCommand(command: SAYCommand)
+    func handleSearchCommand(command: SAYCommand)
+    func handlePlayCommand()
+    func handlePauseCommand()
+    func handleNextCommand()
+    func handlePreviousCommand()
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating, ListConversationTopicEventHandler, SavedRecipesConversationTopicEventHandler
+class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating, SavedRecipesConversationTopicEventHandler
 {
     var selectionBlock: (Recipe -> ())?
     var savedRecipesConversationTopic: SavedRecipesConversationTopic!
@@ -30,7 +30,7 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     override func viewDidAppear(animated: Bool)
     {
         // TODO: More appropriate place for this?
-        self.savedRecipesConversationTopic?.speakSavedRecipes(savedRecipes)
+        self.savedRecipesConversationTopic.speakSavedRecipes(savedRecipes)
     }
     
     deinit {
