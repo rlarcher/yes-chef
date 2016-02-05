@@ -29,12 +29,23 @@ class RecipePreparationConversationTopic: SAYConversationTopic
     
     func topicDidGainFocus()
     {
-        
+        speakPreparationSteps()
     }
     
     func topicDidLoseFocus()
     {
         stopSpeaking()
+    }
+    
+    // MARK: Helpers
+    
+    private func speakPreparationSteps()
+    {
+        let sequence = SAYAudioEventSequence()
+        for step in recipe.preparationSteps {
+            sequence.addEvent(SAYSpeechEvent(utteranceString: step))
+        }
+        postEvents(sequence)
     }
     
     private func stopSpeaking()

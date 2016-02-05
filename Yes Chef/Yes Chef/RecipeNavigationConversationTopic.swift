@@ -15,6 +15,9 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
         self.eventHandler = eventHandler
         
         super.init()
+        
+        self.addCommandRecognizer(SAYSwitchTabCommandRecognizer(responseTarget: eventHandler, action: "handleTabNavigationCommand:"))
+        // TODO: Add command recognizer for "Save recipe".
     }
     
     // This must be called before attempting to speak.
@@ -53,5 +56,5 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
 
 protocol RecipeNavigationConversationTopicEventHandler: class
 {
-    // TODO
+    func handleTabNavigationCommand(command: SAYCommand)
 }

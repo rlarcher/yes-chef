@@ -15,6 +15,10 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         self.eventHandler = eventHandler
         
         super.init()
+        
+        // TODO: Add command recognizer for "Give me an overview"
+        // TODO: Add command recognizer for "What are the ratings?"
+        // TODO: Add command recognizer for "What's the name of the recipe?"
     }
     
     // This must be called before attempting to speak.    

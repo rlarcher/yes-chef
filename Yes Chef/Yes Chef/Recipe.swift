@@ -34,4 +34,9 @@ struct Ingredient
     let name: String
     let quantityString: String
     let units: String
+    
+    var speakableString: String
+    {
+        return "\(quantityString) \(units) \(name)"
+    }
 }

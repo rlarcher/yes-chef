@@ -46,20 +46,12 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
 
     }
     
-    // MARK: UITabBarControllerDelegate Protocol Methods
+    // MARK: RecipeNavigationConversationTopicEventHandler Protocol Methods
     
-//    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController)
-//    {
-//        if viewController is RecipeOverviewViewController {
-//            // TODO: Give focus to OverviewCT
-//        }
-//        else if viewController is RecipeIngredientsViewController {
-//            // TODO: Give focus to IngredientsCT
-//        }
-//        else if viewController is RecipePreparationViewController {
-//            // TODO: Give focus to PreparationCT
-//        }
-//    }
+    func handleTabNavigationCommand(command: SAYCommand)
+    {
+        print("RecipeTabBarController handleTabNavigationCommand: \(command)")
+    }
     
     // MARK: Helpers
     
