@@ -8,9 +8,40 @@
 
 import UIKit
 
-class RecipePreparationViewController: UITableViewController
+class RecipePreparationViewController: UITableViewController, RecipePreparationConversationTopicEventHandler
 {
+    var recipePreparationConversationTopic: RecipePreparationConversationTopic!
+    
     @IBOutlet var activeTimeLabel: UILabel!
+    
+    func updateRecipe(recipe: Recipe)
+    {
+        self.recipe = recipe
+        recipePreparationConversationTopic.updateRecipe(recipe)
+    }
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        self.recipePreparationConversationTopic = RecipePreparationConversationTopic(eventHandler: self)
+    }
+    
+    override func viewDidLoad()
+    {
+
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        recipePreparationConversationTopic.topicDidGainFocus()
+    }
+    
+    override func viewDidDisappear(animated: Bool)
+    {
+        recipePreparationConversationTopic.topicDidLoseFocus()
+    }
+    
+    private var recipe: Recipe!
 }
 
 class PreparationStepCell: UITableViewCell

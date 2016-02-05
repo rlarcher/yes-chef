@@ -10,8 +10,6 @@ import Foundation
 
 class RecipeNavigationConversationTopic: SAYConversationTopic
 {
-    let eventHandler: RecipeNavigationConversationTopicEventHandler
-    
     init(eventHandler: RecipeNavigationConversationTopicEventHandler)
     {
         self.eventHandler = eventHandler
@@ -25,26 +23,22 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
         self.recipe = recipe
     }
     
-    func speakOverview()
+    override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
-        // TODO
+        // TODO: Should be unnecessary to override this functions just to pass the sequence through to `postEvents:`. Investigate.
+        self.postEvents(sequence)
     }
     
     // MARK: Lifecycle
     
     func topicDidGainFocus()
     {
-        addSubtopic(RecipeOverviewConversationTopic())
-        addSubtopic(RecipeIngredientsConversationTopic())
-        addSubtopic(RecipePreparationConversationTopic())
-        
-        speakOverview()
+
     }
     
     func topicDidLoseFocus()
     {
         stopSpeaking()
-        removeAllSubtopics()
     }
     
     private func stopSpeaking()
@@ -54,6 +48,7 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
     }
     
     private var recipe: Recipe!
+    private let eventHandler: RecipeNavigationConversationTopicEventHandler
 }
 
 protocol RecipeNavigationConversationTopicEventHandler: class

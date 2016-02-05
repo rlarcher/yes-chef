@@ -8,9 +8,42 @@
 
 import UIKit
 
-class RecipeIngredientsViewController: UITableViewController
+class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsConversationTopicEventHandler
 {
+    var recipeIngredientsConversationTopic: RecipeIngredientsConversationTopic!
+    
     @IBOutlet var servingsCountLabel: UILabel!
+    
+    func updateRecipe(recipe: Recipe)
+    {
+        self.recipe = recipe
+        recipeIngredientsConversationTopic.updateRecipe(recipe)
+    }
+    
+    // MARK: Lifecycle
+    
+    required init?(coder aDecoder: NSCoder)
+    {
+        super.init(coder: aDecoder)
+        self.recipeIngredientsConversationTopic = RecipeIngredientsConversationTopic(eventHandler: self)
+    }
+    
+    override func viewDidLoad()
+    {
+
+    }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        recipeIngredientsConversationTopic.topicDidGainFocus()
+    }
+    
+    override func viewWillDisappear(animated: Bool)
+    {
+        recipeIngredientsConversationTopic.topicDidLoseFocus()
+    }
+    
+    private var recipe: Recipe!
 }
 
 class IngredientCell: UITableViewCell
