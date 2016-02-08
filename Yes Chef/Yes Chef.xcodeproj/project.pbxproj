@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		831E367C1C691BED00DA63AB /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831E367A1C691BE600DA63AB /* SayKit.framework */; };
+		831E367D1C691BED00DA63AB /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 831E367A1C691BE600DA63AB /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECB1C6146870009C7DF /* AppDelegate.swift */; };
 		8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECD1C6146870009C7DF /* HomeViewController.swift */; };
 		8348DED11C6146870009C7DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8348DECF1C6146870009C7DF /* Main.storyboard */; };
 		8348DED31C6146870009C7DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8348DED21C6146870009C7DF /* Assets.xcassets */; };
 		8348DED61C6146870009C7DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8348DED41C6146870009C7DF /* LaunchScreen.storyboard */; };
-		8348DEDF1C6146EF0009C7DF /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8348DEDD1C6146DB0009C7DF /* SayKit.framework */; };
-		8348DEE01C6146EF0009C7DF /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8348DEDD1C6146DB0009C7DF /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE51C61489B0009C7DF /* SavedRecipesViewController.swift */; };
 		8348DEE81C6148D50009C7DF /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE71C6148D50009C7DF /* SearchResultsViewController.swift */; };
 		8348DEEA1C6148FC0009C7DF /* RecipeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE91C6148FC0009C7DF /* RecipeTabBarController.swift */; };
@@ -43,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8348DEE01C6146EF0009C7DF /* SayKit.framework in Embed Frameworks */,
+				831E367D1C691BED00DA63AB /* SayKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -51,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		831E367A1C691BE600DA63AB /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		8348DEC81C6146870009C7DF /* Yes Chef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yes Chef.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8348DECB1C6146870009C7DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8348DECD1C6146870009C7DF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -58,7 +59,6 @@
 		8348DED21C6146870009C7DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8348DED51C6146870009C7DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8348DED71C6146870009C7DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8348DEDD1C6146DB0009C7DF /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		8348DEE21C6147620009C7DF /* Yes Chef-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yes Chef-Bridging-Header.h"; sourceTree = "<group>"; };
 		8348DEE51C61489B0009C7DF /* SavedRecipesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesViewController.swift; sourceTree = "<group>"; };
 		8348DEE71C6148D50009C7DF /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
@@ -87,7 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8348DEDF1C6146EF0009C7DF /* SayKit.framework in Frameworks */,
+				831E367C1C691BED00DA63AB /* SayKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +97,7 @@
 		8348DEBF1C6146870009C7DF = {
 			isa = PBXGroup;
 			children = (
-				8348DEDD1C6146DB0009C7DF /* SayKit.framework */,
+				831E367A1C691BE600DA63AB /* SayKit.framework */,
 				8348DECA1C6146870009C7DF /* Yes Chef */,
 				8348DEC91C6146870009C7DF /* Products */,
 			);
