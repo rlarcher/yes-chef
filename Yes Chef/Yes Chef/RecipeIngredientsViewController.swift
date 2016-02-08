@@ -43,6 +43,38 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
         recipeIngredientsConversationTopic.topicDidLoseFocus()
     }
     
+    // MARK: ListConversationTopicEventHandler Protocol Methods
+    
+    func handleSelectCommand(command: SAYCommand)
+    {
+        print("RecipeIngredientsVC handleSelectCommand")
+    }
+    
+    func handleSearchCommand(command: SAYCommand)
+    {
+        print("RecipeIngredientsVC handleSearchCommand")
+    }
+    
+    func handlePlayCommand()
+    {
+        print("RecipeIngredientsVC handlePlayCommand")
+    }
+    
+    func handlePauseCommand()
+    {
+        print("RecipeIngredientsVC handlePauseCommand")
+    }
+    
+    func handleNextCommand()
+    {
+        print("RecipeIngredientsVC handleNextCommand")
+    }
+    
+    func handlePreviousCommand()
+    {
+        print("RecipeIngredientsVC handlePreviousCommand")
+    }
+    
     private var recipe: Recipe!
 }
 

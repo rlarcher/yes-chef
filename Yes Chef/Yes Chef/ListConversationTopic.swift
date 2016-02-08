@@ -25,15 +25,19 @@ class ListConversationTopic: SAYConversationTopic
         self.addCommandRecognizer(SAYPauseCommandRecognizer(responseTarget: eventHandler, action: "handlePauseCommand"))
         self.addCommandRecognizer(SAYNextCommandRecognizer(responseTarget: eventHandler, action: "handleNextCommand"))
         self.addCommandRecognizer(SAYPreviousCommandRecognizer(responseTarget: eventHandler, action: "handlePreviousCommand"))
+        // TODO: Add recognizer for "Repeat"
+        // TODO: Add recognizer for "Read all"
     }
     
     func speakItems(items: [String])
     {
         if items.count > 0 {
             let sequence = SAYAudioEventSequence()
+            var index = 1
             
             for item in items {
-                sequence.addEvent(SAYSpeechEvent(utteranceString: item))
+                sequence.addEvent(SAYSpeechEvent(utteranceString: "\(index): \(item)"))
+                index++
             }
             
             self.postEvents(sequence)

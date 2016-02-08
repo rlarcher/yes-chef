@@ -19,6 +19,9 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         // TODO: Add command recognizer for "Give me an overview"
         // TODO: Add command recognizer for "What are the ratings?"
         // TODO: Add command recognizer for "What's the name of the recipe?"
+        // TODO: Add command recognizer for "Calories" etc.
+        // TODO: Add command recognizer for this recipe's "Category"
+        // TODO: Add command recognizer for dietary restrictions
     }
     
     // This must be called before attempting to speak.    

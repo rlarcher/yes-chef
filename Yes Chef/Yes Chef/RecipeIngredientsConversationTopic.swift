@@ -20,7 +20,11 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         
         super.init()
         
-        
+        // TODO: Add command recognizer for "How many servings?"
+        // TODO: Add command recognizer for "Does it contain __ingredient__?" "Do I need __ingredient__?" "How much __ingredient__ do I need?"
+        // TODO: Add command recognizer for "What are the ingredients?"
+        // TODO: Add command recognizer for "Can I substitute __ingredientX__ for __ingredientY__?"
+        // TODO: Add command recognizer for unit conversion.
     }
     
     // This must be called before attempting to speak.    
