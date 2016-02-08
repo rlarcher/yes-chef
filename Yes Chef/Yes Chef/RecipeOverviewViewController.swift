@@ -49,5 +49,19 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
         recipeOverviewConversationTopic.topicDidLoseFocus()
     }
     
+    // MARK: RecipeOverviewConversationTopicEventHandler Protocol Methods
+    
+    func handleOverviewCommand()
+    {
+        if tabBarController?.selectedViewController == self {
+            // If we're already focused on the Overview tab, have the overviewCT repeat its Overview.
+            recipeOverviewConversationTopic.speakOverview()
+        }
+        else {
+            // Otherwise, the overview will be spoken when we switch tabs.
+            tabBarController?.selectedViewController = self
+        }
+    }
+    
     private var recipe: Recipe!
 }

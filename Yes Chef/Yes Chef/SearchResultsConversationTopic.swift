@@ -49,7 +49,6 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     func topicDidLoseFocus()
     {
         stopSpeaking()
-        removeAllSubtopics()
     }
 
     // MARK: Subtopic Handling

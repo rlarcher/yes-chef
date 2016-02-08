@@ -74,12 +74,10 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     
     private func initializeConversationTopic()
     {
-        let topic = RecipeNavigationConversationTopic(eventHandler: self)
-        topic.addSubtopic(recipeOverviewVC.recipeOverviewConversationTopic)
-        topic.addSubtopic(recipeIngredientsVC.recipeIngredientsConversationTopic)
-        topic.addSubtopic(recipePreparationVC.recipePreparationConversationTopic)
-        
-        self.recipeNavigationConversationTopic = topic
+        recipeNavigationConversationTopic = RecipeNavigationConversationTopic(eventHandler: self)
+        recipeNavigationConversationTopic.addSubtopic(recipeOverviewVC.recipeOverviewConversationTopic)
+        recipeNavigationConversationTopic.addSubtopic(recipeIngredientsVC.recipeIngredientsConversationTopic)
+        recipeNavigationConversationTopic.addSubtopic(recipePreparationVC.recipePreparationConversationTopic)
     }
     
     private func updateTabsWithRecipe(recipe: Recipe)

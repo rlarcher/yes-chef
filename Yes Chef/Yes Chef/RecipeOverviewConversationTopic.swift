@@ -16,7 +16,17 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         
         super.init()
         
-        // TODO: Add command recognizer for "Give me an overview"
+        let overviewRecognizer = SAYCustomCommandRecognizer(customType: "Overview", responseTarget: eventHandler, action: "handleOverviewCommand")
+        overviewRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("over view") || text.containsString("overview") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        self.addCommandRecognizer(overviewRecognizer)
+        
         // TODO: Add command recognizer for "What are the ratings?"
         // TODO: Add command recognizer for "What's the name of the recipe?"
         // TODO: Add command recognizer for "Calories" etc.
@@ -44,7 +54,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
     
     // MARK: Helpers
     
-    private func speakOverview()
+    func speakOverview()
     {
         let sequence = SAYAudioEventSequence()
         sequence.addEvent(SAYSpeechEvent(utteranceString: recipe.speakableString))
@@ -63,5 +73,5 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
 
 protocol RecipeOverviewConversationTopicEventHandler: class
 {
-    
+    func handleOverviewCommand()
 }
