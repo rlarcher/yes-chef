@@ -32,6 +32,7 @@
 		8348DF0A1C614BC20009C7DF /* RecipeOverviewConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF091C614BC20009C7DF /* RecipeOverviewConversationTopic.swift */; };
 		8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */; };
 		8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */; };
+		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,7 @@
 		8348DF091C614BC20009C7DF /* RecipeOverviewConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeOverviewConversationTopic.swift; sourceTree = "<group>"; };
 		8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeIngredientsConversationTopic.swift; sourceTree = "<group>"; };
 		8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationConversationTopic.swift; sourceTree = "<group>"; };
+		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */,
+				836EC68F1C68EC2E00FC74F7 /* Utils.swift */,
 			);
 			name = Private;
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				8348DEE81C6148D50009C7DF /* SearchResultsViewController.swift in Sources */,
 				8348DEEC1C6149230009C7DF /* RecipeOverviewViewController.swift in Sources */,
 				8348DF081C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift in Sources */,
+				836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */,
 				8348DEF01C61496A0009C7DF /* RecipePreparationViewController.swift in Sources */,
 				8348DEFE1C614ABC0009C7DF /* SavedRecipesManager.swift in Sources */,
 				8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */,

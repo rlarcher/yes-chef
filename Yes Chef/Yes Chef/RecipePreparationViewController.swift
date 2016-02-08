@@ -73,6 +73,34 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
         print("RecipePreparationVC handlePreviousCommand")
     }
     
+    // MARK: UITableViewDataSource Protocol Methods
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let index = indexPath.row
+        if
+            let cell = tableView.dequeueReusableCellWithIdentifier("PreparationStepCell") as? PreparationStepCell
+            where index < recipe.preparationSteps.count
+        {
+            cell.stepNumberLabel.text = "\(index + 1)"  // base-1
+            cell.instructionsTextView.text = recipe.preparationSteps[index]
+            
+            return cell
+        }
+        else {
+            return UITableViewCell()
+        }
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return recipe.preparationSteps.count
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return 1
+    }
     
     private var recipe: Recipe!
 }

@@ -75,6 +75,36 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
         print("RecipeIngredientsVC handlePreviousCommand")
     }
     
+    // MARK: UITableViewDataSource Protocol Methods
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let index = indexPath.row
+        if
+            let cell = tableView.dequeueReusableCellWithIdentifier("IngredientCell") as? IngredientCell
+            where index < recipe.ingredients.count
+        {
+            let ingredient = recipe.ingredients[index]
+            cell.ingredientNameLabel.text = ingredient.name
+            cell.quantityUnitsLabel.text = "\(ingredient.quantityString) \(ingredient.units)"
+            
+            return cell
+        }
+        else {
+            return UITableViewCell()
+        }
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return recipe.ingredients.count
+    }
+    
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return 1
+    }
+    
     private var recipe: Recipe!
 }
 

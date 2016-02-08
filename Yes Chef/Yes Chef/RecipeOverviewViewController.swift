@@ -32,7 +32,11 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     
     override func viewDidLoad()
     {
-
+        let ratingLabels = Utils.getLabelsForRating(recipe.rating)
+        ratingLabel.text = ratingLabels.textLabel
+        ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
+        
+        recipeImageView.image = recipe.thumbnail
     }
     
     override func viewDidAppear(animated: Bool)

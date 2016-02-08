@@ -92,10 +92,13 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             let recipe = recipes[index]
             cell.recipeNameLabel.text = recipe.name
             cell.thumbnailImageView.image = recipe.thumbnail
-            cell.ratingLabel.text = String(recipe.rating)
             cell.preparationTimeLabel.text = String(recipe.preparationTimeMinutes) + " minutes"
             cell.ingredientCountLabel.text = String(recipe.ingredients.count) + " ingredients"
             cell.caloriesLabel.text = String(recipe.calories) + " calories"
+            
+            let ratingLabels = Utils.getLabelsForRating(recipe.rating)
+            cell.ratingLabel.text = ratingLabels.textLabel
+            cell.ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
             
             return cell
         }
