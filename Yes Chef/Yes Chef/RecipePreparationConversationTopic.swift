@@ -33,13 +33,11 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     func topicDidGainFocus()
     {
         addSubtopic(ListConversationTopic(eventHandler: self))        
-        speakPreparationSteps()
     }
     
     func topicDidLoseFocus()
     {
-        stopSpeaking()
-        removeAllSubtopics()        
+        removeAllSubtopics()
     }
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
@@ -98,13 +96,13 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     // MARK: Helpers
     
-    private func stopSpeaking()
+    func stopSpeaking()
     {
         // TODO: Better way to interrupt speech on transitioning?
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
-    private func speakPreparationSteps()
+    func speakPreparationSteps()
     {
         if let listSubtopic = self.subtopics.first as? ListConversationTopic {
             listSubtopic.speakItems(recipe.preparationSteps)

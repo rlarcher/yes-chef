@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeOverviewViewController: UIViewController, RecipeOverviewConversationTopicEventHandler
+class RecipeOverviewViewController: UIViewController, RecipeOverviewConversationTopicEventHandler, ConversationalTabBarViewController
 {
     var recipeOverviewConversationTopic: RecipeOverviewConversationTopic!
     
@@ -41,26 +41,65 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     
     override func viewDidAppear(animated: Bool)
     {
-        recipeOverviewConversationTopic.topicDidGainFocus()
+
     }
     
     override func viewDidDisappear(animated: Bool)
     {
+
+    }
+    
+    // MARK: ConversationTabBarViewController Methods
+    
+    func didGainFocus(completion: (() -> Void)?)
+    {
+        recipeOverviewConversationTopic.topicDidGainFocus()
+        if let completionBlock = completion {
+            completionBlock()
+        }
+        else {
+            // Do the default
+            recipeOverviewConversationTopic.speakOverview()
+        }
+    }
+    
+    func didLoseFocus(completion: (() -> Void)?)
+    {
         recipeOverviewConversationTopic.topicDidLoseFocus()
+        if let completionBlock = completion {
+            completionBlock()
+        }
+        else {
+            // Do the default
+            recipeOverviewConversationTopic.stopSpeaking()
+        }
     }
     
     // MARK: RecipeOverviewConversationTopicEventHandler Protocol Methods
     
     func handleOverviewCommand()
+    {        
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipeOverviewConversationTopic.speakOverview()
+        }
+    }
+    
+    func handleRatingCommand()
     {
-        if tabBarController?.selectedViewController == self {
-            // If we're already focused on the Overview tab, have the overviewCT repeat its Overview.
-            recipeOverviewConversationTopic.speakOverview()
-        }
-        else {
-            // Otherwise, the overview will be spoken when we switch tabs.
-            tabBarController?.selectedViewController = self
-        }
+        tabBarController?.selectedViewController = self
+        recipeOverviewConversationTopic.speakRating()
+    }
+    
+    func handleRecipeNameCommand()
+    {
+        tabBarController?.selectedViewController = self
+        recipeOverviewConversationTopic.speakRecipeName()
+    }
+    
+    func handleCaloriesCommand()
+    {
+        tabBarController?.selectedViewController = self
+        recipeOverviewConversationTopic.speakCalories()
     }
     
     private var recipe: Recipe!

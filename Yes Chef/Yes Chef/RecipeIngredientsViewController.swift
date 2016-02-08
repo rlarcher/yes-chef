@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsConversationTopicEventHandler
+class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsConversationTopicEventHandler, ConversationalTabBarViewController
 {
     var recipeIngredientsConversationTopic: RecipeIngredientsConversationTopic!
     
@@ -35,12 +35,38 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     override func viewDidAppear(animated: Bool)
     {
-        recipeIngredientsConversationTopic.topicDidGainFocus()
+
     }
     
     override func viewWillDisappear(animated: Bool)
     {
+
+    }
+    
+    // MARK: ConversationTabBarViewController Methods
+    
+    func didGainFocus(completion: (() -> Void)?)
+    {
+        recipeIngredientsConversationTopic.topicDidGainFocus()
+        if let completionBlock = completion {
+            completionBlock()
+        }
+        else {
+            // Do the default
+            recipeIngredientsConversationTopic.speakIngredients()
+        }
+    }
+    
+    func didLoseFocus(completion: (() -> Void)?)
+    {
         recipeIngredientsConversationTopic.topicDidLoseFocus()
+        if let completionBlock = completion {
+            completionBlock()
+        }
+        else {
+            // Do the default
+            recipeIngredientsConversationTopic.stopSpeaking()
+        }
     }
     
     // MARK: ListConversationTopicEventHandler Protocol Methods

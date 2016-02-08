@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		831E367C1C691BED00DA63AB /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831E367A1C691BE600DA63AB /* SayKit.framework */; };
 		831E367D1C691BED00DA63AB /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 831E367A1C691BE600DA63AB /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		831E367F1C69325E00DA63AB /* ConversationalTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */; };
 		8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECB1C6146870009C7DF /* AppDelegate.swift */; };
 		8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECD1C6146870009C7DF /* HomeViewController.swift */; };
 		8348DED11C6146870009C7DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8348DECF1C6146870009C7DF /* Main.storyboard */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		831E367A1C691BE600DA63AB /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
+		831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationalTabBarViewController.swift; sourceTree = "<group>"; };
 		8348DEC81C6146870009C7DF /* Yes Chef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yes Chef.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8348DECB1C6146870009C7DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8348DECD1C6146870009C7DF /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */,
 				8348DEEF1C61496A0009C7DF /* RecipePreparationViewController.swift */,
 				8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */,
+				831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */,
 			);
 			name = "Recipe Details Scene";
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				831E367F1C69325E00DA63AB /* ConversationalTabBarViewController.swift in Sources */,
 				8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */,
 				8348DF061C614B510009C7DF /* SearchResultsConversationTopic.swift in Sources */,
 				8348DEEE1C6149520009C7DF /* RecipeIngredientsViewController.swift in Sources */,

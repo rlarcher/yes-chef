@@ -36,12 +36,10 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     func topicDidGainFocus()
     {
         addSubtopic(ListConversationTopic(eventHandler: self))
-        speakIngredients()
     }
     
     func topicDidLoseFocus()
     {
-        stopSpeaking()
         removeAllSubtopics()
     }
     
@@ -101,13 +99,13 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     
     // MARK: Helpers
     
-    private func stopSpeaking()
+    func stopSpeaking()
     {
         // TODO: Better way to interrupt speech on transitioning?
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
-    private func speakIngredients()
+    func speakIngredients()
     {
         if let listSubtopic = self.subtopics.first as? ListConversationTopic {
             listSubtopic.speakItems(recipe.ingredients.map { $0.speakableString })

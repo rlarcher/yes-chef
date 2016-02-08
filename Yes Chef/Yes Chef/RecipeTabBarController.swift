@@ -17,6 +17,8 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     required init?(coder aDecoder: NSCoder)
     {
         super.init(coder: aDecoder)
+        
+        self.delegate = self
         captureTabs()
         initializeConversationTopic()
     }
@@ -38,7 +40,7 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     override func viewDidAppear(animated: Bool)
     {
         // Note: When the TabBarController is first pushed on the stack, this `viewDidAppear` is triggered, but not any of its tabs' `viewDidAppears`, until we manually switch to a new tab. This is the one and only time `RecipeTabBarController` will "appear".
-        recipeOverviewVC.recipeOverviewConversationTopic.topicDidGainFocus()
+        recipeOverviewVC.didGainFocus(nil)
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -53,7 +55,28 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
         print("RecipeTabBarController handleTabNavigationCommand: \(command)")
     }
     
+    // MARK: UITabBarControllerDelegate Protocol Methods
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController)
+    {
+        if let previousVC = tabBarController.selectedViewController as? ConversationalTabBarViewController {
+            previousVC.didLoseFocus(nil)
+        }
+        
+        if let tabBarVC = viewController as? ConversationalTabBarViewController {
+            tabBarVC.didGainFocus(nil)
+        }
+    }
+    
     // MARK: Helpers
+    
+    func switchToTab(tabViewController: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+    {
+        if let selectedVC = tabViewController as? UIViewController {
+            self.selectedViewController = selectedVC
+            tabViewController.didGainFocus(completionBlock)                
+        }
+    }
     
     private func captureTabs()
     {
