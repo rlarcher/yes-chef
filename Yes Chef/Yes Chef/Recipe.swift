@@ -15,6 +15,7 @@ struct Recipe
     let ingredients: [Ingredient]
     let preparationSteps: [String]
     let preparationTime: NSTimeInterval
+    let servingSize: Int
     let calories: Int
     let thumbnail: UIImage
     

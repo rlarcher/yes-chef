@@ -30,12 +30,12 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     override func viewDidLoad()
     {
-
+        servingsCountLabel.text = String(recipe.servingSize)
     }
     
     override func viewDidAppear(animated: Bool)
     {
-
+        
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -66,6 +66,31 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
         else {
             // Do the default
             recipeIngredientsConversationTopic.stopSpeaking()
+        }
+    }
+    
+    // MARK: RecipeIngredientsConversationTopicEventHandler Protocol Methods
+    
+    func handleServingsCommand()
+    {
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipeIngredientsConversationTopic.speakServings()
+        }
+    }
+    
+    func handleIngredientQueryCommand(command: SAYCommand)
+    {
+        if let ingredient = command.parameters["ingredient"] as? String {
+            (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+                self.recipeIngredientsConversationTopic.speakIngredient(ingredient)
+            }
+        }
+    }
+    
+    func handleIngredientsCommand()
+    {
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipeIngredientsConversationTopic.speakIngredients()
         }
     }
     

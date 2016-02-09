@@ -59,6 +59,8 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController)
     {
+        // This method is called when the user taps a tab.
+        
         if let previousVC = tabBarController.selectedViewController as? ConversationalTabBarViewController {
             previousVC.didLoseFocus(nil)
         }
@@ -72,6 +74,7 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     
     func switchToTab(tabViewController: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
     {
+        // This method is called when the user speaks a command that wants to focus on a certain tab.
         if let selectedVC = tabViewController as? UIViewController {
             self.selectedViewController = selectedVC
             tabViewController.didGainFocus(completionBlock)                

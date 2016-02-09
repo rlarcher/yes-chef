@@ -397,7 +397,7 @@
         <!--Nutrition-->
         <scene sceneID="BTr-ge-sly">
             <objects>
-                <viewController id="clu-wP-n6T" customClass="RecipeOverviewViewController" customModule="Yes_Chef" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController definesPresentationContext="YES" id="clu-wP-n6T" customClass="RecipeOverviewViewController" customModule="Yes_Chef" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KVN-iw-awr"/>
                         <viewControllerLayoutGuide type="bottom" id="jRb-p1-xjx"/>

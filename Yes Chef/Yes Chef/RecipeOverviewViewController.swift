@@ -86,20 +86,23 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     
     func handleRatingCommand()
     {
-        tabBarController?.selectedViewController = self
-        recipeOverviewConversationTopic.speakRating()
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipeOverviewConversationTopic.speakRating()
+        }
     }
     
     func handleRecipeNameCommand()
     {
-        tabBarController?.selectedViewController = self
-        recipeOverviewConversationTopic.speakRecipeName()
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipeOverviewConversationTopic.speakRecipeName()
+        }
     }
     
     func handleCaloriesCommand()
     {
-        tabBarController?.selectedViewController = self
-        recipeOverviewConversationTopic.speakCalories()
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipeOverviewConversationTopic.speakCalories()
+        }
     }
     
     private var recipe: Recipe!

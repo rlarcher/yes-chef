@@ -20,9 +20,43 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         
         super.init()
         
-        // TODO: Add command recognizer for "How many servings?"
-        // TODO: Add command recognizer for "Does it contain __ingredient__?" "Do I need __ingredient__?" "How much __ingredient__ do I need?"
-        // TODO: Add command recognizer for "What are the ingredients?"
+        let servingsRecognizer = SAYCustomCommandRecognizer(customType: "Servings", responseTarget: eventHandler, action: "handleServingsCommand")
+        servingsRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            // Recognize phrases like "How many servings?", "How many people can this feed?"
+            if text.containsString("servings") || text.containsString("serving") || text.containsString("how many people does this feed") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        self.addCommandRecognizer(servingsRecognizer)
+        
+        let ingredientQueryRecognizer = SAYCustomCommandRecognizer(customType: "IngredientQuery", responseTarget: eventHandler, action: "handleIngredientQueryCommand:")
+        ingredientQueryRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPatterns: [
+            "how much @ingredient do I need",
+            "how much @ingredient",
+            "how many @ingredient do I need",
+            "how many @ingredient",
+            "do I need @ingredient",
+            "do I need any @ingredient",
+            "does this contain @ingredient",
+            "does it contain @ingredient"
+            ]))
+        self.addCommandRecognizer(ingredientQueryRecognizer)
+        
+        let ingredientsRecognizer = SAYCustomCommandRecognizer(customType: "Ingredients", responseTarget: eventHandler, action: "handleIngredientsCommand")
+        ingredientsRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            // Recognize phrases like "What are the ingredients?", "What do I need?"
+            if text.containsString("ingredients") || text.containsString("what do I need") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        self.addCommandRecognizer(ingredientsRecognizer)
+        
         // TODO: Add command recognizer for "Can I substitute __ingredientX__ for __ingredientY__?"
         // TODO: Add command recognizer for unit conversion.
     }
@@ -112,6 +146,28 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         }
     }
     
+    func speakServings()
+    {
+        let sequence = SAYAudioEventSequence()
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe feeds \(recipe.servingSize) people."))
+        postEvents(sequence)
+    }
+    
+    func speakIngredient(ingredient: String)
+    {
+        let sequence = SAYAudioEventSequence()
+        
+        let matchingIngredients = recipe.ingredients.filter({ $0.name.lowercaseString.containsString(ingredient.lowercaseString) })
+        if let knownIngredient = matchingIngredients.first {
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "The recipe calls for \(knownIngredient.speakableString)."))
+        }
+        else {
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "The recipe doesn't call for any \(ingredient)."))
+        }
+        
+        postEvents(sequence)
+    }
+    
     private var recipe: Recipe!
 }
 
@@ -123,4 +179,8 @@ protocol RecipeIngredientsConversationTopicEventHandler: class
     func handlePauseCommand()
     func handleNextCommand()
     func handlePreviousCommand()
+    
+    func handleServingsCommand()
+    func handleIngredientQueryCommand(command: SAYCommand)
+    func handleIngredientsCommand()
 }

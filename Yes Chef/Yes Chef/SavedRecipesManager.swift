@@ -34,6 +34,7 @@ class SavedRecipesManager
                                   ingredients: stubIngredients,
                                   preparationSteps: stubPrepSteps,
                                   preparationTime:  25 * 60,
+                                  servingSize: 12,
                                   calories: 265,
                                   thumbnail: UIImage()),
                            Recipe(name: "Raspberry Muffins",
@@ -41,6 +42,7 @@ class SavedRecipesManager
                                   ingredients: stubIngredients,
                                   preparationSteps: stubPrepSteps,
                                   preparationTime:  25 * 45,
+                                  servingSize: 8,
                                   calories: 310,
                                   thumbnail: UIImage())]
         
