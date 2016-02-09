@@ -20,8 +20,29 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         
         super.init()
         
-        // TODO: Add command recognizer for "What temperature do I set the oven?"
-        // TODO: Add command recognizer for "What do I do?"
+        let ovenTemperatureRecognizer = SAYCustomCommandRecognizer(customType: "OvenTemperature", responseTarget: eventHandler, action: "handleOvenTemperatureCommand")
+        ovenTemperatureRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            // Recognize phrases like "What temperature do I set the oven?", "How hot should the oven be?"
+            if text.containsString("oven") || text.containsString("temperature") || text.containsString("how hot") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        self.addCommandRecognizer(ovenTemperatureRecognizer)
+        
+        let whatDoIDoRecognizer = SAYCustomCommandRecognizer(customType: "WhatDoIDo", responseTarget: eventHandler, action: "handleWhatDoIDoCommand")
+        whatDoIDoRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            // Recognize phrases like "What do I do?", "What are the steps?"
+            if text.containsString("what do I do") || text.containsString("what do") || text.containsString("what steps") || text.containsString("what are the steps") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        self.addCommandRecognizer(whatDoIDoRecognizer)
     }
     
     // This must be called before attempting to speak.
@@ -109,6 +130,12 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         }
     }
     
+    func speakOvenTemperature()
+    {
+        // TODO
+        print("RecipePreparationCT speakOvenTemperature")
+    }
+    
     private var recipe: Recipe!
 }
 
@@ -120,4 +147,7 @@ protocol RecipePreparationConversationTopicEventHandler: class
     func handlePauseCommand()
     func handleNextCommand()
     func handlePreviousCommand()
+    
+    func handleWhatDoIDoCommand()
+    func handleOvenTemperatureCommand()
 }

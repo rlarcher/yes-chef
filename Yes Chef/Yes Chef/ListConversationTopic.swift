@@ -27,6 +27,7 @@ class ListConversationTopic: SAYConversationTopic
         self.addCommandRecognizer(SAYPreviousCommandRecognizer(responseTarget: eventHandler, action: "handlePreviousCommand"))
         // TODO: Add recognizer for "Repeat"
         // TODO: Add recognizer for "Read all"
+        // TODO: Add recognizer for "What's the __N'th__ step?"
     }
     
     func speakItems(items: [String])

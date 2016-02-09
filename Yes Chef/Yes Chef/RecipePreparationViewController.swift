@@ -67,6 +67,22 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
         }
     }
     
+    // MARK: RecipePreparationConversationTopicEventHandler Protocol Methods
+    
+    func handleWhatDoIDoCommand()
+    {
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipePreparationConversationTopic.speakPreparationSteps()
+        }
+    }
+    
+    func handleOvenTemperatureCommand()
+    {
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipePreparationConversationTopic.speakOvenTemperature()
+        }
+    }
+    
     // MARK: ListConversationTopicEventHandler Protocol Methods
     
     func handleSelectCommand(command: SAYCommand)
