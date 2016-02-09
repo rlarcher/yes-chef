@@ -35,6 +35,7 @@
 		8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */; };
 		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
+		83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */; };
 		E98EBA06DF207550497612D8 /* Pods_Yes_Chef.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,6 +85,7 @@
 		8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationConversationTopic.swift; sourceTree = "<group>"; };
 		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
+		83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListing.swift; sourceTree = "<group>"; };
 		8A1C61401665FC2F52E9F27B /* Pods-Yes Chef.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yes Chef.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef.debug.xcconfig"; sourceTree = "<group>"; };
 		98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yes_Chef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -194,6 +196,7 @@
 		8348DEF61C6149E50009C7DF /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */,
 				8348DEF71C614A3D0009C7DF /* Recipe.swift */,
 				8348DEF91C614A5F0009C7DF /* BigOvenAPIManager.swift */,
 				8348DEFB1C614A6D0009C7DF /* BigOvenAPIFetcher.swift */,
@@ -351,6 +354,7 @@
 				8348DEE81C6148D50009C7DF /* SearchResultsViewController.swift in Sources */,
 				8348DEEC1C6149230009C7DF /* RecipeOverviewViewController.swift in Sources */,
 				8348DF081C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift in Sources */,
+				83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */,
 				836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */,
 				8348DEF01C61496A0009C7DF /* RecipePreparationViewController.swift in Sources */,
 				8348DEFE1C614ABC0009C7DF /* SavedRecipesManager.swift in Sources */,

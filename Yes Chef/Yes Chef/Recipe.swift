@@ -10,14 +10,15 @@ import Foundation
 
 struct Recipe
 {
+    let recipeID: String
     let name: String
-    let rating: Int
+    let rating: Float
     let ingredients: [Ingredient]
     let preparationSteps: [String]
     let preparationTime: NSTimeInterval
     let servingSize: Int
     let calories: Int
-    let thumbnail: UIImage
+    let thumbnailURL: NSURL
     
     var preparationTimeMinutes: Int
     {
