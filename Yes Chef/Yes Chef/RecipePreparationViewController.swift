@@ -28,7 +28,7 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     
     override func viewDidLoad()
     {
-
+        self.activeTimeLabel.text = String(recipe.preparationTimeMinutes)
     }
     
     override func viewDidAppear(animated: Bool)

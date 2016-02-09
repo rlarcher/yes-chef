@@ -35,6 +35,7 @@
 		8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */; };
 		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
+		E98EBA06DF207550497612D8 /* Pods_Yes_Chef.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		179FDF0F0641DDB7B8EAAB74 /* Pods-Yes Chef.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yes Chef.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef.release.xcconfig"; sourceTree = "<group>"; };
 		831E367A1C691BE600DA63AB /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationalTabBarViewController.swift; sourceTree = "<group>"; };
 		8348DEC81C6146870009C7DF /* Yes Chef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yes Chef.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +84,8 @@
 		8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationConversationTopic.swift; sourceTree = "<group>"; };
 		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
+		8A1C61401665FC2F52E9F27B /* Pods-Yes Chef.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yes Chef.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef.debug.xcconfig"; sourceTree = "<group>"; };
+		98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yes_Chef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,18 +94,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				831E367C1C691BED00DA63AB /* SayKit.framework in Frameworks */,
+				E98EBA06DF207550497612D8 /* Pods_Yes_Chef.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		589468A764207F07B1A2A6EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8348DEBF1C6146870009C7DF = {
 			isa = PBXGroup;
 			children = (
 				831E367A1C691BE600DA63AB /* SayKit.framework */,
 				8348DECA1C6146870009C7DF /* Yes Chef */,
 				8348DEC91C6146870009C7DF /* Products */,
+				9A758F01EA9CE9D2AF3F5898 /* Pods */,
+				589468A764207F07B1A2A6EE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -196,6 +211,15 @@
 			name = Private;
 			sourceTree = "<group>";
 		};
+		9A758F01EA9CE9D2AF3F5898 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8A1C61401665FC2F52E9F27B /* Pods-Yes Chef.debug.xcconfig */,
+				179FDF0F0641DDB7B8EAAB74 /* Pods-Yes Chef.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -203,10 +227,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8348DEDA1C6146870009C7DF /* Build configuration list for PBXNativeTarget "Yes Chef" */;
 			buildPhases = (
+				7409440CCA9D7002E9F8C479 /* Check Pods Manifest.lock */,
 				8348DEC41C6146870009C7DF /* Sources */,
 				8348DEC51C6146870009C7DF /* Frameworks */,
 				8348DEC61C6146870009C7DF /* Resources */,
 				8348DEE11C6146EF0009C7DF /* Embed Frameworks */,
+				44933C3838E5FFA5EC32BC37 /* Embed Pods Frameworks */,
+				D057F13E236F704287A0FF39 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -262,6 +289,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		44933C3838E5FFA5EC32BC37 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7409440CCA9D7002E9F8C479 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D057F13E236F704287A0FF39 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8348DEC41C6146870009C7DF /* Sources */ = {
@@ -401,6 +476,7 @@
 		};
 		8348DEDB1C6146870009C7DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A1C61401665FC2F52E9F27B /* Pods-Yes Chef.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -419,6 +495,7 @@
 		};
 		8348DEDC1C6146870009C7DF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 179FDF0F0641DDB7B8EAAB74 /* Pods-Yes Chef.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
