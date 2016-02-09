@@ -29,22 +29,26 @@ class SavedRecipesManager
         
         let stubPrepSteps = ["Turn on oven", "Mix batter", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]
         
-        let stubRecipes = [Recipe(name: "Blueberry Muffins",
+        let stubRecipes = [Recipe(recipeID: "12345678",
+                                  name: "Blueberry Muffins",
                                   rating: 4,
                                   ingredients: stubIngredients,
                                   preparationSteps: stubPrepSteps,
                                   preparationTime:  25 * 60,
                                   servingSize: 12,
                                   calories: 265,
-                                  thumbnail: UIImage()),
-                           Recipe(name: "Raspberry Muffins",
+                                  thumbnailImageURL: NSURL(string: "http://www.google.com")!,
+                                  heroImageURL: NSURL(string: "http://www.google.com")!),
+                           Recipe(recipeID: "87654321",
+                                  name: "Raspberry Muffins",
                                   rating: 1,
                                   ingredients: stubIngredients,
                                   preparationSteps: stubPrepSteps,
                                   preparationTime:  25 * 45,
                                   servingSize: 8,
                                   calories: 310,
-                                  thumbnail: UIImage())]
+                                  thumbnailImageURL: NSURL(string: "http://www.google.com")!,
+                                  heroImageURL: NSURL(string: "http://www.google.com")!)]
         
         return stubRecipes
     }

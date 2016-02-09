@@ -12,13 +12,14 @@ struct Recipe
 {
     let recipeID: String
     let name: String
-    let rating: Float
+    let rating: Int
     let ingredients: [Ingredient]
     let preparationSteps: [String]
     let preparationTime: NSTimeInterval
     let servingSize: Int
     let calories: Int
-    let thumbnailURL: NSURL
+    let thumbnailImageURL: NSURL
+    let heroImageURL: NSURL
     
     var preparationTimeMinutes: Int
     {

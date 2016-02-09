@@ -91,7 +91,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         {
             let recipe = recipes[index]
             cell.recipeNameLabel.text = recipe.name
-            cell.thumbnailImageView.image = recipe.thumbnail
+            cell.thumbnailImageView.setImageWithURL(recipe.thumbnailImageURL, placeholderImage: nil) // TODO: Add placeholder image
             cell.preparationTimeLabel.text = String(recipe.preparationTimeMinutes) + " minutes"
             cell.ingredientCountLabel.text = String(recipe.ingredients.count) + " ingredients"
             cell.caloriesLabel.text = String(recipe.calories) + " calories"
