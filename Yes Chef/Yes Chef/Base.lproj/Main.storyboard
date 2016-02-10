@@ -81,7 +81,6 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="ingredientsLabel" destination="4nZ-5n-Pru" id="OaU-v5-wLe"/>
-                                    <outlet property="preparationTimeLabel" destination="uy6-aT-k15" id="PyM-pA-oP1"/>
                                     <outlet property="ratingLabel" destination="E5U-Eg-ke2" id="iPN-BC-qR2"/>
                                     <outlet property="recipeNameLabel" destination="e4s-Rp-5tB" id="X1F-D2-FoO"/>
                                     <outlet property="servingSizeLabel" destination="uy6-aT-k15" id="xLN-Ye-igO"/>
@@ -259,7 +258,6 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="preparationTimeLabel" destination="Vh5-Zq-ziN" id="XmX-rl-Gd8"/>
                                     <outlet property="ratingLabel" destination="IbH-1F-OOD" id="7dR-b8-IIW"/>
                                     <outlet property="recipeNameLabel" destination="ktp-Q6-B3g" id="5iQ-kn-NDc"/>
                                     <outlet property="servingSizeLabel" destination="Vh5-Zq-ziN" id="lKR-Lo-hXJ"/>

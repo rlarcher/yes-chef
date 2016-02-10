@@ -21,13 +21,23 @@ class BigOvenAPIFetcher: NSObject
 //    404 NOT FOUND 	Request URI invalid.
 //    500 INTERNAL ERROR 	Server error has occurred.
     
-    class func searchForRecipeByName(query: String, completion: (BigOvenAPISearchResponse -> ()))
+    // TODO: Search by category
+    func searchForRecipeByName(query: String, completion: (BigOvenAPISearchResponse -> ()))
     {
-        let parameters = ["api_key": kAPIKey, "title_kw": query]
+        // TODO: Temp. stubbing
+        if true {
+            let stubRecipeListings = Utils.stubRecipeListings()
+            
+            completion(BigOvenAPISearchResponse(recipeListings: stubRecipeListings, bodyData: nil, responseError: nil))
+            
+            return
+        }
+        
+        let parameters = ["api_key": BigOvenAPIFetcher.kAPIKey, "title_kw": query]
 
-        sessionManager.GET("recipes", parameters: parameters, progress: nil,
+        BigOvenAPIFetcher.sessionManager.GET("recipes", parameters: parameters, progress: nil,
             success: { (task, responseObject) -> Void in
-                if let listings = parseRecipeListingFromResponseObject(responseObject) {
+                if let listings = self.parseRecipeListingFromResponseObject(responseObject) {
                     completion(BigOvenAPISearchResponse(recipeListings: listings, bodyData: nil, responseError: nil))
                 }
                 else {
@@ -38,13 +48,21 @@ class BigOvenAPIFetcher: NSObject
         })
     }
     
-    class func recipeWithID(recipeId: String, completion: (BigOvenAPIRecipeResponse -> ()))
+    func recipeWithId(recipeId: String, completion: (BigOvenAPIRecipeResponse -> ()))
     {
-        let parameters = ["api_key": kAPIKey]
+        // TODO: Temp. stubbing
+        if true {
+            let stubRecipe = Utils.stubRecipes()[0]
+            
+            completion(BigOvenAPIRecipeResponse(recipe: stubRecipe, bodyData: nil, responseError: nil))
+            return
+        }
         
-        sessionManager.GET("recipe/\(recipeId)", parameters: parameters, progress: nil,
+        let parameters = ["api_key": BigOvenAPIFetcher.kAPIKey]
+        
+        BigOvenAPIFetcher.sessionManager.GET("recipe/\(recipeId)", parameters: parameters, progress: nil,
             success: { (task, responseObject) -> Void in
-                if let recipe = parseRecipeFromResponseObject(responseObject) {
+                if let recipe = self.parseRecipeFromResponseObject(responseObject) {
                     completion(BigOvenAPIRecipeResponse(recipe: recipe, bodyData: nil, responseError: nil))
                 }
                 else {
@@ -58,7 +76,7 @@ class BigOvenAPIFetcher: NSObject
     /// Returns nil if the response object and its "Results" array couldn't be read. 
     /// Returns an empty array if no results were found. 
     /// Otherwise returns an array of RecipeListing.
-    private class func parseRecipeListingFromResponseObject(responseObject: AnyObject?) -> [RecipeListing]?
+    private func parseRecipeListingFromResponseObject(responseObject: AnyObject?) -> [RecipeListing]?
     {
         if let object = responseObject {
             let root = JSON(object).dictionaryValue
@@ -77,7 +95,7 @@ class BigOvenAPIFetcher: NSObject
                     {
                         let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                         
-                        let listing = RecipeListing(recipeID: recipeID, name: recipeName, rating: rating, servingSize: servingSize, thumbnailImageURL: thumbnailURL)
+                        let listing = RecipeListing(recipeId: recipeID, name: recipeName, rating: rating, servingSize: servingSize, thumbnailImageURL: thumbnailURL)
                         recipeListings.append(listing)
                     }
                 }
@@ -90,7 +108,7 @@ class BigOvenAPIFetcher: NSObject
     }
     
     /// Returns a Recipe if all went well. Otherwise returns nil.
-    private class func parseRecipeFromResponseObject(responseObject: AnyObject?) -> Recipe?
+    private func parseRecipeFromResponseObject(responseObject: AnyObject?) -> Recipe?
     {
         if let object = responseObject {
             let root = JSON(object).dictionaryValue
@@ -136,7 +154,7 @@ class BigOvenAPIFetcher: NSObject
     /// Returns an array of ingredients parsed from the "Ingredients" JSON array.
     /// If there was an issue parsing any ingredient, returns nil.
     /// If there are no ingredients, returns an empty array.
-    private class func parseIngredients(ingredientsData: [JSON]) -> [Ingredient]?
+    private func parseIngredients(ingredientsData: [JSON]) -> [Ingredient]?
     {
         var ingredients = [Ingredient]()
         for ingredientData in ingredientsData {
@@ -159,7 +177,7 @@ class BigOvenAPIFetcher: NSObject
         return ingredients
     }
     
-    private class func parsePreparationSteps(rawInstructions: String) -> [String]
+    private func parsePreparationSteps(rawInstructions: String) -> [String]
     {
         return rawInstructions.componentsSeparatedByString("\\\r\\\n\\\r\\\n") // TODO: Double-check separator
     }

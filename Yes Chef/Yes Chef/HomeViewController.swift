@@ -115,10 +115,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         }
     }
     
-    private func presentSearchResults(results: [Recipe], forQuery query: String)
+    private func presentSearchResults(results: [RecipeListing], forQuery query: String)
     {
         if let searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier("SearchResultsViewController") as? SearchResultsViewController {
-            searchResultsVC.setRecipes(results, forSearchQuery: query)
+            searchResultsVC.setRecipeListings(results, forSearchQuery: query)
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.pushViewController(searchResultsVC, animated: true)
                 self.homeConversationTopic.addSubtopic(searchResultsVC.searchResultsConversationTopic)
@@ -130,8 +130,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     private func searchUsingQuery(query: String, category: String)
     {
-        BigOvenAPIManager.sharedManager.search(query, category: category) { (results, error) -> Void in
-            if error == nil {
+        BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category) { response -> Void in
+            if let results = response.recipeListings {
                 self.presentSearchResults(results, forQuery: query)
             }
             else {

@@ -76,7 +76,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         let index = indexPath.row
         if index < recipeListings.count {
             let recipeListing = recipeListings[index]
-            presentRecipeForRecipeListing(recipeListing)
+            requestedRecipePresentationForListing(recipeListing)
         }
     }
     
@@ -117,11 +117,20 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     // MARK: Navigation Helpers
     
-    private func presentRecipeForRecipeListing(recipeListing: RecipeListing)
+    private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
     {
-        // TODO: Fetch corresponding Recipe, then present:
-//        let recipe = /*...*/
-        
+        BigOvenAPIManager.sharedManager.fetchRecipe(recipeListing.recipeId) { response -> Void in
+            if let recipe = response.recipe {
+                self.presentRecipe(recipe)
+            }
+            else {
+                // TODO: Handle error
+            }
+        }
+    }
+    
+    private func presentRecipe(recipe: Recipe)
+    {
         if let recipeTabBarController = storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
             recipeTabBarController.setRecipe(recipe)
             dispatch_async(dispatch_get_main_queue()) {

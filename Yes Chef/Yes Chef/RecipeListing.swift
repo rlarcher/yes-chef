@@ -10,7 +10,7 @@ import Foundation
 
 struct RecipeListing
 {
-    let recipeID: String
+    let recipeId: String
     let name: String
     let rating: Int
     let servingSize: Int    

@@ -13,50 +13,69 @@ class BigOvenAPIManager
     static var sharedManager: BigOvenAPIManager {
         get {
             if underlyingInstance == nil {
-                underlyingInstance = BigOvenAPIManager()
+                underlyingInstance = BigOvenAPIManager(apiFetcher: BigOvenAPIFetcher())
             }
             
             return underlyingInstance!
         }
     }
     
-    func search(query: String, category: String, completion: ((results: [Recipe], error: NSError?) -> Void))
+    init(apiFetcher: BigOvenAPIFetcher)
     {
-        // TODO
-        
-        let stubIngredients = [Ingredient(ingredientId: "12345", name: "Flour", quantityString: "2", units: "Cups", preparationNotes: nil),
-                               Ingredient(ingredientId: "678910", name: "Blueberries", quantityString: "one dozen", units: "", preparationNotes: "freshly picked")]
-        
-        let stubPrepSteps = ["Turn on oven", "Mix batter", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]
-        
-        let stubRecipes = [Recipe(recipeId: "12345678",
-                                  name: "Blueberry Muffins",
-                                  rating: 4,
-                                  description: "The most delicious blueberry muffins ever.",
-                                  ingredients: stubIngredients,
-                                  preparationSteps: stubPrepSteps,
-                                  totalPreparationTime: 25,
-                                  activePreparationTime:  10,
-                                  servingSize: 12,
-                                  calories: 265,
-                                  thumbnailImageURL: NSURL(string: "http://www.google.com")!,
-                                  heroImageURL: NSURL(string: "http://www.google.com")!),
-                           Recipe(recipeId: "87654321",
-                                  name: "Raspberry Muffins",
-                                  rating: 1,
-                                  description: "This recipe is known around the world.",
-                                  ingredients: stubIngredients,
-                                  preparationSteps: stubPrepSteps,
-                                  totalPreparationTime: 45,
-                                  activePreparationTime:  5,
-                                  servingSize: 8,
-                                  calories: 310,
-                                  thumbnailImageURL: NSURL(string: "http://www.google.com")!,
-                                  heroImageURL: NSURL(string: "http://www.google.com")!)]
-        
-        completion(results: stubRecipes, error: nil)
+        self.apiFetcher = apiFetcher
     }
     
+    func searchForRecipeByName(query: String, category: String?, completion: (SearchResponse -> Void))
+    {
+        // TODO: Handle category searches
+        apiFetcher.searchForRecipeByName(query) { (response) -> () in
+            if let recipeListings = response.recipeListings where response.didSucceed {
+                for listing in recipeListings {
+                    self.fetchRecipe(listing.recipeId, completion: nil) // Prefetch corresponding recipes
+                }
+                completion(SearchResponse(recipeListings: recipeListings, error: nil))
+            }
+            else {
+                let wrappedError = self.wrapSearchError(response.responseError!, bodyData: response.bodyData)
+                completion(SearchResponse(recipeListings: nil, error: wrappedError))
+            }
+        }
+    }
+    
+    func fetchRecipe(recipeId: String, completion: (RecipeResponse -> Void)?)
+    {
+        if let recipe = retrieveRecipeFromCache(recipeId) {
+            completion?(RecipeResponse(recipe: recipe, error: nil))
+        }
+        else {
+            apiFetcher.recipeWithId(recipeId, completion: { (response) -> () in
+                if let recipe = response.recipe where response.didSucceed {
+                    self.addRecipeToCache(recipe)
+                    completion?(RecipeResponse(recipe: recipe, error: nil))
+                }
+                else {
+                    let wrappedError = self.wrapRecipeError(response.responseError!, bodyData: response.bodyData)
+                    completion?(RecipeResponse(recipe: nil, error: wrappedError))
+                }
+            })
+        }
+    }
+    
+    // MARK: Error Handling
+    
+    private func wrapSearchError(error: NSError, bodyData: NSDictionary?) -> NSError
+    {
+        // TODO
+        return NSError(domain: "TODO", code: 0, userInfo: nil)
+    }
+    
+    private func wrapRecipeError(error: NSError, bodyData: NSDictionary?) -> NSError
+    {
+        // TODO
+        return NSError(domain: "TODO", code: 0, userInfo: nil)
+    }
+    
+    private let apiFetcher: BigOvenAPIFetcher
     static private var underlyingInstance: BigOvenAPIManager?
     
     // MARK: Recipe Caching
@@ -91,4 +110,15 @@ class BigOvenAPIManager
         return matches.first
     }
 }
+
+struct SearchResponse
+{
+    let recipeListings: [RecipeListing]?
+    let error: NSError?
+}
+
+struct RecipeResponse
+{
+    let recipe: Recipe?
+    let error: NSError?
 }
