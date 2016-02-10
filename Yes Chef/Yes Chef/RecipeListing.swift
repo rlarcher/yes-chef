@@ -13,9 +13,10 @@ struct RecipeListing
     let recipeID: String
     let name: String
     let rating: Int
+    let servingSize: Int    
     let thumbnailImageURL: NSURL
     
     var speakableString: String {
-        return "\(name). \(rating) out of 5 stars."
+        return "\(name). \(rating) out of 5 stars. Serves \(servingSize)."
     }
 }

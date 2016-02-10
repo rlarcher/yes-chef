@@ -43,6 +43,8 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
             }
         }))
         self.addCommandRecognizer(whatDoIDoRecognizer)
+        
+        // TODO: Add command recognizer for preparation time
     }
     
     // This must be called before attempting to speak.

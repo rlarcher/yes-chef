@@ -111,9 +111,9 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
             let recipe = savedRecipes[index]
             cell.recipeNameLabel.text = recipe.name
             cell.thumbnailImageView.setImageWithURL(recipe.thumbnailImageURL, placeholderImage: nil) // TODO: Add placeholder image
-            cell.preparationTimeLabel.text = String(recipe.totalPreparationTime) + " minutes"
-            cell.ingredientCountLabel.text = String(recipe.ingredients.count) + " ingredients"
-            cell.caloriesLabel.text = String(recipe.calories) + " calories"
+            cell.servingSizeLabel.text = "Serves: \(recipe.servingSize)"
+            cell.totalPreparationTimeLabel.text = "\(recipe.totalPreparationTime) Minutes"
+            cell.ingredientsLabel.text = "\(recipe.ingredients.count) Ingredients"
             
             let ratingLabels = Utils.getLabelsForRating(recipe.rating)
             cell.ratingLabel.text = ratingLabels.textLabel
@@ -147,10 +147,10 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
 
 class RecipeCell: UITableViewCell
 {
-    @IBOutlet var recipeNameLabel: UILabel!    
-    @IBOutlet var thumbnailImageView: UIImageView!
-    @IBOutlet var ratingLabel: UILabel!
-    @IBOutlet var preparationTimeLabel: UILabel!
-    @IBOutlet var ingredientCountLabel: UILabel!
-    @IBOutlet var caloriesLabel: UILabel!
+    @IBOutlet weak var recipeNameLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var totalPreparationTimeLabel: UILabel!
+    @IBOutlet weak var servingSizeLabel: UILabel!
+    @IBOutlet weak var ingredientsLabel: UILabel!
 }

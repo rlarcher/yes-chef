@@ -21,9 +21,9 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     }
     
     // Must be called immediately after instantiating the VC
-    func setRecipes(recipes: [Recipe], forSearchQuery query: String)
+    func setRecipeListings(recipeListings: [RecipeListing], forSearchQuery query: String)
     {
-        self.recipes = recipes
+        self.recipeListings = recipeListings
         self.query = query
     }
     
@@ -74,9 +74,9 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         let index = indexPath.row
-        if index < recipes.count {
-            let recipe = recipes[index]
-            presentRecipe(recipe)
+        if index < recipeListings.count {
+            let recipeListing = recipeListings[index]
+            presentRecipeForRecipeListing(recipeListing)
         }
     }
     
@@ -86,17 +86,15 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     {
         let index = indexPath.row
         if
-            let cell = tableView.dequeueReusableCellWithIdentifier("RecipeCell") as? RecipeCell
-            where index < recipes.count
+            let cell = tableView.dequeueReusableCellWithIdentifier("RecipeListingCell") as? RecipeListingCell
+            where index < recipeListings.count
         {
-            let recipe = recipes[index]
-            cell.recipeNameLabel.text = recipe.name
-            cell.thumbnailImageView.setImageWithURL(recipe.thumbnailImageURL, placeholderImage: nil) // TODO: Add placeholder image
-            cell.preparationTimeLabel.text = String(recipe.totalPreparationTime) + " minutes"
-            cell.ingredientCountLabel.text = String(recipe.ingredients.count) + " ingredients"
-            cell.caloriesLabel.text = String(recipe.calories) + " calories"
+            let recipeListing = recipeListings[index]
+            cell.recipeNameLabel.text = recipeListing.name
+            cell.thumbnailImageView.setImageWithURL(recipeListing.thumbnailImageURL, placeholderImage: nil) // TODO: Add placeholder image
+            cell.servingSizeLabel.text = "Serves: \(recipeListing.servingSize)"
             
-            let ratingLabels = Utils.getLabelsForRating(recipe.rating)
+            let ratingLabels = Utils.getLabelsForRating(recipeListing.rating)
             cell.ratingLabel.text = ratingLabels.textLabel
             cell.ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
             
@@ -109,7 +107,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return recipes.count
+        return recipeListings.count
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
@@ -119,8 +117,11 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     // MARK: Navigation Helpers
     
-    private func presentRecipe(recipe: Recipe)
+    private func presentRecipeForRecipeListing(recipeListing: RecipeListing)
     {
+        // TODO: Fetch corresponding Recipe, then present:
+//        let recipe = /*...*/
+        
         if let recipeTabBarController = storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
             recipeTabBarController.setRecipe(recipe)
             dispatch_async(dispatch_get_main_queue()) {
@@ -130,10 +131,10 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         }
     }
     
-    private var recipes: [Recipe]! {
+    private var recipeListings: [RecipeListing]! {
         didSet {
-            // Keeps searchResultsCT's recipes in sync with searchResultsVC's recipes.
-            searchResultsConversationTopic.updateResults(recipes)
+            // Keeps searchResultsCT's recipeListings in sync with searchResultsVC's recipeListings.
+            searchResultsConversationTopic.updateResults(recipeListings)
         }
     }
     private var query: String! {
@@ -142,4 +143,12 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             searchResultsConversationTopic.updateSearchQuery(query)
         }
     }
+}
+
+class RecipeListingCell: UITableViewCell
+{
+    @IBOutlet weak var recipeNameLabel: UILabel!
+    @IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var servingSizeLabel: UILabel!
 }

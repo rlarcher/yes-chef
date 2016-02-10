@@ -20,9 +20,9 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     }
     
     // This must be called before attempting to speak.
-    func updateResults(results: [Recipe])
+    func updateResults(results: [RecipeListing])
     {
-        self.recipes = results
+        self.recipeListings = results
     }
 
     // This must be called before attempting to speak.
@@ -34,7 +34,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     func speakResults()
     {
         if let listSubtopic = self.subtopics.first as? ListConversationTopic {
-            listSubtopic.speakItems(recipes.map { $0.speakableString })
+            listSubtopic.speakItems(recipeListings.map { $0.speakableString })
         }
     }
     
@@ -57,8 +57,8 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     {
         if subtopic is ListConversationTopic {
             let prefixEvent: SAYSpeechEvent
-            if recipes.count > 0 {
-                prefixEvent = SAYSpeechEvent(utteranceString: "I found \(recipes.count) results for \"\(searchQuery)\":")
+            if recipeListings.count > 0 {
+                prefixEvent = SAYSpeechEvent(utteranceString: "I found \(recipeListings.count) results for \"\(searchQuery)\":")
             }
             else {
                 prefixEvent = SAYSpeechEvent(utteranceString: "There were no results for \"\(searchQuery)\".")
@@ -115,7 +115,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
-    private var recipes: [Recipe]!
+    private var recipeListings: [RecipeListing]!
     private var searchQuery: String!
 }
 

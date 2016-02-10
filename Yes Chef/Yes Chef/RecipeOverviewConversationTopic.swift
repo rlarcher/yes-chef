@@ -64,6 +64,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         
         // TODO: Add command recognizer for this recipe's "Category"
         // TODO: Add command recognizer for dietary restrictions
+        // TODO: Add command recognizer for recipe description
     }
     
     // This must be called before attempting to speak.    
