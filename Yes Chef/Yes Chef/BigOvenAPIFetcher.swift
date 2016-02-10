@@ -25,9 +25,9 @@ class BigOvenAPIFetcher: NSObject
     {
         let parameters = ["api_key": kAPIKey, "title_kw": query]
 
-        BigOvenAPIFetcher.sessionManager.GET("recipes", parameters: parameters, progress: nil,
+        sessionManager.GET("recipes", parameters: parameters, progress: nil,
             success: { (task, responseObject) -> Void in
-                if let listings = BigOvenAPIFetcher.parseRecipeListingFromResponseObject(responseObject) {
+                if let listings = parseRecipeListingFromResponseObject(responseObject) {
                     completion(BigOvenAPISearchResponse(recipeListings: listings, bodyData: nil, responseError: nil))
                 }
                 else {
@@ -42,9 +42,9 @@ class BigOvenAPIFetcher: NSObject
     {
         let parameters = ["api_key": kAPIKey]
         
-        BigOvenAPIFetcher.sessionManager.GET("recipe/\(recipeId)", parameters: parameters, progress: nil,
+        sessionManager.GET("recipe/\(recipeId)", parameters: parameters, progress: nil,
             success: { (task, responseObject) -> Void in
-                if let recipe = BigOvenAPIFetcher.parseRecipeFromResponseObject(responseObject) {
+                if let recipe = parseRecipeFromResponseObject(responseObject) {
                     completion(BigOvenAPIRecipeResponse(recipe: recipe, bodyData: nil, responseError: nil))
                 }
                 else {
@@ -105,15 +105,15 @@ class BigOvenAPIFetcher: NSObject
                 let ingredientsData         = root["Ingredients"]?.arrayValue,
                 let ingredients             = parseIngredients(ingredientsData),
                 let rawInstructions         = root["Instructions"]?.string,
-                let preparationSteps        = parsePreparationSteps(rawInstructions),
                 let totalPreparationTime    = root["TotalTime"]?.int,
                 let activePreparationTime   = root["ActiveMinutes"]?.int,
                 let servingSize             = root["YieldNumber"]?.int,
                 let calories                = root["NutritionInfo"]?["TotalCalories"].int // TODO: Confirm this is available with the Basic plan
             {
                 let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
+                let preparationSteps = parsePreparationSteps(rawInstructions)
                 
-                let recipe = Recipe(recipeID: recipeId,
+                let recipe = Recipe(recipeId: recipeId,
                                     name: recipeName,
                                     rating:rating,
                                     description: description,
@@ -147,7 +147,7 @@ class BigOvenAPIFetcher: NSObject
                 let preparationNotes    = ingredientData["PreparationNotes"].string
             {
                 let notes: String? = preparationNotes == "null" ? nil : preparationNotes // If BigOven's notes are "null", just set ours to nil.
-                let ingredient = Ingredient(ingredientID: ingredientId, name: name, quantityString:  quantityString, units: units, preparationNotes: notes)
+                let ingredient = Ingredient(ingredientId: ingredientId, name: name, quantityString:  quantityString, units: units, preparationNotes: notes)
                 ingredients.append(ingredient)
             }
             else {
@@ -158,10 +158,9 @@ class BigOvenAPIFetcher: NSObject
         return ingredients
     }
     
-    private class func parsePreparationSteps(rawInstructions: String) -> [String]?
+    private class func parsePreparationSteps(rawInstructions: String) -> [String]
     {
-        // TODO
-        return nil
+        return rawInstructions.componentsSeparatedByString("\\\r\\\n\\\r\\\n") // TODO: Double-check separator
     }
     
     private static let sessionManager: AFHTTPSessionManager = {

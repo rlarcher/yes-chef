@@ -111,9 +111,9 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
             let recipe = savedRecipes[index]
             cell.recipeNameLabel.text = recipe.name
             cell.thumbnailImageView.setImageWithURL(recipe.thumbnailImageURL, placeholderImage: nil) // TODO: Add placeholder image
-            cell.preparationTimeLabel.text = String(recipe.preparationTimeMinutes)
-            cell.ingredientCountLabel.text = String(recipe.ingredients.count)
-            cell.caloriesLabel.text = String(recipe.calories)
+            cell.preparationTimeLabel.text = String(recipe.totalPreparationTime) + " minutes"
+            cell.ingredientCountLabel.text = String(recipe.ingredients.count) + " ingredients"
+            cell.caloriesLabel.text = String(recipe.calories) + " calories"
             
             let ratingLabels = Utils.getLabelsForRating(recipe.rating)
             cell.ratingLabel.text = ratingLabels.textLabel

@@ -10,7 +10,7 @@ import Foundation
 
 struct Recipe
 {
-    let recipeID: String
+    let recipeId: String
     let name: String
     let rating: Int
     let description: String
@@ -25,13 +25,13 @@ struct Recipe
     
     var speakableString: String
     {
-        return "\(name). \(rating) stars. Requires \(preparationTimeMinutes) minutes of preparation and \(ingredients.count) different ingredients."
+        return "\(name). \(rating) stars. \(description). Requires \(totalPreparationTime) minutes of preparation (\(activePreparationTime) minutes active)."
     }
 }
 
 struct Ingredient
 {
-    let ingredientID: String
+    let ingredientId: String
     let name: String
     let quantityString: String
     let units: String
