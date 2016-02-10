@@ -13,18 +13,15 @@ struct Recipe
     let recipeID: String
     let name: String
     let rating: Int
+    let description: String
     let ingredients: [Ingredient]
     let preparationSteps: [String]
-    let preparationTime: NSTimeInterval
+    let totalPreparationTime: Int // in minutes
+    let activePreparationTime: Int // in minutes
     let servingSize: Int
     let calories: Int
     let thumbnailImageURL: NSURL
     let heroImageURL: NSURL
-    
-    var preparationTimeMinutes: Int
-    {
-        return Int(ceil(preparationTime / 60.0))
-    }
     
     var speakableString: String
     {
@@ -34,12 +31,19 @@ struct Recipe
 
 struct Ingredient
 {
+    let ingredientID: String
     let name: String
     let quantityString: String
     let units: String
+    let preparationNotes: String?
     
     var speakableString: String
     {
-        return "\(quantityString) \(units) \(name)"
+        if let notes = preparationNotes {
+            return "\(quantityString) \(units) \(name) (\(notes))"
+        }
+        else {
+            return "\(quantityString) \(units) \(name)"
+        }
     }
 }
