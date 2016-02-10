@@ -58,4 +58,37 @@ class BigOvenAPIManager
     }
     
     static private var underlyingInstance: BigOvenAPIManager?
+    
+    // MARK: Recipe Caching
+    
+    // cache of recipes recently fetched
+    // (stored as an array because we need to size-limit it FIFO, and it should be small enough to get away with the linear access time)
+    private let kMaxRecipeCacheSize = 30
+    private var recipeCache: [Recipe] = Utils.stubRecipes() // TODO: Temp stubbing. // = []
+    private let cacheAccessQueue = dispatch_queue_create("com.conversantlabs.yeschef.BigOvenAPIManager.cacheAccessQueue", nil)
+    
+    private func addRecipeToCache(recipe: Recipe) {
+        dispatch_sync(cacheAccessQueue) {
+            self.recipeCache.append(recipe)
+            if (self.recipeCache.count > self.kMaxRecipeCacheSize) {
+                self.recipeCache.removeAtIndex(0)
+            }
+        }
+        
+        // TODO: revisit this strategy
+        // pre-cache each item's thumbnail and hero image
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), {
+            UIImageView().setImageWithURL(recipe.thumbnailImageURL)
+            UIImageView().setImageWithURL(recipe.heroImageURL)
+        })
+    }
+    
+    private func retrieveRecipeFromCache(recipeId: String) -> Recipe? {
+        var matches: [Recipe]!
+        dispatch_sync(cacheAccessQueue) {
+            matches = self.recipeCache.filter({ $0.recipeId == recipeId })
+        }
+        return matches.first
+    }
+}
 }
