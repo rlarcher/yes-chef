@@ -9,14 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class SAYVerbalCommandRecognizer;
-@class SAYCommandMenuItem;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol SAYVerbalCommandRegistry <NSObject>
 
 @property (nonatomic, readonly) NSArray<SAYVerbalCommandRecognizer *> *commandRecognizers;
-@property (nonatomic, readonly) NSArray<SAYCommandMenuItem *> *menuItems;
 
 @end
 

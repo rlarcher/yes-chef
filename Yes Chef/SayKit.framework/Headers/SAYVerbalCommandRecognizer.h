@@ -27,6 +27,9 @@ typedef SAYVoiceRequestResponse * _Nonnull (^SAYVerbalCommandResponseBuilder)(SA
 // configured from initialization arguments
 @property (nonatomic, copy, readonly) SAYVerbalCommandResponseBuilder responseBuilder;
 
+// managed via calls to add/removeMenuItem
+@property (nonatomic, copy, readonly) NSArray<SAYCommandMenuItem *> *menuItems;
+
 - (instancetype)initWithResponseBuilder:(SAYVerbalCommandResponseBuilder)responseBuilder NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithActionBlock:(SAYCommandActionBlock)actionBlock;
@@ -49,8 +52,9 @@ typedef SAYVoiceRequestResponse * _Nonnull (^SAYVerbalCommandResponseBuilder)(SA
 - (void)addTextMatcher:(id<SAYTextCommandMatcher>)textMatcher;
 - (void)removeTextMatcher:(id<SAYTextCommandMatcher>)textMatcher;
 
-- (SAYCommandMenuItem *)menuItemWithLabel:(NSString *)label;
-- (SAYCommandMenuItem *)menuItemWithLabel:(NSString *)label parameters:(NSDictionary<NSString *, NSString *> *)parameters;
+- (void)addMenuItemWithLabel:(NSString *)label;
+- (void)addMenuItemWithLabel:(NSString *)label parameters:(NSDictionary<NSString *, NSString *> *)parameters;
+- (void)removeMenuItemWithLabel:(NSString *)label;
 
 @end
 

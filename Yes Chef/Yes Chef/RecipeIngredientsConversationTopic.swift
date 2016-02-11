@@ -30,7 +30,8 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
-        self.addCommandRecognizer(servingsRecognizer)
+        servingsRecognizer.addMenuItemWithLabel("Serving Size")
+        addCommandRecognizer(servingsRecognizer)
         
         let ingredientQueryRecognizer = SAYCustomCommandRecognizer(customType: "IngredientQuery", responseTarget: eventHandler, action: "handleIngredientQueryCommand:")
         ingredientQueryRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPatterns: [
@@ -43,7 +44,8 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
             "does this contain @ingredient",
             "does it contain @ingredient"
             ]))
-        self.addCommandRecognizer(ingredientQueryRecognizer)
+        ingredientQueryRecognizer.addMenuItemWithLabel("Ingredient Query...")
+        addCommandRecognizer(ingredientQueryRecognizer)
         
         let ingredientsRecognizer = SAYCustomCommandRecognizer(customType: "Ingredients", responseTarget: eventHandler, action: "handleIngredientsCommand")
         ingredientsRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -55,14 +57,11 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
-        self.addCommandRecognizer(ingredientsRecognizer)
+        ingredientsRecognizer.addMenuItemWithLabel("All Ingredients")
+        addCommandRecognizer(ingredientsRecognizer)
         
         // TODO: Add command recognizer for "Can I substitute __ingredientX__ for __ingredientY__?"
         // TODO: Add command recognizer for unit conversion.
-        
-        addMenuItem(servingsRecognizer.menuItemWithLabel("Serving Size"))
-        addMenuItem(ingredientQueryRecognizer.menuItemWithLabel("Ingredient Query..."))
-        addMenuItem(ingredientsRecognizer.menuItemWithLabel("All Ingredients"))
     }
     
     // This must be called before attempting to speak.    

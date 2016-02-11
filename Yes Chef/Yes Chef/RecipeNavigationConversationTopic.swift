@@ -17,11 +17,10 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
         super.init()
         
         let switchTabRecognizer = SAYSwitchTabCommandRecognizer(responseTarget: eventHandler, action: "handleTabNavigationCommand:")
+        switchTabRecognizer.addMenuItemWithLabel("Switch Tab...")        
         addCommandRecognizer(switchTabRecognizer)
 
-        // TODO: Add command recognizer for "Save recipe".
-        
-        addMenuItem(switchTabRecognizer.menuItemWithLabel("Switch Tab..."))
+        // TODO: Add command recognizer for "Save recipe"
     }
     
     // This must be called before attempting to speak.

@@ -19,35 +19,34 @@ class ListConversationTopic: SAYConversationTopic
         super.init()
         
         let selectRecognizer = SAYSelectCommandRecognizer(responseTarget: eventHandler, action: "handleSelectCommand:")
+        selectRecognizer.addMenuItemWithLabel("Select...")
         addCommandRecognizer(selectRecognizer)
         
         let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: eventHandler, action: "handleSearchCommand:")
+        searchRecognizer.addMenuItemWithLabel("Search...")
         addCommandRecognizer(searchRecognizer)
 
         // TODO: Add "filter" keyword to Search command.
         
         let playRecognizer = SAYPlayCommandRecognizer(responseTarget: eventHandler, action: "handlePlayCommand")
+        playRecognizer.addMenuItemWithLabel("Play")
         addCommandRecognizer(playRecognizer)
 
         let pauseRecognizer = SAYPauseCommandRecognizer(responseTarget: eventHandler, action: "handlePauseCommand")
+        pauseRecognizer.addMenuItemWithLabel("Pause")
         addCommandRecognizer(pauseRecognizer)
 
         let nextRecognizer = SAYNextCommandRecognizer(responseTarget: eventHandler, action: "handleNextCommand")
+        nextRecognizer.addMenuItemWithLabel("Next")
         addCommandRecognizer(nextRecognizer)
 
         let previousRecognizer = SAYPreviousCommandRecognizer(responseTarget: eventHandler, action: "handlePreviousCommand")
+        previousRecognizer.addMenuItemWithLabel("Previous")
         addCommandRecognizer(previousRecognizer)
 
         // TODO: Add recognizer for "Repeat"
         // TODO: Add recognizer for "Read all"
         // TODO: Add recognizer for "What's the __N'th__ step?"
-        
-        addMenuItem(selectRecognizer.menuItemWithLabel("Select..."))
-        addMenuItem(searchRecognizer.menuItemWithLabel("Search..."))
-        addMenuItem(playRecognizer.menuItemWithLabel("Play"))
-        addMenuItem(pauseRecognizer.menuItemWithLabel("Pause"))
-        addMenuItem(nextRecognizer.menuItemWithLabel("Next"))
-        addMenuItem(previousRecognizer.menuItemWithLabel("Previous"))
     }
     
     func speakItems(items: [String])

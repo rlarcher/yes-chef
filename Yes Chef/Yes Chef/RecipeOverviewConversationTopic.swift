@@ -25,7 +25,8 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
-        self.addCommandRecognizer(overviewRecognizer)
+        overviewRecognizer.addMenuItemWithLabel("Recipe Overview")
+        addCommandRecognizer(overviewRecognizer)
         
         let ratingRecognizer = SAYCustomCommandRecognizer(customType: "Rating", responseTarget: eventHandler, action: "handleRatingCommand")
         ratingRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -36,7 +37,8 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
-        self.addCommandRecognizer(ratingRecognizer)
+        ratingRecognizer.addMenuItemWithLabel("Recipe Rating")
+        addCommandRecognizer(ratingRecognizer)
         
         let recipeNameRecognizer = SAYCustomCommandRecognizer(customType: "RecipeName", responseTarget: eventHandler, action: "handleRecipeNameCommand")
         recipeNameRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -48,7 +50,8 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
-        self.addCommandRecognizer(recipeNameRecognizer)
+        recipeNameRecognizer.addMenuItemWithLabel("Recipe Name")
+        addCommandRecognizer(recipeNameRecognizer)
         
         let caloriesRecognizer = SAYCustomCommandRecognizer(customType: "Calories", responseTarget: eventHandler, action: "handleCaloriesCommand")
         caloriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -60,16 +63,12 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
-        self.addCommandRecognizer(caloriesRecognizer)
+        caloriesRecognizer.addMenuItemWithLabel("Recipe Calories")
+        addCommandRecognizer(caloriesRecognizer)
         
         // TODO: Add command recognizer for this recipe's "Category"
         // TODO: Add command recognizer for dietary restrictions
         // TODO: Add command recognizer for recipe description
-        
-        addMenuItem(overviewRecognizer.menuItemWithLabel("Recipe Overview"))
-        addMenuItem(ratingRecognizer.menuItemWithLabel("Recipe Rating"))
-        addMenuItem(recipeNameRecognizer.menuItemWithLabel("Recipe Name"))
-        addMenuItem(caloriesRecognizer.menuItemWithLabel("Recipe Calories"))
     }
     
     // This must be called before attempting to speak.    

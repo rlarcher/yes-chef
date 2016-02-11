@@ -19,27 +19,26 @@ class HomeConversationTopic: SAYConversationTopic
         super.init()
         
         let availableCommandsRecognizer = SAYAvailableCommandsCommandRecognizer(responseTarget: eventHandler, action: "handleAvailableCommands")
+        availableCommandsRecognizer.addMenuItemWithLabel("Available Commands")
         addCommandRecognizer(availableCommandsRecognizer)
         
         let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: eventHandler, action: "handleSearchCommand:")
+        searchRecognizer.addMenuItemWithLabel("Search...")
         addCommandRecognizer(searchRecognizer)
         
         // TODO: Add recognizer for search with categories
         
         let homeRecognizer = SAYHomeCommandRecognizer(responseTarget: eventHandler, action: "handleHomeCommand")
+        homeRecognizer.addMenuItemWithLabel("Home")
         addCommandRecognizer(homeRecognizer)
         
         let backRecognizer = SAYBackCommandRecognizer(responseTarget: eventHandler, action: "handleBackCommand")
+        backRecognizer.addMenuItemWithLabel("Back")
         addCommandRecognizer(backRecognizer)
 
         // TODO: Add recognizer for "How do I __do action__?"
         // TODO: Add recognizer for "What is __feature__?"
         // TODO: Add recognizer for "What are the categories?"
-        
-        addMenuItem(availableCommandsRecognizer.menuItemWithLabel("Available Commands"))
-        addMenuItem(searchRecognizer.menuItemWithLabel("Search..."))
-        addMenuItem(homeRecognizer.menuItemWithLabel("Home"))
-        addMenuItem(backRecognizer.menuItemWithLabel("Back"))
     }
     
     func topicDidGainFocus()

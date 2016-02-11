@@ -30,7 +30,8 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
-        self.addCommandRecognizer(ovenTemperatureRecognizer)
+        ovenTemperatureRecognizer.addMenuItemWithLabel("Oven Temperature")
+        addCommandRecognizer(ovenTemperatureRecognizer)
         
         let whatDoIDoRecognizer = SAYCustomCommandRecognizer(customType: "WhatDoIDo", responseTarget: eventHandler, action: "handleWhatDoIDoCommand")
         whatDoIDoRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -42,12 +43,10 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
-        self.addCommandRecognizer(whatDoIDoRecognizer)
+        whatDoIDoRecognizer.addMenuItemWithLabel("Preparation Steps")
+        addCommandRecognizer(whatDoIDoRecognizer)
         
         // TODO: Add command recognizer for preparation time
-        
-        addMenuItem(ovenTemperatureRecognizer.menuItemWithLabel("Oven Temperature"))
-        addMenuItem(whatDoIDoRecognizer.menuItemWithLabel("Preparation Steps"))
     }
     
     // This must be called before attempting to speak.

@@ -13,7 +13,6 @@
 
 @class SAYVerbalCommandRecognizer;
 @class SAYAudioTrack;
-@class SAYCommandMenuItem;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,7 +44,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface SAYConversationTopic : NSObject <SAYVerbalCommandRegistry, SAYAudioEventSource>
 
 @property (nonatomic, readonly) NSArray <SAYVerbalCommandRecognizer *> *commandRecognizers;
-@property (nonatomic, readonly) NSArray <SAYCommandMenuItem *> *menuItems;
 
 /**
  @name Available Voice Commands
@@ -64,25 +62,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param commandRecognizer Command recognizer to disassociate from the topic.
  */
 - (void)removeCommandRecognizer:(SAYVerbalCommandRecognizer *)commandRecognizer;
-
-/**
- *  Add a menu item from the registry represented by the receiver. The menu item will be presented in the Available Commands menu.
- *
- *  @param menuItem Menu item to present in the Available Commands menu.
- */
-- (void)addMenuItem:(SAYCommandMenuItem *)menuItem;
-
-/**
- *  Remove a menu item from the registry represented by the receiver.
- *
- *  @param menuItem Menu item to remove from the Available Commands menu.
- */
-- (void)removeMenuItem:(SAYCommandMenuItem *)menuItem;
-
-/**
- *  Remove all menu items from the registry represented by the receiver.
- */
-- (void)clearMenuItems;
 
 /**
  @name Audio Production
