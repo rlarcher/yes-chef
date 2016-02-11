@@ -59,6 +59,10 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         
         // TODO: Add command recognizer for "Can I substitute __ingredientX__ for __ingredientY__?"
         // TODO: Add command recognizer for unit conversion.
+        
+        addMenuItem(servingsRecognizer.menuItemWithLabel("Serving Size"))
+        addMenuItem(ingredientQueryRecognizer.menuItemWithLabel("Ingredient Query..."))
+        addMenuItem(ingredientsRecognizer.menuItemWithLabel("All Ingredients"))
     }
     
     // This must be called before attempting to speak.    
@@ -74,6 +78,7 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     
     func topicDidLoseFocus()
     {
+        stopSpeaking()        
         removeAllSubtopics()
     }
     

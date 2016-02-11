@@ -42,13 +42,17 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func topicDidGainFocus()
     {
-        addSubtopic(ListConversationTopic(eventHandler: self))
+        listSubtopic = ListConversationTopic(eventHandler: self)
+        addSubtopic(listSubtopic!)
         speakResults()
     }
     
     func topicDidLoseFocus()
     {
         stopSpeaking()
+        if let subtopic = listSubtopic {
+            removeSubtopic(subtopic)
+        }
     }
 
     // MARK: Subtopic Handling
@@ -115,6 +119,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
+    private var listSubtopic: ListConversationTopic?
     private var recipeListings: [RecipeListing]!
     private var searchQuery: String!
 }

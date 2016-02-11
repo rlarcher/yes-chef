@@ -18,16 +18,36 @@ class ListConversationTopic: SAYConversationTopic
         
         super.init()
         
-        self.addCommandRecognizer(SAYSelectCommandRecognizer(responseTarget: eventHandler, action: "handleSelectCommand:"))
-        self.addCommandRecognizer(SAYSearchCommandRecognizer(responseTarget: eventHandler, action: "handleSearchCommand:"))
+        let selectRecognizer = SAYSelectCommandRecognizer(responseTarget: eventHandler, action: "handleSelectCommand:")
+        addCommandRecognizer(selectRecognizer)
+        
+        let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: eventHandler, action: "handleSearchCommand:")
+        addCommandRecognizer(searchRecognizer)
+
         // TODO: Add "filter" keyword to Search command.
-        self.addCommandRecognizer(SAYPlayCommandRecognizer(responseTarget: eventHandler, action: "handlePlayCommand"))
-        self.addCommandRecognizer(SAYPauseCommandRecognizer(responseTarget: eventHandler, action: "handlePauseCommand"))
-        self.addCommandRecognizer(SAYNextCommandRecognizer(responseTarget: eventHandler, action: "handleNextCommand"))
-        self.addCommandRecognizer(SAYPreviousCommandRecognizer(responseTarget: eventHandler, action: "handlePreviousCommand"))
+        
+        let playRecognizer = SAYPlayCommandRecognizer(responseTarget: eventHandler, action: "handlePlayCommand")
+        addCommandRecognizer(playRecognizer)
+
+        let pauseRecognizer = SAYPauseCommandRecognizer(responseTarget: eventHandler, action: "handlePauseCommand")
+        addCommandRecognizer(pauseRecognizer)
+
+        let nextRecognizer = SAYNextCommandRecognizer(responseTarget: eventHandler, action: "handleNextCommand")
+        addCommandRecognizer(nextRecognizer)
+
+        let previousRecognizer = SAYPreviousCommandRecognizer(responseTarget: eventHandler, action: "handlePreviousCommand")
+        addCommandRecognizer(previousRecognizer)
+
         // TODO: Add recognizer for "Repeat"
         // TODO: Add recognizer for "Read all"
         // TODO: Add recognizer for "What's the __N'th__ step?"
+        
+        addMenuItem(selectRecognizer.menuItemWithLabel("Select..."))
+        addMenuItem(searchRecognizer.menuItemWithLabel("Search..."))
+        addMenuItem(playRecognizer.menuItemWithLabel("Play"))
+        addMenuItem(pauseRecognizer.menuItemWithLabel("Pause"))
+        addMenuItem(nextRecognizer.menuItemWithLabel("Next"))
+        addMenuItem(previousRecognizer.menuItemWithLabel("Previous"))
     }
     
     func speakItems(items: [String])

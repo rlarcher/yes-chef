@@ -65,6 +65,11 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         // TODO: Add command recognizer for this recipe's "Category"
         // TODO: Add command recognizer for dietary restrictions
         // TODO: Add command recognizer for recipe description
+        
+        addMenuItem(overviewRecognizer.menuItemWithLabel("Recipe Overview"))
+        addMenuItem(ratingRecognizer.menuItemWithLabel("Recipe Rating"))
+        addMenuItem(recipeNameRecognizer.menuItemWithLabel("Recipe Name"))
+        addMenuItem(caloriesRecognizer.menuItemWithLabel("Recipe Calories"))
     }
     
     // This must be called before attempting to speak.    
@@ -82,7 +87,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
     
     func topicDidLoseFocus()
     {
-
+        stopSpeaking()
     }
     
     // MARK: Speech

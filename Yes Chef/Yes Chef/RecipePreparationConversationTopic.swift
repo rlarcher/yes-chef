@@ -35,7 +35,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         let whatDoIDoRecognizer = SAYCustomCommandRecognizer(customType: "WhatDoIDo", responseTarget: eventHandler, action: "handleWhatDoIDoCommand")
         whatDoIDoRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             // Recognize phrases like "What do I do?", "What are the steps?"
-            if text.containsString("what do I do") || text.containsString("what do") || text.containsString("what steps") || text.containsString("what are the steps") {
+            if text.containsString("what do I do") || text.containsString("what do") || text.containsString("what steps") || text.containsString("what are the steps") || text.containsString("steps") {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -45,6 +45,9 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         self.addCommandRecognizer(whatDoIDoRecognizer)
         
         // TODO: Add command recognizer for preparation time
+        
+        addMenuItem(ovenTemperatureRecognizer.menuItemWithLabel("Oven Temperature"))
+        addMenuItem(whatDoIDoRecognizer.menuItemWithLabel("Preparation Steps"))
     }
     
     // This must be called before attempting to speak.
@@ -60,6 +63,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     func topicDidLoseFocus()
     {
+        stopSpeaking()        
         removeAllSubtopics()
     }
     
