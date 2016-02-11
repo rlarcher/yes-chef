@@ -13,10 +13,16 @@
 @interface SAYCommandRecognizerCatalog : NSObject <SAYVerbalCommandRegistry>
 
 @property (nonatomic, readonly) NSArray <SAYVerbalCommandRecognizer *> *commandRecognizers;
+@property (nonatomic, readonly) NSArray <SAYCommandMenuItem *> *menuItems;
 
 - (void)addCommandRecognizer:(SAYVerbalCommandRecognizer *)commandRecognizer;
 - (void)removeCommandRecognizer:(SAYVerbalCommandRecognizer *)commandRecognizer;
 
 - (void)clearCommandRecognizers;
+
+- (void)addMenuItem:(SAYCommandMenuItem *)menuItem;
+- (void)removeMenuItem:(SAYCommandMenuItem *)menuItem;
+
+- (void)clearMenuItems;
 
 @end

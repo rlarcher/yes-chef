@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		831E367C1C691BED00DA63AB /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 831E367A1C691BE600DA63AB /* SayKit.framework */; };
-		831E367D1C691BED00DA63AB /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 831E367A1C691BE600DA63AB /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		831E367F1C69325E00DA63AB /* ConversationalTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */; };
 		8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECB1C6146870009C7DF /* AppDelegate.swift */; };
 		8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECD1C6146870009C7DF /* HomeViewController.swift */; };
@@ -36,17 +34,19 @@
 		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
 		83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */; };
+		83E7C6B51C6CCB040044A84C /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7C6B31C6CCAEC0044A84C /* SayKit.framework */; };
+		83E7C6B61C6CCB040044A84C /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83E7C6B31C6CCAEC0044A84C /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E98EBA06DF207550497612D8 /* Pods_Yes_Chef.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		8348DEE11C6146EF0009C7DF /* Embed Frameworks */ = {
+		83E7C6B71C6CCB050044A84C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				831E367D1C691BED00DA63AB /* SayKit.framework in Embed Frameworks */,
+				83E7C6B61C6CCB040044A84C /* SayKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,7 +55,6 @@
 
 /* Begin PBXFileReference section */
 		179FDF0F0641DDB7B8EAAB74 /* Pods-Yes Chef.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yes Chef.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef.release.xcconfig"; sourceTree = "<group>"; };
-		831E367A1C691BE600DA63AB /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationalTabBarViewController.swift; sourceTree = "<group>"; };
 		8348DEC81C6146870009C7DF /* Yes Chef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yes Chef.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8348DECB1C6146870009C7DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -86,6 +85,7 @@
 		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
 		83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListing.swift; sourceTree = "<group>"; };
+		83E7C6B31C6CCAEC0044A84C /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		8A1C61401665FC2F52E9F27B /* Pods-Yes Chef.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yes Chef.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef.debug.xcconfig"; sourceTree = "<group>"; };
 		98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yes_Chef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -95,8 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				831E367C1C691BED00DA63AB /* SayKit.framework in Frameworks */,
 				E98EBA06DF207550497612D8 /* Pods_Yes_Chef.framework in Frameworks */,
+				83E7C6B51C6CCB040044A84C /* SayKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,7 +114,7 @@
 		8348DEBF1C6146870009C7DF = {
 			isa = PBXGroup;
 			children = (
-				831E367A1C691BE600DA63AB /* SayKit.framework */,
+				83E7C6B31C6CCAEC0044A84C /* SayKit.framework */,
 				8348DECA1C6146870009C7DF /* Yes Chef */,
 				8348DEC91C6146870009C7DF /* Products */,
 				9A758F01EA9CE9D2AF3F5898 /* Pods */,
@@ -234,9 +234,9 @@
 				8348DEC41C6146870009C7DF /* Sources */,
 				8348DEC51C6146870009C7DF /* Frameworks */,
 				8348DEC61C6146870009C7DF /* Resources */,
-				8348DEE11C6146EF0009C7DF /* Embed Frameworks */,
 				44933C3838E5FFA5EC32BC37 /* Embed Pods Frameworks */,
 				D057F13E236F704287A0FF39 /* Copy Pods Resources */,
+				83E7C6B71C6CCB050044A84C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

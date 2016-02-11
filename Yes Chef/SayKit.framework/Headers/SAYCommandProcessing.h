@@ -49,5 +49,6 @@
 #import <SayKit/SAYCommandBarDelegate.h>
 #import <SayKit/SAYCommandBarController.h>
 #import <SayKit/SAYCommandBarPresentationController.h>
+#import <SayKit/SAYCommandMenuItem.h>
 
 #endif /* SAYCommandProcessing_h */
