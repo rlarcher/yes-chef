@@ -84,10 +84,12 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-Yes Chef/AFNetworking.framework"
+  install_framework "Pods-Yes Chef/Alamofire.framework"
+  install_framework "Pods-Yes Chef/AlamofireImage.framework"
   install_framework "Pods-Yes Chef/SwiftyJSON.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-Yes Chef/AFNetworking.framework"
+  install_framework "Pods-Yes Chef/Alamofire.framework"
+  install_framework "Pods-Yes Chef/AlamofireImage.framework"
   install_framework "Pods-Yes Chef/SwiftyJSON.framework"
 fi

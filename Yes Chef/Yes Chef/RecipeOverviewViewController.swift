@@ -36,7 +36,7 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
         ratingLabel.text = ratingLabels.textLabel
         ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
         
-        recipeImageView.setImageWithURL(recipe.heroImageURL, placeholderImage: nil) // TODO: Add placeholder image
+        recipeImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil) // TODO: Add placeholder image
     }
     
     override func viewDidAppear(animated: Bool)

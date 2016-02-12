@@ -8,6 +8,7 @@
 
 import Foundation
 import AFNetworking
+import Alamofire
 import SwiftyJSON
 
 class BigOvenAPIFetcher: NSObject
@@ -25,20 +26,23 @@ class BigOvenAPIFetcher: NSObject
     func searchForRecipeByName(query: String, completion: (BigOvenAPISearchResponse -> ()))
     {
         if let apiKey = BigOvenAPIFetcher.kAPIKey {
-            let parameters = ["api_key": apiKey, "any_kw": query, "pg": 1, "rpp": 10]
+            let parameters = ["api_key": apiKey, "any_kw": query, "pg": 1, "rpp": 10] as [String: AnyObject]
             
-            BigOvenAPIFetcher.sessionManager.GET("recipes", parameters: parameters, progress: nil,
-                success: { (task, responseObject) -> Void in
-                    if let listings = self.parseRecipeListingFromResponseObject(responseObject) {
-                        completion(BigOvenAPISearchResponse(recipeListings: listings, bodyData: nil, responseError: nil))
-                    }
-                    else {
-                        // TODO: Handle error
-                    }
-                }, failure: { (task, error) -> Void in
-                    // TODO: Handle error
-                    print("Failure")
-            })
+            sessionManager.request(.GET, "http://api.bigoven.com/recipes", parameters: parameters)
+                          .responseJSON { response in
+                            switch response.result {
+                            case .Success(let jsonObject):
+                                if let listings = self.parseRecipeListingFromJSONObject(jsonObject) {
+                                    completion(BigOvenAPISearchResponse(recipeListings: listings, bodyData: nil, responseError: nil))
+                                }
+                                else {
+                                    // TODO: Handle parsing error
+                                }
+                            case .Failure(let error):
+                                // TODO: Handle connection error
+                                print(error)
+                            }
+            }
         }
         else {
             let stubRecipeListings = Utils.stubRecipeListings()
@@ -52,19 +56,23 @@ class BigOvenAPIFetcher: NSObject
     func recipeWithId(recipeId: String, completion: (BigOvenAPIRecipeResponse -> ()))
     {
         if let apiKey = BigOvenAPIFetcher.kAPIKey {
-            let parameters = ["api_key": apiKey]
+            let parameters = ["api_key": apiKey] as [String: AnyObject]
             
-            BigOvenAPIFetcher.sessionManager.GET("recipe/\(recipeId)", parameters: parameters, progress: nil,
-                success: { (task, responseObject) -> Void in
-                    if let recipe = self.parseRecipeFromResponseObject(responseObject) {
-                        completion(BigOvenAPIRecipeResponse(recipe: recipe, bodyData: nil, responseError: nil))
-                    }
-                    else {
-                        // TODO: Handle error
-                    }
-                }, failure: { (task, error) -> Void in
-                    // TODO: Handle error
-            })
+            sessionManager.request(.GET, "http://api.bigoven.com/recipe/\(recipeId)", parameters: parameters)
+                          .responseJSON { response in
+                            switch response.result {
+                            case .Success(let jsonObject):
+                                if let recipe = self.parseRecipeFromJSONObject(jsonObject) {
+                                    completion(BigOvenAPIRecipeResponse(recipe: recipe, bodyData: nil, responseError: nil))
+                                }
+                                else {
+                                    // TODO: Handle parsing error
+                                }
+                            case .Failure(let error):
+                                // TODO: Handle connection error
+                                print(error)
+                            }
+            }
         }
         else {
             let stubRecipe = Utils.stubRecipes()[0]
@@ -77,9 +85,9 @@ class BigOvenAPIFetcher: NSObject
     /// Returns nil if the response object and its "Results" array couldn't be read. 
     /// Returns an empty array if no results were found. 
     /// Otherwise returns an array of RecipeListing.
-    private func parseRecipeListingFromResponseObject(responseObject: AnyObject?) -> [RecipeListing]?
+    private func parseRecipeListingFromJSONObject(jsonObject: AnyObject?) -> [RecipeListing]?
     {
-        if let object = responseObject {
+        if let object = jsonObject {
             let root = JSON(object).dictionaryValue
             if let results = root["Results"]?.arrayValue {
                 
@@ -110,9 +118,9 @@ class BigOvenAPIFetcher: NSObject
     }
     
     /// Returns a Recipe if all went well. Otherwise returns nil.
-    private func parseRecipeFromResponseObject(responseObject: AnyObject?) -> Recipe?
+    private func parseRecipeFromJSONObject(jsonObject: AnyObject?) -> Recipe?
     {
-        if let object = responseObject {
+        if let object = jsonObject {
             let root = JSON(object).dictionaryValue
             if
                 let rawRecipeId             = root["RecipeID"]?.int,
@@ -193,16 +201,11 @@ class BigOvenAPIFetcher: NSObject
         return steps
     }
     
-    private static let sessionManager: AFHTTPSessionManager = {
-        let url = NSURL(string: "http://api.bigoven.com/")!
-
-        let manager = AFHTTPSessionManager(baseURL: url)
-        manager.requestSerializer = AFJSONRequestSerializer()
-        manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type") // TODO: Why do I have to set these manually?
-        manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
-        manager.responseSerializer = AFJSONResponseSerializer()
+    private let sessionManager: Alamofire.Manager = {
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        config.HTTPAdditionalHeaders = ["Content-Type": "application/json", "Accept": "application/json"]
         
-        return manager
+        return Alamofire.Manager(configuration: config)
     }()
     
     private static let kAPIKey: String? = nil // NOTE: Replace this with your own BigOven API key, or leave as is to receive stubbed responses.

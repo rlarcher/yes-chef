@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AlamofireImage
 
 class BigOvenAPIManager
 {
@@ -97,7 +98,7 @@ class BigOvenAPIManager
         // TODO: revisit this strategy
         // pre-cache each item's thumbnail and hero image
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), {
-            UIImageView().setImageWithURL(recipe.heroImageURL)
+            UIImageView().af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil)  // TODO: Add placeholder image
         })
     }
     
