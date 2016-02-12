@@ -12,9 +12,10 @@ class ListConversationTopic: SAYConversationTopic
 {
     let eventHandler: ListConversationTopicEventHandler
     
-    init(eventHandler: ListConversationTopicEventHandler)
+    init(items: [String], eventHandler: ListConversationTopicEventHandler)
     {
         self.eventHandler = eventHandler
+        self.items = items
         
         super.init()
         
@@ -49,15 +50,68 @@ class ListConversationTopic: SAYConversationTopic
         // TODO: Add recognizer for "What's the __N'th__ step?"
     }
     
-    func speakItems(items: [String])
+    var items: [String] {
+        didSet {
+            stopSpeaking()  // Don't continue with any existing speakItems sequence, else we might go out of bounds.
+        }
+    }
+    
+    func speakItems()
     {
-        if items.count > 0 {
+        speakItems(startingAtIndex: 0)
+    }
+    
+    func speakNextItem()
+    {
+        if headIndex < items.count - 1 {
+            headIndex++
+        }
+        speakItems(startingAtIndex: headIndex)
+    }
+    
+    func speakPreviousItem()
+    {
+        if headIndex > 0 {
+            headIndex--
+        }
+        speakItems(startingAtIndex: headIndex)
+    }
+    
+    func pauseSpeaking()
+    {
+        stopSpeaking()
+    }
+    
+    func resumeSpeaking()
+    {
+        speakItems(startingAtIndex: headIndex)
+    }
+    
+    // MARK: Helpers
+    
+    private func stopSpeaking()
+    {
+        // TODO: Better way to interrupt speech on transitioning?
+        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+    }
+    
+    private func speakItems(startingAtIndex index: Int)
+    {
+        if items.count > 0 && index < items.count {
             let sequence = SAYAudioEventSequence()
-            var index = 1
+            headIndex = index
             
-            for item in items {
-                sequence.addEvent(SAYSpeechEvent(utteranceString: "\(index): \(item)"))
-                index++
+            let remainingItems = items.suffixFrom(headIndex)
+            
+            for item in remainingItems {
+                // TODO: This is a workaround for a "prefix" block. Proper way?
+                sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
+                    self.eventHandler.beganSpeakingItemAtIndex(self.headIndex)
+                }
+                sequence.addEvent(SAYSpeechEvent(utteranceString: "\(index + 1): \(item)")) {   // Speak the 1-based version of the index.
+                    self.eventHandler.finishedSpeakingItemAtIndex(self.headIndex)
+                    self.headIndex++
+                }
             }
             
             self.postEvents(sequence)
@@ -66,10 +120,15 @@ class ListConversationTopic: SAYConversationTopic
             // TODO: Do nothing?
         }
     }
+    
+    private var headIndex = 0   // The index currently being read
 }
 
 protocol ListConversationTopicEventHandler: class
 {
+    func beganSpeakingItemAtIndex(index: Int) // TODO: So any parent VC will know to highlight that cell, etc.
+    func finishedSpeakingItemAtIndex(index: Int)
+    
     func handleSelectCommand(command: SAYCommand)
     func handleSearchCommand(command: SAYCommand)
     func handlePlayCommand()
