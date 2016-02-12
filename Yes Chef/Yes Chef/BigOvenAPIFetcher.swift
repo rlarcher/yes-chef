@@ -85,18 +85,19 @@ class BigOvenAPIFetcher: NSObject
                 
                 var recipeListings = [RecipeListing]()
                 
-                for recipeData in results {
+                for result in results {
+                    let recipeData = result.dictionaryValue
                     if
-                        let recipeID = recipeData["RecipeID"].string,
-                        let recipeName = recipeData["Title"].string,
-                        let ratingFloat = recipeData["StarRating"].float,
-                        let servingSize = recipeData["YieldNumber"].int,
-                        let thumbnailURLString = recipeData["ImageURL48"].string,
+                        let rawRecipeID = recipeData["RecipeID"]?.int,
+                        let recipeName = recipeData["Title"]?.string,
+                        let ratingFloat = recipeData["StarRating"]?.float,
+                        let servingSize = recipeData["YieldNumber"]?.int,
+                        let thumbnailURLString = recipeData["ImageURL120"]?.string,
                         let thumbnailURL = NSURL(string: thumbnailURLString)
                     {
                         let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                         
-                        let listing = RecipeListing(recipeId: recipeID, name: recipeName, rating: rating, servingSize: servingSize, thumbnailImageURL: thumbnailURL)
+                        let listing = RecipeListing(recipeId: String(rawRecipeID), name: recipeName, rating: rating, servingSize: servingSize, thumbnailImageURL: thumbnailURL)
                         recipeListings.append(listing)
                     }
                 }
@@ -114,26 +115,24 @@ class BigOvenAPIFetcher: NSObject
         if let object = responseObject {
             let root = JSON(object).dictionaryValue
             if
-                let recipeId                = root["RecipeID"]?.string,
+                let rawRecipeId             = root["RecipeID"]?.int,
                 let recipeName              = root["Title"]?.string,
                 let description             = root["Description"]?.string,
                 let ratingFloat             = root["StarRating"]?.float,
-                let thumbnailURLString      = root["ImageURL48"]?.string,
-                let thumbnailURL            = NSURL(string: thumbnailURLString),
                 let heroImageURLString      = root["HeroPhotoUrl"]?.string,
                 let heroImageURL            = NSURL(string: heroImageURLString),
                 let ingredientsData         = root["Ingredients"]?.arrayValue,
                 let ingredients             = parseIngredients(ingredientsData),
                 let rawInstructions         = root["Instructions"]?.string,
-                let totalPreparationTime    = root["TotalTime"]?.int,
-                let activePreparationTime   = root["ActiveMinutes"]?.int,
-                let servingSize             = root["YieldNumber"]?.int,
-                let calories                = root["NutritionInfo"]?["TotalCalories"].int // TODO: Confirm this is available with the Basic plan
+                let servingSize             = root["YieldNumber"]?.int
             {
+                let totalPreparationTime    = root["TotalMinutes"]?.int     // May be nil
+                let activePreparationTime   = root["ActiveMinutes"]?.int    // May be nil
+                
                 let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                 let preparationSteps = parsePreparationSteps(rawInstructions)
                 
-                let recipe = Recipe(recipeId: recipeId,
+                let recipe = Recipe(recipeId: String(rawRecipeId),
                                     name: recipeName,
                                     rating:rating,
                                     description: description,
@@ -142,8 +141,7 @@ class BigOvenAPIFetcher: NSObject
                                     totalPreparationTime: totalPreparationTime,
                                     activePreparationTime: activePreparationTime,
                                     servingSize: servingSize,
-                                    calories: calories,
-                                    thumbnailImageURL: thumbnailURL,
+                                    calories: 0,  // TODO: Handle NutrifionInfo
                                     heroImageURL: heroImageURL)
                 return recipe
             }
@@ -159,15 +157,19 @@ class BigOvenAPIFetcher: NSObject
     {
         var ingredients = [Ingredient]()
         for ingredientData in ingredientsData {
+            let ingredientJSON = ingredientData.dictionaryValue
             if
-                let ingredientId        = ingredientData["IngredientID"].string,
-                let name                = ingredientData["Name"].string,
-                let quantityString      = ingredientData["DisplayQuantity"].string,
-                let units               = ingredientData["Unit"].string,
-                let preparationNotes    = ingredientData["PreparationNotes"].string
+                let rawIngredientId     = ingredientJSON["IngredientID"]?.int,
+                let name                = ingredientJSON["Name"]?.string,
+                let quantity            = ingredientJSON["DisplayQuantity"]?.string
             {
-                let notes: String? = preparationNotes == "null" ? nil : preparationNotes // If BigOven's notes are "null", just set ours to nil.
-                let ingredient = Ingredient(ingredientId: ingredientId, name: name, quantityString:  quantityString, units: units, preparationNotes: notes)
+                let rawUnits            = ingredientJSON["Unit"]?.string                // Could be nil, an empty string (""), or a proper string.
+                let units               = rawUnits == "" ? nil : rawUnits               // If BigOven's units are empty, just set ours to nil.
+                
+                let preparationNotes    = ingredientJSON["PreparationNotes"]?.string    // Could be nil, an empty string (""), or a proper string.
+                let notes: String?      = preparationNotes == "" ? nil : preparationNotes    // If BigOven's notes are empty, just set ours to nil.
+                
+                let ingredient = Ingredient(ingredientId: String(rawIngredientId), name: name, quantityString: quantity, units: units, preparationNotes: notes)
                 ingredients.append(ingredient)
             }
             else {
@@ -180,7 +182,15 @@ class BigOvenAPIFetcher: NSObject
     
     private func parsePreparationSteps(rawInstructions: String) -> [String]
     {
-        return rawInstructions.componentsSeparatedByString("\\\r\\\n\\\r\\\n") // TODO: Double-check separator
+        // TODO: Revisit preparation parsing to account for the various ways contributors might write steps. (Sentence-separated, paragraph-separated, numbered paragraph-separated, external link)
+        var cleanedInstructions = rawInstructions
+        cleanedInstructions = cleanedInstructions.stringByReplacingOccurrencesOfString("\r", withString: "")
+        cleanedInstructions = cleanedInstructions.stringByReplacingOccurrencesOfString("\n", withString: "")
+        cleanedInstructions = cleanedInstructions.stringByReplacingOccurrencesOfString("\\d+.", withString: "", options: .RegularExpressionSearch, range: nil)
+        
+        let steps = cleanedInstructions.componentsSeparatedByString(".")
+        
+        return steps
     }
     
     private static let sessionManager: AFHTTPSessionManager = {

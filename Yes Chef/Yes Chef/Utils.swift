@@ -70,7 +70,6 @@ class Utils: NSObject
                                   activePreparationTime:  10,
                                   servingSize: 12,
                                   calories: 265,
-                                  thumbnailImageURL: NSURL(string: "http://www.google.com")!,
                                   heroImageURL: NSURL(string: "http://www.google.com")!),
                            Recipe(recipeId: "87654321",
                                   name: "Raspberry Muffins",
@@ -82,7 +81,6 @@ class Utils: NSObject
                                   activePreparationTime:  5,
                                   servingSize: 8,
                                   calories: 310,
-                                  thumbnailImageURL: NSURL(string: "http://www.google.com")!,
                                   heroImageURL: NSURL(string: "http://www.google.com")!)]
         
         return stubRecipes
