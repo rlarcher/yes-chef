@@ -24,53 +24,54 @@ class BigOvenAPIFetcher: NSObject
     // TODO: Search by category
     func searchForRecipeByName(query: String, completion: (BigOvenAPISearchResponse -> ()))
     {
-        // TODO: Temp. stubbing
-        if true {
+        if let apiKey = BigOvenAPIFetcher.kAPIKey {
+            let parameters = ["api_key": apiKey, "any_kw": query, "pg": 1, "rpp": 10]
+            
+            BigOvenAPIFetcher.sessionManager.GET("recipes", parameters: parameters, progress: nil,
+                success: { (task, responseObject) -> Void in
+                    if let listings = self.parseRecipeListingFromResponseObject(responseObject) {
+                        completion(BigOvenAPISearchResponse(recipeListings: listings, bodyData: nil, responseError: nil))
+                    }
+                    else {
+                        // TODO: Handle error
+                    }
+                }, failure: { (task, error) -> Void in
+                    // TODO: Handle error
+                    print("Failure")
+            })
+        }
+        else {
             let stubRecipeListings = Utils.stubRecipeListings()
             
             completion(BigOvenAPISearchResponse(recipeListings: stubRecipeListings, bodyData: nil, responseError: nil))
             
             return
         }
-        
-        let parameters = ["api_key": BigOvenAPIFetcher.kAPIKey, "title_kw": query]
-
-        BigOvenAPIFetcher.sessionManager.GET("recipes", parameters: parameters, progress: nil,
-            success: { (task, responseObject) -> Void in
-                if let listings = self.parseRecipeListingFromResponseObject(responseObject) {
-                    completion(BigOvenAPISearchResponse(recipeListings: listings, bodyData: nil, responseError: nil))
-                }
-                else {
-                    // TODO: Handle error
-                }
-            }, failure: { (task, error) -> Void in
-                // TODO: Handle error
-        })
     }
     
     func recipeWithId(recipeId: String, completion: (BigOvenAPIRecipeResponse -> ()))
     {
-        // TODO: Temp. stubbing
-        if true {
+        if let apiKey = BigOvenAPIFetcher.kAPIKey {
+            let parameters = ["api_key": apiKey]
+            
+            BigOvenAPIFetcher.sessionManager.GET("recipe/\(recipeId)", parameters: parameters, progress: nil,
+                success: { (task, responseObject) -> Void in
+                    if let recipe = self.parseRecipeFromResponseObject(responseObject) {
+                        completion(BigOvenAPIRecipeResponse(recipe: recipe, bodyData: nil, responseError: nil))
+                    }
+                    else {
+                        // TODO: Handle error
+                    }
+                }, failure: { (task, error) -> Void in
+                    // TODO: Handle error
+            })
+        }
+        else {
             let stubRecipe = Utils.stubRecipes()[0]
             
             completion(BigOvenAPIRecipeResponse(recipe: stubRecipe, bodyData: nil, responseError: nil))
             return
         }
-        
-        let parameters = ["api_key": BigOvenAPIFetcher.kAPIKey]
-        
-        BigOvenAPIFetcher.sessionManager.GET("recipe/\(recipeId)", parameters: parameters, progress: nil,
-            success: { (task, responseObject) -> Void in
-                if let recipe = self.parseRecipeFromResponseObject(responseObject) {
-                    completion(BigOvenAPIRecipeResponse(recipe: recipe, bodyData: nil, responseError: nil))
-                }
-                else {
-                    // TODO: Handle error
-                }
-            }, failure: { (task, error) -> Void in
-                // TODO: Handle error
-        })
     }
     
     /// Returns nil if the response object and its "Results" array couldn't be read. 
@@ -187,12 +188,14 @@ class BigOvenAPIFetcher: NSObject
 
         let manager = AFHTTPSessionManager(baseURL: url)
         manager.requestSerializer = AFJSONRequestSerializer()
+        manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type") // TODO: Why do I have to set these manually?
+        manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
         manager.responseSerializer = AFJSONResponseSerializer()
         
         return manager
     }()
     
-    private static let kAPIKey = "12345678"
+    private static let kAPIKey: String? = nil // NOTE: Replace this with your own BigOven API key, or leave as is to receive stubbed responses.
 }
 
 struct BigOvenAPISearchResponse
