@@ -137,7 +137,13 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
         {
             let ingredient = recipe.ingredients[index]
             cell.ingredientNameLabel.text = ingredient.name
-            cell.quantityUnitsLabel.text = "\(ingredient.quantityString) \(ingredient.units)"
+            
+            if let ingredientUnits = ingredient.units {
+                cell.quantityUnitsLabel.text = "\(ingredient.quantityString) \(ingredientUnits)"
+            }
+            else {
+                cell.quantityUnitsLabel.text = "\(ingredient.quantityString)"                
+            }
             
             return cell
         }
