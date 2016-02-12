@@ -66,10 +66,6 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
         if let completionBlock = completion {
             completionBlock()
         }
-        else {
-            // Do the default
-            recipePreparationConversationTopic.stopSpeaking()
-        }
     }
     
     // MARK: RecipePreparationConversationTopicEventHandler Protocol Methods

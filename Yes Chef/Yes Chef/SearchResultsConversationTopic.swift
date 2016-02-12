@@ -33,7 +33,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func speakResults()
     {
-        if let listSubtopic = self.subtopics.first as? ListConversationTopic {
+        if let listSubtopic = self.listSubtopic {
             listSubtopic.speakItems(recipeListings.map { $0.speakableString })
         }
     }

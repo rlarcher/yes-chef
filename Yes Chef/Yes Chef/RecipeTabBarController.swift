@@ -45,7 +45,7 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     
     override func viewWillDisappear(animated: Bool)
     {
-
+        recipeNavigationConversationTopic.topicDidLoseFocus()
     }
     
     // MARK: RecipeNavigationConversationTopicEventHandler Protocol Methods

@@ -44,7 +44,9 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
     
     func topicDidLoseFocus()
     {
+        // Note: This won't happen until the TabBarController is popped off the navigation stack.
         stopSpeaking()
+        removeAllSubtopics()
     }
     
     private func stopSpeaking()

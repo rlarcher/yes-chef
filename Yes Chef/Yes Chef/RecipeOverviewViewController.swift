@@ -69,10 +69,6 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
         if let completionBlock = completion {
             completionBlock()
         }
-        else {
-            // Do the default
-            recipeOverviewConversationTopic.stopSpeaking()
-        }
     }
     
     // MARK: RecipeOverviewConversationTopicEventHandler Protocol Methods
