@@ -18,6 +18,10 @@ class HomeConversationTopic: SAYConversationTopic
         
         super.init()
         
+        let helpRecognizer = SAYHelpCommandRecognizer(responseTarget: eventHandler, action: "handleHelpCommand")
+        helpRecognizer.addMenuItemWithLabel("Help")
+        addCommandRecognizer(helpRecognizer)
+        
         let availableCommandsRecognizer = SAYAvailableCommandsCommandRecognizer(responseTarget: eventHandler, action: "handleAvailableCommands")
         availableCommandsRecognizer.addMenuItemWithLabel("Available Commands")
         addCommandRecognizer(availableCommandsRecognizer)
@@ -33,7 +37,7 @@ class HomeConversationTopic: SAYConversationTopic
         let backRecognizer = SAYBackCommandRecognizer(responseTarget: eventHandler, action: "handleBackCommand")
         backRecognizer.addMenuItemWithLabel("Back")
         addCommandRecognizer(backRecognizer)
-
+        
         // TODO: Add recognizer for "How do I __do action__?"
         // TODO: Add recognizer for "What is __feature__?"
         
@@ -68,6 +72,26 @@ class HomeConversationTopic: SAYConversationTopic
     func topicDidLoseFocus()
     {
         // Do nothing
+    }
+    
+    func speakIntroduction(shouldIncludeWelcomeMessage: Bool)
+    {
+        let sequence = SAYAudioEventSequence()
+        
+        if shouldIncludeWelcomeMessage {
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "Welcome to \"Yes Chef\"!"))
+        }
+        
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\". Say \"Help\" for more details."))
+        postEvents(sequence)
+    }
+    
+    func speakHelpMessage()
+    {
+        let sequence = SAYAudioEventSequence()
+        
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can say \"Categories\" or \"Cuisines\" to hear available filters for your search. Say \"Saved Recipes\" to explore your saved recipes list. Say \"Home\" at any time to return here."))
+        postEvents(sequence)
     }
     
     func handleSearchCommand(command: SAYCommand)
@@ -119,6 +143,7 @@ class HomeConversationTopic: SAYConversationTopic
 
 protocol HomeConversationTopicEventHandler: class
 {
+    func handleHelpCommand()
     func handleAvailableCommands()
     func requestedSearchUsingQuery(searchQuery: String?, category: Category?, cuisine: Cuisine?)
     func handleHomeCommand()

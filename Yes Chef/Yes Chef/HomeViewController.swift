@@ -32,10 +32,18 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     override func viewDidAppear(animated: Bool)
     {
-        homeConversationTopic.topicDidGainFocus() 
+        homeConversationTopic.topicDidGainFocus()
+        
+        homeConversationTopic.speakIntroduction(shouldSpeakFirstTimeIntroduction)
+        shouldSpeakFirstTimeIntroduction = false
     }
     
     // MARK: HomeConversationTopicEventHandler Protocol Methods
+    
+    func handleHelpCommand()
+    {
+        homeConversationTopic.speakHelpMessage()
+    }
     
     func handleAvailableCommands()
     {
@@ -44,12 +52,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     func handleHomeCommand()
     {
-        print("HomeVC handleHomeCommand!")
+        navigationController?.popToRootViewControllerAnimated(true)
+        homeConversationTopic.speakIntroduction(false)
     }
     
     func handleBackCommand()
     {
-        print("HomeVC handleBackCommand")
+        navigationController?.popViewControllerAnimated(true)
     }
     
     func requestedSearchUsingQuery(searchQuery: String?, category: Category?, cuisine: Cuisine?)
@@ -88,13 +97,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
-        if
-            let query = searchBar.text,
-            let categoryString = categoryButton.titleLabel?.text,
-            let category = Category(rawValue: categoryString),
-            let cuisineString = cuisineButton.titleLabel?.text,
-            let cuisine = Cuisine(rawValue: cuisineString)
-        {
+        if let query = searchBar.text {
+            var category: Category? = nil
+            if let categoryString = categoryButton.titleLabel?.text {
+                category = Category(rawValue: categoryString)
+            }
+            
+            var cuisine: Cuisine? = nil
+            if let cuisineString = cuisineButton.titleLabel?.text {
+                cuisine = Cuisine(rawValue: cuisineString)
+            }
+
             searchUsingQuery(query, category: category, cuisine: cuisine)
         }
     }
@@ -219,4 +232,5 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     private var activeCategory = Category.All
     private var activeCuisine = Cuisine.All
+    private var shouldSpeakFirstTimeIntroduction = true
 }
