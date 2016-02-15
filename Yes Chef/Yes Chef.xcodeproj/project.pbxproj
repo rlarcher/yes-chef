@@ -36,6 +36,8 @@
 		83CC6EA31C6D194B00EB7DCC /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
 		83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */; };
+		83FF39581C72535700755AD3 /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */; };
+		83FF395A1C72549400755AD3 /* CuisineSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */; };
 		E98EBA06DF207550497612D8 /* Pods_Yes_Chef.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */; };
 /* End PBXBuildFile section */
 
@@ -86,6 +88,8 @@
 		83CC6EA01C6D193900EB7DCC /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
 		83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListing.swift; sourceTree = "<group>"; };
+		83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
+		83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuisineSelectorViewController.swift; sourceTree = "<group>"; };
 		8A1C61401665FC2F52E9F27B /* Pods-Yes Chef.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yes Chef.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef.debug.xcconfig"; sourceTree = "<group>"; };
 		98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yes_Chef.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -154,6 +158,8 @@
 			children = (
 				8348DECD1C6146870009C7DF /* HomeViewController.swift */,
 				8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */,
+				83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */,
+				83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */,
 			);
 			name = "Home Scene";
 			sourceTree = "<group>";
@@ -352,12 +358,14 @@
 				8348DEEE1C6149520009C7DF /* RecipeIngredientsViewController.swift in Sources */,
 				8348DF021C614AFE0009C7DF /* SavedRecipesConversationTopic.swift in Sources */,
 				8348DEE81C6148D50009C7DF /* SearchResultsViewController.swift in Sources */,
+				83FF395A1C72549400755AD3 /* CuisineSelectorViewController.swift in Sources */,
 				8348DEEC1C6149230009C7DF /* RecipeOverviewViewController.swift in Sources */,
 				8348DF081C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift in Sources */,
 				83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */,
 				836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */,
 				8348DEF01C61496A0009C7DF /* RecipePreparationViewController.swift in Sources */,
 				8348DEFE1C614ABC0009C7DF /* SavedRecipesManager.swift in Sources */,
+				83FF39581C72535700755AD3 /* CategorySelectorViewController.swift in Sources */,
 				8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */,
 				83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */,
 				8348DEFC1C614A6D0009C7DF /* BigOvenAPIFetcher.swift in Sources */,

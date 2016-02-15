@@ -132,7 +132,14 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8z-a2-Wtd">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apo-zx-Yt3">
+                                <rect key="frame" x="450" y="108" width="51" height="30"/>
+                                <state key="normal" title="Cuisine"/>
+                                <connections>
+                                    <action selector="cuisineButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="v8O-z9-9IE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l8z-a2-Wtd">
                                 <rect key="frame" x="517" y="108" width="63" height="30"/>
                                 <state key="normal" title="Category"/>
                                 <connections>
@@ -158,11 +165,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="l8z-a2-Wtd" secondAttribute="trailing" id="3Xl-TC-BXG"/>
+                            <constraint firstItem="l8z-a2-Wtd" firstAttribute="leading" secondItem="apo-zx-Yt3" secondAttribute="trailing" constant="16" id="4GY-i7-gYp"/>
                             <constraint firstItem="8ZC-HC-mb3" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-32" id="6x7-uq-fgx"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oYH-4o-Ykw" secondAttribute="trailing" constant="-20" id="Acs-Ow-ir7"/>
                             <constraint firstItem="fHa-7R-HTe" firstAttribute="centerX" secondItem="8ZC-HC-mb3" secondAttribute="centerX" id="B6J-ic-jjy"/>
                             <constraint firstItem="l8z-a2-Wtd" firstAttribute="top" secondItem="oYH-4o-Ykw" secondAttribute="bottom" id="Eph-eV-Ew7"/>
                             <constraint firstItem="oYH-4o-Ykw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Hmf-9H-C97"/>
+                            <constraint firstItem="apo-zx-Yt3" firstAttribute="centerY" secondItem="l8z-a2-Wtd" secondAttribute="centerY" id="L9z-EO-RA1"/>
                             <constraint firstItem="8ZC-HC-mb3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Lic-Gq-rz0"/>
                             <constraint firstItem="fHa-7R-HTe" firstAttribute="top" secondItem="8ZC-HC-mb3" secondAttribute="bottom" constant="16" id="ckY-KC-ZdG"/>
                             <constraint firstItem="oYH-4o-Ykw" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="iQu-ml-PJI"/>
@@ -174,6 +183,7 @@
                     <navigationItem key="navigationItem" title="Yes Chef" id="wXG-zA-wLp"/>
                     <connections>
                         <outlet property="categoryButton" destination="l8z-a2-Wtd" id="xqv-DL-GTi"/>
+                        <outlet property="cuisineButton" destination="apo-zx-Yt3" id="9ce-fd-cYd"/>
                         <outlet property="searchBar" destination="oYH-4o-Ykw" id="jh5-Le-SPc"/>
                     </connections>
                 </viewController>

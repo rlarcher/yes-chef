@@ -22,15 +22,8 @@ class HomeConversationTopic: SAYConversationTopic
         availableCommandsRecognizer.addMenuItemWithLabel("Available Commands")
         addCommandRecognizer(availableCommandsRecognizer)
         
-        let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: eventHandler, action: "handleSearchCommand:")
+        let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: self, action: "handleSearchCommand:")
         searchRecognizer.addMenuItemWithLabel("Search...")
-        searchRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPatterns: [
-            "search for @query in @category",
-            "search for @query in category @category",
-            "search for @category food",
-            "@category sounds good",
-            "show me @category recipes"
-            ]))
         addCommandRecognizer(searchRecognizer)
         
         let homeRecognizer = SAYHomeCommandRecognizer(responseTarget: eventHandler, action: "handleHomeCommand")
@@ -56,6 +49,18 @@ class HomeConversationTopic: SAYConversationTopic
         // Do nothing
     }
     
+    func handleSearchCommand(command: SAYCommand)
+    {
+        if let searchQuery = command.parameters[SAYSearchCommandRecognizerParameterQuery] as? String {
+            let category = Category.categoryFoundInText(searchQuery)
+            let cuisine = Cuisine.cuisineFoundInText(searchQuery)
+            self.eventHandler.requestedSearchUsingQuery(searchQuery, category: category, cuisine: cuisine)
+        }
+        else {
+            self.eventHandler.requestedSearchUsingQuery(nil, category: nil, cuisine: nil)
+        }
+    }
+    
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
         let outgoingSequence = sequence
@@ -72,7 +77,7 @@ class HomeConversationTopic: SAYConversationTopic
 protocol HomeConversationTopicEventHandler: class
 {
     func handleAvailableCommands()
-    func handleSearchCommand(command: SAYCommand)
+    func requestedSearchUsingQuery(searchQuery: String?, category: Category?, cuisine: Cuisine?)
     func handleHomeCommand()
     func handleBackCommand()
 }

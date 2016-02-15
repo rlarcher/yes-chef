@@ -22,11 +22,12 @@ class BigOvenAPIFetcher: NSObject
 //    404 NOT FOUND 	Request URI invalid.
 //    500 INTERNAL ERROR 	Server error has occurred.
     
-    func searchForRecipeByName(query: String, category: String?, completion: (BigOvenAPISearchResponse -> ()))
+    func searchForRecipeByName(query: String, category: String?, cuisine: String?, completion: (BigOvenAPISearchResponse -> ()))
     {
         if let apiKey = BigOvenAPIFetcher.kAPIKey {
             let parameters = ["api_key": apiKey, "any_kw": query, "pg": 1, "rpp": 10] as [String: AnyObject]
             // TODO: Add category parameter
+            // TODO: Add cuisine parameter
             
             sessionManager.request(.GET, "http://api.bigoven.com/recipes", parameters: parameters)
                           .responseJSON { response in

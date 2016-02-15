@@ -12,6 +12,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
 {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var categoryButton: UIButton!
+    @IBOutlet var cuisineButton: UIButton!
 
     var homeConversationTopic: HomeConversationTopic!
     
@@ -25,6 +26,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     override func viewDidLoad()
     {
         searchBar.delegate = self
+        categoryButton.titleLabel?.text = activeCategory.rawValue
+        cuisineButton.titleLabel?.text = activeCuisine.rawValue
     }
     
     override func viewDidAppear(animated: Bool)
@@ -39,14 +42,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         print("HomeVC handleAvailableCommands!")
     }
     
-    func handleSearchCommand(command: SAYCommand)
-    {
-        if let searchQuery = command.parameters[SAYSearchCommandRecognizerParameterQuery] as? String {
-            let category = command.parameters["category"] as? String
-            searchUsingQuery(searchQuery, category: category)
-        }
-    }
-    
     func handleHomeCommand()
     {
         print("HomeVC handleHomeCommand!")
@@ -57,11 +52,26 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         print("HomeVC handleBackCommand")
     }
     
+    func requestedSearchUsingQuery(searchQuery: String?, category: Category?, cuisine: Cuisine?)
+    {
+        if let query = searchQuery {
+            searchUsingQuery(query, category: category, cuisine: cuisine)
+        }
+        else {
+            // TODO: Prompt for clarification ("Search for what?")
+        }
+    }
+    
     // MARK: IBAction Methods
     
     @IBAction func categoryButtonTapped(sender: AnyObject)
     {
-        // TODO
+        presentCategorySelector()
+    }
+    
+    @IBAction func cuisineButtonTapped(sender: AnyObject)
+    {
+        presentCuisineSelector()
     }
     
     @IBAction func savedRecipesButtonTapped(sender: AnyObject)
@@ -80,9 +90,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     {
         if
             let query = searchBar.text,
-            let category = categoryButton.titleLabel?.text
+            let categoryString = categoryButton.titleLabel?.text,
+            let category = Category(rawValue: categoryString),
+            let cuisineString = cuisineButton.titleLabel?.text,
+            let cuisine = Cuisine(rawValue: cuisineString)
         {
-            searchUsingQuery(query, category: category)
+            searchUsingQuery(query, category: category, cuisine: cuisine)
         }
     }
     
@@ -129,11 +142,53 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         }
     }
     
+    private func presentCategorySelector() {
+        let categories = Category.orderedValues
+        
+        let selectorVC = CategorySelectorViewController()
+        selectorVC.categories = categories
+        selectorVC.selectedRow = categories.indexOf(activeCategory)
+        
+        selectorVC.selectionBlock = { selectedCategory in
+            self.dismissViewControllerAnimated(true, completion: nil)
+            self.setActiveCategory(selectedCategory)
+        }
+        
+        // embed in a nav controller and add cancel button
+        let navVC = UINavigationController(rootViewController: selectorVC)
+        
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "presentedViewControllerCancelButtonTapped")
+        selectorVC.navigationItem.leftBarButtonItem = cancelButton
+        
+        self.presentViewController(navVC, animated: true, completion: nil)
+    }
+    
+    private func presentCuisineSelector() {
+        let cuisines = Cuisine.orderedValues
+        
+        let selectorVC = CuisineSelectorViewController()
+        selectorVC.cuisines = cuisines
+        selectorVC.selectedRow = cuisines.indexOf(activeCuisine)
+        
+        selectorVC.selectionBlock = { selectedCuisine in
+            self.dismissViewControllerAnimated(true, completion: nil)
+            self.setActiveCuisine(selectedCuisine)
+        }
+        
+        // embed in a nav controller and add cancel button
+        let navVC = UINavigationController(rootViewController: selectorVC)
+        
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "presentedViewControllerCancelButtonTapped")
+        selectorVC.navigationItem.leftBarButtonItem = cancelButton
+        
+        self.presentViewController(navVC, animated: true, completion: nil)
+    }
+    
     // MARK: Helpers
     
-    private func searchUsingQuery(query: String, category: String?)
+    private func searchUsingQuery(query: String, category: Category?, cuisine: Cuisine?)
     {
-        BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category) { response -> Void in
+        BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category, cuisine: cuisine) { response -> Void in
             if let results = response.recipeListings {
                 self.presentSearchResults(results, forQuery: query)
             }
@@ -142,4 +197,26 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
             }
         }
     }
+    
+    func presentedViewControllerCancelButtonTapped()
+    {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    private func setActiveCategory(category: Category)
+    {
+        activeCategory = category
+        categoryButton.titleLabel?.text = category.rawValue
+        categoryButton.updateConstraints()
+    }
+    
+    private func setActiveCuisine(cuisine: Cuisine)
+    {
+        activeCuisine = cuisine
+        cuisineButton.titleLabel?.text = cuisine.rawValue
+        cuisineButton.updateConstraints()
+    }
+    
+    private var activeCategory = Category.All
+    private var activeCuisine = Cuisine.All
 }
