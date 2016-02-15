@@ -36,7 +36,28 @@ class HomeConversationTopic: SAYConversationTopic
 
         // TODO: Add recognizer for "How do I __do action__?"
         // TODO: Add recognizer for "What is __feature__?"
-        // TODO: Add recognizer for "What are the categories?"
+        
+        let categoriesRecognizer = SAYCustomCommandRecognizer(customType: "Categories") { _ in self.handleCategoriesCommand() }
+        categoriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("categories") || text.containsString("category") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryUnlikely)
+            }
+        }))
+        addCommandRecognizer(categoriesRecognizer)
+        
+        let cuisinesRecognizer = SAYCustomCommandRecognizer(customType: "Cuisines") { _ in self.handleCuisinesCommand() }
+        cuisinesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("cuisine") || text.containsString("cuisines") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryUnlikely)
+            }
+        }))
+        addCommandRecognizer(cuisinesRecognizer)
     }
     
     func topicDidGainFocus()
@@ -59,6 +80,28 @@ class HomeConversationTopic: SAYConversationTopic
         else {
             self.eventHandler.requestedSearchUsingQuery(nil, category: nil, cuisine: nil)
         }
+    }
+
+    private func handleCategoriesCommand()
+    {
+        // TODO: Do this inside a ListCT? For better control of long lists
+        let sequence = SAYAudioEventSequence()
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for recipes in the following categories:"))
+        for category in Category.orderedValues {
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "\"\(category.rawValue)\""))
+        }
+        postEvents(sequence)
+    }
+
+    private func handleCuisinesCommand()
+    {
+        // TODO: Do this inside a ListCT? For better control of long lists
+        let sequence = SAYAudioEventSequence()
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for recipes according to the following cuisines:"))
+        for cuisine in Cuisine.orderedValues {
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "\"\(cuisine.rawValue)\""))
+        }
+        postEvents(sequence)
     }
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
