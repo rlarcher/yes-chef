@@ -69,6 +69,16 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         print("SearchResultsVC handlePreviousCommand")
     }
     
+    func beganSpeakingItemAtIndex(index: Int)
+    {
+        print("SearchResultsVC beganSpeakingItemAtIndex: \(index)")
+    }
+    
+    func finishedSpeakingItemAtIndex(index: Int)
+    {
+        print("SearchResultsVC finishedSpeakingItemAtIndex: \(index)")
+    }
+    
     // MARK: UITableViewDelegate Protocol Methods
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)

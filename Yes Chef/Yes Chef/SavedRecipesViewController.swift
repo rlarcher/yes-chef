@@ -75,6 +75,16 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
         print("SavedRecipesVC handlePreviousCommand")
     }
     
+    func beganSpeakingItemAtIndex(index: Int)
+    {
+        print("SavedRecipesVC beganSpeakingItemAtIndex: \(index)")
+    }
+    
+    func finishedSpeakingItemAtIndex(index: Int)
+    {
+        print("SavedRecipesVC finishedSpeakingItemAtIndex: \(index)")
+    }
+    
     // MARK: SavedRecipesConversationTopicEventHandler Protocol Methods
     
     func handleRemoveRecipeCommand(command: SAYCommand)

@@ -25,20 +25,20 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     func updateSavedRecipes(recipes: [Recipe])
     {
         self.recipes = recipes
+        listSubtopic?.items = recipes.map({ $0.speakableString })
     }
     
     func speakSavedRecipes()
     {
-        if let listSubtopic = self.subtopics.first as? ListConversationTopic {
-            listSubtopic.speakItems(recipes.map { $0.speakableString })
-        }
+        listSubtopic?.speakItems()
     }
     
     // MARK: Lifecycle
     
     func topicDidGainFocus()
     {
-        addSubtopic(ListConversationTopic(eventHandler: self))
+        listSubtopic = ListConversationTopic(items: recipes.map({ $0.speakableString }), eventHandler: self)
+        addSubtopic(listSubtopic!)
         speakSavedRecipes()
     }
     
@@ -86,22 +86,36 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     func handlePlayCommand()
     {
+        listSubtopic?.resumeSpeaking()
         eventHandler.handlePlayCommand()
     }
     
     func handlePauseCommand()
     {
+        listSubtopic?.pauseSpeaking()
         eventHandler.handlePauseCommand()
     }
     
     func handleNextCommand()
     {
+        listSubtopic?.speakNextItem()
         eventHandler.handleNextCommand()
     }
     
     func handlePreviousCommand()
     {
+        listSubtopic?.speakPreviousItem()
         eventHandler.handlePreviousCommand()
+    }
+    
+    func beganSpeakingItemAtIndex(index: Int)
+    {
+        eventHandler.beganSpeakingItemAtIndex(index)
+    }
+    
+    func finishedSpeakingItemAtIndex(index: Int)
+    {
+        eventHandler.finishedSpeakingItemAtIndex(index)
     }
     
     // MARK: Helpers
@@ -112,6 +126,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
+    private var listSubtopic: ListConversationTopic?
     private var recipes: [Recipe]!
 }
 
@@ -125,4 +140,7 @@ protocol SavedRecipesConversationTopicEventHandler: class
     func handlePauseCommand()
     func handleNextCommand()
     func handlePreviousCommand()
+    
+    func beganSpeakingItemAtIndex(index: Int)
+    func finishedSpeakingItemAtIndex(index: Int)
 }

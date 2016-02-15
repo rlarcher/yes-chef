@@ -23,6 +23,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     func updateResults(results: [RecipeListing])
     {
         self.recipeListings = results
+        listSubtopic?.items = recipeListings.map({ $0.speakableString })
     }
 
     // This must be called before attempting to speak.
@@ -33,16 +34,14 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func speakResults()
     {
-        if let listSubtopic = self.listSubtopic {
-            listSubtopic.speakItems(recipeListings.map { $0.speakableString })
-        }
+        listSubtopic?.speakItems()
     }
     
     // MARK: Lifecycle
     
     func topicDidGainFocus()
     {
-        listSubtopic = ListConversationTopic(eventHandler: self)
+        listSubtopic = ListConversationTopic(items: recipeListings.map({ $0.speakableString }), eventHandler: self)
         addSubtopic(listSubtopic!)
         speakResults()
     }
@@ -93,22 +92,36 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func handlePlayCommand()
     {
+        listSubtopic?.resumeSpeaking()
         eventHandler.handlePlayCommand()
     }
     
     func handlePauseCommand()
     {
+        listSubtopic?.pauseSpeaking()
         eventHandler.handlePauseCommand()
     }
     
     func handleNextCommand()
     {
+        listSubtopic?.speakNextItem()
         eventHandler.handleNextCommand()
     }
     
     func handlePreviousCommand()
     {
+        listSubtopic?.speakPreviousItem()
         eventHandler.handlePreviousCommand()
+    }
+    
+    func beganSpeakingItemAtIndex(index: Int)
+    {
+        eventHandler.beganSpeakingItemAtIndex(index)
+    }
+    
+    func finishedSpeakingItemAtIndex(index: Int)
+    {
+        eventHandler.finishedSpeakingItemAtIndex(index)
     }
     
     // MARK: Helpers
@@ -132,4 +145,7 @@ protocol SearchResultsConversationTopicEventHandler: class
     func handlePauseCommand()
     func handleNextCommand()
     func handlePreviousCommand()
+    
+    func beganSpeakingItemAtIndex(index: Int)
+    func finishedSpeakingItemAtIndex(index: Int)
 }

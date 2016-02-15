@@ -53,6 +53,7 @@ class ListConversationTopic: SAYConversationTopic
     var items: [String] {
         didSet {
             stopSpeaking()  // Don't continue with any existing speakItems sequence, else we might go out of bounds.
+            headIndex = 0   // Reset head
         }
     }
     
@@ -95,11 +96,12 @@ class ListConversationTopic: SAYConversationTopic
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
-    private func speakItems(startingAtIndex index: Int)
+    private func speakItems(startingAtIndex startIndex: Int)
     {
-        if items.count > 0 && index < items.count {
+        if items.count > 0 && startIndex < items.count {
             let sequence = SAYAudioEventSequence()
-            headIndex = index
+            headIndex = startIndex
+            var spokenIndex = startIndex
             
             let remainingItems = items.suffixFrom(headIndex)
             
@@ -108,10 +110,11 @@ class ListConversationTopic: SAYConversationTopic
                 sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
                     self.eventHandler.beganSpeakingItemAtIndex(self.headIndex)
                 }
-                sequence.addEvent(SAYSpeechEvent(utteranceString: "\(index + 1): \(item)")) {   // Speak the 1-based version of the index.
+                sequence.addEvent(SAYSpeechEvent(utteranceString: "\(spokenIndex + 1): \(item)")) {   // Speak the 1-based version of the index.
                     self.eventHandler.finishedSpeakingItemAtIndex(self.headIndex)
                     self.headIndex++
                 }
+                spokenIndex++
             }
             
             self.postEvents(sequence)

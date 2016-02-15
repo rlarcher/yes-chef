@@ -53,11 +53,13 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     func updateRecipe(recipe: Recipe)
     {
         self.recipe = recipe
+        listSubtopic?.items = recipe.preparationSteps
     }
     
     func topicDidGainFocus()
     {
-        addSubtopic(ListConversationTopic(eventHandler: self))        
+        listSubtopic = ListConversationTopic(items: recipe.preparationSteps, eventHandler: self)
+        addSubtopic(listSubtopic!)
     }
     
     func topicDidLoseFocus()
@@ -102,22 +104,36 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     func handlePlayCommand()
     {
+        listSubtopic?.resumeSpeaking()
         eventHandler.handlePlayCommand()
     }
     
     func handlePauseCommand()
     {
+        listSubtopic?.pauseSpeaking()
         eventHandler.handlePauseCommand()
     }
     
     func handleNextCommand()
     {
+        listSubtopic?.speakNextItem()
         eventHandler.handleNextCommand()
     }
     
     func handlePreviousCommand()
     {
+        listSubtopic?.speakPreviousItem()
         eventHandler.handlePreviousCommand()
+    }
+    
+    func beganSpeakingItemAtIndex(index: Int)
+    {
+        eventHandler.beganSpeakingItemAtIndex(index)
+    }
+    
+    func finishedSpeakingItemAtIndex(index: Int)
+    {
+        eventHandler.finishedSpeakingItemAtIndex(index)
     }
     
     // MARK: Helpers
@@ -130,9 +146,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     func speakPreparationSteps()
     {
-        if let listSubtopic = self.subtopics.first as? ListConversationTopic {
-            listSubtopic.speakItems(recipe.preparationSteps)
-        }
+        listSubtopic?.speakItems()
     }
     
     func speakOvenTemperature()
@@ -141,6 +155,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         print("RecipePreparationCT speakOvenTemperature")
     }
     
+    private var listSubtopic: ListConversationTopic?
     private var recipe: Recipe!
 }
 
@@ -152,6 +167,9 @@ protocol RecipePreparationConversationTopicEventHandler: class
     func handlePauseCommand()
     func handleNextCommand()
     func handlePreviousCommand()
+    
+    func beganSpeakingItemAtIndex(index: Int)
+    func finishedSpeakingItemAtIndex(index: Int)
     
     func handleWhatDoIDoCommand()
     func handleOvenTemperatureCommand()

@@ -116,6 +116,16 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
         print("RecipePreparationVC handlePreviousCommand")
     }
     
+    func beganSpeakingItemAtIndex(index: Int)
+    {
+        print("RecipePreparationVC beganSpeakingItemAtIndex: \(index)")
+    }
+    
+    func finishedSpeakingItemAtIndex(index: Int)
+    {
+        print("RecipePreparationVC finishedSpeakingItemAtIndex: \(index)")
+    }
+    
     // MARK: UITableViewDataSource Protocol Methods
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
