@@ -39,9 +39,23 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
     
-    func handleSelectCommand(command: SAYCommand)
+    func selectedItemWithName(name: String?, index: Int?)
     {
-        print("SearchResultsVC handleSelectCommand")
+        if
+            let listingName = name,
+            let selectedListing = listingWithName(listingName)
+        {
+            requestedRecipePresentationForListing(selectedListing)
+        }
+        else if
+            let listingIndex = index,
+            let selectedListing = listingAtIndex(listingIndex)
+        {
+            requestedRecipePresentationForListing(selectedListing)
+        }
+        else {
+            // TODO: Handle error / followup
+        }
     }
     
     func handleSearchCommand(command: SAYCommand)
@@ -123,6 +137,24 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
+    }
+    
+    // MARK: Helpers
+    
+    func listingWithName(name: String) -> RecipeListing?
+    {
+        let matchingListing = recipeListings.filter({ $0.name.lowercaseString == name.lowercaseString }).first // TODO: Improve how we check for a match
+        return matchingListing
+    }
+    
+    func listingAtIndex(index: Int) -> RecipeListing?
+    {
+        if index > 0 && index < recipeListings.count {
+            return recipeListings[index]
+        }
+        else {
+            return nil
+        }
     }
     
     // MARK: Navigation Helpers

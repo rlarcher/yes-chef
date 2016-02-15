@@ -86,9 +86,9 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
     
-    func handleSelectCommand(command: SAYCommand)
+    func selectedItemWithName(name: String?, index: Int?)
     {
-        print("RecipePreparationVC handleSelectCommand")
+        // TODO: Do nothing?
     }
     
     func handleSearchCommand(command: SAYCommand)

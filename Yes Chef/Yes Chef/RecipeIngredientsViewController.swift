@@ -92,9 +92,23 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
     
-    func handleSelectCommand(command: SAYCommand)
+    func selectedItemWithName(name: String?, index: Int?)
     {
-        print("RecipeIngredientsVC handleSelectCommand")
+        if
+            let ingredientName = name,
+            let _ = ingredientWithName(ingredientName)
+        {
+            // TODO: Add to grocery list
+        }
+        else if
+            let ingredientIndex = index,
+            let _ = ingredientAtIndex(ingredientIndex)
+        {
+            // TODO: Add to grocery list
+        }
+        else {
+            // TODO: Handle error / followup
+        }
     }
     
     func handleSearchCommand(command: SAYCommand)
@@ -166,6 +180,24 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
+    }
+    
+    // MARK: Helpers
+    
+    func ingredientWithName(name: String) -> Ingredient?
+    {
+        let matchingIngredient = recipe.ingredients.filter({ $0.name.lowercaseString == name.lowercaseString }).first // TODO: Improve how we check for a match
+        return matchingIngredient
+    }
+    
+    func ingredientAtIndex(index: Int) -> Ingredient?
+    {
+        if index > 0 && index < recipe.ingredients.count {
+            return recipe.ingredients[index]
+        }
+        else {
+            return nil
+        }
     }
     
     private var recipe: Recipe!

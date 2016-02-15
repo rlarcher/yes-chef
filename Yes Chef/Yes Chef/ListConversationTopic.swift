@@ -19,7 +19,7 @@ class ListConversationTopic: SAYConversationTopic
         
         super.init()
         
-        let selectRecognizer = SAYSelectCommandRecognizer(responseTarget: eventHandler, action: "handleSelectCommand:")
+        let selectRecognizer = SAYSelectCommandRecognizer(responseTarget: self, action: "handleSelectCommand:")
         selectRecognizer.addMenuItemWithLabel("Select...")
         addCommandRecognizer(selectRecognizer)
         
@@ -95,6 +95,25 @@ class ListConversationTopic: SAYConversationTopic
     
     // MARK: Helpers
     
+    func handleSelectCommand(command: SAYCommand)
+    {
+        let selectedName = command.parameters[SAYSelectCommandRecognizerParameterItemName] as? String
+        
+        let selectedIndex: Int?
+        if let index = command.parameters[SAYSelectCommandRecognizerParameterItemNumber] as? NSNumber {
+            selectedIndex = index.integerValue
+        }
+        else if selectedName == nil {
+            // User said "Select" without any parameters, so assume they meant to select the current item.
+            selectedIndex = headIndex
+        }
+        else {
+            selectedIndex = nil
+        }
+        
+        eventHandler.selectedItemWithName(selectedName, index: selectedIndex)
+    }
+    
     private func stopSpeaking()
     {
         isFlushingOldAudioSequence = true
@@ -148,8 +167,9 @@ protocol ListConversationTopicEventHandler: class
     func beganSpeakingItemAtIndex(index: Int) // TODO: So any parent VC will know to highlight that cell, etc.
     func finishedSpeakingItemAtIndex(index: Int)
     
-    func handleSelectCommand(command: SAYCommand)
+    func selectedItemWithName(name: String?, index: Int?)
     func handleSearchCommand(command: SAYCommand)
+    
     func handlePlayCommand()
     func handlePauseCommand()
     func handleNextCommand()

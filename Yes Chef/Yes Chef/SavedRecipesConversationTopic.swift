@@ -74,9 +74,9 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     // MARK: ListConversationTopicEventHandler Protocol Methods 
     // TODO: Using these as pass-through only. Better way?
     
-    func handleSelectCommand(command: SAYCommand)
+    func selectedItemWithName(name: String?, index: Int?)
     {
-        eventHandler.handleSelectCommand(command)
+        eventHandler.selectedItemWithName(name, index: index)
     }
     
     func handleSearchCommand(command: SAYCommand)
@@ -134,7 +134,7 @@ protocol SavedRecipesConversationTopicEventHandler: class
 {
     func handleRemoveRecipeCommand(command: SAYCommand)
     
-    func handleSelectCommand(command: SAYCommand)
+    func selectedItemWithName(name: String?, index: Int?)
     func handleSearchCommand(command: SAYCommand)
     func handlePlayCommand()
     func handlePauseCommand()

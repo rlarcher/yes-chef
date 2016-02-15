@@ -45,9 +45,23 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
     
-    func handleSelectCommand(command: SAYCommand)
+    func selectedItemWithName(name: String?, index: Int?)
     {
-        print("SavedRecipesVC handleSelectCommand")
+        if
+            let recipeName = name,
+            let selectedRecipe = recipeWithName(recipeName)
+        {
+            selectionBlock?(selectedRecipe)
+        }
+        else if
+            let recipeIndex = index,
+            let selectedRecipe = recipeAtIndex(recipeIndex)
+        {
+            selectionBlock?(selectedRecipe)
+        }
+        else {
+            // TODO: Handle error / followup
+        }
     }
     
     func handleSearchCommand(command: SAYCommand)
@@ -144,6 +158,24 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
+    }
+    
+    // MARK: Helpers
+    
+    func recipeWithName(name: String) -> Recipe?
+    {
+        let matchingRecipe = savedRecipes.filter({ $0.name.lowercaseString == name.lowercaseString }).first // TODO: Improve how we check for a match
+        return matchingRecipe
+    }
+    
+    func recipeAtIndex(index: Int) -> Recipe?
+    {
+        if index > 0 && index < savedRecipes.count {
+            return savedRecipes[index]
+        }
+        else {
+            return nil
+        }
     }
     
     private var savedRecipes: [Recipe]! {
