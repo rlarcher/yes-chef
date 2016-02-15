@@ -59,6 +59,9 @@ class ListConversationTopic: SAYConversationTopic
     
     func speakItems()
     {
+        if headIndex > 0 {
+            isFlushingOldAudioSequence = true
+        }
         speakItems(startingAtIndex: 0)
     }
     
@@ -67,6 +70,7 @@ class ListConversationTopic: SAYConversationTopic
         if headIndex < items.count - 1 {
             headIndex++
         }
+        isFlushingOldAudioSequence = true
         speakItems(startingAtIndex: headIndex)
     }
     
@@ -75,6 +79,7 @@ class ListConversationTopic: SAYConversationTopic
         if headIndex > 0 {
             headIndex--
         }
+        isFlushingOldAudioSequence = true
         speakItems(startingAtIndex: headIndex)
     }
     
@@ -92,6 +97,8 @@ class ListConversationTopic: SAYConversationTopic
     
     private func stopSpeaking()
     {
+        isFlushingOldAudioSequence = true
+        
         // TODO: Better way to interrupt speech on transitioning?
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
@@ -107,14 +114,22 @@ class ListConversationTopic: SAYConversationTopic
             
             for item in remainingItems {
                 // TODO: This is a workaround for a "prefix" block. Proper way?
-                sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
-                    self.eventHandler.beganSpeakingItemAtIndex(self.headIndex)
-                }
+                // TODO: Disabled for now. Seems to worsen Main Track leakage during VerbalCommandRequests.
+//                sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
+//                    self.eventHandler.beganSpeakingItemAtIndex(self.headIndex)
+//                }
                 sequence.addEvent(SAYSpeechEvent(utteranceString: "\(spokenIndex + 1): \(item)")) {   // Speak the 1-based version of the index.
-                    self.eventHandler.finishedSpeakingItemAtIndex(self.headIndex)
-                    self.headIndex++
+                    if !self.isFlushingOldAudioSequence {
+                        self.eventHandler.finishedSpeakingItemAtIndex(self.headIndex)
+                        self.headIndex++
+                    }
                 }
                 spokenIndex++
+            }
+            
+            // Terminal event to release the flushing lock
+            sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
+                self.isFlushingOldAudioSequence = false
             }
             
             self.postEvents(sequence)
@@ -125,6 +140,7 @@ class ListConversationTopic: SAYConversationTopic
     }
     
     private var headIndex = 0   // The index currently being read
+    private var isFlushingOldAudioSequence: Bool = false    // Hack to suppress speech event completion blocks when we don't care about them (ie, when interrupting the sequence with a new one).
 }
 
 protocol ListConversationTopicEventHandler: class
