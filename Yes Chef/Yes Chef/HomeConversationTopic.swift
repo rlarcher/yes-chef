@@ -24,9 +24,14 @@ class HomeConversationTopic: SAYConversationTopic
         
         let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: eventHandler, action: "handleSearchCommand:")
         searchRecognizer.addMenuItemWithLabel("Search...")
+        searchRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPatterns: [
+            "search for @query in @category",
+            "search for @query in category @category",
+            "search for @category food",
+            "@category sounds good",
+            "show me @category recipes"
+            ]))
         addCommandRecognizer(searchRecognizer)
-        
-        // TODO: Add recognizer for search with categories
         
         let homeRecognizer = SAYHomeCommandRecognizer(responseTarget: eventHandler, action: "handleHomeCommand")
         homeRecognizer.addMenuItemWithLabel("Home")

@@ -41,12 +41,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     func handleSearchCommand(command: SAYCommand)
     {
-        print("HomeVC handleSearchCommand: \(command)")
         if let searchQuery = command.parameters[SAYSearchCommandRecognizerParameterQuery] as? String {
-            BigOvenAPIManager.sharedManager.searchForRecipeByName(searchQuery, category: nil, completion: { response -> Void in
-                // TODO
-                print("HomeVC Finished Search")
-            })
+            let category = command.parameters["category"] as? String
+            searchUsingQuery(searchQuery, category: category)
         }
     }
     
@@ -134,7 +131,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     // MARK: Helpers
     
-    private func searchUsingQuery(query: String, category: String)
+    private func searchUsingQuery(query: String, category: String?)
     {
         BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category) { response -> Void in
             if let results = response.recipeListings {

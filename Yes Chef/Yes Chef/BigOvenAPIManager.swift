@@ -28,8 +28,7 @@ class BigOvenAPIManager
     
     func searchForRecipeByName(query: String, category: String?, completion: (SearchResponse -> Void))
     {
-        // TODO: Handle category searches
-        apiFetcher.searchForRecipeByName(query) { (response) -> () in
+        apiFetcher.searchForRecipeByName(query, category: category) { (response) -> () in
             if let recipeListings = response.recipeListings where response.didSucceed {
                 for listing in recipeListings {
                     self.fetchRecipe(listing.recipeId, completion: nil) // Prefetch corresponding recipes
