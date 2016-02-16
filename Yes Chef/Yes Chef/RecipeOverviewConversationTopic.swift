@@ -93,7 +93,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         let descriptionRecognizer = SAYCustomCommandRecognizer(customType: "Description", responseTarget: eventHandler, action: "handleDescriptionCommand")
         descriptionRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             if text.containsString("description") || text.containsString("describe") || text.containsString("about the recipe") {
-                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceCertain)
             }
             else {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
