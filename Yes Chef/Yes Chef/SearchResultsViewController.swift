@@ -61,31 +61,25 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     func handlePlayCommand()
     {
         print("SearchResultsVC handlePlayCommand")
+        // TODO: Interact with the command bar playback controls - change middle button to Pause
     }
     
     func handlePauseCommand()
     {
         print("SearchResultsVC handlePauseCommand")
+        // TODO: Interact with the command bar playback controls - change middle button to Play
     }
-    
-    func handleNextCommand()
-    {
-        print("SearchResultsVC handleNextCommand")
-    }
-    
-    func handlePreviousCommand()
-    {
-        print("SearchResultsVC handlePreviousCommand")
-    }
-    
+        
     func beganSpeakingItemAtIndex(index: Int)
     {
         print("SearchResultsVC beganSpeakingItemAtIndex: \(index)")
+        tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)
     }
     
     func finishedSpeakingItemAtIndex(index: Int)
     {
         print("SearchResultsVC finishedSpeakingItemAtIndex: \(index)")
+        tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
     }
     
     // MARK: UITableViewDelegate Protocol Methods

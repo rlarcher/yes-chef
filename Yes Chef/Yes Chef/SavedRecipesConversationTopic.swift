@@ -17,8 +17,6 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
         self.eventHandler = eventHandler
         
         super.init()
-        
-        // TODO: Add command recognizer for "Remove __recipe__".
     }
     
     // This must be called before attempting to speak.
@@ -37,7 +35,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     func topicDidGainFocus()
     {
-        listSubtopic = ListConversationTopic(items: recipes.map({ $0.speakableString }), eventHandler: self)
+        listSubtopic = ListConversationTopic(items: recipes.map({ $0.speakableString }), listIsMutable: true, eventHandler: self)
         addSubtopic(listSubtopic!)
         speakSavedRecipes()
     }
@@ -79,6 +77,16 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
         eventHandler.selectedItemWithName(name, index: index)
     }
     
+    func requestedRemoveItemWithName(name: String?, index: Int?)
+    {
+        if let indexToRemove = index {
+            eventHandler.requestedRemoveItemWithName(name, index: indexToRemove)
+        }
+        else {
+            // TODO: Present a clarification request, "Remove what?"
+        }
+    }
+    
     func handlePlayCommand()
     {
         listSubtopic?.resumeSpeaking()
@@ -94,13 +102,11 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     func handleNextCommand()
     {
         listSubtopic?.speakNextItem()
-        eventHandler.handleNextCommand()
     }
     
     func handlePreviousCommand()
     {
         listSubtopic?.speakPreviousItem()
-        eventHandler.handlePreviousCommand()
     }
     
     func beganSpeakingItemAtIndex(index: Int)
@@ -127,14 +133,11 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
 
 protocol SavedRecipesConversationTopicEventHandler: class
 {
-    func handleRemoveRecipeCommand(command: SAYCommand)
-    
     func selectedItemWithName(name: String?, index: Int?)
+    func requestedRemoveItemWithName(name: String?, index: Int)
 
     func handlePlayCommand()
     func handlePauseCommand()
-    func handleNextCommand()
-    func handlePreviousCommand()
     
     func beganSpeakingItemAtIndex(index: Int)
     func finishedSpeakingItemAtIndex(index: Int)

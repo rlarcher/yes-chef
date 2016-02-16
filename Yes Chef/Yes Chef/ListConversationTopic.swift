@@ -12,7 +12,12 @@ class ListConversationTopic: SAYConversationTopic
 {
     let eventHandler: ListConversationTopicEventHandler
     
-    init(items: [String], eventHandler: ListConversationTopicEventHandler)
+    convenience init(items: [String], eventHandler: ListConversationTopicEventHandler)
+    {
+        self.init(items: items, listIsMutable: false, eventHandler: eventHandler)
+    }
+    
+    init(items: [String], listIsMutable: Bool, eventHandler: ListConversationTopicEventHandler)
     {
         self.eventHandler = eventHandler
         self.items = items
@@ -41,6 +46,28 @@ class ListConversationTopic: SAYConversationTopic
         previousRecognizer.addMenuItemWithLabel("Previous")
         addCommandRecognizer(previousRecognizer)
 
+        if listIsMutable {
+            let removeItemRecognizer = SAYCustomCommandRecognizer(customType: "RemoveItem", responseTarget: self, action: "handleRemoveItemCommand:")
+            removeItemRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPatterns: [
+                "remove @item",
+                "forget @item",
+                "erase @item",
+                "delete @item",
+                "remove @itemNumber:Number",
+                "forget @itemNumber:Number",
+                "erase @itemNumber:Number",
+                "delete @itemNumber:Number",
+                "remove number @itemNumber:Number",
+                "forget number @itemNumber:Number",
+                "erase number @itemNumber:Number",
+                "delete number @itemNumber:Number",
+                "remove",
+                "delete"
+                ]))
+            removeItemRecognizer.addMenuItemWithLabel("Remove Item")    // TODO: How can we customize this label based on context? (e.g. "Remove Recipe")
+            addCommandRecognizer(removeItemRecognizer)
+        }
+        
         // TODO: Add recognizer for "Repeat"
         // TODO: Add recognizer for "Read all"
         // TODO: Add recognizer for "What's the __N'th__ step?"
@@ -89,7 +116,7 @@ class ListConversationTopic: SAYConversationTopic
         speakItems(startingAtIndex: headIndex)
     }
     
-    // MARK: Helpers
+    // MARK: Handle Commands
     
     func handleSelectCommand(command: SAYCommand)
     {
@@ -109,6 +136,14 @@ class ListConversationTopic: SAYConversationTopic
         
         eventHandler.selectedItemWithName(selectedName, index: selectedIndex)
     }
+    
+    func handleRemoveItemCommand(command: SAYCommand)
+    {
+        // TODO: Leverage the logic used in interpreting a SAYSelectRequest
+        eventHandler.requestedRemoveItemWithName(nil, index: headIndex) // Temp.
+    }
+    
+    // MARK: Speech
     
     private func stopSpeaking()
     {
@@ -164,9 +199,19 @@ protocol ListConversationTopicEventHandler: class
     func finishedSpeakingItemAtIndex(index: Int)
     
     func selectedItemWithName(name: String?, index: Int?)
+    /*optional*/ func requestedRemoveItemWithName(name: String?, index: Int?)
     
     func handlePlayCommand()
     func handlePauseCommand()
     func handleNextCommand()
     func handlePreviousCommand()
+}
+
+extension ListConversationTopicEventHandler
+{
+    func requestedRemoveItemWithName(name: String?, index: Int?)
+    {
+        // Default implementation does nothing. Effectively makes this function optional, since anyone implementing `ListConversationTopicEventHandler` will use this implementation by default.
+        // This is an alternative to adding the @objc decorator to the protocol and using the `optional` keyword, which requires all types to be applicable in Objective C (which `Int` is not).
+    }
 }

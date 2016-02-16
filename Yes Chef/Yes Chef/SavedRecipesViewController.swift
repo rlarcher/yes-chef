@@ -67,38 +67,33 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     func handlePlayCommand()
     {
         print("SavedRecipesVC handlePlayCommand")
+        // TODO: Interact with the command bar playback controls - change middle button to Pause
     }
     
     func handlePauseCommand()
     {
         print("SavedRecipesVC handlePauseCommand")
-    }
-    
-    func handleNextCommand()
-    {
-        print("SavedRecipesVC handleNextCommand")
-    }
-    
-    func handlePreviousCommand()
-    {
-        print("SavedRecipesVC handlePreviousCommand")
+        // TODO: Interact with the command bar playback controls - change middle button to Play
     }
     
     func beganSpeakingItemAtIndex(index: Int)
     {
         print("SavedRecipesVC beganSpeakingItemAtIndex: \(index)")
+        tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)
     }
     
     func finishedSpeakingItemAtIndex(index: Int)
     {
         print("SavedRecipesVC finishedSpeakingItemAtIndex: \(index)")
+        tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
     }
     
     // MARK: SavedRecipesConversationTopicEventHandler Protocol Methods
     
-    func handleRemoveRecipeCommand(command: SAYCommand)
+    func requestedRemoveItemWithName(name: String?, index: Int)
     {
         print("SavedRecipesVC handleRemoveRecipeCommand")
+        // TODO: Interact with Saved Recipes manager
     }
     
     // MARK: UISearchResultsUpdating Protocol Methods

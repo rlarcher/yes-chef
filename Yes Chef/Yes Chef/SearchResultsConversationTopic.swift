@@ -100,13 +100,11 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     func handleNextCommand()
     {
         listSubtopic?.speakNextItem()
-        eventHandler.handleNextCommand()
     }
     
     func handlePreviousCommand()
     {
         listSubtopic?.speakPreviousItem()
-        eventHandler.handlePreviousCommand()
     }
     
     func beganSpeakingItemAtIndex(index: Int)
@@ -138,8 +136,6 @@ protocol SearchResultsConversationTopicEventHandler: class
 
     func handlePlayCommand()
     func handlePauseCommand()
-    func handleNextCommand()
-    func handlePreviousCommand()
     
     func beganSpeakingItemAtIndex(index: Int)
     func finishedSpeakingItemAtIndex(index: Int)

@@ -94,31 +94,26 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     func handlePlayCommand()
     {
         print("RecipePreparationVC handlePlayCommand")
+        // TODO: Interact with the command bar playback controls - change middle button to Pause
     }
     
     func handlePauseCommand()
     {
         print("RecipePreparationVC handlePauseCommand")
-    }
-    
-    func handleNextCommand()
-    {
-        print("RecipePreparationVC handleNextCommand")
-    }
-    
-    func handlePreviousCommand()
-    {
-        print("RecipePreparationVC handlePreviousCommand")
+        // TODO: Interact with the command bar playback controls - change middle button to Play
+        
     }
     
     func beganSpeakingItemAtIndex(index: Int)
     {
         print("RecipePreparationVC beganSpeakingItemAtIndex: \(index)")
+        tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)
     }
     
     func finishedSpeakingItemAtIndex(index: Int)
     {
         print("RecipePreparationVC finishedSpeakingItemAtIndex: \(index)")
+        tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
     }
     
     // MARK: UITableViewDataSource Protocol Methods
