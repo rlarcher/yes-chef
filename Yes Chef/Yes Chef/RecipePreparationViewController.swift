@@ -91,11 +91,6 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
         // TODO: Do nothing?
     }
     
-    func handleSearchCommand(command: SAYCommand)
-    {
-        print("RecipePreparationVC handleSearchCommand")
-    }
-    
     func handlePlayCommand()
     {
         print("RecipePreparationVC handlePlayCommand")

@@ -22,10 +22,6 @@ class ListConversationTopic: SAYConversationTopic
         let selectRecognizer = SAYSelectCommandRecognizer(responseTarget: self, action: "handleSelectCommand:")
         selectRecognizer.addMenuItemWithLabel("Select...")
         addCommandRecognizer(selectRecognizer)
-        
-        let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: eventHandler, action: "handleSearchCommand:")
-        searchRecognizer.addMenuItemWithLabel("Search...")
-        addCommandRecognizer(searchRecognizer)
 
         // TODO: Add "filter" keyword to Search command.
         
@@ -168,7 +164,6 @@ protocol ListConversationTopicEventHandler: class
     func finishedSpeakingItemAtIndex(index: Int)
     
     func selectedItemWithName(name: String?, index: Int?)
-    func handleSearchCommand(command: SAYCommand)
     
     func handlePlayCommand()
     func handlePauseCommand()

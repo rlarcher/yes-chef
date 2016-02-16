@@ -58,11 +58,6 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         }
     }
     
-    func handleSearchCommand(command: SAYCommand)
-    {
-        print("SearchResultsVC handleSearchCommand")
-    }
-    
     func handlePlayCommand()
     {
         print("SearchResultsVC handlePlayCommand")

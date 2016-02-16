@@ -111,11 +111,6 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
         }
     }
     
-    func handleSearchCommand(command: SAYCommand)
-    {
-        print("RecipeIngredientsVC handleSearchCommand")
-    }
-    
     func handlePlayCommand()
     {
         print("RecipeIngredientsVC handlePlayCommand")

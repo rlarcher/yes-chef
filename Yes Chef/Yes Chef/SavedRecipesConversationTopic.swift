@@ -79,11 +79,6 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
         eventHandler.selectedItemWithName(name, index: index)
     }
     
-    func handleSearchCommand(command: SAYCommand)
-    {
-        eventHandler.handleSearchCommand(command)
-    }
-    
     func handlePlayCommand()
     {
         listSubtopic?.resumeSpeaking()
@@ -135,7 +130,7 @@ protocol SavedRecipesConversationTopicEventHandler: class
     func handleRemoveRecipeCommand(command: SAYCommand)
     
     func selectedItemWithName(name: String?, index: Int?)
-    func handleSearchCommand(command: SAYCommand)
+
     func handlePlayCommand()
     func handlePauseCommand()
     func handleNextCommand()

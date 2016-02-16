@@ -64,11 +64,6 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
         }
     }
     
-    func handleSearchCommand(command: SAYCommand)
-    {
-        print("SavedRecipesVC handleSearchCommand")
-    }
-    
     func handlePlayCommand()
     {
         print("SavedRecipesVC handlePlayCommand")
