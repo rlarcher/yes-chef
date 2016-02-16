@@ -38,8 +38,27 @@ class HomeConversationTopic: SAYConversationTopic
         backRecognizer.addMenuItemWithLabel("Back")
         addCommandRecognizer(backRecognizer)
         
-        // TODO: Add recognizer for "How do I __do action__?"
-        // TODO: Add recognizer for "What is __feature__?"
+        let howToDoActionRecognizer = SAYCustomCommandRecognizer(customType: "HowToDoAction", responseTarget: self, action: "handleHowToDoActionCommand:")
+        howToDoActionRecognizer.addTextMatcher(SAYPatternCommandMatcher(patterns: [
+            "how do I @action",
+            "how can I @action",
+            "how would I @action",
+            "I don't know how to @action",
+            "tell me how to @action",
+            "tell me how @action"
+            ]))
+        howToDoActionRecognizer.addMenuItemWithLabel("How do I...")
+        addCommandRecognizer(howToDoActionRecognizer)
+        
+        let featureQueryRecognizer = SAYCustomCommandRecognizer(customType: "FeatureQuery", responseTarget: self, action: "handleFeatureQueryCommand:")
+        featureQueryRecognizer.addTextMatcher(SAYPatternCommandMatcher(patterns: [
+            "what is @feature",
+            "what's the deal with @feature",
+            "what about @feature",
+            "tell me about @feature"
+            ]))
+        featureQueryRecognizer.addMenuItemWithLabel("What is...")
+        addCommandRecognizer(featureQueryRecognizer)
         
         let categoriesRecognizer = SAYCustomCommandRecognizer(customType: "Categories") { _ in self.handleCategoriesCommand() }
         categoriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -74,6 +93,8 @@ class HomeConversationTopic: SAYConversationTopic
         // Do nothing
     }
     
+    // MARK: Speech Methods
+    
     func speakIntroduction(shouldIncludeWelcomeMessage: Bool)
     {
         let sequence = SAYAudioEventSequence()
@@ -106,6 +127,8 @@ class HomeConversationTopic: SAYConversationTopic
         }
     }
 
+    // MARK: Handle Commands
+    
     private func handleCategoriesCommand()
     {
         // TODO: Do this inside a ListCT? For better control of long lists
@@ -126,6 +149,34 @@ class HomeConversationTopic: SAYConversationTopic
             sequence.addEvent(SAYSpeechEvent(utteranceString: "\"\(cuisine.rawValue)\""))
         }
         postEvents(sequence)
+    }
+    
+    func handleHowToDoActionCommand(command: SAYCommand)
+    {
+        if let queriedAction = command.parameters["action"] as? String {
+            // TODO: Define a proper response for various actions
+            let sequence = SAYAudioEventSequence()
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "I don't know how to \"\(queriedAction)\", either."))
+            postEvents(sequence)
+        }
+        else {
+            // TODO: Present a clarification request, "What would you like to learn how to do?"
+            print("HomeCT handleHowToDoActionCommand requires clarification.")
+        }
+    }
+    
+    func handleFeatureQueryCommand(command: SAYCommand)
+    {
+        if let queriedFeature = command.parameters["feature"] as? String {
+            // TODO: Define a proper response for various features
+            let sequence = SAYAudioEventSequence()
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "\"\(queriedFeature)\" is a nice feature, but I don't know much beyond that."))
+            postEvents(sequence)
+        }
+        else {
+            // TODO: Present a clarification request, "What would you like to learn about?"
+            print("HomeCT handleFeatureQueryCommand requires clarification.")
+        }
     }
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
