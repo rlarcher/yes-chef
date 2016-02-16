@@ -27,8 +27,6 @@ class ListConversationTopic: SAYConversationTopic
         let selectRecognizer = SAYSelectCommandRecognizer(responseTarget: self, action: "handleSelectCommand:")
         selectRecognizer.addMenuItemWithLabel("Select...")
         addCommandRecognizer(selectRecognizer)
-
-        // TODO: Add "filter" keyword to Search command.
         
         let playRecognizer = SAYPlayCommandRecognizer(responseTarget: eventHandler, action: "handlePlayCommand")
         playRecognizer.addMenuItemWithLabel("Play")
@@ -46,6 +44,55 @@ class ListConversationTopic: SAYConversationTopic
         previousRecognizer.addMenuItemWithLabel("Previous")
         addCommandRecognizer(previousRecognizer)
 
+        let repeatRecognizer = SAYCustomCommandRecognizer(customType: "Repeat", responseTarget: self, action: "handleRepeatCommand")
+        repeatRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("repeat") || text.containsString("again") || text.containsString("what did you say") || text.containsString("what was that?") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        repeatRecognizer.addMenuItemWithLabel("Repeat")
+        addCommandRecognizer(repeatRecognizer)
+        
+        let readAllRecognizer = SAYCustomCommandRecognizer(customType: "ReadAll", responseTarget: self, action: "handleReadAllCommand")
+        readAllRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("read all") || text.containsString("read everything") || text.containsString("repeat everything") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        readAllRecognizer.addMenuItemWithLabel("Read All")
+        addCommandRecognizer(readAllRecognizer)
+        
+        let readItemRecognizer = SAYCustomCommandRecognizer(customType: "ReadItem", responseTarget: self, action: "handleReadItemCommand:")
+        readItemRecognizer.addTextMatcher(SAYPatternCommandMatcher(patterns: [
+            "read step @itemNumber:Number",
+            "read step number @itemNumber:Number",
+            "read the @itemNumber:Number step",
+            "read @itemNumber:Number",
+            "read item @itemNumber:Number",
+            "read the @itemNumber:Number item",
+            "read number @itemNumber:Number",
+            "what is the @itemNumber:Number step",
+            "what is the @itemNumber:Number item",
+            "what is step number @itemNumber:Number",
+            "what is item number @itemNumber:Number",
+            "what is step @itemNumber:Number",
+            "what is item @itemNumber:Number",
+            "what's the @itemNumber:Number step",
+            "what's the @itemNumber:Number item",
+            "what's step number @itemNumber:Number",
+            "what's item number @itemNumber:Number",
+            "what's step @itemNumber:Number",
+            "what's item @itemNumber:Number"
+            ]))
+        readItemRecognizer.addMenuItemWithLabel("Read Item Number...")
+        addCommandRecognizer(readItemRecognizer)
+        
         if listIsMutable {
             let removeItemRecognizer = SAYCustomCommandRecognizer(customType: "RemoveItem", responseTarget: self, action: "handleRemoveItemCommand:")
             removeItemRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPatterns: [
@@ -66,11 +113,9 @@ class ListConversationTopic: SAYConversationTopic
                 ]))
             removeItemRecognizer.addMenuItemWithLabel("Remove Item")    // TODO: How can we customize this label based on context? (e.g. "Remove Recipe")
             addCommandRecognizer(removeItemRecognizer)
+            
+            // TODO: Add "filter" keyword to Search command.
         }
-        
-        // TODO: Add recognizer for "Repeat"
-        // TODO: Add recognizer for "Read all"
-        // TODO: Add recognizer for "What's the __N'th__ step?"
     }
     
     var items: [String] {
@@ -117,6 +162,37 @@ class ListConversationTopic: SAYConversationTopic
     }
     
     // MARK: Handle Commands
+    
+    func handleRepeatCommand()
+    {
+        if headIndex > items.count {
+            speakPreviousItem()
+        }
+        else {
+            isFlushingOldAudioSequence = true
+            speakItems(startingAtIndex: headIndex)
+        }
+    }
+    
+    func handleReadAllCommand()
+    {
+        speakItems()
+    }
+    
+    func handleReadItemCommand(command: SAYCommand)
+    {
+        if let itemNumber = command.parameters["itemNumber"] as? NSNumber {
+            let index = max(itemNumber.integerValue - 1, 0)     // Interpret spoken number as 1-based index. Convert to 0-based index.
+            if index < items.count {
+                isFlushingOldAudioSequence = true
+                speakItems(startingAtIndex: index)
+                return
+            }
+        }
+        
+        // TODO: Handle error - followup clarification?
+        print("ListCT failed to interpret read step number")
+    }
     
     func handleSelectCommand(command: SAYCommand)
     {
