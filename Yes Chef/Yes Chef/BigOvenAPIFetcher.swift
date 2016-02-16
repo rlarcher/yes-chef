@@ -13,15 +13,6 @@ import SwiftyJSON
 
 class BigOvenAPIFetcher: NSObject
 {
-//    From http://api.bigoven.com/documentation/response-codes
-//    Response Code 	Description
-//    200 OK 	Request was fulfilled.
-//    201 CREATED 	POST request successfully created entity.
-//    400 BAD REQUEST 	Invalid request or rate limit exceeded.
-//    403 FORBIDDEN 	Failed authentication request.
-//    404 NOT FOUND 	Request URI invalid.
-//    500 INTERNAL ERROR 	Server error has occurred.
-    
     func searchForRecipeByName(query: String, category: String?, cuisine: String?, completion: (BigOvenAPISearchResponse -> ()))
     {
         if let apiKey = BigOvenAPIFetcher.kAPIKey {
@@ -76,10 +67,9 @@ class BigOvenAPIFetcher: NSObject
         }
     }
     
-    private func validateSearchFailure(failureError: NSError) -> BigOvenAPISearchResponse
+    private func validateSearchFailure(error: NSError) -> BigOvenAPISearchResponse
     {
-        // TODO: Handle connection error
-        print(failureError)
+        return .ConnectionError(error: buildSearchConnectionError(error))
     }
     
     private func validateRecipeSuccess(jsonObject: AnyObject) -> BigOvenAPIRecipeResponse
@@ -92,10 +82,9 @@ class BigOvenAPIFetcher: NSObject
         }
     }
     
-    private func validateRecipeFailure(failureError: NSError) -> BigOvenAPIRecipeResponse
+    private func validateRecipeFailure(error: NSError) -> BigOvenAPIRecipeResponse
     {
-        // TODO: Handle connection error
-        print(failureError)
+        return .ConnectionError(error: buildRecipeConnectionError(error))
     }
     
     // MARK: Parsing Helpers
@@ -248,6 +237,39 @@ class BigOvenAPIFetcher: NSObject
             userInfo: [kRecipeErrorUnderlyingJSONObjectKey: underlyingJSONObject])
         
         return parsingError
+    }
+    
+    //    From http://api.bigoven.com/documentation/response-codes
+    //    Response Code 	Description
+    //    200 OK 	Request was fulfilled.
+    //    201 CREATED 	POST request successfully created entity.
+    //    400 BAD REQUEST 	Invalid request or rate limit exceeded.
+    //    403 FORBIDDEN 	Failed authentication request.
+    //    404 NOT FOUND 	Request URI invalid.
+    //    500 INTERNAL ERROR 	Server error has occurred.
+    
+    private func buildSearchConnectionError(underlyingError: NSError) -> NSError
+    {
+        // TODO: Distinguish between local connection error (e.g. no wifi), and server-side connection error (e.g. server down)
+        
+        let connectionError = NSError(
+            domain: kSearchErrorDomain,
+            code: SearchErrorCode.ServerConnectionError.rawValue,
+            userInfo: [NSUnderlyingErrorKey: underlyingError])
+        
+        return connectionError
+    }
+
+    private func buildRecipeConnectionError(underlyingError: NSError) -> NSError
+    {
+        // TODO: Distinguish between local connection error (e.g. no wifi), and server-side connection error (e.g. server down)
+        
+        let connectionError = NSError(
+            domain: kRecipeErrorDomain,
+            code: RecipeErrorCode.ServerConnectionError.rawValue,
+            userInfo: [NSUnderlyingErrorKey: underlyingError])
+        
+        return connectionError
     }
     
     private let sessionManager: Alamofire.Manager = {
