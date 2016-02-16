@@ -72,7 +72,7 @@ class BigOvenAPIFetcher: NSObject
             return .Success(recipeListings: listings)
         }
         else {
-            // TODO: Handle parsing error
+            return .UnexpectedBodyFormat(error: buildSearchParsingError(jsonObject))
         }
     }
     
@@ -88,7 +88,7 @@ class BigOvenAPIFetcher: NSObject
             return .Success(recipe: recipe)
         }
         else {
-            // TODO: Handle parsing error
+            return .UnexpectedBodyFormat(error: buildRecipeParsingError(jsonObject))
         }
     }
     
@@ -228,6 +228,28 @@ class BigOvenAPIFetcher: NSObject
         return steps
     }
     
+    // MARK: Error Handling
+    
+    private func buildSearchParsingError(underlyingJSONObject: AnyObject) -> NSError
+    {
+        let parsingError = NSError(
+            domain: kSearchErrorDomain,
+            code: SearchErrorCode.UnexpectedResponseFormat.rawValue,
+            userInfo: [kSearchErrorUnderlyingJSONObjectKey: underlyingJSONObject])
+        
+        return parsingError
+    }
+    
+    private func buildRecipeParsingError(underlyingJSONObject: AnyObject) -> NSError
+    {
+        let parsingError = NSError(
+            domain: kRecipeErrorDomain,
+            code: RecipeErrorCode.UnexpectedResponseFormat.rawValue,
+            userInfo: [kRecipeErrorUnderlyingJSONObjectKey: underlyingJSONObject])
+        
+        return parsingError
+    }
+    
     private let sessionManager: Alamofire.Manager = {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         config.HTTPAdditionalHeaders = ["Content-Type": "application/json", "Accept": "application/json"]
@@ -242,12 +264,12 @@ enum BigOvenAPISearchResponse
 {
     case Success(recipeListings: [RecipeListing])
     case ConnectionError(error: NSError)
-    case UnrecognizedBodyFormat(error: NSError)
+    case UnexpectedBodyFormat(error: NSError)
 }
 
 enum BigOvenAPIRecipeResponse
 {
     case Success(recipe: Recipe)
     case ConnectionError(error: NSError)
-    case UnrecognizedBodyFormat(error: NSError)
+    case UnexpectedBodyFormat(error: NSError)
 }

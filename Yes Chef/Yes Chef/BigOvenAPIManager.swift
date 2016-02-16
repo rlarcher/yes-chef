@@ -121,3 +121,19 @@ struct RecipeResponse
     let recipe: Recipe?
     let error: NSError?
 }
+
+let kSearchErrorDomain = "searchErrorDomain"
+enum SearchErrorCode: Int
+{
+    case ConnectionError = 1
+    case UnexpectedResponseFormat = 2
+}
+let kSearchErrorUnderlyingJSONObjectKey = "SearchErrorUnderlyingJSONObjectKey"
+
+let kRecipeErrorDomain = "recipeErrorDomain"
+enum RecipeErrorCode: Int
+{
+    case ConnectionError = 1
+    case UnexpectedResponseFormat = 2    
+}
+let kRecipeErrorUnderlyingJSONObjectKey = "RecipeErrorUnderlyingJSONObjectKey"
