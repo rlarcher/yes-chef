@@ -78,8 +78,29 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         cuisineCategoryRecognizer.addMenuItemWithLabel("Cuisine and Category")
         addCommandRecognizer(cuisineCategoryRecognizer)
         
-        // TODO: Add command recognizer for dietary restrictions
-        // TODO: Add command recognizer for recipe description
+        let nutritionInfoRecognizer = SAYCustomCommandRecognizer(customType: "NutritionInfo", responseTarget: eventHandler, action: "handleNutritionInfoCommand")
+        nutritionInfoRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("nutrition") || text.containsString("nutritional") || text.containsString("fat") || text.containsString("diet") || text.containsString("dietary") || text.containsString("calories") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        nutritionInfoRecognizer.addMenuItemWithLabel("Nutritional Information")
+        addCommandRecognizer(nutritionInfoRecognizer)
+        
+        let descriptionRecognizer = SAYCustomCommandRecognizer(customType: "Description", responseTarget: eventHandler, action: "handleDescriptionCommand")
+        descriptionRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("description") || text.containsString("describe") || text.containsString("about the recipe") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        descriptionRecognizer.addMenuItemWithLabel("Description")
+        addCommandRecognizer(descriptionRecognizer)
     }
     
     // This must be called before attempting to speak.    
@@ -152,6 +173,21 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         postEvents(sequence)
     }
     
+    func speakNutritionInfo()
+    {
+        // TODO: Pending API upgrade
+        let sequence = SAYAudioEventSequence()
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "Sorry, I don't know this recipe's nutritional information."))
+        postEvents(sequence)
+    }
+    
+    func speakDescription()
+    {
+        let sequence = SAYAudioEventSequence()
+        sequence.addEvent(SAYSpeechEvent(utteranceString: recipe.description))
+        postEvents(sequence)
+    }
+    
     func stopSpeaking()
     {
         // TODO: Better way to interrupt speech on transitioning?
@@ -169,4 +205,6 @@ protocol RecipeOverviewConversationTopicEventHandler: class
     func handleRecipeNameCommand()
     func handleCaloriesCommand()
     func handleCuisineCategoryCommand()
+    func handleNutritionInfoCommand()
+    func handleDescriptionCommand()
 }

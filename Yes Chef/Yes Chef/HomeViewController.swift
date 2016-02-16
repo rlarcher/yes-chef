@@ -47,7 +47,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     func handleAvailableCommands()
     {
-        print("HomeVC handleAvailableCommands!")
+        // TODO: Present available commands list?
+        homeConversationTopic.speakAvailableCommands()
     }
     
     func handleHomeCommand()

@@ -114,6 +114,16 @@ class HomeConversationTopic: SAYConversationTopic
         sequence.addEvent(SAYSpeechEvent(utteranceString: "You can say \"Categories\" or \"Cuisines\" to hear available filters for your search. Say \"Saved Recipes\" to explore your saved recipes list. Say \"Home\" at any time to return here."))
         postEvents(sequence)
     }
+
+    func speakAvailableCommands()
+    {
+        // TODO: Fetch available commands (e.g., from CT hierarchy) and speak those.
+        let sequence = SAYAudioEventSequence()
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "There are lots of available commands, but I misplaced the list."))
+        postEvents(sequence)
+    }
+    
+    // MARK: Handle Commands
     
     func handleSearchCommand(command: SAYCommand)
     {
@@ -126,8 +136,6 @@ class HomeConversationTopic: SAYConversationTopic
             self.eventHandler.requestedSearchUsingQuery(nil, category: nil, cuisine: nil)
         }
     }
-
-    // MARK: Handle Commands
     
     private func handleCategoriesCommand()
     {
