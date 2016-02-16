@@ -16,7 +16,7 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
         
         super.init()
         
-        let switchTabRecognizer = SAYSwitchTabCommandRecognizer(responseTarget: eventHandler, action: "handleTabNavigationCommand:")
+        let switchTabRecognizer = SAYSwitchTabCommandRecognizer(responseTarget: self, action: "handleTabNavigationCommand:")
         switchTabRecognizer.addMenuItemWithLabel("Switch Tab...")        
         addCommandRecognizer(switchTabRecognizer)
 
@@ -57,11 +57,39 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
         removeAllSubtopics()
     }
     
+    // MARK: Handle Commands
+
+    func handleTabNavigationCommand(command: SAYCommand)
+    {
+        if let tabName = command.parameters[SAYSwitchTabCommandRecognizerParameterTabName] as? String {
+            for tab in RecipeTab.orderedCases() {
+                if tab.rawValue.lowercaseString.containsString(tabName.lowercaseString) { // TODO: Improve string matching
+                    eventHandler.requestedSwitchTab(tab)
+                    return
+                }
+            }
+        }
+        else if let tabNumber = command.parameters[SAYSwitchTabCommandRecognizerParameterTabNumber] as? NSNumber {
+            let index = max(tabNumber.integerValue - 1, 0)    // Assume the user spoke a 1-based tab number. Translate it here to a 0-based index.
+            if index >= 0 && index < RecipeTab.orderedCases().count {
+                let newTab = RecipeTab.orderedCases()[index]
+                eventHandler.requestedSwitchTab(newTab)
+                return
+            }
+        }
+        
+        // If we reach here, we couldn't understand a valid tab to switch to.
+        // TODO: Present a clarifying request, "Which tab would you like to switch to?"
+        print("RecipeNavigationCT handleTabNavigationCommand needs clarification.")
+    }
+    
     func handleSaveRecipeCommand()
     {
         print("RecipeNavigationCT handleSaveRecipeCommand")
         // TODO: Interact with the SavedRecipes manager.
     }
+    
+    // MARK: Speech
     
     private func stopSpeaking()
     {
@@ -75,5 +103,5 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
 
 protocol RecipeNavigationConversationTopicEventHandler: class
 {
-    func handleTabNavigationCommand(command: SAYCommand)
+    func requestedSwitchTab(newTab: RecipeTab)
 }

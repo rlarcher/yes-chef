@@ -103,7 +103,7 @@ class HomeConversationTopic: SAYConversationTopic
             sequence.addEvent(SAYSpeechEvent(utteranceString: "Welcome to \"Yes Chef\"!"))
         }
         
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\". Say \"Help\" for more details."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\" Say \"Help\" for more details."))
         postEvents(sequence)
     }
     

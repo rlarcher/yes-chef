@@ -50,9 +50,16 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     
     // MARK: RecipeNavigationConversationTopicEventHandler Protocol Methods
     
-    func handleTabNavigationCommand(command: SAYCommand)
+    func requestedSwitchTab(newTab: RecipeTab)
     {
-        print("RecipeTabBarController handleTabNavigationCommand: \(command)")
+        switch newTab {
+        case .Overview:
+            switchToTab(recipeOverviewVC, then: nil)
+        case .Preparation:
+            switchToTab(recipePreparationVC, then: nil)
+        case .Ingredients:
+            switchToTab(recipeIngredientsVC, then: nil)
+        }
     }
     
     // MARK: UITabBarControllerDelegate Protocol Methods
@@ -117,4 +124,16 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     private weak var recipeOverviewVC: RecipeOverviewViewController!
     private weak var recipeIngredientsVC: RecipeIngredientsViewController!
     private weak var recipePreparationVC: RecipePreparationViewController!
+}
+
+enum RecipeTab: String
+{
+    case Overview = "Overview"
+    case Preparation = "Preparation"
+    case Ingredients = "Ingredients"
+    
+    static func orderedCases() -> [RecipeTab]
+    {
+        return [.Overview, .Preparation, .Ingredients]
+    }
 }
