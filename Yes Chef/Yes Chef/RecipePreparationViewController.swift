@@ -104,6 +104,11 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
         
     }
     
+    func handlePreparationTimeCommand()
+    {
+        recipePreparationConversationTopic.speakPreparationTime()
+    }
+    
     func beganSpeakingItemAtIndex(index: Int)
     {
         tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)

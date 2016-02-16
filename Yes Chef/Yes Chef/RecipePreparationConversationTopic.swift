@@ -46,7 +46,17 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         whatDoIDoRecognizer.addMenuItemWithLabel("Preparation Steps")
         addCommandRecognizer(whatDoIDoRecognizer)
         
-        // TODO: Add command recognizer for preparation time
+        let preparationTimeRecognizer = SAYCustomCommandRecognizer(customType: "PreparationTime", responseTarget: eventHandler, action: "handlePreparationTimeCommand")
+        preparationTimeRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("time") || text.containsString("how long") || text.containsString("preparation") || text.containsString("prep") || text.containsString("long") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        preparationTimeRecognizer.addMenuItemWithLabel("Preparation Time")
+        addCommandRecognizer(preparationTimeRecognizer)
     }
     
     // This must be called before attempting to speak.
@@ -148,6 +158,27 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         print("RecipePreparationCT speakOvenTemperature")
     }
     
+    func speakPreparationTime()
+    {
+        let sequence = SAYAudioEventSequence()
+        
+        let utteranceString: String
+        if let totalPrepTime = recipe.totalPreparationTime {
+            if let activePrepTime = recipe.activePreparationTime {
+                utteranceString = "This recipe will take \(totalPrepTime) minutes to complete (\(activePrepTime) minutes active)."
+            }
+            else {
+                utteranceString = "This recipe will take \(totalPrepTime) minutes to complete."
+            }
+        }
+        else {
+            utteranceString = "I don't know how long this recipe will take."
+        }
+        
+        sequence.addEvent(SAYSpeechEvent(utteranceString: utteranceString))
+        postEvents(sequence)
+    }
+    
     private var listSubtopic: ListConversationTopic?
     private var recipe: Recipe!
 }
@@ -164,4 +195,5 @@ protocol RecipePreparationConversationTopicEventHandler: class
     
     func handleWhatDoIDoCommand()
     func handleOvenTemperatureCommand()
+    func handlePreparationTimeCommand()
 }
