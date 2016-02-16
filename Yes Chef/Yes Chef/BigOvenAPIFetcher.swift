@@ -33,24 +33,14 @@ class BigOvenAPIFetcher: NSObject
                           .responseJSON { response in
                             switch response.result {
                             case .Success(let jsonObject):
-                                if let listings = self.parseRecipeListingFromJSONObject(jsonObject) {
-                                    completion(BigOvenAPISearchResponse(recipeListings: listings, bodyData: nil, responseError: nil))
-                                }
-                                else {
-                                    // TODO: Handle parsing error
-                                }
+                                completion(self.validateSearchSuccess(jsonObject))
                             case .Failure(let error):
-                                // TODO: Handle connection error
-                                print(error)
+                                completion(self.validateSearchFailure(error))
                             }
             }
         }
         else {
-            let stubRecipeListings = Utils.stubRecipeListings()
-            
-            completion(BigOvenAPISearchResponse(recipeListings: stubRecipeListings, bodyData: nil, responseError: nil))
-            
-            return
+            completion(.Success(recipeListings: Utils.stubRecipeListings()))
         }
     }
     
@@ -63,28 +53,55 @@ class BigOvenAPIFetcher: NSObject
                           .responseJSON { response in
                             switch response.result {
                             case .Success(let jsonObject):
-                                if let recipe = self.parseRecipeFromJSONObject(jsonObject) {
-                                    completion(BigOvenAPIRecipeResponse(recipe: recipe, bodyData: nil, responseError: nil))
-                                }
-                                else {
-                                    // TODO: Handle parsing error
-                                }
+                                completion(self.validateRecipeSuccess(jsonObject))
                             case .Failure(let error):
-                                // TODO: Handle connection error
-                                print(error)
+                                completion(self.validateRecipeFailure(error))
                             }
             }
         }
         else {
-            let stubRecipe = Utils.stubRecipes()[0]
-            
-            completion(BigOvenAPIRecipeResponse(recipe: stubRecipe, bodyData: nil, responseError: nil))
-            return
+            completion(.Success(recipe: Utils.stubRecipes()[0]))
         }
     }
     
-    /// Returns nil if the response object and its "Results" array couldn't be read. 
-    /// Returns an empty array if no results were found. 
+    // MARK: API Response Validation Helpers
+    
+    private func validateSearchSuccess(jsonObject: AnyObject) -> BigOvenAPISearchResponse
+    {
+        if let listings = self.parseRecipeListingFromJSONObject(jsonObject) {
+            return .Success(recipeListings: listings)
+        }
+        else {
+            // TODO: Handle parsing error
+        }
+    }
+    
+    private func validateSearchFailure(failureError: NSError) -> BigOvenAPISearchResponse
+    {
+        // TODO: Handle connection error
+        print(failureError)
+    }
+    
+    private func validateRecipeSuccess(jsonObject: AnyObject) -> BigOvenAPIRecipeResponse
+    {
+        if let recipe = self.parseRecipeFromJSONObject(jsonObject) {
+            return .Success(recipe: recipe)
+        }
+        else {
+            // TODO: Handle parsing error
+        }
+    }
+    
+    private func validateRecipeFailure(failureError: NSError) -> BigOvenAPIRecipeResponse
+    {
+        // TODO: Handle connection error
+        print(failureError)
+    }
+    
+    // MARK: Parsing Helpers
+    
+    /// Returns nil if the response object and its "Results" array couldn't be read.
+    /// Returns an empty array if no results were found.
     /// Otherwise returns an array of RecipeListing.
     private func parseRecipeListingFromJSONObject(jsonObject: AnyObject?) -> [RecipeListing]?
     {
@@ -221,26 +238,16 @@ class BigOvenAPIFetcher: NSObject
     private static let kAPIKey: String? = nil // NOTE: Replace this with your own BigOven API key, or leave as is to receive stubbed responses.
 }
 
-struct BigOvenAPISearchResponse
+enum BigOvenAPISearchResponse
 {
-    let recipeListings: [RecipeListing]?
-    
-    let bodyData: NSDictionary?
-    let responseError: NSError?
-    
-    var didSucceed: Bool {
-        return recipeListings != nil && responseError == nil
-    }
+    case Success(recipeListings: [RecipeListing])
+    case ConnectionError(error: NSError)
+    case UnrecognizedBodyFormat(error: NSError)
 }
 
-struct BigOvenAPIRecipeResponse
+enum BigOvenAPIRecipeResponse
 {
-    let recipe: Recipe?
-    
-    let bodyData: NSDictionary?
-    let responseError: NSError?
-    
-    var didSucceed: Bool {
-        return recipe != nil && responseError == nil
-    }
+    case Success(recipe: Recipe)
+    case ConnectionError(error: NSError)
+    case UnrecognizedBodyFormat(error: NSError)
 }
