@@ -14,6 +14,9 @@ struct Recipe
     let name: String
     let rating: Int
     let description: String
+    let cuisine: Cuisine
+    let category: Category
+    let subcategory: String
     let ingredients: [Ingredient]
     let preparationSteps: [String]
     let totalPreparationTime: Int?  // in minutes. If nil, then the poster didn't define a time.

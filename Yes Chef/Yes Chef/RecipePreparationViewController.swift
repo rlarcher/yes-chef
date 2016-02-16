@@ -106,13 +106,11 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     
     func beganSpeakingItemAtIndex(index: Int)
     {
-        print("RecipePreparationVC beganSpeakingItemAtIndex: \(index)")
         tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)
     }
     
     func finishedSpeakingItemAtIndex(index: Int)
     {
-        print("RecipePreparationVC finishedSpeakingItemAtIndex: \(index)")
         tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
     }
     

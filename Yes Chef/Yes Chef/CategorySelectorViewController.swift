@@ -53,22 +53,22 @@ class CategorySelectorViewController: UITableViewController {
 enum Category: String
 {
     case All =        "All Categories"
-    case Dessert =    "dessert"
-    case Appetizer =  "appetizer"
-    case Bread =      "bread"
-    case Breakfast =  "breakfast"
-    case Drinks =     "drinks"
-    case MainDish =   "main dish"
-    case Salad =      "salad"
-    case SideDish =   "side dish"
-    case Soup =       "soup"
-    case Marinade =   "marinade"
-    case Other =      "other"
+    case Desserts =   "Desserts"    // NOTE: Differs from docs, which says "dessert" without the "s".
+    case Appetizers = "Appetizers"  // NOTE: Differs from docs, which says "appetizer" without the "s".
+    case Bread =      "Bread"
+    case Breakfast =  "Breakfast"
+    case Drinks =     "Drinks"
+    case MainDish =   "Main Dish"
+    case Salad =      "Salad"
+    case SideDish =   "Side Dish"
+    case Soup =       "Soup"        // TODO: May actually be "Soups Stews and Chili", according to a regular BigOven search
+    case Marinade =   "Marinade"    // TODO: May actually be "Marinades and Sauces", according to a regular BigOven search
+    case Other =      "Other"
     
     static let orderedValues: [Category] = [
         All,
-        Dessert,
-        Appetizer,
+        Desserts,
+        Appetizers,
         Bread,
         Breakfast,
         Drinks,

@@ -78,13 +78,11 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     
     func beganSpeakingItemAtIndex(index: Int)
     {
-        print("SavedRecipesVC beganSpeakingItemAtIndex: \(index)")
         tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)
     }
     
     func finishedSpeakingItemAtIndex(index: Int)
     {
-        print("SavedRecipesVC finishedSpeakingItemAtIndex: \(index)")
         tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
     }
     

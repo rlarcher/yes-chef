@@ -20,7 +20,15 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
         switchTabRecognizer.addMenuItemWithLabel("Switch Tab...")        
         addCommandRecognizer(switchTabRecognizer)
 
-        // TODO: Add command recognizer for "Save recipe"
+        let saveRecipeRecognizer = SAYCustomCommandRecognizer(customType: "SaveRecipe", responseTarget: self, action: "handleSaveRecipeCommand")
+        saveRecipeRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("save") || text.containsString("keep") || text.containsString("favorite") || text.containsString("saved") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
     }
     
     // This must be called before attempting to speak.
@@ -47,6 +55,12 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
         // Note: This won't happen until the TabBarController is popped off the navigation stack.
         stopSpeaking()
         removeAllSubtopics()
+    }
+    
+    func handleSaveRecipeCommand()
+    {
+        print("RecipeNavigationCT handleSaveRecipeCommand")
+        // TODO: Interact with the SavedRecipes manager.
     }
     
     private func stopSpeaking()

@@ -101,5 +101,12 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
         }
     }
     
+    func handleCuisineCategoryCommand()
+    {
+        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            self.recipeOverviewConversationTopic.speakCuisineCategory()
+        }
+    }
+    
     private var recipe: Recipe!
 }

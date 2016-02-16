@@ -127,6 +127,9 @@ class BigOvenAPIFetcher: NSObject
                 let rawRecipeId             = root["RecipeID"]?.int,
                 let recipeName              = root["Title"]?.string,
                 let description             = root["Description"]?.string,
+                let cuisineString           = root["Cuisine"]?.string,
+                let categoryString          = root["Category"]?.string,
+                let subcategory             = root["Subcategory"]?.string,
                 let ratingFloat             = root["StarRating"]?.float,
                 let heroImageURLString      = root["HeroPhotoUrl"]?.string,
                 let heroImageURL            = NSURL(string: heroImageURLString),
@@ -141,10 +144,16 @@ class BigOvenAPIFetcher: NSObject
                 let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                 let preparationSteps = parsePreparationSteps(rawInstructions)
                 
+                let cuisine                 = Cuisine(rawValue: cuisineString) ?? Cuisine.All
+                let category                = Category(rawValue: categoryString) ?? Category.All
+                
                 let recipe = Recipe(recipeId: String(rawRecipeId),
                                     name: recipeName,
                                     rating:rating,
                                     description: description,
+                                    cuisine: cuisine,
+                                    category: category,
+                                    subcategory: subcategory,
                                     ingredients: ingredients,
                                     preparationSteps: preparationSteps,
                                     totalPreparationTime: totalPreparationTime,

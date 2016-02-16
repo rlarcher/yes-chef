@@ -72,13 +72,11 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         
     func beganSpeakingItemAtIndex(index: Int)
     {
-        print("SearchResultsVC beganSpeakingItemAtIndex: \(index)")
         tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)
     }
     
     func finishedSpeakingItemAtIndex(index: Int)
     {
-        print("SearchResultsVC finishedSpeakingItemAtIndex: \(index)")
         tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
     }
     

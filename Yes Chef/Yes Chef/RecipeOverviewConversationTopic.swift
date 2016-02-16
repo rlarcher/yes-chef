@@ -66,7 +66,18 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         caloriesRecognizer.addMenuItemWithLabel("Recipe Calories")
         addCommandRecognizer(caloriesRecognizer)
         
-        // TODO: Add command recognizer for this recipe's "Category"
+        let cuisineCategoryRecognizer = SAYCustomCommandRecognizer(customType: "CuisineCategory", responseTarget: eventHandler, action: "handleCuisineCategoryCommand")
+        cuisineCategoryRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsString("cuisine") || text.containsString("cuisines") || text.containsString("category") || text.containsString("categories") || text.containsString("what kind") || text.containsString("what type") {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        cuisineCategoryRecognizer.addMenuItemWithLabel("Cuisine and Category")
+        addCommandRecognizer(cuisineCategoryRecognizer)
+        
         // TODO: Add command recognizer for dietary restrictions
         // TODO: Add command recognizer for recipe description
     }
@@ -119,6 +130,28 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         postEvents(sequence)
     }
     
+    func speakCuisineCategory()
+    {
+        let sequence = SAYAudioEventSequence()
+        
+        let utteranceString: String
+        if recipe.cuisine != .All && recipe.category != .All {
+            utteranceString = "This is a \"\(recipe.cuisine)\" dish, in the \"\(recipe.category): \(recipe.subcategory)\" category."
+        }
+        else if recipe.cuisine != .All {
+            utteranceString = "This is a \"\(recipe.cuisine)\" dish."
+        }
+        else if recipe.category != .All {
+            utteranceString = "This dish is in the \"\(recipe.category): \(recipe.subcategory)\" category."
+        }
+        else {
+            utteranceString = "I don't know what kind of dish this is."
+        }
+        
+        sequence.addEvent(SAYSpeechEvent(utteranceString: utteranceString))
+        postEvents(sequence)
+    }
+    
     func stopSpeaking()
     {
         // TODO: Better way to interrupt speech on transitioning?
@@ -135,4 +168,5 @@ protocol RecipeOverviewConversationTopicEventHandler: class
     func handleRatingCommand()
     func handleRecipeNameCommand()
     func handleCaloriesCommand()
+    func handleCuisineCategoryCommand()
 }
