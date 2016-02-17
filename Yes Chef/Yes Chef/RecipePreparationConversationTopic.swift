@@ -154,8 +154,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     func speakOvenTemperature()
     {
-        // TODO
-        print("RecipePreparationCT speakOvenTemperature")
+        postEvents(SAYAudioEventSequence(events:[SAYSpeechEvent(utteranceString: "Sorry, I don't know what temperature the oven should be.")]))
     }
     
     func speakPreparationTime()
