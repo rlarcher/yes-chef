@@ -37,6 +37,11 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         listSubtopic?.speakItems()
     }
     
+    func speakErrorMessage(message: String)
+    {
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: message)]))
+    }
+    
     // MARK: Lifecycle
     
     func topicDidGainFocus()

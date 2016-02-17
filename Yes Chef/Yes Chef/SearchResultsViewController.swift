@@ -152,8 +152,8 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             switch response {
             case .Success(let recipe):
                 self.presentRecipe(recipe)
-            case .Failure(let errorMessage, let error):
-                break // TODO: Present error
+            case .Failure(let errorMessage, _):
+                self.presentErrorMessage(errorMessage)
             }
         }
     }
@@ -167,6 +167,12 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
                 self.searchResultsConversationTopic.addSubtopic(recipeTabBarController.recipeNavigationConversationTopic)
             }
         }
+    }
+    
+    private func presentErrorMessage(message: String)
+    {
+        // TODO: GUI component? Popup?
+        searchResultsConversationTopic.speakErrorMessage(message)
     }
     
     private var recipeListings: [RecipeListing]! {

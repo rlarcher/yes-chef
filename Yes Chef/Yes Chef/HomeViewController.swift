@@ -206,10 +206,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
             switch response {
             case .Success(let recipeListings):
                 self.presentSearchResults(recipeListings, forQuery: query)
-            case .Failure(let errorMessage, let error):
-                break // TODO: Present error message.
+            case .Failure(let errorMessage, _):
+                self.presentErrorMessage(errorMessage)
             }
         }
+    }
+    
+    private func presentErrorMessage(message: String)
+    {
+        // TODO: GUI component? Popup?
+        homeConversationTopic.speakErrorMessage(message)
     }
     
     func presentedViewControllerCancelButtonTapped()

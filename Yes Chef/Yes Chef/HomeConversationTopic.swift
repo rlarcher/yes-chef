@@ -123,6 +123,11 @@ class HomeConversationTopic: SAYConversationTopic
         postEvents(sequence)
     }
     
+    func speakErrorMessage(message: String)
+    {
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: message)]))
+    }
+    
     // MARK: Handle Commands
     
     func handleSearchCommand(command: SAYCommand)
