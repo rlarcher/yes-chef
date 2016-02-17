@@ -13,6 +13,7 @@ struct Recipe
     let recipeId: String
     let name: String
     let rating: Int
+    let reviewCount: Int
     let description: String
     let cuisine: Cuisine
     let category: Category
@@ -21,14 +22,23 @@ struct Recipe
     let preparationSteps: [String]
     let totalPreparationTime: Int?  // in minutes. If nil, then the poster didn't define a time.
     let activePreparationTime: Int? // in minutes. If nil, then the poster didn't define a time.
-    let servingSize: Int
+    let servingsQuantity: Int
+    let servingsUnit: String
     let calories: Int
     let heroImageURL: NSURL
     
     var speakableString: String
     {
         // Construct speakable string piece by piece, depending on what we have available.
-        var string = "\(name). \(rating) stars. \(description)."
+        var string = "\(name)."
+        
+        // Append rating, if there have been any reviews (suppress 0-star rating due to 0 reviews).
+        if reviewCount > 0 {
+            string = "\(string) \(rating) stars."
+        }
+        
+        // Append truncated description.
+        string = "\(string) \(truncatedDescription)."
         
         // Append total prep time, if we have it.
         if let totalTime = totalPreparationTime {
@@ -41,6 +51,27 @@ struct Recipe
         }
         
         return string
+    }
+    
+    var truncatedDescription: String
+    {
+        let descriptionSentences = description.componentsSeparatedByString(". ")
+        if descriptionSentences.count > 0 {
+            return descriptionSentences[0]
+        }
+        else {
+            return description
+        }
+    }
+    
+    var presentableServingsText: String
+    {
+        if servingsUnit.lowercaseString == "serving" || servingsUnit.lowercaseString == "servings" {
+            return "\(servingsQuantity)"
+        }
+        else {
+            return "\(servingsQuantity) \(servingsUnit)"
+        }
     }
 }
 

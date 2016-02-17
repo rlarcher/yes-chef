@@ -30,7 +30,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     override func viewDidLoad()
     {
-        servingsCountLabel.text = String(recipe.servingSize)
+        servingsCountLabel.text = String(recipe.presentableServingsText)
     }
     
     override func viewDidAppear(animated: Bool)

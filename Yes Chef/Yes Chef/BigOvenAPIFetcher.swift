@@ -103,16 +103,17 @@ class BigOvenAPIFetcher: NSObject
                 for result in results {
                     let recipeData = result.dictionaryValue
                     if
-                        let rawRecipeID = recipeData["RecipeID"]?.int,
-                        let recipeName = recipeData["Title"]?.string,
-                        let ratingFloat = recipeData["StarRating"]?.float,
-                        let servingSize = recipeData["YieldNumber"]?.int,
-                        let thumbnailURLString = recipeData["ImageURL120"]?.string,
-                        let thumbnailURL = NSURL(string: thumbnailURLString)
+                        let rawRecipeID         = recipeData["RecipeID"]?.int,
+                        let recipeName          = recipeData["Title"]?.string,
+                        let ratingFloat         = recipeData["StarRating"]?.float,
+                        let reviewCount         = recipeData["ReviewCount"]?.int,
+                        let yieldNumber         = recipeData["YieldNumber"]?.int,
+                        let thumbnailURLString  = recipeData["ImageURL120"]?.string,
+                        let thumbnailURL        = NSURL(string: thumbnailURLString)
                     {
                         let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                         
-                        let listing = RecipeListing(recipeId: String(rawRecipeID), name: recipeName, rating: rating, servingSize: servingSize, thumbnailImageURL: thumbnailURL)
+                        let listing = RecipeListing(recipeId: String(rawRecipeID), name: recipeName, rating: rating, reviewCount: reviewCount, servingsQuantity: yieldNumber, thumbnailImageURL: thumbnailURL)
                         recipeListings.append(listing)
                     }
                 }
@@ -139,7 +140,9 @@ class BigOvenAPIFetcher: NSObject
                 let ingredientsData         = root["Ingredients"]?.arrayValue,
                 let ingredients             = parseIngredients(ingredientsData),
                 let rawInstructions         = root["Instructions"]?.string,
-                let servingSize             = root["YieldNumber"]?.int
+                let yieldNumber             = root["YieldNumber"]?.int,
+                let yieldUnit               = root["YieldUnit"]?.string,
+                let reviewCount             = root["ReviewCount"]?.int
             {
                 let rawTotalPrepTime = root["TotalMinutes"]?.int                              // Could be nil, 0, or a proper number.
                 let totalPreparationTime = rawTotalPrepTime == 0 ? nil : rawTotalPrepTime     // If BigOven's time is 0, just set ours to nil.
@@ -171,6 +174,7 @@ class BigOvenAPIFetcher: NSObject
                 let recipe = Recipe(recipeId: String(rawRecipeId),
                                     name: recipeName,
                                     rating:rating,
+                                    reviewCount: reviewCount,
                                     description: description,
                                     cuisine: cuisine,
                                     category: category,
@@ -179,7 +183,8 @@ class BigOvenAPIFetcher: NSObject
                                     preparationSteps: preparationSteps,
                                     totalPreparationTime: totalPreparationTime,
                                     activePreparationTime: activePreparationTime,
-                                    servingSize: servingSize,
+                                    servingsQuantity: yieldNumber,
+                                    servingsUnit: yieldUnit,
                                     calories: 0,  // TODO: Handle NutrifionInfo
                                     heroImageURL: heroImageURL)
                 return recipe

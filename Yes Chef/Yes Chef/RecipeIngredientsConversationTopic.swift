@@ -160,7 +160,7 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     func speakServings()
     {
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe feeds \(recipe.servingSize) people."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe serves \(recipe.presentableServingsText)."))
         postEvents(sequence)
     }
     
@@ -168,7 +168,7 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     {
         let sequence = SAYAudioEventSequence()
         
-        let matchingIngredients = recipe.ingredients.filter({ $0.name.lowercaseString.containsString(ingredient.lowercaseString) })
+        let matchingIngredients = recipe.ingredients.filter({ $0.name.lowercaseString.containsString(ingredient.lowercaseString) }) // TODO: Improve string matching
         if let knownIngredient = matchingIngredients.first {
             sequence.addEvent(SAYSpeechEvent(utteranceString: "The recipe calls for \(knownIngredient.speakableString)."))
         }
