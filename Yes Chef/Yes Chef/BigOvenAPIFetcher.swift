@@ -63,13 +63,13 @@ class BigOvenAPIFetcher: NSObject
             return .Success(recipeListings: listings)
         }
         else {
-            return .UnexpectedBodyFormat(error: buildSearchParsingError(jsonObject))
+            return .UnexpectedBodyFormat(error: buildParsingError(jsonObject))
         }
     }
     
     private func validateSearchFailure(error: NSError) -> BigOvenAPISearchResponse
     {
-        return .ConnectionError(error: buildSearchConnectionError(error))
+        return .ConnectionError(error: buildConnectionError(error))
     }
     
     private func validateRecipeSuccess(jsonObject: AnyObject) -> BigOvenAPIRecipeResponse
@@ -78,13 +78,13 @@ class BigOvenAPIFetcher: NSObject
             return .Success(recipe: recipe)
         }
         else {
-            return .UnexpectedBodyFormat(error: buildRecipeParsingError(jsonObject))
+            return .UnexpectedBodyFormat(error: buildParsingError(jsonObject))
         }
     }
     
     private func validateRecipeFailure(error: NSError) -> BigOvenAPIRecipeResponse
     {
-        return .ConnectionError(error: buildRecipeConnectionError(error))
+        return .ConnectionError(error: buildConnectionError(error))
     }
     
     // MARK: Parsing Helpers
@@ -219,22 +219,12 @@ class BigOvenAPIFetcher: NSObject
     
     // MARK: Error Handling
     
-    private func buildSearchParsingError(underlyingJSONObject: AnyObject) -> NSError
+    private func buildParsingError(underlyingJSONObject: AnyObject) -> NSError
     {
         let parsingError = NSError(
-            domain: kSearchErrorDomain,
-            code: SearchErrorCode.UnexpectedResponseFormat.rawValue,
-            userInfo: [kSearchErrorUnderlyingJSONObjectKey: underlyingJSONObject])
-        
-        return parsingError
-    }
-    
-    private func buildRecipeParsingError(underlyingJSONObject: AnyObject) -> NSError
-    {
-        let parsingError = NSError(
-            domain: kRecipeErrorDomain,
-            code: RecipeErrorCode.UnexpectedResponseFormat.rawValue,
-            userInfo: [kRecipeErrorUnderlyingJSONObjectKey: underlyingJSONObject])
+            domain: kBigOvenAPIFetcherErrorDomain,
+            code: BigOvenAPIFetcherErrorCode.UnexpectedResponseFormat.rawValue,
+            userInfo: [kUnderlyingJSONObjectKey: underlyingJSONObject])
         
         return parsingError
     }
@@ -248,57 +238,28 @@ class BigOvenAPIFetcher: NSObject
     //    404 NOT FOUND 	Request URI invalid.
     //    500 INTERNAL ERROR 	Server error has occurred.
     
-    private func buildSearchConnectionError(underlyingError: NSError) -> NSError
+    private func buildConnectionError(underlyingError: NSError) -> NSError
     {
         let connectionError: NSError
         
         if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorNotConnectedToInternet {
             connectionError = NSError(
-                domain: kSearchErrorDomain,
-                code: SearchErrorCode.ConnectionOfflineError.rawValue,
+                domain: kBigOvenAPIFetcherErrorDomain,
+                code: BigOvenAPIFetcherErrorCode.ConnectionOffline.rawValue,
                 userInfo: [kUserFriendlyErrorMessageKey: "The internet connection appears to be offline. Please check your connection and try again.",
                     NSUnderlyingErrorKey: underlyingError])
         }
         else if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorTimedOut {
             connectionError = NSError(
-                domain: kSearchErrorDomain,
-                code: SearchErrorCode.ConnectionTimedOutError.rawValue,
+                domain: kBigOvenAPIFetcherErrorDomain,
+                code: BigOvenAPIFetcherErrorCode.ConnectionTimedOut.rawValue,
                 userInfo: [kUserFriendlyErrorMessageKey: "The internet connection has timed out. Please check your connection and try again.",
                     NSUnderlyingErrorKey: underlyingError])
         }
         else {
             connectionError = NSError(
-                domain: kSearchErrorDomain,
-                code: SearchErrorCode.ServerConnectionError.rawValue,
-                userInfo: [kUserFriendlyErrorMessageKey: "There was a problem connecting to the server. Please try again later.",
-                    NSUnderlyingErrorKey: underlyingError])
-        }
-        
-        return connectionError
-    }
-
-    private func buildRecipeConnectionError(underlyingError: NSError) -> NSError
-    {
-        let connectionError: NSError
-        
-        if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorNotConnectedToInternet {
-            connectionError = NSError(
-                domain: kRecipeErrorDomain,
-                code: RecipeErrorCode.ConnectionOfflineError.rawValue,
-                userInfo: [kUserFriendlyErrorMessageKey: "The internet connection appears to be offline. Please check your connection and try again.",
-                    NSUnderlyingErrorKey: underlyingError])
-        }
-        else if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorTimedOut {
-            connectionError = NSError(
-                domain: kRecipeErrorDomain,
-                code: RecipeErrorCode.ConnectionTimedOutError.rawValue,
-                userInfo: [kUserFriendlyErrorMessageKey: "The internet connection has timed out. Please check your connection and try again.",
-                    NSUnderlyingErrorKey: underlyingError])
-        }
-        else {
-            connectionError = NSError(
-                domain: kRecipeErrorDomain,
-                code: RecipeErrorCode.ServerConnectionError.rawValue,
+                domain: kBigOvenAPIFetcherErrorDomain,
+                code: BigOvenAPIFetcherErrorCode.ServerConnectionError.rawValue,
                 userInfo: [kUserFriendlyErrorMessageKey: "There was a problem connecting to the server. Please try again later.",
                     NSUnderlyingErrorKey: underlyingError])
         }
@@ -329,3 +290,15 @@ enum BigOvenAPIRecipeResponse
     case ConnectionError(error: NSError)
     case UnexpectedBodyFormat(error: NSError)
 }
+
+let kBigOvenAPIFetcherErrorDomain = "BigOvenAPIFetcherErrorDomain"
+enum BigOvenAPIFetcherErrorCode: Int
+{
+    case ConnectionOffline = 1
+    case ConnectionTimedOut = 2
+    case ServerConnectionError = 3
+    case UnexpectedResponseFormat = 4
+}
+
+let kUnderlyingJSONObjectKey = "UnderlyingJSONObjectKey"
+let kUserFriendlyErrorMessageKey = "UserFriendlyErrorMessageKey"

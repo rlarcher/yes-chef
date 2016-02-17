@@ -113,25 +113,3 @@ enum RecipeResponse
     case Success(recipe: Recipe)
     case Failure(message: String, error: NSError)
 }
-
-let kSearchErrorDomain = "searchErrorDomain"
-enum SearchErrorCode: Int
-{
-    case ConnectionOfflineError = 1
-    case ConnectionTimedOutError = 2
-    case ServerConnectionError = 3
-    case UnexpectedResponseFormat = 4
-}
-let kSearchErrorUnderlyingJSONObjectKey = "SearchErrorUnderlyingJSONObjectKey"
-
-let kRecipeErrorDomain = "recipeErrorDomain"
-enum RecipeErrorCode: Int
-{
-    case ConnectionOfflineError = 1
-    case ConnectionTimedOutError = 2
-    case ServerConnectionError = 3
-    case UnexpectedResponseFormat = 4
-}
-let kRecipeErrorUnderlyingJSONObjectKey = "RecipeErrorUnderlyingJSONObjectKey"
-
-let kUserFriendlyErrorMessageKey = "UserFriendlyErrorMessageKey"
