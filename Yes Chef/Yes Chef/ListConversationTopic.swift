@@ -234,23 +234,21 @@ class ListConversationTopic: SAYConversationTopic
         if items.count > 0 && startIndex < items.count {
             let sequence = SAYAudioEventSequence()
             headIndex = startIndex
-            var spokenIndex = startIndex
             
             let remainingItems = items.suffixFrom(headIndex)
             
-            for item in remainingItems {
+            for (index, item) in remainingItems.enumerate() {
                 // TODO: This is a workaround for a "prefix" block. Proper way?
                 // TODO: Disabled for now. Seems to worsen Main Track leakage during VerbalCommandRequests.
 //                sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
-//                    self.eventHandler.beganSpeakingItemAtIndex(self.headIndex)
+//                    self.eventHandler.beganSpeakingItemAtIndex(index)
 //                }
-                sequence.addEvent(SAYSpeechEvent(utteranceString: "\(spokenIndex + 1): \(item)")) {   // Speak the 1-based version of the index.
+                sequence.addEvent(SAYSpeechEvent(utteranceString: "\(index + 1): \(item)")) {   // Speak the 1-based version of the index.
                     if !self.isFlushingOldAudioSequence {
                         self.eventHandler.finishedSpeakingItemAtIndex(self.headIndex)
                         self.headIndex++
                     }
                 }
-                spokenIndex++
             }
             
             // Terminal event to release the flushing lock
