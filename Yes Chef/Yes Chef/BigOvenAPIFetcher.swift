@@ -133,9 +133,6 @@ class BigOvenAPIFetcher: NSObject
                 let rawRecipeId             = root["RecipeID"]?.int,
                 let recipeName              = root["Title"]?.string,
                 let description             = root["Description"]?.string,
-                let cuisineString           = root["Cuisine"]?.string,
-                let categoryString          = root["Category"]?.string,
-                let subcategory             = root["Subcategory"]?.string,
                 let ratingFloat             = root["StarRating"]?.float,
                 let heroImageURLString      = root["HeroPhotoUrl"]?.string,
                 let heroImageURL            = NSURL(string: heroImageURLString),
@@ -144,14 +141,32 @@ class BigOvenAPIFetcher: NSObject
                 let rawInstructions         = root["Instructions"]?.string,
                 let servingSize             = root["YieldNumber"]?.int
             {
-                let totalPreparationTime    = root["TotalMinutes"]?.int     // May be nil
-                let activePreparationTime   = root["ActiveMinutes"]?.int    // May be nil
+                let rawTotalPrepTime = root["TotalMinutes"]?.int                              // Could be nil, 0, or a proper number.
+                let totalPreparationTime = rawTotalPrepTime == 0 ? nil : rawTotalPrepTime     // If BigOven's time is 0, just set ours to nil.
+                
+                let rawActivePrepTime = root["ActiveMinutes"]?.int                            // Could be nil, 0, or a proper number.
+                let activePreparationTime = rawActivePrepTime == 0 ? nil : rawActivePrepTime  // If BigOven's time is 0, just set ours to nil.
                 
                 let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                 let preparationSteps = parsePreparationSteps(rawInstructions)
                 
-                let cuisine                 = Cuisine(rawValue: cuisineString) ?? Cuisine.All
-                let category                = Category(rawValue: categoryString) ?? Category.All
+                var cuisine = Cuisine.All
+                if
+                    let cuisineString = root["Cuisine"]?.string,                // Could be nil, empty (""), or a proper string.
+                    let parsedCuisine = Cuisine(rawValue: cuisineString)        // If `cuisineString` is a proper string, we should be able to create a Cuisine out of it.
+                {
+                    cuisine = parsedCuisine
+                }
+                
+                var category = Category.All
+                if
+                    let categoryString = root["Category"]?.string,              // Could be nil, empty (""), or a proper string.
+                    let parsedCategory = Category(rawValue: categoryString)     // If `categoryString` is a proper string, we should be able to create a Category out of it.
+                {
+                    category = parsedCategory
+                }
+                
+                let subcategory             = root["Subcategory"]?.string ?? ""
                 
                 let recipe = Recipe(recipeId: String(rawRecipeId),
                                     name: recipeName,
@@ -182,21 +197,23 @@ class BigOvenAPIFetcher: NSObject
         var ingredients = [Ingredient]()
         for ingredientData in ingredientsData {
             let ingredientJSON = ingredientData.dictionaryValue
-            if
-                let rawIngredientId     = ingredientJSON["IngredientID"]?.int,
-                let name                = ingredientJSON["Name"]?.string,
-                let quantity            = ingredientJSON["DisplayQuantity"]?.string
-            {
+            if let rawIngredientId      = ingredientJSON["IngredientID"]?.int {
+                let name                = ingredientJSON["Name"]?.string ?? "Unnamed Ingredient"    // Could be nil :(
+                
                 let rawUnits            = ingredientJSON["Unit"]?.string                // Could be nil, an empty string (""), or a proper string.
                 let units               = rawUnits == "" ? nil : rawUnits               // If BigOven's units are empty, just set ours to nil.
                 
+                let rawQuantity         = ingredientJSON["DisplayQuantity"]?.string     // Could be nil, an empty string (""), or a proper string.
+                let quantity            = rawQuantity == "" ? nil : rawQuantity         // If BigOven's quantity is empty, just set ours to nil.
+                
                 let preparationNotes    = ingredientJSON["PreparationNotes"]?.string    // Could be nil, an empty string (""), or a proper string.
-                let notes: String?      = preparationNotes == "" ? nil : preparationNotes    // If BigOven's notes are empty, just set ours to nil.
+                let notes               = preparationNotes == "" ? nil : preparationNotes    // If BigOven's notes are empty, just set ours to nil.
                 
                 let ingredient = Ingredient(ingredientId: String(rawIngredientId), name: name, quantityString: quantity, units: units, preparationNotes: notes)
                 ingredients.append(ingredient)
             }
             else {
+                print("Couldn't parse ingredient. Data: \(ingredientData)")
                 return nil
             }
         }

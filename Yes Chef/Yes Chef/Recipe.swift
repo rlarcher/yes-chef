@@ -48,14 +48,18 @@ struct Ingredient
 {
     let ingredientId: String
     let name: String
-    let quantityString: String
+    let quantityString: String?
     let units: String?
     let preparationNotes: String?
     
     var speakableString: String
     {
         // Construct speakable string piece by piece, depending on what we have available.
-        var string = quantityString
+        var string = ""
+        
+        if let usableQuantity = quantityString {
+            string = usableQuantity
+        }
         
         // Append units, if we have them.
         if let usableUnits = units {

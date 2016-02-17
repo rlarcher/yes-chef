@@ -36,10 +36,10 @@ class BigOvenAPIManager
                 }
                 completion(.Success(recipeListings: recipeListings))
             case .ConnectionError(let error):
-                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as! String
+                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while searching for recipes. Please try again later."
                 completion(.Failure(message: errorMessage, error: error))
             case .UnexpectedBodyFormat(let error):
-                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as! String
+                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while searching for recipes."
                 completion(.Failure(message: errorMessage, error: error))
             }
         }
@@ -57,10 +57,10 @@ class BigOvenAPIManager
                     self.addRecipeToCache(recipe)
                     completion?(.Success(recipe: recipe))
                 case .ConnectionError(let error):
-                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as! String
+                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while looking up a recipe. Please try again later."
                     completion?(.Failure(message: errorMessage, error: error))
                 case .UnexpectedBodyFormat(let error):
-                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as! String
+                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while looking up a recipe."
                     completion?(.Failure(message: errorMessage, error: error))
                 }
             })
