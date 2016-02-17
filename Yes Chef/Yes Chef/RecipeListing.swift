@@ -25,4 +25,8 @@ struct RecipeListing
             return "\(name). Serves \(servingsQuantity)."
         }
     }
+    
+    var presentableRating: Int? {
+        return reviewCount > 0 ? rating : nil
+    }
 }

@@ -105,7 +105,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             cell.thumbnailImageView.af_setImageWithURL(recipeListing.thumbnailImageURL, placeholderImage: nil) // TODO: Add placeholder image
             cell.servingSizeLabel.text = "Serves: \(recipeListing.servingsQuantity)"
             
-            let ratingLabels = Utils.getLabelsForRating(recipeListing.rating)
+            let ratingLabels = Utils.getLabelsForRating(recipeListing.presentableRating)
             cell.ratingLabel.text = ratingLabels.textLabel
             cell.ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
             

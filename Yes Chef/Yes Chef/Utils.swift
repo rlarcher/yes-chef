@@ -10,22 +10,27 @@ import Foundation
 
 class Utils: NSObject
 {
-    static func getLabelsForRating(rating: Int) -> (textLabel: String, accessibilityLabel: String) {
-        switch rating {
-        case 0:
-            return ("☆☆☆☆☆", "0 out of 5 stars")
-        case 1:
-            return ("★☆☆☆☆", "1 out of 5 stars")
-        case 2:
-            return ("★★☆☆☆", "2 out of 5 stars")
-        case 3:
-            return ("★★★☆☆", "3 out of 5 stars")
-        case 4:
-            return ("★★★★☆", "4 out of 5 stars")
-        case 5:
-            return ("★★★★★", "5 out of 5 stars")
-        default:
+    static func getLabelsForRating(rating: Int?) -> (textLabel: String, accessibilityLabel: String) {
+        if rating == nil {
             return ("", "")
+        }
+        else {
+            switch rating! {
+            case 0:
+                return ("☆☆☆☆☆", "0 out of 5 stars")
+            case 1:
+                return ("★☆☆☆☆", "1 out of 5 stars")
+            case 2:
+                return ("★★☆☆☆", "2 out of 5 stars")
+            case 3:
+                return ("★★★☆☆", "3 out of 5 stars")
+            case 4:
+                return ("★★★★☆", "4 out of 5 stars")
+            case 5:
+                return ("★★★★★", "5 out of 5 stars")
+            default:
+                return ("", "")
+            }
         }
     }
     

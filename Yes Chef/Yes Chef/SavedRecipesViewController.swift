@@ -132,7 +132,7 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
             }
             cell.ingredientsLabel.text = "\(recipe.ingredients.count) Ingredients"
             
-            let ratingLabels = Utils.getLabelsForRating(recipe.rating)
+            let ratingLabels = Utils.getLabelsForRating(recipe.presentableRating)
             cell.ratingLabel.text = ratingLabels.textLabel
             cell.ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
             

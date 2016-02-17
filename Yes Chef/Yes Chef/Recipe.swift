@@ -73,6 +73,11 @@ struct Recipe
             return "\(servingsQuantity) \(servingsUnit)"
         }
     }
+    
+    var presentableRating: Int?
+    {
+        return reviewCount > 0 ? rating : nil
+    }
 }
 
 struct Ingredient
