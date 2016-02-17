@@ -62,7 +62,7 @@ class HomeConversationTopic: SAYConversationTopic
         
         let categoriesRecognizer = SAYCustomCommandRecognizer(customType: "Categories") { _ in self.handleCategoriesCommand() }
         categoriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("categories") || text.containsString("category") {
+            if text.containsAny(["category", "categories"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -73,7 +73,7 @@ class HomeConversationTopic: SAYConversationTopic
         
         let cuisinesRecognizer = SAYCustomCommandRecognizer(customType: "Cuisines") { _ in self.handleCuisinesCommand() }
         cuisinesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("cuisine") || text.containsString("cuisines") {
+            if text.containsAny(["cuisine", "cuisines"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {

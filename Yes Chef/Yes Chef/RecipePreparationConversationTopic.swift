@@ -23,7 +23,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         let ovenTemperatureRecognizer = SAYCustomCommandRecognizer(customType: "OvenTemperature", responseTarget: eventHandler, action: "handleOvenTemperatureCommand")
         ovenTemperatureRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             // Recognize phrases like "What temperature do I set the oven?", "How hot should the oven be?"
-            if text.containsString("oven") || text.containsString("temperature") || text.containsString("how hot") {
+            if text.containsAny(["oven", "temperature", "how hot"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -36,7 +36,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         let whatDoIDoRecognizer = SAYCustomCommandRecognizer(customType: "WhatDoIDo", responseTarget: eventHandler, action: "handleWhatDoIDoCommand")
         whatDoIDoRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             // Recognize phrases like "What do I do?", "What are the steps?"
-            if text.containsString("what do I do") || text.containsString("what do") || text.containsString("what steps") || text.containsString("what are the steps") || text.containsString("steps") {
+            if text.containsAny(["what do I do", "what do", "what steps", "what are the steps", "steps"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -48,7 +48,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         
         let preparationTimeRecognizer = SAYCustomCommandRecognizer(customType: "PreparationTime", responseTarget: eventHandler, action: "handlePreparationTimeCommand")
         preparationTimeRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("time") || text.containsString("how long") || text.containsString("preparation") || text.containsString("prep") || text.containsString("long") {
+            if text.containsAny(["time", "how long", "preparation", "prep", "long"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {

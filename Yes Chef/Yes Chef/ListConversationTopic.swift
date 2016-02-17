@@ -46,7 +46,7 @@ class ListConversationTopic: SAYConversationTopic
 
         let repeatRecognizer = SAYCustomCommandRecognizer(customType: "Repeat", responseTarget: self, action: "handleRepeatCommand")
         repeatRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("repeat") || text.containsString("again") || text.containsString("what did you say") || text.containsString("what was that?") {
+            if text.containsAny(["repeat", "again", "what did you say", "what was that"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -58,7 +58,7 @@ class ListConversationTopic: SAYConversationTopic
         
         let readAllRecognizer = SAYCustomCommandRecognizer(customType: "ReadAll", responseTarget: self, action: "handleReadAllCommand")
         readAllRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("read all") || text.containsString("read everything") || text.containsString("repeat everything") {
+            if text.containsAny(["read all", "read everything", "repeat everything"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {

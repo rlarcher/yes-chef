@@ -22,7 +22,7 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
 
         let saveRecipeRecognizer = SAYCustomCommandRecognizer(customType: "SaveRecipe", responseTarget: self, action: "handleSaveRecipeCommand")
         saveRecipeRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("save") || text.containsString("keep") || text.containsString("favorite") || text.containsString("saved") {
+            if text.containsAny(["save", "keep", "favorite", "saved"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {

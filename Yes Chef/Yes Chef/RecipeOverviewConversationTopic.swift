@@ -18,7 +18,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         
         let overviewRecognizer = SAYCustomCommandRecognizer(customType: "Overview", responseTarget: eventHandler, action: "handleOverviewCommand")
         overviewRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("over view") || text.containsString("overview") {
+            if text.containsAny(["overview", "over view"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -30,7 +30,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         
         let ratingRecognizer = SAYCustomCommandRecognizer(customType: "Rating", responseTarget: eventHandler, action: "handleRatingCommand")
         ratingRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("rating") || text.containsString("ratings") || text.containsString("rated") || text.containsString("rate") || text.containsString("stars") {
+            if text.containsAny(["rating", "ratings", "rated", "rate", "stars"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -43,7 +43,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         let recipeNameRecognizer = SAYCustomCommandRecognizer(customType: "RecipeName", responseTarget: eventHandler, action: "handleRecipeNameCommand")
         recipeNameRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             // Respond to speech like "What's the name of this recipe?", "What's this called?"
-            if text.containsString("named") || text.containsString("called") || text.containsString("name") || text.containsString("call") {
+            if text.containsAny(["named", "called", "name", "call"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -56,7 +56,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         let caloriesRecognizer = SAYCustomCommandRecognizer(customType: "Calories", responseTarget: eventHandler, action: "handleCaloriesCommand")
         caloriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             // Respond to speech like "How many calories is this?", "Is this healthy?"
-            if text.containsString("calorie") || text.containsString("calories") || text.containsString("healthy") {
+            if text.containsAny(["calorie", "calories", "healthy"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -68,7 +68,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         
         let cuisineCategoryRecognizer = SAYCustomCommandRecognizer(customType: "CuisineCategory", responseTarget: eventHandler, action: "handleCuisineCategoryCommand")
         cuisineCategoryRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("cuisine") || text.containsString("cuisines") || text.containsString("category") || text.containsString("categories") || text.containsString("what kind") || text.containsString("what type") {
+            if text.containsAny(["cuisine", "cuisines", "category", "categories", "what kind", "what type"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -80,7 +80,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         
         let nutritionInfoRecognizer = SAYCustomCommandRecognizer(customType: "NutritionInfo", responseTarget: eventHandler, action: "handleNutritionInfoCommand")
         nutritionInfoRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("nutrition") || text.containsString("nutritional") || text.containsString("fat") || text.containsString("diet") || text.containsString("dietary") || text.containsString("calories") {
+            if text.containsAny(["nutrition", "nutritional", "fat", "diet", "dietary", "calories"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -92,7 +92,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         
         let descriptionRecognizer = SAYCustomCommandRecognizer(customType: "Description", responseTarget: eventHandler, action: "handleDescriptionCommand")
         descriptionRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsString("description") || text.containsString("describe") || text.containsString("about the recipe") {
+            if text.containsAny(["description", "describe", "about the recipe"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceCertain)
             }
             else {

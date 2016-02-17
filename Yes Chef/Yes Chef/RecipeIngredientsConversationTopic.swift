@@ -23,7 +23,7 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         let servingsRecognizer = SAYCustomCommandRecognizer(customType: "Servings", responseTarget: eventHandler, action: "handleServingsCommand")
         servingsRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             // Recognize phrases like "How many servings?", "How many people can this feed?"
-            if text.containsString("servings") || text.containsString("serving") || text.containsString("how many people does this feed") {
+            if text.containsAny(["servings", "serving", "how many people does this feed"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -50,7 +50,7 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         let ingredientsRecognizer = SAYCustomCommandRecognizer(customType: "Ingredients", responseTarget: eventHandler, action: "handleIngredientsCommand")
         ingredientsRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             // Recognize phrases like "What are the ingredients?", "What do I need?"
-            if text.containsString("ingredients") || text.containsString("what do I need") {
+            if text.containsAny(["ingredients", "what do I need"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
