@@ -29,15 +29,18 @@ class BigOvenAPIManager
     func searchForRecipeByName(query: String, category: Category?, cuisine: Cuisine?, completion: (SearchResponse -> Void))
     {
         apiFetcher.searchForRecipeByName(query, category: category?.rawValue, cuisine: cuisine?.rawValue) { (response) -> () in
-            if let recipeListings = response.recipeListings where response.didSucceed {
+            switch response {
+            case .Success(let recipeListings):
                 for listing in recipeListings {
                     self.fetchRecipe(listing.recipeId, completion: nil) // Prefetch corresponding recipes
                 }
-                completion(SearchResponse(recipeListings: recipeListings, error: nil))
-            }
-            else {
-                let wrappedError = self.wrapSearchError(response.responseError!, bodyData: response.bodyData)
-                completion(SearchResponse(recipeListings: nil, error: wrappedError))
+                completion(.Success(recipeListings: recipeListings))
+            case .ConnectionError(let error):
+                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as! String
+                completion(.Failure(message: errorMessage, error: error))
+            case .UnexpectedBodyFormat(let error):
+                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as! String
+                completion(.Failure(message: errorMessage, error: error))
             }
         }
     }
@@ -45,34 +48,23 @@ class BigOvenAPIManager
     func fetchRecipe(recipeId: String, completion: (RecipeResponse -> Void)?)
     {
         if let recipe = retrieveRecipeFromCache(recipeId) {
-            completion?(RecipeResponse(recipe: recipe, error: nil))
+            completion?(.Success(recipe: recipe))
         }
         else {
             apiFetcher.recipeWithId(recipeId, completion: { (response) -> () in
-                if let recipe = response.recipe where response.didSucceed {
+                switch response {
+                case .Success(let recipe):
                     self.addRecipeToCache(recipe)
-                    completion?(RecipeResponse(recipe: recipe, error: nil))
-                }
-                else {
-                    let wrappedError = self.wrapRecipeError(response.responseError!, bodyData: response.bodyData)
-                    completion?(RecipeResponse(recipe: nil, error: wrappedError))
+                    completion?(.Success(recipe: recipe))
+                case .ConnectionError(let error):
+                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as! String
+                    completion?(.Failure(message: errorMessage, error: error))
+                case .UnexpectedBodyFormat(let error):
+                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as! String
+                    completion?(.Failure(message: errorMessage, error: error))
                 }
             })
         }
-    }
-    
-    // MARK: Error Handling
-    
-    private func wrapSearchError(error: NSError, bodyData: NSDictionary?) -> NSError
-    {
-        // TODO
-        return NSError(domain: "TODO", code: 0, userInfo: nil)
-    }
-    
-    private func wrapRecipeError(error: NSError, bodyData: NSDictionary?) -> NSError
-    {
-        // TODO
-        return NSError(domain: "TODO", code: 0, userInfo: nil)
     }
     
     private let apiFetcher: BigOvenAPIFetcher
@@ -110,32 +102,36 @@ class BigOvenAPIManager
     }
 }
 
-struct SearchResponse
+enum SearchResponse
 {
-    let recipeListings: [RecipeListing]?
-    let error: NSError?
+    case Success(recipeListings: [RecipeListing])
+    case Failure(message: String, error: NSError)
 }
 
-struct RecipeResponse
+enum RecipeResponse
 {
-    let recipe: Recipe?
-    let error: NSError?
+    case Success(recipe: Recipe)
+    case Failure(message: String, error: NSError)
 }
 
 let kSearchErrorDomain = "searchErrorDomain"
 enum SearchErrorCode: Int
 {
-    case LocalConnectionError = 1
-    case ServerConnectionError = 2
-    case UnexpectedResponseFormat = 3
+    case ConnectionOfflineError = 1
+    case ConnectionTimedOutError = 2
+    case ServerConnectionError = 3
+    case UnexpectedResponseFormat = 4
 }
 let kSearchErrorUnderlyingJSONObjectKey = "SearchErrorUnderlyingJSONObjectKey"
 
 let kRecipeErrorDomain = "recipeErrorDomain"
 enum RecipeErrorCode: Int
 {
-    case LocalConnectionError = 1
-    case ServerConnectionError = 2
-    case UnexpectedResponseFormat = 3
+    case ConnectionOfflineError = 1
+    case ConnectionTimedOutError = 2
+    case ServerConnectionError = 3
+    case UnexpectedResponseFormat = 4
 }
 let kRecipeErrorUnderlyingJSONObjectKey = "RecipeErrorUnderlyingJSONObjectKey"
+
+let kUserFriendlyErrorMessageKey = "UserFriendlyErrorMessageKey"

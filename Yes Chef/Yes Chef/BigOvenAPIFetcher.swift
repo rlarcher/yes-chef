@@ -250,24 +250,58 @@ class BigOvenAPIFetcher: NSObject
     
     private func buildSearchConnectionError(underlyingError: NSError) -> NSError
     {
-        // TODO: Distinguish between local connection error (e.g. no wifi), and server-side connection error (e.g. server down)
+        let connectionError: NSError
         
-        let connectionError = NSError(
-            domain: kSearchErrorDomain,
-            code: SearchErrorCode.ServerConnectionError.rawValue,
-            userInfo: [NSUnderlyingErrorKey: underlyingError])
+        if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorNotConnectedToInternet {
+            connectionError = NSError(
+                domain: kSearchErrorDomain,
+                code: SearchErrorCode.ConnectionOfflineError.rawValue,
+                userInfo: [kUserFriendlyErrorMessageKey: "The internet connection appears to be offline. Please check your connection and try again.",
+                    NSUnderlyingErrorKey: underlyingError])
+        }
+        else if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorTimedOut {
+            connectionError = NSError(
+                domain: kSearchErrorDomain,
+                code: SearchErrorCode.ConnectionTimedOutError.rawValue,
+                userInfo: [kUserFriendlyErrorMessageKey: "The internet connection has timed out. Please check your connection and try again.",
+                    NSUnderlyingErrorKey: underlyingError])
+        }
+        else {
+            connectionError = NSError(
+                domain: kSearchErrorDomain,
+                code: SearchErrorCode.ServerConnectionError.rawValue,
+                userInfo: [kUserFriendlyErrorMessageKey: "There was a problem connecting to the server. Please try again later.",
+                    NSUnderlyingErrorKey: underlyingError])
+        }
         
         return connectionError
     }
 
     private func buildRecipeConnectionError(underlyingError: NSError) -> NSError
     {
-        // TODO: Distinguish between local connection error (e.g. no wifi), and server-side connection error (e.g. server down)
+        let connectionError: NSError
         
-        let connectionError = NSError(
-            domain: kRecipeErrorDomain,
-            code: RecipeErrorCode.ServerConnectionError.rawValue,
-            userInfo: [NSUnderlyingErrorKey: underlyingError])
+        if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorNotConnectedToInternet {
+            connectionError = NSError(
+                domain: kRecipeErrorDomain,
+                code: RecipeErrorCode.ConnectionOfflineError.rawValue,
+                userInfo: [kUserFriendlyErrorMessageKey: "The internet connection appears to be offline. Please check your connection and try again.",
+                    NSUnderlyingErrorKey: underlyingError])
+        }
+        else if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorTimedOut {
+            connectionError = NSError(
+                domain: kRecipeErrorDomain,
+                code: RecipeErrorCode.ConnectionTimedOutError.rawValue,
+                userInfo: [kUserFriendlyErrorMessageKey: "The internet connection has timed out. Please check your connection and try again.",
+                    NSUnderlyingErrorKey: underlyingError])
+        }
+        else {
+            connectionError = NSError(
+                domain: kRecipeErrorDomain,
+                code: RecipeErrorCode.ServerConnectionError.rawValue,
+                userInfo: [kUserFriendlyErrorMessageKey: "There was a problem connecting to the server. Please try again later.",
+                    NSUnderlyingErrorKey: underlyingError])
+        }
         
         return connectionError
     }

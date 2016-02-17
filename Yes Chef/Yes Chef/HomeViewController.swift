@@ -203,11 +203,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     private func searchUsingQuery(query: String, category: Category?, cuisine: Cuisine?)
     {
         BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category, cuisine: cuisine) { response -> Void in
-            if let results = response.recipeListings {
-                self.presentSearchResults(results, forQuery: query)
-            }
-            else {
-                // TODO: Handle error
+            switch response {
+            case .Success(let recipeListings):
+                self.presentSearchResults(recipeListings, forQuery: query)
+            case .Failure(let errorMessage, let error):
+                break // TODO: Present error message.
             }
         }
     }

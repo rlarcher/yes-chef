@@ -149,11 +149,11 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
     {
         BigOvenAPIManager.sharedManager.fetchRecipe(recipeListing.recipeId) { response -> Void in
-            if let recipe = response.recipe {
+            switch response {
+            case .Success(let recipe):
                 self.presentRecipe(recipe)
-            }
-            else {
-                // TODO: Handle error
+            case .Failure(let errorMessage, let error):
+                break // TODO: Present error
             }
         }
     }
