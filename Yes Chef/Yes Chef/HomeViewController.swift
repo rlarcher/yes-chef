@@ -38,6 +38,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         shouldSpeakFirstTimeIntroduction = false
     }
     
+    override func viewWillDisappear(animated: Bool)
+    {
+        homeConversationTopic.topicDidLoseFocus()
+    }
+    
     // MARK: HomeConversationTopicEventHandler Protocol Methods
     
     func handleHelpCommand()

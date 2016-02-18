@@ -59,6 +59,11 @@ class HomeConversationTopic: SAYConversationTopic
             ]))
         featureQueryRecognizer.addMenuItemWithLabel("What is...")
         addCommandRecognizer(featureQueryRecognizer)
+    }
+    
+    func topicDidGainFocus()
+    {
+        removeAllSubtopics() // TODO: Think of a better way to clean up popped subtopics. Override navigation methods? Independent navigation management?
         
         let categoriesRecognizer = SAYCustomCommandRecognizer(customType: "Categories") { _ in self.handleCategoriesCommand() }
         categoriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -66,10 +71,11 @@ class HomeConversationTopic: SAYConversationTopic
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
-                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryUnlikely)
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
         addCommandRecognizer(categoriesRecognizer)
+        focusedRecognizers.append(categoriesRecognizer)
         
         let cuisinesRecognizer = SAYCustomCommandRecognizer(customType: "Cuisines") { _ in self.handleCuisinesCommand() }
         cuisinesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -77,20 +83,19 @@ class HomeConversationTopic: SAYConversationTopic
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
-                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryUnlikely)
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
             }
         }))
         addCommandRecognizer(cuisinesRecognizer)
-    }
-    
-    func topicDidGainFocus()
-    {
-        removeAllSubtopics() // TODO: Think of a better way to clean up popped subtopics. Override navigation methods? Independent navigation management?
+        focusedRecognizers.append(cuisinesRecognizer)
     }
     
     func topicDidLoseFocus()
     {
-        // Do nothing
+        for recognizer in focusedRecognizers {
+            removeCommandRecognizer(recognizer)
+        }
+        focusedRecognizers.removeAll()
     }
     
     // MARK: Speech Methods
@@ -203,6 +208,8 @@ class HomeConversationTopic: SAYConversationTopic
         
         self.postEvents(outgoingSequence)
     }
+    
+    private var focusedRecognizers = [SAYVerbalCommandRecognizer]() // Recognizers that we only want active while this CT is focused.
 }
 
 protocol HomeConversationTopicEventHandler: class
