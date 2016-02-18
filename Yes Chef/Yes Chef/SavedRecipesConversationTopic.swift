@@ -74,7 +74,22 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     func selectedItemWithName(name: String?, index: Int?)
     {
-        eventHandler.selectedItemWithName(name, index: index)
+        if
+            let recipeName = name,
+            let selectedRecipe = recipeWithName(recipeName)
+        {
+            eventHandler.selectedRecipe(selectedRecipe)
+        }
+        else if
+            let recipeIndex = index,
+            let selectedRecipe = recipeAtIndex(recipeIndex)
+        {
+            eventHandler.selectedRecipe(selectedRecipe)
+        }
+        else {
+            speakSelectionFailed()
+            eventHandler.selectedRecipe(nil)
+        }
     }
     
     func requestedRemoveItemWithName(name: String?, index: Int?)
@@ -127,13 +142,34 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
+    private func speakSelectionFailed()
+    {
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "I couldn't select an item by that name or number. Please try again.")]))
+    }
+    
+    func recipeWithName(name: String) -> Recipe?
+    {
+        let matchingRecipe = recipes.filter({ $0.name.lowercaseString.containsString(name.lowercaseString) }).first // TODO: Improve how we check for a match
+        return matchingRecipe
+    }
+    
+    func recipeAtIndex(index: Int) -> Recipe?
+    {
+        if index > 0 && index < recipes.count {
+            return recipes[index]
+        }
+        else {
+            return nil
+        }
+    }
+    
     private var listSubtopic: ListConversationTopic?
     private var recipes: [Recipe]!
 }
 
 protocol SavedRecipesConversationTopicEventHandler: class
 {
-    func selectedItemWithName(name: String?, index: Int?)
+    func selectedRecipe(recipe: Recipe?)
     func requestedRemoveItemWithName(name: String?, index: Int)
 
     func handlePlayCommand()

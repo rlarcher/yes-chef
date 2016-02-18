@@ -200,7 +200,7 @@ class ListConversationTopic: SAYConversationTopic
         
         let selectedIndex: Int?
         if let index = command.parameters[SAYSelectCommandRecognizerParameterItemNumber] as? NSNumber {
-            selectedIndex = index.integerValue
+            selectedIndex = max(index.integerValue - 1, 0)  // Convert from spoken 1-based number to 0-based index
         }
         else if selectedName == nil {
             // User said "Select" without any parameters, so assume they meant to select the current item.

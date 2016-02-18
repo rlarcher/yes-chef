@@ -87,7 +87,22 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func selectedItemWithName(name: String?, index: Int?)
     {
-        eventHandler.selectedItemWithName(name, index: index)
+        if
+            let listingName = name,
+            let selectedListing = recipeListingWithName(listingName)
+        {
+            eventHandler.selectedRecipeListing(selectedListing)
+        }
+        else if
+            let listingIndex = index,
+            let selectedListing = recipeListingAtIndex(listingIndex)
+        {
+            eventHandler.selectedRecipeListing(selectedListing)
+        }
+        else {
+            speakSelectionFailed()
+            eventHandler.selectedRecipeListing(nil)
+        }
     }
     
     func handlePlayCommand()
@@ -130,6 +145,27 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
+    private func speakSelectionFailed()
+    {
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "I couldn't select an item by that name or number. Please try again.")]))
+    }
+    
+    func recipeListingWithName(name: String) -> RecipeListing?
+    {
+        let matchingListing = recipeListings.filter({ $0.name.lowercaseString.containsString(name.lowercaseString) }).first // TODO: Improve how we check for a match
+        return matchingListing
+    }
+    
+    func recipeListingAtIndex(index: Int) -> RecipeListing?
+    {
+        if index > 0 && index < recipeListings.count {
+            return recipeListings[index]
+        }
+        else {
+            return nil
+        }
+    }
+    
     private var listSubtopic: ListConversationTopic?
     private var recipeListings: [RecipeListing]!
     private var searchQuery: String!
@@ -137,7 +173,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
 
 protocol SearchResultsConversationTopicEventHandler: class
 {
-    func selectedItemWithName(name: String?, index: Int?)
+    func selectedRecipeListing(recipeListing: RecipeListing?)
 
     func handlePlayCommand()
     func handlePauseCommand()

@@ -45,22 +45,14 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
     
-    func selectedItemWithName(name: String?, index: Int?)
+    func selectedRecipe(recipe: Recipe?)
     {
-        if
-            let recipeName = name,
-            let selectedRecipe = recipeWithName(recipeName)
-        {
-            selectionBlock?(selectedRecipe)
-        }
-        else if
-            let recipeIndex = index,
-            let selectedRecipe = recipeAtIndex(recipeIndex)
-        {
+        if let selectedRecipe = recipe {
             selectionBlock?(selectedRecipe)
         }
         else {
-            // TODO: Handle error / followup
+            // TODO: Visual feedback?
+            print("SavedRecipesVC selectedRecipe, no recipe could be selected.")
         }
     }
     
@@ -154,23 +146,7 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     }
     
     // MARK: Helpers
-    
-    func recipeWithName(name: String) -> Recipe?
-    {
-        let matchingRecipe = savedRecipes.filter({ $0.name.lowercaseString == name.lowercaseString }).first // TODO: Improve how we check for a match
-        return matchingRecipe
-    }
-    
-    func recipeAtIndex(index: Int) -> Recipe?
-    {
-        if index > 0 && index < savedRecipes.count {
-            return savedRecipes[index]
-        }
-        else {
-            return nil
-        }
-    }
-    
+        
     private var savedRecipes: [Recipe]! {
         didSet {
             // Keeps savedRecipesCT's recipes in sync with savedRecipesVC's recipes.

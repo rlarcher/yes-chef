@@ -39,22 +39,14 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
     
-    func selectedItemWithName(name: String?, index: Int?)
+    func selectedRecipeListing(recipeListing: RecipeListing?)
     {
-        if
-            let listingName = name,
-            let selectedListing = listingWithName(listingName)
-        {
-            requestedRecipePresentationForListing(selectedListing)
-        }
-        else if
-            let listingIndex = index,
-            let selectedListing = listingAtIndex(listingIndex)
-        {
+        if let selectedListing = recipeListing {
             requestedRecipePresentationForListing(selectedListing)
         }
         else {
-            // TODO: Handle error / followup
+            // TODO: Visual feedback?
+            print("SearchResultsVC selectedRecipeListing, couldn't select a listing.")
         }
     }
     
