@@ -153,7 +153,7 @@ class HomeConversationTopic: SAYConversationTopic
         else {
             // We didn't understand a search query. Present a clarifying request.
             let request = SAYStringRequest(promptText: "What would you like to search for?", action: { spokenText -> Void in
-                if let text = spokenText {
+                if let text = spokenText where !text.isEmpty() {
                     self.performSearchUsingQuery(text)
                 }
                 else {
