@@ -87,7 +87,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
             eventHandler.selectedRecipe(selectedRecipe)
         }
         else {
-            speakSelectionFailed()
+            speakSelectionFailed(name, index: index)
             eventHandler.selectedRecipe(nil)
         }
     }
@@ -142,9 +142,20 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
-    private func speakSelectionFailed()
+    private func speakSelectionFailed(name: String?, index: Int?)
     {
-        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "I couldn't select an item by that name or number. Please try again.")]))
+        let utteranceString: String
+        if let listingName = name {
+            utteranceString = "I couldn't select an item called \"\(listingName)\". Please try again."
+        }
+        else if let listingIndex = index {
+            utteranceString = "I couldn't select item number \"\(listingIndex)\". Please try again."
+        }
+        else {
+            utteranceString = "I couldn't select an item by that name or number. Please try again."
+        }
+        
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utteranceString)]))
     }
     
     func recipeWithName(name: String) -> Recipe?

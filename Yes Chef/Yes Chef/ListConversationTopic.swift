@@ -135,9 +135,7 @@ class ListConversationTopic: SAYConversationTopic
     
     func speakNextItem()
     {
-        if headIndex < items.count - 1 {
-            headIndex++
-        }
+        incrementHeadIndex()
         isFlushingOldAudioSequence = true
         speakItems(startingAtIndex: headIndex)
     }
@@ -246,7 +244,7 @@ class ListConversationTopic: SAYConversationTopic
                 sequence.addEvent(SAYSpeechEvent(utteranceString: "\(index + 1): \(item)")) {   // Speak the 1-based version of the index.
                     if !self.isFlushingOldAudioSequence {
                         self.eventHandler.finishedSpeakingItemAtIndex(self.headIndex)
-                        self.headIndex++
+                        self.incrementHeadIndex()
                     }
                 }
             }
@@ -260,6 +258,13 @@ class ListConversationTopic: SAYConversationTopic
         }
         else {
             // TODO: Do nothing?
+        }
+    }
+    
+    private func incrementHeadIndex()
+    {
+        if headIndex < items.count - 1 {
+            headIndex++
         }
     }
     
