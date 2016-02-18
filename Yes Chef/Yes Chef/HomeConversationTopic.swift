@@ -28,6 +28,16 @@ class HomeConversationTopic: SAYConversationTopic
         
         let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: self, action: "handleSearchCommand:")
         searchRecognizer.addMenuItemWithLabel("Search...")
+        searchRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPatterns: [
+            "I want to bake @\(SAYSearchCommandRecognizerParameterQuery)",
+            "I want to cook @\(SAYSearchCommandRecognizerParameterQuery)",
+            "I want to grill @\(SAYSearchCommandRecognizerParameterQuery)",
+            "I want to make @\(SAYSearchCommandRecognizerParameterQuery)",
+            "let's bake @\(SAYSearchCommandRecognizerParameterQuery)",
+            "let's cook @\(SAYSearchCommandRecognizerParameterQuery)",
+            "let's grill @\(SAYSearchCommandRecognizerParameterQuery)",
+            "let's make @\(SAYSearchCommandRecognizerParameterQuery)"
+            ]))
         addCommandRecognizer(searchRecognizer)
         
         let homeRecognizer = SAYHomeCommandRecognizer(responseTarget: eventHandler, action: "handleHomeCommand")
