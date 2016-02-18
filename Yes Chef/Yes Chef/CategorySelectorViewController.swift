@@ -82,10 +82,9 @@ enum Category: String
     
     static func categoryFoundInText(text: String) -> Category?
     {
-        for category in Category.orderedValues {
-            if text.lowercaseString.containsString(category.rawValue.lowercaseString) { // TODO: Improve how we make matches
-                return category
-            }
+        let categoryNames = Category.orderedValues.map({ $0.rawValue })
+        if let index = Utils.fuzzyIndexOfItemWithName(text, inList: categoryNames) {
+            return Category.orderedValues[index]
         }
         
         return nil

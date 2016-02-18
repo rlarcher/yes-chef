@@ -1,5 +1,5 @@
 //
-//  String+ContainsAny.swift
+//  String+Utils.swift
 //  Yes Chef
 //
 //  Created by Adam Larsen on 2016/02/17.
@@ -19,5 +19,10 @@ extension String
         }
         
         return false
+    }
+    
+    func fuzzyMatches(other: String) -> Bool
+    {
+        return self.score(other, fuzziness: 0.7) > Utils.kFuzzyScoreThreshold
     }
 }

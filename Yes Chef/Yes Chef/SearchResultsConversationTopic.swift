@@ -152,8 +152,13 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func recipeListingWithName(name: String) -> RecipeListing?
     {
-        let matchingListing = recipeListings.filter({ $0.name.lowercaseString.containsString(name.lowercaseString) }).first // TODO: Improve how we check for a match
-        return matchingListing
+        let listingsNames = recipeListings.map({ $0.name })
+        if let matchingIndex = Utils.fuzzyIndexOfItemWithName(name, inList: listingsNames) {
+            return recipeListings[matchingIndex]
+        }
+        else {
+            return nil
+        }
     }
     
     func recipeListingAtIndex(index: Int) -> RecipeListing?

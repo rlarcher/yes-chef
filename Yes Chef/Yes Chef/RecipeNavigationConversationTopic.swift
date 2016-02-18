@@ -62,11 +62,11 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
     func handleTabNavigationCommand(command: SAYCommand)
     {
         if let tabName = command.parameters[SAYSwitchTabCommandRecognizerParameterTabName] as? String {
-            for tab in RecipeTab.orderedCases() {
-                if tab.rawValue.lowercaseString.containsString(tabName.lowercaseString) { // TODO: Improve string matching
-                    eventHandler.requestedSwitchTab(tab)
-                    return
-                }
+            let tabNames = RecipeTab.orderedCases().map({ $0.rawValue })
+            if let tabIndex = Utils.fuzzyIndexOfItemWithName(tabName, inList: tabNames) {
+                let newTab = RecipeTab.orderedCases()[tabIndex]
+                eventHandler.requestedSwitchTab(newTab)
+                return
             }
         }
         else if let tabNumber = command.parameters[SAYSwitchTabCommandRecognizerParameterTabNumber] as? NSNumber {

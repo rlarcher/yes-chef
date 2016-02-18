@@ -164,19 +164,20 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         postEvents(sequence)
     }
     
-    func speakIngredient(ingredient: String)
+    func speakIngredient(ingredientName: String)
     {
-        let sequence = SAYAudioEventSequence()
+        let utteranceString: String
         
-        let matchingIngredients = recipe.ingredients.filter({ $0.name.lowercaseString.containsString(ingredient.lowercaseString) }) // TODO: Improve string matching
-        if let knownIngredient = matchingIngredients.first {
-            sequence.addEvent(SAYSpeechEvent(utteranceString: "The recipe calls for \(knownIngredient.speakableString)."))
+        let ingredientNames = recipe.ingredients.map({ $0.name })
+        if let matchingIndex = Utils.fuzzyIndexOfItemWithName(ingredientName, inList: ingredientNames) {
+            let ingredient = recipe.ingredients[matchingIndex]
+            utteranceString = "The recipe calls for \(ingredient.speakableString)."
         }
         else {
-            sequence.addEvent(SAYSpeechEvent(utteranceString: "The recipe doesn't call for any \(ingredient)."))
+            utteranceString = "The recipe doesn't call for any \(ingredientName)."
         }
         
-        postEvents(sequence)
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utteranceString)]))
     }
     
     private var listSubtopic: ListConversationTopic?

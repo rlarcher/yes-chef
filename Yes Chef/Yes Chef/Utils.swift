@@ -34,6 +34,30 @@ class Utils: NSObject
         }
     }
     
+    static var kFuzzyScoreThreshold = 0.45  // Arbitrary!
+    
+    static func fuzzyIndexOfItemWithName(name: String, inList itemList: [String]) -> Int?
+    {
+        var bestScore = 0.0
+        var bestIndex: Int? = nil
+        
+        let lowerName = name.lowercaseString
+        
+        for (index, item) in itemList.enumerate() {
+            let lowerItem = item.lowercaseString
+            let score = lowerItem.score(lowerName, fuzziness: 0.7)
+            
+            print("(\(lowerItem)).score(\(lowerName)) == \(score)")
+            
+            if score > bestScore {
+                bestScore = score
+                bestIndex = index
+            }
+        }
+        
+        return bestScore > kFuzzyScoreThreshold ? bestIndex : nil
+    }
+    
     static func stubRecipeListings() -> [RecipeListing]
     {
         let stubRecipeListings = [RecipeListing(recipeId: "12345678",

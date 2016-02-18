@@ -148,10 +148,9 @@ enum Cuisine: String
     
     static func cuisineFoundInText(text: String) -> Cuisine?
     {
-        for cuisine in Cuisine.orderedValues {
-            if text.lowercaseString.containsString(cuisine.rawValue.lowercaseString) { // TODO: Improve how we make matches
-                return cuisine
-            }
+        let cuisineNames = Cuisine.orderedValues.map({ $0.rawValue })
+        if let index = Utils.fuzzyIndexOfItemWithName(text, inList: cuisineNames) {
+            return Cuisine.orderedValues[index]
         }
         
         return nil
