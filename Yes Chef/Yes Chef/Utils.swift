@@ -47,7 +47,7 @@ class Utils: NSObject
             let lowerItem = item.lowercaseString
             let score = lowerItem.score(lowerName, fuzziness: 0.7)
             
-            print("(\(lowerItem)).score(\(lowerName)) == \(score)")
+//            print("(\(lowerItem)).score(\(lowerName)) == \(score)")
             
             if score > bestScore {
                 bestScore = score

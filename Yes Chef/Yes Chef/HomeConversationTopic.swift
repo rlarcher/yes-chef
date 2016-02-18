@@ -148,12 +148,19 @@ class HomeConversationTopic: SAYConversationTopic
     func handleSearchCommand(command: SAYCommand)
     {
         if let searchQuery = command.parameters[SAYSearchCommandRecognizerParameterQuery] as? String {
-            let category = Category.categoryFoundInText(searchQuery)
-            let cuisine = Cuisine.cuisineFoundInText(searchQuery)
-            self.eventHandler.requestedSearchUsingQuery(searchQuery, category: category, cuisine: cuisine)
+            performSearchUsingQuery(searchQuery)
         }
         else {
-            self.eventHandler.requestedSearchUsingQuery(nil, category: nil, cuisine: nil)
+            // We didn't understand a search query. Present a clarifying request.
+            let request = SAYStringRequest(promptText: "What would you like to search for?", action: { spokenText -> Void in
+                if let text = spokenText {
+                    self.performSearchUsingQuery(text)
+                }
+                else {
+                    self.performSearchUsingQuery(nil)
+                }
+            })
+            SAYConversationManager.systemManager().presentVoiceRequest(request)
         }
     }
     
@@ -217,6 +224,20 @@ class HomeConversationTopic: SAYConversationTopic
         outgoingSequence.appendSequence(SAYAudioEventSequence(events: [silenceEvent, helpMessageEvent]))
         
         self.postEvents(outgoingSequence)
+    }
+    
+    // MARK: Helpers
+    
+    private func performSearchUsingQuery(query: String?)
+    {
+        if let searchQuery = query {
+            let category = Category.categoryFoundInText(searchQuery)
+            let cuisine = Cuisine.cuisineFoundInText(searchQuery)
+            self.eventHandler.requestedSearchUsingQuery(searchQuery, category: category, cuisine: cuisine)
+        }
+        else {
+            self.eventHandler.requestedSearchUsingQuery(nil, category: nil, cuisine: nil)
+        }
     }
     
     private var focusedRecognizers = [SAYVerbalCommandRecognizer]() // Recognizers that we only want active while this CT is focused.

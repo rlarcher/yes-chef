@@ -73,7 +73,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
             searchUsingQuery(query, category: category, cuisine: cuisine)
         }
         else {
-            // TODO: Prompt for clarification ("Search for what?")
+            // TODO: Do anything? Bonk?
         }
     }
     
