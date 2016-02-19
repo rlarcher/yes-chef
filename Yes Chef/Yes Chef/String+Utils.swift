@@ -26,26 +26,17 @@ extension String
         return self.score(other, fuzziness: 0.7) > Utils.kFuzzyScoreThreshold
     }
     
-    func isEmpty() -> Bool
+    // Returns true if this string is empty or contains only whitespace.
+    var isBlank: Bool
     {
-        if self.characters.count == 0 {
+        if self.isEmpty {
             return true
         }
         
         let trimmedSelf = self.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-//        if trimmedSelf.characters.count
-//        + (BOOL)isStringEmptyOrWhitespace:(NSString *)string {
-//            if ([string length] == 0) { // string is empty or nil
-//                return YES;
-//            }
-//            
-//            if (![[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length]) {
-//                // string is all whitespace
-//                return YES;
-//            }
-//            
-//            return NO;
-//        }
+        if trimmedSelf.isEmpty {
+            return true
+        }
         
         return false
     }

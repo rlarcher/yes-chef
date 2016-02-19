@@ -171,7 +171,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     func recipeAtIndex(index: Int) -> Recipe?
     {
-        if index > 0 && index < recipes.count {
+        if index >= 0 && index < recipes.count {
             return recipes[index]
         }
         else {

@@ -174,7 +174,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func recipeListingAtIndex(index: Int) -> RecipeListing?
     {
-        if index > 0 && index < recipeListings.count {
+        if index >= 0 && index < recipeListings.count {
             return recipeListings[index]
         }
         else {
