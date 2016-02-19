@@ -68,7 +68,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     func topicDidGainFocus()
     {
-        listSubtopic = ListConversationTopic(items: recipe.preparationSteps, eventHandler: self)
+        listSubtopic = buildPreparationListSubtopic()
         addSubtopic(listSubtopic!)
     }
     
@@ -80,30 +80,8 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
-        if subtopic is ListConversationTopic {
-            var outgoingEvents = sequence.items().map({ $0.event })
-            
-            // Speak a help message after the 3rd item.
-            let helpString = "You can say \"Pause\" at any time if you need a minute."
-            if recipe.preparationSteps.count > 3 {
-                outgoingEvents.insert(SAYSpeechEvent(utteranceString: helpString), atIndex: 3)
-            }
-            
-            // Speak an introduction before the first item.
-            let prefixString = recipe.preparationSteps.count > 0 ?
-                "There are \(recipe.preparationSteps.count) steps to this recipe:" :
-                "There are no preparation steps for this recipe."
-            outgoingEvents.insert(SAYSpeechEvent(utteranceString: prefixString), atIndex: 0)
-            
-            // Speak an outro after the last item.
-            let suffixString = "You can say \"Repeat\" to listen to the instructions again, or skip around by saying \"What's the third step?\""
-            outgoingEvents.append(SAYSpeechEvent(utteranceString: suffixString))
-            
-            postEvents(SAYAudioEventSequence(events: outgoingEvents))
-        }
-        else {
-            postEvents(sequence)
-        }
+        // TODO: Should be unnecessary to override this functions just to pass the sequence through to `postEvents:`. Investigate.
+        self.postEvents(sequence)
     }
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
@@ -146,13 +124,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         eventHandler.finishedSpeakingItemAtIndex(index)
     }
     
-    // MARK: Helpers
-    
-    func stopSpeaking()
-    {
-        // TODO: Better way to interrupt speech on transitioning?
-        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
-    }
+    // MARK: Speech
     
     func speakPreparationSteps()
     {
@@ -183,6 +155,26 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         
         sequence.addEvent(SAYSpeechEvent(utteranceString: utteranceString))
         postEvents(sequence)
+    }
+    
+    // MARK: Helpers
+    
+    func stopSpeaking()
+    {
+        // TODO: Better way to interrupt speech on transitioning?
+        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+    }
+    
+    private func buildPreparationListSubtopic() -> ListConversationTopic
+    {
+        let listTopic = ListConversationTopic(items: recipe.preparationSteps, eventHandler: self)
+        listTopic.introString = recipe.preparationSteps.count > 0 ?
+                                    "There are \(recipe.preparationSteps.count) steps to this recipe:" :
+                                    "There are no preparation steps for this recipe."
+        listTopic.intermediateHelpString = "You can say \"Pause\" at any time if you need a minute."
+        listTopic.outroString = "You can say \"Repeat\" to listen to the instructions again, or skip around by saying \"What's the third step?\""
+        
+        return listTopic
     }
     
     private var listSubtopic: ListConversationTopic?

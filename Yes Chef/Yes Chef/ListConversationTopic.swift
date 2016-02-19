@@ -8,9 +8,15 @@
 
 import Foundation
 
+/// `ListConversationTopic` is a conversation topic that handles many common list-based commands and behaviors, such as playback controls, selection, item reading, and help messaging.
+/// This is a working prototype. Stay tuned for a pre-packaged SAYListConversationTopic!
 class ListConversationTopic: SAYConversationTopic
 {
     let eventHandler: ListConversationTopicEventHandler
+    
+    var introString: String?
+    var intermediateHelpString: String?
+    var outroString: String?
     
     convenience init(items: [String], eventHandler: ListConversationTopicEventHandler)
     {
@@ -230,10 +236,10 @@ class ListConversationTopic: SAYConversationTopic
     private func speakItems(startingAtIndex startIndex: Int)
     {
         if items.count > 0 && startIndex < items.count {
-            let sequence = SAYAudioEventSequence()
+            var sequence = SAYAudioEventSequence()
             headIndex = startIndex
             
-            let remainingItems = items.suffixFrom(headIndex)
+            let remainingItems = items.suffixFrom(headIndex) // TODO: Find an alternative where we can preserve the item's true index, but don't speak anything prior to startIndex
             
             for (index, item) in remainingItems.enumerate() {
                 // TODO: This is a workaround for a "prefix" block. Proper way?
@@ -248,6 +254,8 @@ class ListConversationTopic: SAYConversationTopic
                     }
                 }
             }
+            
+            sequence = insertHelpMessagesIntoSequence(sequence)
             
             // Terminal event to release the flushing lock
             sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
@@ -266,6 +274,54 @@ class ListConversationTopic: SAYConversationTopic
         if headIndex < items.count - 1 {
             headIndex++
         }
+    }
+    
+    private func insertHelpMessagesIntoSequence(sequence: SAYAudioEventSequence) -> SAYAudioEventSequence
+    {
+        let helpIndex = 2
+        
+        if introString == nil && intermediateHelpString == nil && outroString == nil {
+            // If no help messages have been defined, do nothing.
+            return sequence
+        }
+        
+        var outgoingEvents = sequence.items().map({ $0.event })
+        
+        // Insert help and outro message events.
+        if items.count > 5 {    // Arbitrary! If there's more than this many items, we don't need to worry about the Help and Outro messages being spoken too close together.
+            // Long List. If defined, speak a help message after the third item, and an outro message at the end of the list.
+            if let help = intermediateHelpString {
+                outgoingEvents.insert(SAYSpeechEvent(utteranceString: help), atIndex: helpIndex)
+            }
+            if let outro = outroString {
+                outgoingEvents.append(SAYSpeechEvent(utteranceString: outro))
+            }
+        }
+        else if items.count > helpIndex {
+            // Medium-length List. If defined, speak a help message after the third item. If the outro message is unique, speak it at the end of the list (ie, if the outro is the same as the help message, we'd be repeating our message from just a few items ago).
+            if let help = intermediateHelpString {
+                outgoingEvents.insert(SAYSpeechEvent(utteranceString: help), atIndex: helpIndex)
+            }
+            if let outro = outroString where outro != intermediateHelpString {
+                outgoingEvents.append(SAYSpeechEvent(utteranceString: outro))
+            }
+        }
+        else {
+            // Short List. If defined, speak a help message at the end of the list. If the outro message is unique, speak it also (ie, if the outro is the same as the help message, we'd be saying the same thing twice).
+            if let help = intermediateHelpString {
+                outgoingEvents.append(SAYSpeechEvent(utteranceString: help))
+            }
+            if let outro = outroString where outro != intermediateHelpString {
+                outgoingEvents.append(SAYSpeechEvent(utteranceString: outro))
+            }
+        }
+        
+        // Insert introduction message event.
+        if let intro = introString {
+            outgoingEvents.insert(SAYSpeechEvent(utteranceString: intro), atIndex: 0)
+        }
+        
+        return SAYAudioEventSequence(events: outgoingEvents)
     }
     
     private var headIndex = 0   // The index currently being read

@@ -46,7 +46,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func topicDidGainFocus()
     {
-        listSubtopic = ListConversationTopic(items: recipeListings.map({ $0.speakableString }), eventHandler: self)
+        listSubtopic = buildResultsListSubtopic()
         addSubtopic(listSubtopic!)
         speakResults()
     }
@@ -63,30 +63,8 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
-        if subtopic is ListConversationTopic {
-            var outgoingEvents = sequence.items().map({ $0.event })
-            
-            // Speak a help message after the 3rd item.
-            if recipeListings.count > 3 {
-                let helpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
-                outgoingEvents.insert(SAYSpeechEvent(utteranceString: helpString), atIndex: 3)
-            }
-            
-            // Speak an introduction before the first item.
-            let prefixString = recipeListings.count > 0 ?
-                "I found \(recipeListings.count) results for \"\(searchQuery)\":" :
-                "There were no results for \"\(searchQuery)\"."
-            outgoingEvents.insert(SAYSpeechEvent(utteranceString: prefixString), atIndex: 0)
-            
-            // Speak an outro after the last item.
-            let suffixString = "Say \"More\" for more recipes (coming soon)."
-            outgoingEvents.append(SAYSpeechEvent(utteranceString: suffixString))
-            
-            postEvents(SAYAudioEventSequence(events: outgoingEvents))
-        }
-        else {
-            postEvents(sequence)
-        }
+        // TODO: Should be unnecessary to override this functions just to pass the sequence through to `postEvents:`. Investigate.
+        self.postEvents(sequence)
     }
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
@@ -150,6 +128,18 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     {
         // TODO: Better way to interrupt speech on transitioning?
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+    }
+    
+    private func buildResultsListSubtopic() -> ListConversationTopic
+    {
+        let listTopic = ListConversationTopic(items: recipeListings.map({ $0.speakableString }), eventHandler: self)
+        listTopic.introString = recipeListings.count > 0 ?
+                                    "I found \(recipeListings.count) results for \"\(searchQuery)\":" :
+                                    "There were no results for \"\(searchQuery)\"."
+        listTopic.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
+        listTopic.outroString = "Say \"More\" for more recipes (coming soon)."
+        
+        return listTopic
     }
     
     private func speakSelectionFailed(name: String?, index: Int?)

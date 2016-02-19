@@ -73,7 +73,7 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     
     func topicDidGainFocus()
     {
-        listSubtopic = ListConversationTopic(items: recipe.ingredients.map({ $0.speakableString }), eventHandler: self)
+        listSubtopic = buildIngredientsListSubtopic()
         addSubtopic(listSubtopic!)
     }
     
@@ -85,24 +85,8 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
-        if subtopic is ListConversationTopic {
-            var outgoingEvents = sequence.items().map({ $0.event })
-            
-            // Speak an introduction before the first item.
-            let prefixString = recipe.ingredients.count > 0 ?
-                "You need \(recipe.ingredients.count) ingredients:" :
-                "There are no ingredients for this recipe."
-            outgoingEvents.insert(SAYSpeechEvent(utteranceString: prefixString), atIndex: 0)
-            
-            // Speak an outro after the last item.
-            let helpString = "To add an ingredient to your grocery list, say \"Save\" followed by the ingredient's name or number."
-            outgoingEvents.append(SAYSpeechEvent(utteranceString: helpString))
-            
-            postEvents(SAYAudioEventSequence(events: outgoingEvents))
-        }
-        else {
-            postEvents(sequence)
-        }
+        // TODO: Should be unnecessary to override this functions just to pass the sequence through to `postEvents:`. Investigate.
+        self.postEvents(sequence)
     }
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
@@ -145,13 +129,7 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         eventHandler.finishedSpeakingItemAtIndex(index)
     }
     
-    // MARK: Helpers
-    
-    func stopSpeaking()
-    {
-        // TODO: Better way to interrupt speech on transitioning?
-        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
-    }
+    // MARK: Speech
     
     func speakIngredients()
     {
@@ -179,6 +157,26 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         }
         
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utteranceString)]))
+    }
+    
+    // MARK: Helpers
+    
+    func stopSpeaking()
+    {
+        // TODO: Better way to interrupt speech on transitioning?
+        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+    }
+
+    private func buildIngredientsListSubtopic() -> ListConversationTopic
+    {
+        let listTopic = ListConversationTopic(items: recipe.ingredients.map({ $0.speakableString }), eventHandler: self)
+        listTopic.introString = recipe.ingredients.count > 0 ?
+                                    "You need \(recipe.ingredients.count) ingredients:" :
+                                    "There are no ingredients for this recipe."
+        listTopic.intermediateHelpString = "You can say \"Pause\" at any time if you need a minute."
+        listTopic.outroString = "To add an ingredient to your grocery list, say \"Save\" followed by the ingredient's name or number (coming soon)."
+        
+        return listTopic
     }
     
     private var listSubtopic: ListConversationTopic?

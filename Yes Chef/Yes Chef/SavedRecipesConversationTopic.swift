@@ -35,7 +35,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     func topicDidGainFocus()
     {
-        listSubtopic = ListConversationTopic(items: recipes.map({ $0.speakableString }), listIsMutable: true, eventHandler: self)
+        listSubtopic = buildSavedListSubtopic()
         addSubtopic(listSubtopic!)
         speakSavedRecipes()
     }
@@ -50,44 +50,8 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
-        if subtopic is ListConversationTopic {
-            var outgoingEvents = sequence.items().map({ $0.event })
-            
-            // Speak help messages.
-            let helpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
-            let outroString = helpString
-            if recipes.count > 6 {
-                // Speak a help message after the third item, and an outro message at the end of the list.
-                outgoingEvents.insert(SAYSpeechEvent(utteranceString: helpString), atIndex: 3)
-                outgoingEvents.append(SAYSpeechEvent(utteranceString: outroString))
-            }
-            else if recipes.count > 3 {
-                // Speak a help message after the third item (but not at the end of the list, since it's a short list, unless our outroString is explicitly different).
-                // TODO: Tweak? Remove?
-                outgoingEvents.insert(SAYSpeechEvent(utteranceString: helpString), atIndex: 3)
-                if outroString != helpString {
-                    outgoingEvents.append(SAYSpeechEvent(utteranceString: outroString))
-                }
-            }
-            else {
-                // Speak a help message at the end of the (very short) list.
-                outgoingEvents.append(SAYSpeechEvent(utteranceString: helpString))
-                if outroString != helpString {
-                    outgoingEvents.append(SAYSpeechEvent(utteranceString: outroString))
-                }
-            }
-            
-            // Speak an introduction before the first item.
-            let prefixString = recipes.count > 0 ?
-                "You have \(recipes.count) saved items:" :
-                "You have no saved items."
-            outgoingEvents.insert(SAYSpeechEvent(utteranceString: prefixString), atIndex: 0)
-            
-            postEvents(SAYAudioEventSequence(events: outgoingEvents))
-        }
-        else {
-            postEvents(sequence)
-        }
+        // TODO: Should be unnecessary to override this functions just to pass the sequence through to `postEvents:`. Investigate.
+        self.postEvents(sequence)
     }
     
     // MARK: ListConversationTopicEventHandler Protocol Methods 
@@ -161,6 +125,20 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     {
         // TODO: Better way to interrupt speech on transitioning?
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+    }
+    
+    private func buildSavedListSubtopic() -> ListConversationTopic
+    {
+        let listTopic = ListConversationTopic(items: recipes.map({ $0.speakableString }), listIsMutable: true, eventHandler: self)
+        listTopic.introString = recipes.count > 0 ?
+                                    "You have \(recipes.count) saved items:" :
+                                    "You have no saved items."
+        
+        let helpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
+        listTopic.intermediateHelpString = helpString
+        listTopic.outroString = helpString
+        
+        return listTopic
     }
     
     private func speakSelectionFailed(name: String?, index: Int?)
