@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AFNetworking
 import Alamofire
 import SwiftyJSON
 
