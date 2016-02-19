@@ -127,7 +127,9 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
     {
         let sequence = SAYAudioEventSequence()
         sequence.addEvent(SAYSpeechEvent(utteranceString: recipe.speakableString))
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "Say \"overview\" to hear the entire description."))  // TODO: Only speak this if the description was truncated.
+        if recipe.truncatedDescriptionAvailable {
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "Say \"Description\" to hear the entire description."))
+        }
         postEvents(sequence)
     }
     

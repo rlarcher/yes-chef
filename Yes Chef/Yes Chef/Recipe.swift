@@ -53,6 +53,10 @@ struct Recipe
         return string
     }
     
+    var truncatedDescriptionAvailable: Bool {
+        return description != truncatedDescription
+    }
+    
     var truncatedDescription: String
     {
         let descriptionSentences = description.componentsSeparatedByString(". ")
