@@ -86,21 +86,22 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
         if subtopic is ListConversationTopic {
-            let prefixEvent: SAYSpeechEvent
-            if recipe.ingredients.count > 0 {
-                prefixEvent = SAYSpeechEvent(utteranceString: "You need \(recipe.ingredients.count) ingredients for this recipe:")
-            }
-            else {
-                prefixEvent = SAYSpeechEvent(utteranceString: "There are no ingredients for this recipe.") // ...delicious
-            }
+            var outgoingEvents = sequence.items().map({ $0.event })
             
-            let outgoingSequence = SAYAudioEventSequence(events: [prefixEvent])
-            outgoingSequence.appendSequence(sequence)
+            // Speak an introduction before the first item.
+            let prefixString = recipe.ingredients.count > 0 ?
+                "You need \(recipe.ingredients.count) ingredients:" :
+                "There are no ingredients for this recipe."
+            outgoingEvents.insert(SAYSpeechEvent(utteranceString: prefixString), atIndex: 0)
             
-            self.postEvents(outgoingSequence)
+            // Speak an outro after the last item.
+            let helpString = "To add an ingredient to your grocery list, say \"Save\" followed by the ingredient's name or number."
+            outgoingEvents.append(SAYSpeechEvent(utteranceString: helpString))
+            
+            postEvents(SAYAudioEventSequence(events: outgoingEvents))
         }
         else {
-            self.postEvents(sequence)
+            postEvents(sequence)
         }
     }
     

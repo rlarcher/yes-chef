@@ -51,21 +51,42 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
         if subtopic is ListConversationTopic {
-            let prefixEvent: SAYSpeechEvent
-            if recipes.count > 0 {
-                prefixEvent = SAYSpeechEvent(utteranceString: "You have \(recipes.count) saved items:")
+            var outgoingEvents = sequence.items().map({ $0.event })
+            
+            // Speak help messages.
+            let helpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
+            let outroString = helpString
+            if recipes.count > 6 {
+                // Speak a help message after the third item, and an outro message at the end of the list.
+                outgoingEvents.insert(SAYSpeechEvent(utteranceString: helpString), atIndex: 3)
+                outgoingEvents.append(SAYSpeechEvent(utteranceString: outroString))
+            }
+            else if recipes.count > 3 {
+                // Speak a help message after the third item (but not at the end of the list, since it's a short list, unless our outroString is explicitly different).
+                // TODO: Tweak? Remove?
+                outgoingEvents.insert(SAYSpeechEvent(utteranceString: helpString), atIndex: 3)
+                if outroString != helpString {
+                    outgoingEvents.append(SAYSpeechEvent(utteranceString: outroString))
+                }
             }
             else {
-                prefixEvent = SAYSpeechEvent(utteranceString: "You have no saved items.")
+                // Speak a help message at the end of the (very short) list.
+                outgoingEvents.append(SAYSpeechEvent(utteranceString: helpString))
+                if outroString != helpString {
+                    outgoingEvents.append(SAYSpeechEvent(utteranceString: outroString))
+                }
             }
             
-            let outgoingSequence = SAYAudioEventSequence(events: [prefixEvent])
-            outgoingSequence.appendSequence(sequence)
+            // Speak an introduction before the first item.
+            let prefixString = recipes.count > 0 ?
+                "You have \(recipes.count) saved items:" :
+                "You have no saved items."
+            outgoingEvents.insert(SAYSpeechEvent(utteranceString: prefixString), atIndex: 0)
             
-            self.postEvents(outgoingSequence)
+            postEvents(SAYAudioEventSequence(events: outgoingEvents))
         }
         else {
-            self.postEvents(sequence)
+            postEvents(sequence)
         }
     }
     

@@ -81,21 +81,28 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
         if subtopic is ListConversationTopic {
-            let prefixEvent: SAYSpeechEvent
-            if recipe.preparationSteps.count > 0 {
-                prefixEvent = SAYSpeechEvent(utteranceString: "There are \(recipe.preparationSteps.count) steps to this recipe:")
-            }
-            else {
-                prefixEvent = SAYSpeechEvent(utteranceString: "There are no preparation steps for this recipe.")
+            var outgoingEvents = sequence.items().map({ $0.event })
+            
+            // Speak a help message after the 3rd item.
+            let helpString = "You can say \"Pause\" at any time if you need a minute."
+            if recipe.preparationSteps.count > 3 {
+                outgoingEvents.insert(SAYSpeechEvent(utteranceString: helpString), atIndex: 3)
             }
             
-            let outgoingSequence = SAYAudioEventSequence(events: [prefixEvent])
-            outgoingSequence.appendSequence(sequence)
+            // Speak an introduction before the first item.
+            let prefixString = recipe.preparationSteps.count > 0 ?
+                "There are \(recipe.preparationSteps.count) steps to this recipe:" :
+                "There are no preparation steps for this recipe."
+            outgoingEvents.insert(SAYSpeechEvent(utteranceString: prefixString), atIndex: 0)
             
-            self.postEvents(outgoingSequence)
+            // Speak an outro after the last item.
+            let suffixString = "You can say \"Repeat\" to listen to the instructions again, or skip around by saying \"What's the third step?\""
+            outgoingEvents.append(SAYSpeechEvent(utteranceString: suffixString))
+            
+            postEvents(SAYAudioEventSequence(events: outgoingEvents))
         }
         else {
-            self.postEvents(sequence)
+            postEvents(sequence)
         }
     }
     

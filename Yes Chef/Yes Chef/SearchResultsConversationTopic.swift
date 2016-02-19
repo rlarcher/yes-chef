@@ -64,21 +64,28 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
         if subtopic is ListConversationTopic {
-            let prefixEvent: SAYSpeechEvent
-            if recipeListings.count > 0 {
-                prefixEvent = SAYSpeechEvent(utteranceString: "I found \(recipeListings.count) results for \"\(searchQuery)\":")
-            }
-            else {
-                prefixEvent = SAYSpeechEvent(utteranceString: "There were no results for \"\(searchQuery)\".")
+            var outgoingEvents = sequence.items().map({ $0.event })
+            
+            // Speak a help message after the 3rd item.
+            if recipeListings.count > 3 {
+                let helpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
+                outgoingEvents.insert(SAYSpeechEvent(utteranceString: helpString), atIndex: 3)
             }
             
-            let outgoingSequence = SAYAudioEventSequence(events: [prefixEvent])
-            outgoingSequence.appendSequence(sequence)
+            // Speak an introduction before the first item.
+            let prefixString = recipeListings.count > 0 ?
+                "I found \(recipeListings.count) results for \"\(searchQuery)\":" :
+                "There were no results for \"\(searchQuery)\"."
+            outgoingEvents.insert(SAYSpeechEvent(utteranceString: prefixString), atIndex: 0)
             
-            self.postEvents(outgoingSequence)
+            // Speak an outro after the last item.
+            let suffixString = "Say \"More\" for more recipes (coming soon)."
+            outgoingEvents.append(SAYSpeechEvent(utteranceString: suffixString))
+            
+            postEvents(SAYAudioEventSequence(events: outgoingEvents))
         }
         else {
-            self.postEvents(sequence)
+            postEvents(sequence)
         }
     }
     

@@ -218,8 +218,8 @@ class HomeConversationTopic: SAYConversationTopic
     {
         let outgoingSequence = sequence
         
-        let silenceEvent = SAYSilenceEvent(interval: 10.0)
-        let helpMessageEvent = SAYSpeechEvent(utteranceString: "Say \"Search\" followed by the name of a recipe to perform a search. If you need help, say \"Help\".")
+        let silenceEvent = SAYSilenceEvent(interval: 7.0)
+        let helpMessageEvent = SAYSpeechEvent(utteranceString: "Let me know if you need help.")
     
         outgoingSequence.appendSequence(SAYAudioEventSequence(events: [silenceEvent, helpMessageEvent]))
         
