@@ -136,7 +136,7 @@ class ListConversationTopic: SAYConversationTopic
         if headIndex > 0 {
             isFlushingOldAudioSequence = true
         }
-        speakItems(startingAtIndex: 0)
+        speakItems(startingAtIndex: 0, withIntroduction: true)
     }
     
     func speakNextItem()
@@ -235,18 +235,24 @@ class ListConversationTopic: SAYConversationTopic
     
     private func speakItems(startingAtIndex startIndex: Int)
     {
+        speakItems(startingAtIndex: startIndex, withIntroduction: false)
+    }
+    
+    private func speakItems(startingAtIndex startIndex: Int, withIntroduction shouldSpeakIntroduction: Bool)
+    {
         if items.count > 0 && startIndex < items.count {
             var sequence = SAYAudioEventSequence()
             headIndex = startIndex
             
-            let remainingItems = items.suffixFrom(headIndex) // TODO: Find an alternative where we can preserve the item's true index, but don't speak anything prior to startIndex
-            
-            for (index, item) in remainingItems.enumerate() {
+            for (index, item) in items.enumerate() {
+                if index < startIndex { continue }  // Skip anything before the startIndex (but keep incrementing `index`)
+                
                 // TODO: This is a workaround for a "prefix" block. Proper way?
                 // TODO: Disabled for now. Seems to worsen Main Track leakage during VerbalCommandRequests.
 //                sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
 //                    self.eventHandler.beganSpeakingItemAtIndex(index)
 //                }
+                
                 sequence.addEvent(SAYSpeechEvent(utteranceString: "\(index + 1): \(item)")) {   // Speak the 1-based version of the index.
                     if !self.isFlushingOldAudioSequence {
                         self.eventHandler.finishedSpeakingItemAtIndex(self.headIndex)
@@ -255,7 +261,7 @@ class ListConversationTopic: SAYConversationTopic
                 }
             }
             
-            sequence = insertHelpMessagesIntoSequence(sequence)
+            sequence = insertHelpMessagesIntoSequence(sequence, speakIntroduction: shouldSpeakIntroduction)
             
             // Terminal event to release the flushing lock
             sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
@@ -276,7 +282,7 @@ class ListConversationTopic: SAYConversationTopic
         }
     }
     
-    private func insertHelpMessagesIntoSequence(sequence: SAYAudioEventSequence) -> SAYAudioEventSequence
+    private func insertHelpMessagesIntoSequence(sequence: SAYAudioEventSequence, speakIntroduction shouldSpeakIntroduction: Bool) -> SAYAudioEventSequence
     {
         let helpIndex = 2
         
@@ -317,7 +323,7 @@ class ListConversationTopic: SAYConversationTopic
         }
         
         // Insert introduction message event.
-        if let intro = introString {
+        if let intro = introString where shouldSpeakIntroduction {
             outgoingEvents.insert(SAYSpeechEvent(utteranceString: intro), atIndex: 0)
         }
         
