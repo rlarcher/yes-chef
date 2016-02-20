@@ -173,8 +173,13 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     func ingredientWithName(name: String) -> Ingredient?
     {
-        let matchingIngredient = recipe.ingredients.filter({ $0.name.lowercaseString == name.lowercaseString }).first // TODO: Improve how we check for a match
-        return matchingIngredient
+        let ingredientsNames = recipe.ingredients.map({ $0.name })
+        if let index = Utils.fuzzyIndexOfItemWithName(name, inList: ingredientsNames) {
+            return recipe.ingredients[index]
+        }
+        else {
+            return nil
+        }
     }
     
     func ingredientAtIndex(index: Int) -> Ingredient?

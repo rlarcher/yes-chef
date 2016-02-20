@@ -118,24 +118,6 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         return 1
     }
     
-    // MARK: Helpers
-    
-    func listingWithName(name: String) -> RecipeListing?
-    {
-        let matchingListing = recipeListings.filter({ $0.name.lowercaseString == name.lowercaseString }).first // TODO: Improve how we check for a match
-        return matchingListing
-    }
-    
-    func listingAtIndex(index: Int) -> RecipeListing?
-    {
-        if index > 0 && index < recipeListings.count {
-            return recipeListings[index]
-        }
-        else {
-            return nil
-        }
-    }
-    
     // MARK: Navigation Helpers
     
     private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
