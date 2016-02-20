@@ -134,7 +134,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     {
         let listTopic = ListConversationTopic(items: recipeListings.map({ $0.speakableString }), eventHandler: self)
         listTopic.introString = recipeListings.count > 0 ?
-                                    "I found \(recipeListings.count) results for \"\(searchQuery)\":" :
+                                    "I found \(recipeListings.count.withSuffix("result")) for \"\(searchQuery)\":" :
                                     "There were no results for \"\(searchQuery)\"."
         listTopic.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
         listTopic.outroString = "Say \"More\" for more recipes (coming soon)."

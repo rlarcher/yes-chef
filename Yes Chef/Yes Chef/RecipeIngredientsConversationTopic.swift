@@ -170,8 +170,9 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     private func buildIngredientsListSubtopic() -> ListConversationTopic
     {
         let listTopic = ListConversationTopic(items: recipe.ingredients.map({ $0.speakableString }), eventHandler: self)
-        listTopic.introString = recipe.ingredients.count > 0 ?
-                                    "You need \(recipe.ingredients.count) ingredients:" :
+        let count = recipe.ingredients.count
+        listTopic.introString = count > 0 ?
+                                    "You need \(count.withSuffix("ingredient")):" :
                                     "There are no ingredients for this recipe."
         listTopic.intermediateHelpString = "You can say \"Pause\" at any time if you need a minute."
         listTopic.outroString = "To add an ingredient to your grocery list, say \"Save\" followed by the ingredient's name or number (coming soon)."

@@ -131,7 +131,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     {
         let listTopic = ListConversationTopic(items: recipes.map({ $0.speakableString }), listIsMutable: true, eventHandler: self)
         listTopic.introString = recipes.count > 0 ?
-                                    "You have \(recipes.count) saved items:" :
+                                    "You have \(recipes.count.withSuffix("saved item")):" :
                                     "You have no saved items."
         
         let helpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."

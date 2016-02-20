@@ -143,10 +143,10 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         let utteranceString: String
         if let totalPrepTime = recipe.totalPreparationTime {
             if let activePrepTime = recipe.activePreparationTime {
-                utteranceString = "This recipe will take \(totalPrepTime) minutes to complete (\(activePrepTime) minutes active)."
+                utteranceString = "This recipe will take \(totalPrepTime.withSuffix("minute")) to complete (\(activePrepTime.withSuffix("minute")) active)."
             }
             else {
-                utteranceString = "This recipe will take \(totalPrepTime) minutes to complete."
+                utteranceString = "This recipe will take \(totalPrepTime.withSuffix("minute")) to complete."
             }
         }
         else {
@@ -168,8 +168,9 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     private func buildPreparationListSubtopic() -> ListConversationTopic
     {
         let listTopic = ListConversationTopic(items: recipe.preparationSteps, eventHandler: self)
-        listTopic.introString = recipe.preparationSteps.count > 0 ?
-                                    "There are \(recipe.preparationSteps.count) steps to this recipe:" :
+        let count = recipe.preparationSteps.count
+        listTopic.introString = count > 0 ?
+                                    "There \("is".plural(count, pluralForm: "are")) \(count.withSuffix("step")) to this recipe:" :
                                     "There are no preparation steps for this recipe."
         listTopic.intermediateHelpString = "You can say \"Pause\" at any time if you need a minute."
         listTopic.outroString = "You can say \"Repeat\" to listen to the instructions again, or skip around by saying \"What's the third step?\""

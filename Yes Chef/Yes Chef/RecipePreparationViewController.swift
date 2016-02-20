@@ -29,7 +29,7 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     override func viewDidLoad()
     {
         if let activePrepTime = recipe.activePreparationTime {
-            self.activeTimeLabel.text = String(activePrepTime) + " minutes"
+            self.activeTimeLabel.text = "\(activePrepTime.withSuffix("minute"))"
         }
         else {
             self.activeTimeLabel.text = "Unspecified"

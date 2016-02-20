@@ -40,4 +40,19 @@ extension String
         
         return false
     }
+    
+    func plural(count: Int) -> String
+    {
+        return plural(count, pluralForm: self + "s")
+    }
+    
+    func plural(count: Int, pluralForm: String) -> String
+    {
+        if count == 1 {
+            return self
+        }
+        else {
+            return pluralForm
+        }
+    }
 }

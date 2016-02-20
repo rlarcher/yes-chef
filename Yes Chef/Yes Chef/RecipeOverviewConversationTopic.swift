@@ -150,7 +150,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
     func speakCalories()
     {
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe has \(recipe.calories) calories."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe has \(recipe.calories.withSuffix("calorie"))."))
         postEvents(sequence)
     }
     

@@ -34,20 +34,20 @@ struct Recipe
         
         // Append rating, if there have been any reviews (suppress 0-star rating due to 0 reviews).
         if reviewCount > 0 {
-            string = "\(string) \(rating) stars."
+            string = "\(string) \(rating.withSuffix("star"))"
         }
         
         // Append truncated description.
         string = "\(string) \(truncatedDescription)."
         
         // Append total prep time, if we have it.
-        if let totalTime = totalPreparationTime {
+        if let totalTime = totalPreparationTime where totalTime > 0 {
             string = "\(string) Requires \(totalTime) minutes of preparation."
-        }
-        
-        // Append active prep time, if we have it.
-        if let activeTime = activePreparationTime {
-            string = "\(string) (\(activeTime) minutes active)"
+            
+            // Append active prep time, if we have it.
+            if let activeTime = activePreparationTime where activeTime > 0 {
+                string = "\(string) (\(activeTime) minutes active)"
+            }
         }
         
         return string
