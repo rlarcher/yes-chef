@@ -77,7 +77,7 @@ class HomeConversationTopic: SAYConversationTopic
         
         let categoriesRecognizer = SAYCustomCommandRecognizer(customType: "Categories") { _ in self.handleCategoriesCommand() }
         categoriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsAny(["category", "categories"]) {
+            if text.containsAny(["category", "categories", "course", "courses"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
@@ -168,7 +168,7 @@ class HomeConversationTopic: SAYConversationTopic
     {
         // TODO: Do this inside a ListCT? For better control of long lists
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for recipes in the following categories:"))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for recipes for the following courses:"))
         for category in Category.orderedValues {
             sequence.addEvent(SAYSpeechEvent(utteranceString: "\"\(category.rawValue)\""))
         }
