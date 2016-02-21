@@ -196,6 +196,18 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         cuisineButton.updateConstraints()
     }
     
+    private func searchUsingQuery(query: String, category: Category?, cuisine: Cuisine?)
+    {
+        BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category, cuisine: cuisine) { response -> Void in
+            switch response {
+            case .Success(let recipeListings):
+                self.setRecipeListings(recipeListings, forSearchQuery: query)
+            case .Failure(let errorMessage, _):
+                self.presentErrorMessage(errorMessage)
+            }
+        }
+    }
+    
     private var selectorPresenter: SelectorPresenter!
     private var activeCategory = Category.All
     private var activeCuisine = Cuisine.All
