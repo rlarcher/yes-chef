@@ -55,4 +55,83 @@ extension String
             return pluralForm
         }
     }
+    
+    func toOrdinalNumber() -> NSNumber?
+    {
+        let formatter = NSNumberFormatter()
+        
+        // Handle a numerical ordinal (e.g. "4th").
+        formatter.numberStyle = .OrdinalStyle
+        if let number = formatter.numberFromString(self) {
+            return number
+        }
+        
+        // Handle a spelled-out ordinal (e.g. "fourth").
+        formatter.numberStyle = .SpellOutStyle
+        if let number = formatter.numberFromString(self) {
+            return number
+        }
+        
+        return nil
+    }
+ 
+    func toNumber() -> NSNumber?
+    {
+        if let number = self.decimalOrSpellOutToNumber() {
+            return number
+        }
+        else if let number = self.ordinalToNumber() {
+            return number
+        }
+        else {
+            return nil
+        }
+    }
+    
+    private func decimalOrSpellOutToNumber() -> NSNumber?
+    {
+        let formatter = NSNumberFormatter()
+        
+        // Remove any extraneous spaces around punctuation
+        // (e.g. "3 . 5" -> "3.5")
+        // (e.g. "10 , 000" -> "10,000").
+        // These white spaces may be inserted by the speech recognition service to separate out tokens. Luis definitely does this.
+        let despacedText = self.stringByReplacingOccurrencesOfString("((?<=\\d) (?=.|,))|((?<=.|,) (?=\\d))", withString: "", options: .RegularExpressionSearch, range: nil)
+        
+        // Handle a numerical string (e.g. "4").
+        formatter.numberStyle = .DecimalStyle
+        if let number = formatter.numberFromString(despacedText) {
+            return number
+        }
+        
+        // Pre-process the raw number text so multi-word numbers are in a format expected by NSNumberFormatterSpellOutStyle (e.g. we want "thirty-eight", not "thirty eight").
+        let hyphenatedText = Utils.insertHyphensBetweenNumbersInText(self)
+        
+        // Handle a spelled-out number (e.g. "four").
+        formatter.numberStyle = .SpellOutStyle
+        if let number = formatter.numberFromString(hyphenatedText) {
+            return number
+        }
+        
+        return nil
+    }
+    
+    private func ordinalToNumber() -> NSNumber?
+    {
+        let formatter = NSNumberFormatter()
+        
+        // Handle a numerical ordinal (e.g. "4th").
+        formatter.numberStyle = .OrdinalStyle
+        if let number = formatter.numberFromString(self) {
+            return number
+        }
+        
+        // Handle a spelled-out ordinal (e.g. "fourth").
+        formatter.numberStyle = .SpellOutStyle
+        if let number = formatter.numberFromString(self) {
+            return number
+        }
+        
+        return nil
+    }
 }

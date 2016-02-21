@@ -32,6 +32,18 @@ class ListConversationTopic: SAYConversationTopic
         
         let selectRecognizer = SAYSelectCommandRecognizer(responseTarget: self, action: "handleSelectCommand:")
         selectRecognizer.addMenuItemWithLabel("Select...")
+        selectRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            // This is a "fallthrough" extension on the standard select recognizer. It will attempt to use the entire spoken text as a parameter for selecting an item (either by number or by raw text). It has a very low confidence, since it shouldn't take precedence over well-recognized commands.
+            let parameters: [String: AnyObject]
+            if let number = text.toNumber() {
+                parameters = [SAYSelectCommandRecognizerParameterItemNumber: number]
+            }
+            else {
+                parameters = [SAYSelectCommandRecognizerParameterItemName: text]
+            }
+            
+            return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryUnlikely, parameters: parameters)
+        }))
         addCommandRecognizer(selectRecognizer)
         
         let playRecognizer = SAYPlayCommandRecognizer(responseTarget: eventHandler, action: "handlePlayCommand")
