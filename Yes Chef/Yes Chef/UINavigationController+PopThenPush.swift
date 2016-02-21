@@ -30,4 +30,12 @@ extension UINavigationController
         
         self.setViewControllers(newNavigationStack, animated: animated) // Set stack
     }
+    
+    func popToRootThenPushViewController(newViewController: UIViewController, animated: Bool)
+    {
+        if let rootViewController = viewControllers.first {
+            let newNavigationStack = [rootViewController, newViewController]
+            self.setViewControllers(newNavigationStack, animated: animated)
+        }
+    }
 }
