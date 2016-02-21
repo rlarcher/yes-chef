@@ -8,9 +8,13 @@
 
 import UIKit
 
-class SearchResultsViewController: UITableViewController, SearchResultsConversationTopicEventHandler
+class SearchResultsViewController: UITableViewController, SearchResultsConversationTopicEventHandler, UISearchBarDelegate, CategoryCuisineSelectorEventHandler
 {
     var searchResultsConversationTopic: SearchResultsConversationTopic!
+    
+    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet var categoryButton: UIButton!
+    @IBOutlet var cuisineButton: UIButton!
     
     // MARK: Lifecycle
     
@@ -18,6 +22,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     {
         super.init(coder: aDecoder)
         self.searchResultsConversationTopic = SearchResultsConversationTopic(eventHandler: self)
+        self.categoryCuisinePresenter = CategoryCuisinePresenter(presentingViewController: self, eventHandler: self)
     }
     
     // Must be called immediately after instantiating the VC
@@ -35,6 +40,42 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     override func viewWillDisappear(animated: Bool)
     {
         searchResultsConversationTopic.topicDidLoseFocus()
+    }
+    
+    // MARK: IBAction Methods
+    
+    @IBAction func categoryButtonTapped(sender: AnyObject)
+    {
+        categoryCuisinePresenter.presentCategorySelector(initialCategory: activeCategory)
+    }
+    
+    @IBAction func cuisineButtonTapped(sender: AnyObject)
+    {
+        categoryCuisinePresenter.presentCuisineSelector(initialCuisine: activeCuisine)
+    }
+    
+    // MARK: UISearchBarDelegate Protocol Methods
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar)
+    {
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar)
+    {
+        if let query = searchBar.text {
+            var category: Category? = nil
+            if let categoryString = categoryButton.titleLabel?.text {
+                category = Category(rawValue: categoryString)
+            }
+            
+            var cuisine: Cuisine? = nil
+            if let cuisineString = cuisineButton.titleLabel?.text {
+                cuisine = Cuisine(rawValue: cuisineString)
+            }
+            
+            searchUsingQuery(query, category: category, cuisine: cuisine)
+        }
     }
     
     // MARK: ListConversationTopicEventHandler Protocol Methods
@@ -148,6 +189,26 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         // TODO: GUI component? Popup?
         searchResultsConversationTopic.speakErrorMessage(message)
     }
+    
+    // MARK: CategoryCuisineSelectorEventHandler Protocol Methods
+    
+    func selectedNewCategory(category: Category)
+    {
+        activeCategory = category
+        categoryButton.titleLabel?.text = category.rawValue
+        categoryButton.updateConstraints()
+    }
+    
+    func selectedNewCuisine(cuisine: Cuisine)
+    {
+        activeCuisine = cuisine
+        cuisineButton.titleLabel?.text = cuisine.rawValue
+        cuisineButton.updateConstraints()
+    }
+    
+    private var categoryCuisinePresenter: CategoryCuisinePresenter!
+    private var activeCategory = Category.All
+    private var activeCuisine = Cuisine.All
     
     private var recipeListings: [RecipeListing]! {
         didSet {

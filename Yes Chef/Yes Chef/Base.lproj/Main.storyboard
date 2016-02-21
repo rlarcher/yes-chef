@@ -203,13 +203,23 @@
                             <rect key="frame" x="0.0" y="64" width="600" height="74"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="tXz-dO-afB">
+                                <searchBar contentMode="redraw" placeholder="Search for a Recipe" translatesAutoresizingMaskIntoConstraints="NO" id="tXz-dO-afB">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
-                                <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-kz-snB">
-                                    <rect key="frame" x="529" y="44" width="63" height="30"/>
-                                    <state key="normal" title="Category"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="14w-YA-RXe">
+                                    <rect key="frame" x="476" y="44" width="51" height="30"/>
+                                    <state key="normal" title="Cuisine"/>
+                                    <connections>
+                                        <action selector="cuisineButtonTapped:" destination="wsL-vb-xmL" eventType="touchUpInside" id="agx-DP-Bpn"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-kz-snB">
+                                    <rect key="frame" x="543" y="44" width="49" height="30"/>
+                                    <state key="normal" title="Course"/>
+                                    <connections>
+                                        <action selector="categoryButtonTapped:" destination="wsL-vb-xmL" eventType="touchUpInside" id="W6i-ZN-Mcv"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -217,8 +227,10 @@
                                 <constraint firstAttribute="trailing" secondItem="tXz-dO-afB" secondAttribute="trailing" id="5GO-jZ-ADr"/>
                                 <constraint firstAttribute="trailing" secondItem="oNa-kz-snB" secondAttribute="trailing" constant="8" id="C3U-LC-5st"/>
                                 <constraint firstItem="oNa-kz-snB" firstAttribute="top" secondItem="tXz-dO-afB" secondAttribute="bottom" id="EpD-av-N3y"/>
+                                <constraint firstItem="14w-YA-RXe" firstAttribute="centerY" secondItem="oNa-kz-snB" secondAttribute="centerY" id="M70-cN-doe"/>
                                 <constraint firstItem="tXz-dO-afB" firstAttribute="top" secondItem="wii-VT-G6g" secondAttribute="top" id="WWU-hJ-oCD"/>
                                 <constraint firstItem="tXz-dO-afB" firstAttribute="leading" secondItem="wii-VT-G6g" secondAttribute="leading" id="ZYJ-Vh-avd"/>
+                                <constraint firstItem="oNa-kz-snB" firstAttribute="leading" secondItem="14w-YA-RXe" secondAttribute="trailing" constant="16" id="hrT-rF-1Ny"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -281,6 +293,11 @@
                         </connections>
                     </tableView>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="categoryButton" destination="oNa-kz-snB" id="fyd-Y0-Lqs"/>
+                        <outlet property="cuisineButton" destination="14w-YA-RXe" id="KEL-sh-vUA"/>
+                        <outlet property="searchBar" destination="tXz-dO-afB" id="aKI-j4-fxp"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eKd-Qz-eAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

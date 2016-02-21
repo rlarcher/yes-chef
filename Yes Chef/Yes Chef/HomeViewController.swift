@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler
+class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, CategoryCuisineSelectorEventHandler
 {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var categoryButton: UIButton!
@@ -21,6 +21,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         // Called as part of `storyboard.instantiateViewControllerWithIdentifier:` method.
         super.init(coder: aDecoder)
         self.homeConversationTopic = HomeConversationTopic(eventHandler: self)
+        self.categoryCuisinePresenter = CategoryCuisinePresenter(presentingViewController: self, eventHandler: self)
     }
     
     override func viewDidLoad()
@@ -81,12 +82,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     @IBAction func categoryButtonTapped(sender: AnyObject)
     {
-        presentCategorySelector()
+        categoryCuisinePresenter.presentCategorySelector(initialCategory: activeCategory)
     }
     
     @IBAction func cuisineButtonTapped(sender: AnyObject)
     {
-        presentCuisineSelector()
+        categoryCuisinePresenter.presentCuisineSelector(initialCuisine: activeCuisine)
     }
     
     @IBAction func savedRecipesButtonTapped(sender: AnyObject)
@@ -161,46 +162,20 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         }
     }
     
-    private func presentCategorySelector() {
-        let categories = Category.orderedValues
-        
-        let selectorVC = CategorySelectorViewController()
-        selectorVC.categories = categories
-        selectorVC.selectedRow = categories.indexOf(activeCategory)
-        
-        selectorVC.selectionBlock = { selectedCategory in
-            self.dismissViewControllerAnimated(true, completion: nil)
-            self.setActiveCategory(selectedCategory)
-        }
-        
-        // embed in a nav controller and add cancel button
-        let navVC = UINavigationController(rootViewController: selectorVC)
-        
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "presentedViewControllerCancelButtonTapped")
-        selectorVC.navigationItem.leftBarButtonItem = cancelButton
-        
-        self.presentViewController(navVC, animated: true, completion: nil)
+    // MARK: CategoryCuisinePresenter Protocol Methods
+    
+    func selectedNewCategory(category: Category)
+    {
+        activeCategory = category
+        categoryButton.titleLabel?.text = category.rawValue
+        categoryButton.updateConstraints()
     }
     
-    private func presentCuisineSelector() {
-        let cuisines = Cuisine.orderedValues
-        
-        let selectorVC = CuisineSelectorViewController()
-        selectorVC.cuisines = cuisines
-        selectorVC.selectedRow = cuisines.indexOf(activeCuisine)
-        
-        selectorVC.selectionBlock = { selectedCuisine in
-            self.dismissViewControllerAnimated(true, completion: nil)
-            self.setActiveCuisine(selectedCuisine)
-        }
-        
-        // embed in a nav controller and add cancel button
-        let navVC = UINavigationController(rootViewController: selectorVC)
-        
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "presentedViewControllerCancelButtonTapped")
-        selectorVC.navigationItem.leftBarButtonItem = cancelButton
-        
-        self.presentViewController(navVC, animated: true, completion: nil)
+    func selectedNewCuisine(cuisine: Cuisine)
+    {
+        activeCuisine = cuisine
+        cuisineButton.titleLabel?.text = cuisine.rawValue
+        cuisineButton.updateConstraints()
     }
     
     // MARK: Helpers
@@ -223,25 +198,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         homeConversationTopic.speakErrorMessage(message)
     }
     
-    func presentedViewControllerCancelButtonTapped()
-    {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    private func setActiveCategory(category: Category)
-    {
-        activeCategory = category
-        categoryButton.titleLabel?.text = category.rawValue
-        categoryButton.updateConstraints()
-    }
-    
-    private func setActiveCuisine(cuisine: Cuisine)
-    {
-        activeCuisine = cuisine
-        cuisineButton.titleLabel?.text = cuisine.rawValue
-        cuisineButton.updateConstraints()
-    }
-    
+    private var categoryCuisinePresenter: CategoryCuisinePresenter!
     private var activeCategory = Category.All
     private var activeCuisine = Cuisine.All
     private var shouldSpeakFirstTimeIntroduction = true
