@@ -1,5 +1,5 @@
 //
-//  CategoryCuisinePresenter.swift
+//  SelectorPresenter.swift
 //  Yes Chef
 //
 //  Created by Adam Larsen on 2016/20/2.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-class CategoryCuisinePresenter
+class SelectorPresenter
 {
-    var eventHandler: CategoryCuisineSelectorEventHandler
+    var eventHandler: SelectorPresenterEventHandler
     var presentingViewController: UIViewController
     
-    init(presentingViewController: UIViewController, eventHandler: CategoryCuisineSelectorEventHandler)
+    init(presentingViewController: UIViewController, eventHandler: SelectorPresenterEventHandler)
     {
         self.presentingViewController = presentingViewController
         self.eventHandler = eventHandler
@@ -67,7 +67,7 @@ class CategoryCuisinePresenter
     }
 }
 
-protocol CategoryCuisineSelectorEventHandler
+protocol SelectorPresenterEventHandler
 {
     func selectedNewCategory(category: Category)
     func selectedNewCuisine(cuisine: Cuisine)

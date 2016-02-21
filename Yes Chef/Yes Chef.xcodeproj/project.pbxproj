@@ -34,7 +34,7 @@
 		836447D41C76299F000BEB90 /* StringScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836447D31C76299F000BEB90 /* StringScore.swift */; };
 		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
 		83987D771C78DCFF00E3BBE9 /* Int+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83987D761C78DCFF00E3BBE9 /* Int+Utils.swift */; };
-		83987D791C7903D600E3BBE9 /* CategoryCuisinePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83987D781C7903D600E3BBE9 /* CategoryCuisinePresenter.swift */; };
+		83987D791C7903D600E3BBE9 /* SelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */; };
 		83A6A6CB1C74D79F003B559D /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6A6CA1C74D79F003B559D /* String+Utils.swift */; };
 		83CC6EA21C6D194B00EB7DCC /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; };
 		83CC6EA31C6D194B00EB7DCC /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -91,7 +91,7 @@
 		836447D31C76299F000BEB90 /* StringScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringScore.swift; sourceTree = "<group>"; };
 		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		83987D761C78DCFF00E3BBE9 /* Int+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Utils.swift"; sourceTree = "<group>"; };
-		83987D781C7903D600E3BBE9 /* CategoryCuisinePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCuisinePresenter.swift; sourceTree = "<group>"; };
+		83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorPresenter.swift; sourceTree = "<group>"; };
 		83A6A6CA1C74D79F003B559D /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		83CC6EA01C6D193900EB7DCC /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 				8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */,
 				83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */,
 				83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */,
-				83987D781C7903D600E3BBE9 /* CategoryCuisinePresenter.swift */,
+				83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */,
 			);
 			name = "Home Scene";
 			sourceTree = "<group>";
@@ -399,7 +399,7 @@
 				836447D41C76299F000BEB90 /* StringScore.swift in Sources */,
 				8348DF001C614ADE0009C7DF /* HomeConversationTopic.swift in Sources */,
 				8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */,
-				83987D791C7903D600E3BBE9 /* CategoryCuisinePresenter.swift in Sources */,
+				83987D791C7903D600E3BBE9 /* SelectorPresenter.swift in Sources */,
 				8348DEEA1C6148FC0009C7DF /* RecipeTabBarController.swift in Sources */,
 				8348DEFA1C614A5F0009C7DF /* BigOvenAPIManager.swift in Sources */,
 			);

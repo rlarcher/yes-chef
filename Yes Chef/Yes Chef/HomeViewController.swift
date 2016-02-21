@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, CategoryCuisineSelectorEventHandler
+class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, SelectorPresenterEventHandler
 {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var categoryButton: UIButton!
@@ -21,7 +21,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         // Called as part of `storyboard.instantiateViewControllerWithIdentifier:` method.
         super.init(coder: aDecoder)
         self.homeConversationTopic = HomeConversationTopic(eventHandler: self)
-        self.categoryCuisinePresenter = CategoryCuisinePresenter(presentingViewController: self, eventHandler: self)
+        self.selectorPresenter = SelectorPresenter(presentingViewController: self, eventHandler: self)
     }
     
     override func viewDidLoad()
@@ -82,12 +82,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     @IBAction func categoryButtonTapped(sender: AnyObject)
     {
-        categoryCuisinePresenter.presentCategorySelector(initialCategory: activeCategory)
+        selectorPresenter.presentCategorySelector(initialCategory: activeCategory)
     }
     
     @IBAction func cuisineButtonTapped(sender: AnyObject)
     {
-        categoryCuisinePresenter.presentCuisineSelector(initialCuisine: activeCuisine)
+        selectorPresenter.presentCuisineSelector(initialCuisine: activeCuisine)
     }
     
     @IBAction func savedRecipesButtonTapped(sender: AnyObject)
@@ -105,17 +105,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
         if let query = searchBar.text {
-            var category: Category? = nil
-            if let categoryString = categoryButton.titleLabel?.text {
-                category = Category(rawValue: categoryString)
-            }
-            
-            var cuisine: Cuisine? = nil
-            if let cuisineString = cuisineButton.titleLabel?.text {
-                cuisine = Cuisine(rawValue: cuisineString)
-            }
-
-            searchUsingQuery(query, category: category, cuisine: cuisine)
+            searchUsingQuery(query, category: activeCategory, cuisine: activeCuisine)
         }
     }
     
@@ -198,7 +188,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         homeConversationTopic.speakErrorMessage(message)
     }
     
-    private var categoryCuisinePresenter: CategoryCuisinePresenter!
+    private var selectorPresenter: SelectorPresenter!
     private var activeCategory = Category.All
     private var activeCuisine = Cuisine.All
     private var shouldSpeakFirstTimeIntroduction = true

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchResultsViewController: UITableViewController, SearchResultsConversationTopicEventHandler, UISearchBarDelegate, CategoryCuisineSelectorEventHandler
+class SearchResultsViewController: UITableViewController, SearchResultsConversationTopicEventHandler, UISearchBarDelegate, SelectorPresenterEventHandler
 {
     var searchResultsConversationTopic: SearchResultsConversationTopic!
     
@@ -22,7 +22,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     {
         super.init(coder: aDecoder)
         self.searchResultsConversationTopic = SearchResultsConversationTopic(eventHandler: self)
-        self.categoryCuisinePresenter = CategoryCuisinePresenter(presentingViewController: self, eventHandler: self)
+        self.selectorPresenter = SelectorPresenter(presentingViewController: self, eventHandler: self)
     }
     
     // Must be called immediately after instantiating the VC
@@ -46,12 +46,12 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     @IBAction func categoryButtonTapped(sender: AnyObject)
     {
-        categoryCuisinePresenter.presentCategorySelector(initialCategory: activeCategory)
+        selectorPresenter.presentCategorySelector(initialCategory: activeCategory)
     }
     
     @IBAction func cuisineButtonTapped(sender: AnyObject)
     {
-        categoryCuisinePresenter.presentCuisineSelector(initialCuisine: activeCuisine)
+        selectorPresenter.presentCuisineSelector(initialCuisine: activeCuisine)
     }
     
     // MARK: UISearchBarDelegate Protocol Methods
@@ -64,17 +64,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
         if let query = searchBar.text {
-            var category: Category? = nil
-            if let categoryString = categoryButton.titleLabel?.text {
-                category = Category(rawValue: categoryString)
-            }
-            
-            var cuisine: Cuisine? = nil
-            if let cuisineString = cuisineButton.titleLabel?.text {
-                cuisine = Cuisine(rawValue: cuisineString)
-            }
-            
-            searchUsingQuery(query, category: category, cuisine: cuisine)
+            searchUsingQuery(query, category: activeCategory, cuisine: activeCuisine)
         }
     }
     
@@ -206,7 +196,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         cuisineButton.updateConstraints()
     }
     
-    private var categoryCuisinePresenter: CategoryCuisinePresenter!
+    private var selectorPresenter: SelectorPresenter!
     private var activeCategory = Category.All
     private var activeCuisine = Cuisine.All
     
