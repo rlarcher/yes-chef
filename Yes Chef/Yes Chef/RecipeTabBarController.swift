@@ -82,6 +82,12 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     func switchToTab(tabViewController: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
     {
         // This method is called when the user speaks a command that wants to focus on a certain tab.
+        
+        // TODO: Any way to just call this on previousVC?
+        recipeOverviewVC.didLoseFocus(nil)
+        recipeIngredientsVC.didLoseFocus(nil)
+        recipePreparationVC.didLoseFocus(nil)
+        
         if let selectedVC = tabViewController as? UIViewController {
             self.selectedViewController = selectedVC
             tabViewController.didGainFocus(completionBlock)                
