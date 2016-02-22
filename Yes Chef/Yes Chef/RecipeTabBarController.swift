@@ -64,7 +64,7 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     
     // MARK: UITabBarControllerDelegate Protocol Methods
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController)
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool
     {
         // This method is called when the user taps a tab.
         
@@ -75,6 +75,8 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
         if let tabBarVC = viewController as? ConversationalTabBarViewController {
             tabBarVC.didGainFocus(nil)
         }
+        
+        return true
     }
     
     // MARK: Helpers
