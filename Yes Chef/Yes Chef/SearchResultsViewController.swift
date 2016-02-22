@@ -30,6 +30,15 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     {
         self.recipeListings = recipeListings
         self.query = query
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView?.reloadData()
+        }
+    }
+    
+    override func viewDidLoad()
+    {
+        searchBar.delegate = self
     }
     
     override func viewDidAppear(animated: Bool)
@@ -213,6 +222,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             switch response {
             case .Success(let recipeListings):
                 self.setRecipeListings(recipeListings, forSearchQuery: query)
+                self.searchResultsConversationTopic.speakResults()
             case .Failure(let errorMessage, _):
                 self.presentErrorMessage(errorMessage)
             }
