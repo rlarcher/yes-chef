@@ -30,7 +30,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     override func viewDidLoad()
     {
-        servingsCountLabel.text = String(recipe.presentableServingsText)
+        servingsCountLabel.text = recipe.presentableServingsText
     }
     
     override func viewDidAppear(animated: Bool)
@@ -145,12 +145,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
             let ingredient = recipe.ingredients[index]
             cell.ingredientNameLabel.text = ingredient.name
             
-            if let ingredientUnits = ingredient.units {
-                cell.quantityUnitsLabel.text = "\(ingredient.quantityString) \(ingredientUnits)"
-            }
-            else {
-                cell.quantityUnitsLabel.text = "\(ingredient.quantityString)"                
-            }
+            cell.quantityUnitsLabel.text = "\(ingredient.presentableQuantity)"
             
             return cell
         }

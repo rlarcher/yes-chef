@@ -71,10 +71,10 @@ struct Recipe
     var presentableServingsText: String
     {
         if servingsUnit.lowercaseString == "serving" || servingsUnit.lowercaseString == "servings" {
-            return "\(servingsQuantity)"
+            return "Serves: \(servingsQuantity)"
         }
         else {
-            return "\(servingsQuantity) \(servingsUnit)"
+            return "Makes: \(servingsQuantity) \(servingsUnit)"
         }
     }
     
@@ -116,5 +116,21 @@ struct Ingredient
         
         // Return completed string. Some examples could be "3 dozen eggs (scrambled)", "one chicken", "1/3 cup butter", etc.
         return string
+    }
+    
+    var presentableQuantity: String
+    {
+        if
+            let ingredientQuantity = quantityString,
+            let ingredientUnits = units
+        {
+            return "\(ingredientQuantity) \(ingredientUnits)"
+        }
+        else if let ingredientQuantity = quantityString {
+            return "\(ingredientQuantity)"
+        }
+        else {
+            return ""
+        }
     }
 }
