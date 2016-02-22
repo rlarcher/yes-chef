@@ -132,10 +132,23 @@ class HomeConversationTopic: SAYConversationTopic
 
     func speakAvailableCommands()
     {
-        // TODO: Fetch available commands (e.g., from CT hierarchy) and speak those.
-        let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "There are lots of available commands, but I misplaced the list."))
-        postEvents(sequence)
+        var availableCommands = [String]()
+        if let recognizers = SAYConversationManager.systemManager().commandRegistry?.commandRecognizers {
+            for recognizer in recognizers {
+                for menuItem in recognizer.menuItems {
+                    availableCommands.append(menuItem.label)
+                }
+            }
+        }
+        if availableCommands.count > 0 {
+            // TODO: Use a listCT for speaking these?
+            let sequence = SAYAudioEventSequence()
+            sequence.addEvent(SAYSpeechEvent(utteranceString: "There are \(availableCommands.count) available commands:"))
+            for commandName in availableCommands {
+                sequence.addEvent(SAYSpeechEvent(utteranceString: commandName))
+            }
+            postEvents(sequence)
+        }
     }
     
     func speakErrorMessage(message: String)
