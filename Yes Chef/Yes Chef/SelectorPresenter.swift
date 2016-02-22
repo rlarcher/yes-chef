@@ -27,14 +27,15 @@ class SelectorPresenter
         selectorVC.selectedRow = categories.indexOf(initialCategory)
         
         selectorVC.selectionBlock = { selectedCategory in
-            self.presentingViewController.dismissViewControllerAnimated(true, completion: nil)
-            self.eventHandler.selectedNewCategory(selectedCategory)
+            self.presentingViewController.dismissViewControllerAnimated(true) {
+                self.eventHandler.selectedNewCategory(selectedCategory)
+            }
         }
         
         // embed in a nav controller and add cancel button
         let navVC = UINavigationController(rootViewController: selectorVC)
         
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "presentedViewControllerCancelButtonTapped")
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: eventHandler, action: "selectorCancelButtonTapped")
         selectorVC.navigationItem.leftBarButtonItem = cancelButton
         
         self.presentingViewController.presentViewController(navVC, animated: true, completion: nil)
@@ -48,27 +49,25 @@ class SelectorPresenter
         selectorVC.selectedRow = cuisines.indexOf(initialCuisine)
         
         selectorVC.selectionBlock = { selectedCuisine in
-            self.presentingViewController.dismissViewControllerAnimated(true, completion: nil)
-            self.eventHandler.selectedNewCuisine(selectedCuisine)
+            self.presentingViewController.dismissViewControllerAnimated(true) {
+                self.eventHandler.selectedNewCuisine(selectedCuisine)
+            }
         }
         
         // embed in a nav controller and add cancel button
         let navVC = UINavigationController(rootViewController: selectorVC)
         
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "presentedViewControllerCancelButtonTapped")
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: eventHandler, action: "selectorCancelButtonTapped")
         selectorVC.navigationItem.leftBarButtonItem = cancelButton
         
         presentingViewController.presentViewController(navVC, animated: true, completion: nil)
     }
-
-    func presentedViewControllerCancelButtonTapped()
-    {
-        presentingViewController.dismissViewControllerAnimated(true, completion: nil)
-    }
 }
 
-protocol SelectorPresenterEventHandler
+protocol SelectorPresenterEventHandler: class
 {
     func selectedNewCategory(category: Category)
     func selectedNewCuisine(cuisine: Cuisine)
+    
+    func selectorCancelButtonTapped()
 }

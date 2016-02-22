@@ -157,15 +157,24 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     func selectedNewCategory(category: Category)
     {
         activeCategory = category
-        categoryButton.titleLabel?.text = category.rawValue
-        categoryButton.updateConstraints()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.categoryButton.setTitle(category.rawValue, forState: .Normal)
+        }
     }
     
     func selectedNewCuisine(cuisine: Cuisine)
     {
         activeCuisine = cuisine
-        cuisineButton.titleLabel?.text = cuisine.rawValue
-        cuisineButton.updateConstraints()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.cuisineButton.setTitle(cuisine.rawValue, forState: .Normal)
+        }
+    }
+    
+    func selectorCancelButtonTapped()
+    {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     // MARK: Helpers

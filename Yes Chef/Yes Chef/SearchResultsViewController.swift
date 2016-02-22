@@ -180,20 +180,31 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         searchResultsConversationTopic.speakErrorMessage(message)
     }
     
-    // MARK: CategoryCuisineSelectorEventHandler Protocol Methods
+    // MARK: SelectorPresenterEventHandler Protocol Methods
     
     func selectedNewCategory(category: Category)
     {
         activeCategory = category
-        categoryButton.titleLabel?.text = category.rawValue
-        categoryButton.updateConstraints()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.categoryButton.titleLabel?.text = category.rawValue
+            self.categoryButton.updateConstraints()
+        }
     }
     
     func selectedNewCuisine(cuisine: Cuisine)
     {
         activeCuisine = cuisine
-        cuisineButton.titleLabel?.text = cuisine.rawValue
-        cuisineButton.updateConstraints()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.cuisineButton.titleLabel?.text = cuisine.rawValue
+            self.cuisineButton.updateConstraints()
+        }
+    }
+    
+    func selectorCancelButtonTapped()
+    {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
     private func searchUsingQuery(query: String, category: Category?, cuisine: Cuisine?)
