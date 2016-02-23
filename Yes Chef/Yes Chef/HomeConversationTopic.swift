@@ -39,6 +39,7 @@ class HomeConversationTopic: SAYConversationTopic
             "let's make @\(SAYSearchCommandRecognizerParameterQuery)"
             ]))
         addCommandRecognizer(searchRecognizer)
+        self.searchRecognizer = searchRecognizer
         
         let homeRecognizer = SAYHomeCommandRecognizer(responseTarget: eventHandler, action: "handleHomeCommand")
         homeRecognizer.addMenuItemWithLabel("Home")
@@ -98,6 +99,8 @@ class HomeConversationTopic: SAYConversationTopic
         }))
         addCommandRecognizer(cuisinesRecognizer)
         focusedRecognizers.append(cuisinesRecognizer)
+        
+        searchRecognizer?.addTextMatcher(HomeConversationTopic.fallthroughTextMatcher)
     }
     
     func topicDidLoseFocus()
@@ -106,6 +109,8 @@ class HomeConversationTopic: SAYConversationTopic
             removeCommandRecognizer(recognizer)
         }
         focusedRecognizers.removeAll()
+        
+        searchRecognizer?.removeTextMatcher(HomeConversationTopic.fallthroughTextMatcher)
     }
     
     // MARK: Speech Methods
@@ -258,6 +263,20 @@ class HomeConversationTopic: SAYConversationTopic
         }
     }
     
+    private static var fallthroughTextMatcher: SAYBlockCommandMatcher = {
+        // This is a "fallthrough" text matcher for extending the standard search recognizer. It will attempt to use the entire spoken text as a parameter for performing a search. It has a very low confidence, since it shouldn't take precedence over well-recognized commands.
+        return SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if !text.isBlank {
+                let parameters = [SAYSearchCommandRecognizerParameterQuery: text]
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryUnlikely, parameters: parameters)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        })
+    }()
+    
+    private var searchRecognizer: SAYSearchCommandRecognizer?
     private var focusedRecognizers = [SAYVerbalCommandRecognizer]() // Recognizers that we only want active while this CT is focused.
 }
 
