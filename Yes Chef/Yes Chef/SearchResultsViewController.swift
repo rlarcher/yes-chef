@@ -65,8 +65,16 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     // MARK: UISearchBarDelegate Protocol Methods
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar)
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool
     {
+        searchBar.setShowsCancelButton(true, animated: true)
+        
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar)
+    {
+        searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
     }
     
@@ -75,6 +83,9 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         if let query = searchBar.text {
             searchUsingQuery(query, category: activeCategory, cuisine: activeCuisine)
         }
+        
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
     }
     
     // MARK: ListConversationTopicEventHandler Protocol Methods

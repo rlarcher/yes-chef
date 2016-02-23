@@ -97,8 +97,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     // MARK: UISearchBarDelegate Protocol Methods
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar)
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool
     {
+        searchBar.setShowsCancelButton(true, animated: true)
+        
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar)
+    {
+        searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
     }
     
@@ -107,6 +115,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         if let query = searchBar.text {
             searchUsingQuery(query, category: activeCategory, cuisine: activeCuisine)
         }
+        
+        searchBar.setShowsCancelButton(false, animated: true)
+        searchBar.resignFirstResponder()
     }
     
     // MARK: Navigation Helpers
