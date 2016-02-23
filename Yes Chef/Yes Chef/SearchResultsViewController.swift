@@ -235,12 +235,23 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category, cuisine: cuisine) { response -> Void in
             switch response {
             case .Success(let recipeListings):
-                self.setRecipeListings(recipeListings, forSearchQuery: query)
-                self.searchResultsConversationTopic.speakResults()
+                if recipeListings.count > 0 {
+                    self.setRecipeListings(recipeListings, forSearchQuery: query)
+                    self.searchResultsConversationTopic.speakResults()
+                }
+                else {
+                    self.notifyNoResultsForQuery(query)
+                }
             case .Failure(let errorMessage, _):
                 self.presentErrorMessage(errorMessage)
             }
         }
+    }
+    
+    private func notifyNoResultsForQuery(query: String)
+    {
+        // TODO: If search was performed via search bar, re-highlight the search bar?
+        searchResultsConversationTopic.speakNoResultsForQuery(query)
     }
     
     private var selectorPresenter: SelectorPresenter!

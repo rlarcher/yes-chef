@@ -195,7 +195,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category, cuisine: cuisine) { response -> Void in
             switch response {
             case .Success(let recipeListings):
-                self.presentSearchResults(recipeListings, forQuery: query)
+                if recipeListings.count > 0 {
+                    self.presentSearchResults(recipeListings, forQuery: query)
+                }
+                else {
+                    self.notifyNoResultsForQuery(query)
+                }
             case .Failure(let errorMessage, _):
                 self.presentErrorMessage(errorMessage)
             }
@@ -206,6 +211,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     {
         // TODO: GUI component? Popup?
         homeConversationTopic.speakErrorMessage(message)
+    }
+    
+    private func notifyNoResultsForQuery(query: String)
+    {
+        // TODO: If search was performed via search bar, re-highlight the search bar?
+        homeConversationTopic.speakNoResultsForQuery(query)
     }
     
     private var selectorPresenter: SelectorPresenter!

@@ -156,6 +156,11 @@ class HomeConversationTopic: SAYConversationTopic
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: message)]))
     }
     
+    func speakNoResultsForQuery(query: String)
+    {
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "Sorry, I couldn't find any recipes for \"\(query)\". Please try another search.")]))
+    }
+    
     // MARK: Handle Commands
     
     func handleSearchCommand(command: SAYCommand)
