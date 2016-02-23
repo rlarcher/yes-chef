@@ -18,11 +18,26 @@ struct RecipeListing
     let thumbnailImageURL: NSURL
     
     var speakableString: String {
+        var string = "\(name)."
+        
         if reviewCount > 0 {
-            return "\(name). \(rating) out of 5 stars. Serves \(servingsQuantity)."
+            string = "\(string) \(rating) out of 5 stars."
+        }
+        
+        if servingsQuantity > 0 {
+            string = "\(string) \(presentableServingsText)"
+        }
+        
+        return string
+    }
+    
+    var presentableServingsText: String
+    {
+        if servingsQuantity > 0 {
+            return "Serves: \(servingsQuantity)"    // Note: Serving units aren't specified in search results API. Assume they're "servings", not some other unit (like cups, or count).
         }
         else {
-            return "\(name). Serves \(servingsQuantity)."
+            return ""
         }
     }
     

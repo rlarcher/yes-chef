@@ -37,6 +37,10 @@ struct Recipe
             string = "\(string) \(rating.withSuffix("star"))"
         }
         
+        if servingsQuantity > 0 {
+            string = "\(string) \(presentableServingsText)."
+        }
+        
         // Append truncated description.
         string = "\(string) \(truncatedDescription)."
         
@@ -70,11 +74,16 @@ struct Recipe
     
     var presentableServingsText: String
     {
-        if servingsUnit.lowercaseString == "serving" || servingsUnit.lowercaseString == "servings" {
-            return "Serves: \(servingsQuantity)"
+        if servingsQuantity > 0 {
+            if servingsUnit.lowercaseString == "serving" || servingsUnit.lowercaseString == "servings" {
+                return "Serves: \(servingsQuantity)"
+            }
+            else {
+                return "Makes: \(servingsQuantity) \(servingsUnit)"
+            }
         }
         else {
-            return "Makes: \(servingsQuantity) \(servingsUnit)"
+            return ""
         }
     }
     
