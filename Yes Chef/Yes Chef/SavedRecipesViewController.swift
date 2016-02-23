@@ -115,18 +115,28 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
             let recipe = savedRecipes[index]
             cell.recipeNameLabel.text = recipe.name
             cell.thumbnailImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil) // TODO: Add placeholder image
-            cell.servingSizeLabel.text = "Serves: \(recipe.presentableServingsText)"
+            
+            cell.servingSizeLabel.text = recipe.presentableServingsText
+            
             if let prepTime = recipe.totalPreparationTime where prepTime > 0 {
                 cell.totalPreparationTimeLabel.text = "\(prepTime.withSuffix("Minute"))"
             }
             else {
                 cell.totalPreparationTimeLabel.text = ""
             }
-            cell.ingredientsLabel.text = "\(recipe.ingredients.count.withSuffix("Ingredient"))"
+            
+            if recipe.ingredients.count > 0 {
+                cell.ingredientsLabel.text = "\(recipe.ingredients.count.withSuffix("Ingredient"))"
+            }
+            else {
+                cell.ingredientsLabel.text = ""
+            }
             
             let ratingLabels = Utils.getLabelsForRating(recipe.presentableRating)
             cell.ratingLabel.text = ratingLabels.textLabel
             cell.ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
+            
+            cell.itemNumberLabel.text = "\(index + 1)."    // Convert 0-based index to 1-based item number.
             
             return cell
         }
@@ -164,4 +174,5 @@ class RecipeCell: UITableViewCell
     @IBOutlet weak var totalPreparationTimeLabel: UILabel!
     @IBOutlet weak var servingSizeLabel: UILabel!
     @IBOutlet weak var ingredientsLabel: UILabel!
+    @IBOutlet weak var itemNumberLabel: UILabel!
 }

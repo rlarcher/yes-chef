@@ -142,6 +142,8 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             cell.ratingLabel.text = ratingLabels.textLabel
             cell.ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
             
+            cell.itemNumberLabel.text = "\(index + 1)."   // Convert 0-based index to 1-based item number.
+            
             return cell
         }
         else {
@@ -254,4 +256,5 @@ class RecipeListingCell: UITableViewCell
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var servingSizeLabel: UILabel!
+    @IBOutlet weak var itemNumberLabel: UILabel!
 }
