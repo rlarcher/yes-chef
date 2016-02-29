@@ -22,12 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  Text to be displayed
  */
-@property (nonatomic, copy, readonly) NSAttributedString *displayMessage;
+@property (nonatomic, copy, readonly, nullable) NSAttributedString *displayMessage;
 
 /**
  *  Message to be spoken
  */
-@property (nonatomic, copy, readonly) AVSpeechUtterance *spokenMessage;
+@property (nonatomic, copy, readonly, nullable) AVSpeechUtterance *spokenMessage;
 
 /**
  *  An optional view controller to be paired along with the verbal messages, in order to supplement them with custom visuals. The supplemental view can include controls, creating an opportunity for touch-based responses to prompts.
@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return A new `SAYVoicePrompt` instance with the given message componenets.
  */
-- (instancetype)initWithDisplayMessage:(NSAttributedString *)displayMessage spokenMessage:(AVSpeechUtterance *)spokenMessage NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithDisplayMessage:(nullable NSAttributedString *)displayMessage spokenMessage:(nullable AVSpeechUtterance *)spokenMessage NS_DESIGNATED_INITIALIZER;
 
 /// @abstract Not supported. Use designated initialize for this class instead.
 - (instancetype)init NS_UNAVAILABLE;

@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		elthqbhk+T4Cao6hRomNDoEBxRg=
+		1/5+2wZHEpe4/eydorE1UhoKgLM=
 		</data>
 		<key>Headers/SAYAPIKeyManager.h</key>
 		<data>
@@ -82,7 +82,7 @@
 		</data>
 		<key>Headers/SAYCommandProcessing.h</key>
 		<data>
-		+E8IYC8w+eXCChATiWuPnqR5tkg=
+		AgAPQ85UPL7CAkl5RLELdSS8oj4=
 		</data>
 		<key>Headers/SAYCommandRecognizerCatalog.h</key>
 		<data>
@@ -262,7 +262,7 @@
 		</data>
 		<key>Headers/SAYStandardCommandLibrary.h</key>
 		<data>
-		JdRZB2e/kG4Ror9tai0OmX8xCSk=
+		/p8k6rc9+3ELYY8dNAIgEjXFnTI=
 		</data>
 		<key>Headers/SAYStandardRequestResponder.h</key>
 		<data>
@@ -310,7 +310,7 @@
 		</data>
 		<key>Headers/SAYVoicePrompt.h</key>
 		<data>
-		siwjvcBTxm2TFWQfSkFTmJLy/R4=
+		wwFGN1SoCyotE79Q+3B95NKgIic=
 		</data>
 		<key>Headers/SAYVoiceRequest.h</key>
 		<data>
@@ -356,9 +356,13 @@
 		<data>
 		my1Y4OK2N12XDDFIVcdfXyFB09k=
 		</data>
+		<key>Headers/YesChefSearchCuisineCourseCommandRecognizer.h</key>
+		<data>
+		9hQvROZ9MkcopfaiPYnupfC+HoY=
+		</data>
 		<key>Info.plist</key>
 		<data>
-		6p9iCuwNz+ZFJgEJyxzwH1bNF4w=
+		MDwdugaLXL1hdenDbz9QlxayIEs=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -398,15 +402,15 @@
 		</data>
 		<key>SAYCommandBar.nib</key>
 		<data>
-		CHUEumyP8ZSk2jOOI39R56sLa7E=
+		QbEWxbaHTdvEkw+YDSn2gywrqm0=
 		</data>
 		<key>SAYConfirmationContentViewController.nib</key>
 		<data>
-		Ap/MoRzl82Gh5U4uEG4lP7j8yu8=
+		0jnMbid0I8ftTqkCuxidhhmS/QI=
 		</data>
 		<key>SAYVoiceRequestView.nib</key>
 		<data>
-		F1DM2BwDGeyLMgvQ5wRH4y2mD78=
+		r2WgAzNSMYVfyA5bh8MOcFzNlLQ=
 		</data>
 		<key>SayKitAPIServer.cer</key>
 		<data>
@@ -433,7 +437,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		elthqbhk+T4Cao6hRomNDoEBxRg=
+		1/5+2wZHEpe4/eydorE1UhoKgLM=
 		</data>
 		<key>Headers/SAYAPIKeyManager.h</key>
 		<data>
@@ -509,7 +513,7 @@
 		</data>
 		<key>Headers/SAYCommandProcessing.h</key>
 		<data>
-		+E8IYC8w+eXCChATiWuPnqR5tkg=
+		AgAPQ85UPL7CAkl5RLELdSS8oj4=
 		</data>
 		<key>Headers/SAYCommandRecognizerCatalog.h</key>
 		<data>
@@ -689,7 +693,7 @@
 		</data>
 		<key>Headers/SAYStandardCommandLibrary.h</key>
 		<data>
-		JdRZB2e/kG4Ror9tai0OmX8xCSk=
+		/p8k6rc9+3ELYY8dNAIgEjXFnTI=
 		</data>
 		<key>Headers/SAYStandardRequestResponder.h</key>
 		<data>
@@ -737,7 +741,7 @@
 		</data>
 		<key>Headers/SAYVoicePrompt.h</key>
 		<data>
-		siwjvcBTxm2TFWQfSkFTmJLy/R4=
+		wwFGN1SoCyotE79Q+3B95NKgIic=
 		</data>
 		<key>Headers/SAYVoiceRequest.h</key>
 		<data>
@@ -783,6 +787,10 @@
 		<data>
 		my1Y4OK2N12XDDFIVcdfXyFB09k=
 		</data>
+		<key>Headers/YesChefSearchCuisineCourseCommandRecognizer.h</key>
+		<data>
+		9hQvROZ9MkcopfaiPYnupfC+HoY=
+		</data>
 		<key>LICENSE</key>
 		<data>
 		yLbG2LdPjVBZsk7GpbEx0az4a9Y=
@@ -821,15 +829,15 @@
 		</data>
 		<key>SAYCommandBar.nib</key>
 		<data>
-		CHUEumyP8ZSk2jOOI39R56sLa7E=
+		QbEWxbaHTdvEkw+YDSn2gywrqm0=
 		</data>
 		<key>SAYConfirmationContentViewController.nib</key>
 		<data>
-		Ap/MoRzl82Gh5U4uEG4lP7j8yu8=
+		0jnMbid0I8ftTqkCuxidhhmS/QI=
 		</data>
 		<key>SAYVoiceRequestView.nib</key>
 		<data>
-		F1DM2BwDGeyLMgvQ5wRH4y2mD78=
+		r2WgAzNSMYVfyA5bh8MOcFzNlLQ=
 		</data>
 		<key>SayKitAPIServer.cer</key>
 		<data>

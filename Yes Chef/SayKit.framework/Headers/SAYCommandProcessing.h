@@ -37,6 +37,8 @@
 #import <SayKit/SAYSetVoiceCommandRecognizer.h>
 #import <SayKit/SAYCustomCommandRecognizer.h>
 
+#import <SayKit/YesChefSearchCuisineCourseCommandRecognizer.h>  // TODO: Remove once we implement third-party intent recognition.
+
 #import <SayKit/SAYStandardCommandLibrary.h>
 
 #import <SayKit/SAYCommandSuggestion.h>

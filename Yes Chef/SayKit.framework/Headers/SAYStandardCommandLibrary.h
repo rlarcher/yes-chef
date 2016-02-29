@@ -145,4 +145,10 @@ FOUNDATION_EXPORT NSString * const SAYStandardCommandSetVoice;
  */
 FOUNDATION_EXPORT NSString * const SAYSetVoiceCommandRecognizerParameterVoice;
 
+// TODO: Remove these once we implement third-party intent recognition.
+FOUNDATION_EXPORT NSString * const YesChefCommandSearchCuisineCourse;
+FOUNDATION_EXPORT NSString * const YesChefSearchCuisineCourseCommandRecognizerParameterQuery;
+FOUNDATION_EXPORT NSString * const YesChefSearchCuisineCourseCommandRecognizerParameterCuisine;
+FOUNDATION_EXPORT NSString * const YesChefSearchCuisineCourseCommandRecognizerParameterCourse;
+
 NS_ASSUME_NONNULL_END
