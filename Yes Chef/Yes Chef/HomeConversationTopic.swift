@@ -26,18 +26,8 @@ class HomeConversationTopic: SAYConversationTopic
         availableCommandsRecognizer.addMenuItemWithLabel("Available Commands")
         addCommandRecognizer(availableCommandsRecognizer)
         
-        let searchRecognizer = SAYSearchCommandRecognizer(responseTarget: self, action: "handleSearchCommand:")
+        let searchRecognizer = YesChefSearchCuisineCourseCommandRecognizer(responseTarget: self, action: "handleSearchCommand:")
         searchRecognizer.addMenuItemWithLabel("Search...")
-        searchRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPatterns: [
-            "I want to bake @\(SAYSearchCommandRecognizerParameterQuery)",
-            "I want to cook @\(SAYSearchCommandRecognizerParameterQuery)",
-            "I want to grill @\(SAYSearchCommandRecognizerParameterQuery)",
-            "I want to make @\(SAYSearchCommandRecognizerParameterQuery)",
-            "let's bake @\(SAYSearchCommandRecognizerParameterQuery)",
-            "let's cook @\(SAYSearchCommandRecognizerParameterQuery)",
-            "let's grill @\(SAYSearchCommandRecognizerParameterQuery)",
-            "let's make @\(SAYSearchCommandRecognizerParameterQuery)"
-            ]))
         addCommandRecognizer(searchRecognizer)
         self.searchRecognizer = searchRecognizer
         
@@ -170,17 +160,25 @@ class HomeConversationTopic: SAYConversationTopic
     
     func handleSearchCommand(command: SAYCommand)
     {
-        if let searchQuery = command.parameters[SAYSearchCommandRecognizerParameterQuery] as? String {
-            performSearchUsingQuery(searchQuery)
+        let searchQuery = command.parameters[YesChefSearchCuisineCourseCommandRecognizerParameterQuery] as? String ?? nil
+        let cuisine = parseCuisineFromCommand(command)
+        let course = parseCourseFromCommand(command)
+        
+        if searchQuery != nil || cuisine != nil || course != nil {
+            eventHandler.requestedSearchUsingQuery(searchQuery, category: course, cuisine: cuisine)
         }
         else {
             // We didn't understand a search query. Present a clarifying request.
             let request = SAYStringRequest(promptText: "What would you like to search for?", action: { spokenText -> Void in
                 if let text = spokenText where !text.isBlank {
-                    self.performSearchUsingQuery(text)
+                    let cuisine = Cuisine.cuisineFoundInText(text)
+                    let course = Category.categoryFoundInText(text)
+                    // TODO: Should we remove the cuisine/category substring from the text, if we find a match? (So that speaking "Cuban pastries" would search "pastries" in Cuisine "Cuban", instead of searching for "Cuban pastries" in cuisine "Cuban"?)
+                    
+                    self.eventHandler.requestedSearchUsingQuery(text, category: course, cuisine: cuisine)
                 }
                 else {
-                    self.performSearchUsingQuery(nil)
+                    self.eventHandler.requestedSearchUsingQuery(nil, category: nil, cuisine: nil)
                 }
             })
             SAYConversationManager.systemManager().presentVoiceRequest(request)
@@ -251,16 +249,46 @@ class HomeConversationTopic: SAYConversationTopic
     
     // MARK: Helpers
     
-    private func performSearchUsingQuery(query: String?)
+    private func parseCuisineFromCommand(command: SAYCommand) -> Cuisine?
     {
-        if let searchQuery = query {
-            let category = Category.categoryFoundInText(searchQuery)
-            let cuisine = Cuisine.cuisineFoundInText(searchQuery)
-            self.eventHandler.requestedSearchUsingQuery(searchQuery, category: category, cuisine: cuisine)
+        let cuisine: Cuisine?
+        if
+            let rawCuisine = command.parameters[YesChefSearchCuisineCourseCommandRecognizerParameterCuisine] as? String,
+            let parsedCuisine = Cuisine.cuisineFoundInText(rawCuisine)
+        {
+            cuisine = parsedCuisine
+        }
+        else if let searchQuery = command.parameters[YesChefSearchCuisineCourseCommandRecognizerParameterQuery] as? String {
+            // Try to find a Cuisine in the entire search query, in case intent recognition didn't find the Cuisine parameter.
+            cuisine = Cuisine.cuisineFoundInText(searchQuery)
         }
         else {
-            self.eventHandler.requestedSearchUsingQuery(nil, category: nil, cuisine: nil)
+            // Couldn't find any Cuisine for the given command.
+            cuisine = nil
         }
+        
+        return cuisine
+    }
+    
+    private func parseCourseFromCommand(command: SAYCommand) -> Category?
+    {
+        let course: Category?
+        if
+            let rawCourse = command.parameters[YesChefSearchCuisineCourseCommandRecognizerParameterCourse] as? String,
+            let parsedCourse = Category.categoryFoundInText(rawCourse)
+        {
+            course = parsedCourse
+        }
+        else if let searchQuery = command.parameters[YesChefSearchCuisineCourseCommandRecognizerParameterQuery] as? String {
+            // Try to find a Course in the entire search query, in case intent recognition didn't find the Course parameter.
+            course = Category.categoryFoundInText(searchQuery)
+        }
+        else {
+            // Couldn't find any Course for the given command.
+            course = nil
+        }
+        
+        return course
     }
     
     private static var fallthroughTextMatcher: SAYBlockCommandMatcher = {
@@ -276,7 +304,7 @@ class HomeConversationTopic: SAYConversationTopic
         })
     }()
     
-    private var searchRecognizer: SAYSearchCommandRecognizer?
+    private var searchRecognizer: YesChefSearchCuisineCourseCommandRecognizer?
     private var focusedRecognizers = [SAYVerbalCommandRecognizer]() // Recognizers that we only want active while this CT is focused.
 }
 

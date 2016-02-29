@@ -28,7 +28,7 @@ class BigOvenAPIManager
     
     func searchForRecipeByName(query: String, category: Category?, cuisine: Cuisine?, completion: (SearchResponse -> Void))
     {
-        apiFetcher.searchForRecipeByName(query, category: category?.rawValue, cuisine: cuisine?.rawValue) { (response) -> () in
+        apiFetcher.searchForRecipeByName(query, category: category, cuisine: cuisine) { (response) -> () in
             switch response {
             case .Success(let recipeListings):
                 for listing in recipeListings {
