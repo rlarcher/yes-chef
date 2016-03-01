@@ -209,7 +209,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     {
         activeCategory = category
         dispatch_async(dispatch_get_main_queue()) {
-            self.categoryButton.titleLabel?.text = category.rawValue
+            self.categoryButton.setTitle(category.rawValue, forState: .Normal)
             self.categoryButton.updateConstraints()
         }
     }
@@ -218,7 +218,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     {
         activeCuisine = cuisine
         dispatch_async(dispatch_get_main_queue()) {
-            self.cuisineButton.titleLabel?.text = cuisine.rawValue
+            self.cuisineButton.setTitle(cuisine.rawValue, forState: .Normal)
             self.cuisineButton.updateConstraints()
         }
     }

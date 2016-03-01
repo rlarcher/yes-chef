@@ -37,6 +37,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         
         homeConversationTopic.speakIntroduction(shouldSpeakFirstTimeIntroduction)
         shouldSpeakFirstTimeIntroduction = false
+        
+        selectedNewCuisine(.All)
+        selectedNewCategory(.All)
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -70,7 +73,15 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     func requestedSearchUsingQuery(searchQuery: String?, category: Category?, cuisine: Cuisine?)
     {
+        if let newCategory = category {
+            selectedNewCategory(newCategory)
+        }
+        if let newCuisine = cuisine {
+            selectedNewCuisine(newCuisine)
+        }
+        
         if let query = searchQuery {
+            // TODO: Present intermediate "Loading" scene
             searchUsingQuery(query, category: category, cuisine: cuisine)
         }
         else {
@@ -156,6 +167,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     {
         if let searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier("SearchResultsViewController") as? SearchResultsViewController {
             searchResultsVC.setRecipeListings(results, forSearchQuery: query)
+            searchResultsVC.selectedNewCategory(activeCategory)
+            searchResultsVC.selectedNewCuisine(activeCuisine)
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.popToRootThenPushViewController(searchResultsVC, animated: true) // Note: We use `popToRootThenPushVC` to avoid deep stacks of `SearchResultsVC`s when performing multiple searches in a row.
                 self.homeConversationTopic.addSubtopic(searchResultsVC.searchResultsConversationTopic)
