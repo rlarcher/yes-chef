@@ -27,8 +27,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     override func viewDidLoad()
     {
         searchBar.delegate = self
-        categoryButton.titleLabel?.text = activeCategory.rawValue
-        cuisineButton.titleLabel?.text = activeCuisine.rawValue
+        categoryButton.setTitle(searchParameters.course.rawValue, forState: .Normal)
+        cuisineButton.setTitle(searchParameters.cuisine.rawValue, forState: .Normal)
     }
     
     override func viewDidAppear(animated: Bool)
@@ -71,34 +71,26 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         navigationController?.popViewControllerAnimated(true)
     }
     
-    func requestedSearchUsingQuery(searchQuery: String?, category: Category?, cuisine: Cuisine?)
+    func requestedSearchUsingParameters(searchParameters: SearchParameters)
     {
-        if let newCategory = category {
-            selectedNewCategory(newCategory)
-        }
-        if let newCuisine = cuisine {
-            selectedNewCuisine(newCuisine)
-        }
+        selectedNewCategory(searchParameters.course)
+        selectedNewCuisine(searchParameters.cuisine)
+        self.searchParameters.query = searchParameters.query
         
-        if let query = searchQuery {
-            // TODO: Present intermediate "Loading" scene
-            searchUsingQuery(query, category: category, cuisine: cuisine)
-        }
-        else {
-            // TODO: Do anything? Bonk?
-        }
+        // TODO: Present intermediate "Loading" scene
+        searchUsingParameters(searchParameters)
     }
     
     // MARK: IBAction Methods
     
     @IBAction func categoryButtonTapped(sender: AnyObject)
     {
-        selectorPresenter.presentCategorySelector(initialCategory: activeCategory)
+        selectorPresenter.presentCategorySelector(initialCategory: searchParameters.course)
     }
     
     @IBAction func cuisineButtonTapped(sender: AnyObject)
     {
-        selectorPresenter.presentCuisineSelector(initialCuisine: activeCuisine)
+        selectorPresenter.presentCuisineSelector(initialCuisine: searchParameters.cuisine)
     }
     
     @IBAction func savedRecipesButtonTapped(sender: AnyObject)
@@ -124,7 +116,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
         if let query = searchBar.text {
-            searchUsingQuery(query, category: activeCategory, cuisine: activeCuisine)
+            searchParameters.query = query
+            searchUsingParameters(searchParameters)
         }
         
         searchBar.setShowsCancelButton(false, animated: true)
@@ -163,12 +156,10 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         }
     }
     
-    private func presentSearchResults(results: [RecipeListing], forQuery query: String)
+    private func presentSearchResults(results: [RecipeListing], forSearchParameters parameters: SearchParameters)
     {
         if let searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier("SearchResultsViewController") as? SearchResultsViewController {
-            searchResultsVC.setRecipeListings(results, forSearchQuery: query)
-            searchResultsVC.selectedNewCategory(activeCategory)
-            searchResultsVC.selectedNewCuisine(activeCuisine)
+            searchResultsVC.setRecipeListings(results, forSearchParameters: parameters)
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.popToRootThenPushViewController(searchResultsVC, animated: true) // Note: We use `popToRootThenPushVC` to avoid deep stacks of `SearchResultsVC`s when performing multiple searches in a row.
                 self.homeConversationTopic.addSubtopic(searchResultsVC.searchResultsConversationTopic)
@@ -180,7 +171,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     func selectedNewCategory(category: Category)
     {
-        activeCategory = category
+        searchParameters.course = category
         dispatch_async(dispatch_get_main_queue()) {
             self.categoryButton.setTitle(category.rawValue, forState: .Normal)
         }
@@ -188,7 +179,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     func selectedNewCuisine(cuisine: Cuisine)
     {
-        activeCuisine = cuisine
+        searchParameters.cuisine = cuisine
         dispatch_async(dispatch_get_main_queue()) {
             self.cuisineButton.setTitle(cuisine.rawValue, forState: .Normal)
         }
@@ -203,16 +194,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     // MARK: Helpers
     
-    private func searchUsingQuery(query: String, category: Category?, cuisine: Cuisine?)
+    private func searchUsingParameters(parameters: SearchParameters)
     {
-        BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category, cuisine: cuisine) { response -> Void in
+        BigOvenAPIManager.sharedManager.searchForRecipeWithParameters(parameters) { response -> Void in
             switch response {
             case .Success(let recipeListings):
                 if recipeListings.count > 0 {
-                    self.presentSearchResults(recipeListings, forQuery: query)
+                    self.presentSearchResults(recipeListings, forSearchParameters: parameters)
                 }
                 else {
-                    self.notifyNoResultsForQuery(query)
+                    self.notifyNoResultsForSearchParameters(parameters)
                 }
             case .Failure(let errorMessage, _):
                 self.presentErrorMessage(errorMessage)
@@ -226,14 +217,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         homeConversationTopic.speakErrorMessage(message)
     }
     
-    private func notifyNoResultsForQuery(query: String)
+    private func notifyNoResultsForSearchParameters(parameters: SearchParameters)
     {
         // TODO: If search was performed via search bar, re-highlight the search bar?
-        homeConversationTopic.speakNoResultsForQuery(query)
+        homeConversationTopic.speakNoResultsForSearchParameters(parameters)
     }
     
     private var selectorPresenter: SelectorPresenter!
-    private var activeCategory = Category.All
-    private var activeCuisine = Cuisine.All
+    private var searchParameters = SearchParameters.emptyParameters()
     private var shouldSpeakFirstTimeIntroduction = true
 }

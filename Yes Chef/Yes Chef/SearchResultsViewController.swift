@@ -26,10 +26,10 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     }
     
     // Must be called immediately after instantiating the VC
-    func setRecipeListings(recipeListings: [RecipeListing], forSearchQuery query: String)
+    func setRecipeListings(recipeListings: [RecipeListing], forSearchParameters parameters: SearchParameters)
     {
         self.recipeListings = recipeListings
-        self.query = query
+        self.searchParameters = parameters
         
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView?.reloadData()
@@ -39,6 +39,9 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     override func viewDidLoad()
     {
         searchBar.delegate = self
+        
+        selectedNewCategory(searchParameters.course)
+        selectedNewCuisine(searchParameters.cuisine)
     }
     
     override func viewDidAppear(animated: Bool)
@@ -55,12 +58,12 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     @IBAction func categoryButtonTapped(sender: AnyObject)
     {
-        selectorPresenter.presentCategorySelector(initialCategory: activeCategory)
+        selectorPresenter.presentCategorySelector(initialCategory: searchParameters.course)
     }
     
     @IBAction func cuisineButtonTapped(sender: AnyObject)
     {
-        selectorPresenter.presentCuisineSelector(initialCuisine: activeCuisine)
+        selectorPresenter.presentCuisineSelector(initialCuisine: searchParameters.cuisine)
     }
     
     // MARK: UISearchBarDelegate Protocol Methods
@@ -81,7 +84,8 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
         if let query = searchBar.text {
-            searchUsingQuery(query, category: activeCategory, cuisine: activeCuisine)
+            searchParameters.query = query
+            searchUsingParameters(searchParameters)
         }
         
         searchBar.setShowsCancelButton(false, animated: true)
@@ -207,7 +211,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     func selectedNewCategory(category: Category)
     {
-        activeCategory = category
+        searchParameters.course = category
         dispatch_async(dispatch_get_main_queue()) {
             self.categoryButton.setTitle(category.rawValue, forState: .Normal)
             self.categoryButton.updateConstraints()
@@ -216,7 +220,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     func selectedNewCuisine(cuisine: Cuisine)
     {
-        activeCuisine = cuisine
+        searchParameters.cuisine = cuisine
         dispatch_async(dispatch_get_main_queue()) {
             self.cuisineButton.setTitle(cuisine.rawValue, forState: .Normal)
             self.cuisineButton.updateConstraints()
@@ -230,17 +234,17 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         }
     }
     
-    private func searchUsingQuery(query: String, category: Category?, cuisine: Cuisine?)
+    private func searchUsingParameters(parameters: SearchParameters)
     {
-        BigOvenAPIManager.sharedManager.searchForRecipeByName(query, category: category, cuisine: cuisine) { response -> Void in
+        BigOvenAPIManager.sharedManager.searchForRecipeWithParameters(parameters) { response -> Void in
             switch response {
             case .Success(let recipeListings):
                 if recipeListings.count > 0 {
-                    self.setRecipeListings(recipeListings, forSearchQuery: query)
+                    self.setRecipeListings(recipeListings, forSearchParameters: parameters)
                     self.searchResultsConversationTopic.speakResults()
                 }
                 else {
-                    self.notifyNoResultsForQuery(query)
+                    self.notifyNoResultsForSearchParameters(parameters)
                 }
             case .Failure(let errorMessage, _):
                 self.presentErrorMessage(errorMessage)
@@ -248,15 +252,13 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         }
     }
     
-    private func notifyNoResultsForQuery(query: String)
+    private func notifyNoResultsForSearchParameters(parameters: SearchParameters)
     {
         // TODO: If search was performed via search bar, re-highlight the search bar?
-        searchResultsConversationTopic.speakNoResultsForQuery(query)
+        searchResultsConversationTopic.speakNoResultsForSearchParameters(parameters)
     }
     
     private var selectorPresenter: SelectorPresenter!
-    private var activeCategory = Category.All
-    private var activeCuisine = Cuisine.All
     
     private var recipeListings: [RecipeListing]! {
         didSet {
@@ -264,10 +266,10 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             searchResultsConversationTopic.updateResults(recipeListings)
         }
     }
-    private var query: String! {
+    private var searchParameters: SearchParameters! {
         didSet {
-            // Keeps searchResultsCT's query in sync with searchResultsVC's query.
-            searchResultsConversationTopic.updateSearchQuery(query)
+            // Keeps searchResultsCT's search parameters in sync with searchResultsVC's.
+            searchResultsConversationTopic.updateSearchParameters(searchParameters)
         }
     }
 }

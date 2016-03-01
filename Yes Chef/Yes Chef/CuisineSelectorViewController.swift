@@ -77,6 +77,7 @@ enum Cuisine: String
     case India =            "India"
     case Indian =           "Indian"
     case Irish =            "Irish"
+    case Italian =          "Italian"
     case Japanese =         "Japanese"
     case Jewish =           "Jewish"
     case Korean =           "Korean"
@@ -124,6 +125,7 @@ enum Cuisine: String
         India,
         Indian,
         Irish,
+        Italian,
         Japanese,
         Jewish,
         Korean,

@@ -27,9 +27,9 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     }
 
     // This must be called before attempting to speak.
-    func updateSearchQuery(query: String)
+    func updateSearchParameters(parameters: SearchParameters)
     {
-        self.searchQuery = query
+        self.searchParameters = parameters
     }
     
     func speakResults()
@@ -42,9 +42,9 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: message)]))
     }
     
-    func speakNoResultsForQuery(query: String)
+    func speakNoResultsForSearchParameters(parameters: SearchParameters)
     {
-        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "Sorry, I couldn't find any recipes for \"\(query)\". Please try another search.")]))
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "Sorry, I couldn't find any recipes for \"\(parameters.presentableString)\". Please try another search.")]))
     }
     
     // MARK: Lifecycle
@@ -139,8 +139,8 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     {
         let listTopic = ListConversationTopic(items: recipeListings.map({ $0.speakableString }), eventHandler: self)
         listTopic.introString = recipeListings.count > 0 ?
-                                    "I found \(recipeListings.count.withSuffix("result")) for \"\(searchQuery)\":" :
-                                    "There were no results for \"\(searchQuery)\"."
+                                    "I found \(recipeListings.count.withSuffix("result")) for \"\(searchParameters.presentableString)\":" :
+                                    "There were no results for \"\(searchParameters.presentableString)\"."
         listTopic.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
         listTopic.outroString = "Say \"More\" for more recipes (coming soon)."
         
@@ -186,7 +186,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     private var listSubtopic: ListConversationTopic?
     private var recipeListings: [RecipeListing]!
-    private var searchQuery: String!
+    private var searchParameters: SearchParameters!
 }
 
 protocol SearchResultsConversationTopicEventHandler: class

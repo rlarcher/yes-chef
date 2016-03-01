@@ -151,9 +151,9 @@ class HomeConversationTopic: SAYConversationTopic
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: message)]))
     }
     
-    func speakNoResultsForQuery(query: String)
+    func speakNoResultsForSearchParameters(parameters: SearchParameters)
     {
-        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "Sorry, I couldn't find any recipes for \"\(query)\". Please try another search.")]))
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "Sorry, I couldn't find any recipes for \"\(parameters.presentableString)\". Please try another search.")]))
     }
     
     // MARK: Handle Commands
@@ -165,20 +165,19 @@ class HomeConversationTopic: SAYConversationTopic
         let course = parseCourseFromCommand(command)
         
         if searchQuery != nil || cuisine != nil || course != nil {
-            eventHandler.requestedSearchUsingQuery(searchQuery, category: course, cuisine: cuisine)
+            eventHandler.requestedSearchUsingParameters(SearchParameters(query: searchQuery ?? "", cuisine: cuisine ?? .All, course: course ?? .All))
         }
         else {
             // We didn't understand a search query. Present a clarifying request.
             let request = SAYStringRequest(promptText: "What would you like to search for?", action: { spokenText -> Void in
                 if let text = spokenText where !text.isBlank {
-                    let cuisine = Cuisine.cuisineFoundInText(text)
-                    let course = Category.categoryFoundInText(text)
-                    // TODO: Should we remove the cuisine/category substring from the text, if we find a match? (So that speaking "Cuban pastries" would search "pastries" in Cuisine "Cuban", instead of searching for "Cuban pastries" in cuisine "Cuban"?)
+                    let cuisine = Cuisine.cuisineFoundInText(text) ?? .All
+                    let course = Category.categoryFoundInText(text) ?? .All
                     
-                    self.eventHandler.requestedSearchUsingQuery(text, category: course, cuisine: cuisine)
+                    self.eventHandler.requestedSearchUsingParameters(SearchParameters(query: text, cuisine: cuisine, course: course))
                 }
                 else {
-                    self.eventHandler.requestedSearchUsingQuery(nil, category: nil, cuisine: nil)
+                    self.eventHandler.requestedSearchUsingParameters(SearchParameters.emptyParameters())
                 }
             })
             SAYConversationManager.systemManager().presentVoiceRequest(request)
@@ -312,7 +311,7 @@ protocol HomeConversationTopicEventHandler: class
 {
     func handleHelpCommand()
     func handleAvailableCommands()
-    func requestedSearchUsingQuery(searchQuery: String?, category: Category?, cuisine: Cuisine?)
+    func requestedSearchUsingParameters(searchParameters: SearchParameters)
     func handleHomeCommand()
     func handleBackCommand()
 }
