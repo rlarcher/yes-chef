@@ -21,9 +21,14 @@ extension String
         return false
     }
     
-    func fuzzyMatches(other: String) -> Bool
+    func fuzzyContains(other: String, useLowercase shouldUseLowercase: Bool = true) -> Bool
     {
-        return self.score(other, fuzziness: 0.7) > Utils.kFuzzyScoreThreshold
+        if shouldUseLowercase {
+            return self.lowercaseString.score(other.lowercaseString, fuzziness: 0.7) > Utils.kFuzzyScoreThreshold
+        }
+        else {
+            return self.score(other, fuzziness: 0.7) > Utils.kFuzzyScoreThreshold
+        }
     }
     
     // Returns true if this string is empty or contains only whitespace.

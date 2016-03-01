@@ -17,8 +17,9 @@ class BigOvenAPIFetcher: NSObject
         if let apiKey = BigOvenAPIFetcher.kAPIKey {
             
             var searchQuery = query
-            if let cuisine = cuisine {
-                searchQuery = "\(cuisine) \(searchQuery)"   // Since we can't yet search by Cuisine, prefix the search query with the cuisine. Should result in queries like "Japanese shrimp", "Cuban pastries".
+            // Since we can't yet search by Cuisine, prefix the search query with the cuisine. Should result in queries like "Japanese shrimp", "Cuban pastries".
+            if let cuisine = cuisine where !searchQuery.fuzzyContains(cuisine.rawValue) { // If the search query already contains the cuisine's name, we don't need to do add it.
+                searchQuery = "\(cuisine) \(searchQuery)"
             }
             // TODO: Add cuisine parameter for reals
             

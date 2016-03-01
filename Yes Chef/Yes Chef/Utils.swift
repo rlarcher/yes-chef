@@ -45,9 +45,10 @@ class Utils: NSObject
         
         for (index, item) in itemList.enumerate() {
             let lowerItem = item.lowercaseString
-            let score = lowerItem.score(lowerName, fuzziness: 0.7)
             
-//            print("(\(lowerItem)).score(\(lowerName)) == \(score)")
+            let forwardScore = lowerItem.score(lowerName, fuzziness: 0.7)
+            let backwardScore = lowerName.score(lowerItem, fuzziness: 0.7)
+            let score = max(forwardScore, backwardScore)
             
             if score > bestScore {
                 bestScore = score
