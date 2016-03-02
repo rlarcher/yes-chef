@@ -315,6 +315,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="backdropView" destination="w3s-xR-58L" id="pfq-IC-oAo"/>
                                     <outlet property="courseLabel" destination="2n8-Dl-kK0" id="7SV-as-HRd"/>
                                     <outlet property="itemNumberLabel" destination="465-al-Tvu" id="yaQ-3O-bMa"/>
                                     <outlet property="ratingLabel" destination="IbH-1F-OOD" id="7dR-b8-IIW"/>
