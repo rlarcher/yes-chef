@@ -14,6 +14,8 @@ struct RecipeListing
     let name: String
     let rating: Int
     let reviewCount: Int
+    let cuisine: Cuisine
+    let category: Category
     let servingsQuantity: Int
     let imageURL: NSURL
     

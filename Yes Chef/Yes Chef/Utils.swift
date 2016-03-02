@@ -142,12 +142,16 @@ extension Utils
                           name: "Blueberry Muffins",
                           rating: 4,
                           reviewCount: 20,
+                          cuisine: .All,
+                          category: .Desserts,
                           servingsQuantity: 12,
                           imageURL: NSURL(string: "http://www.google.com")!),
             RecipeListing(recipeId: "87654321",
                           name: "Raspberry Muffins",
                           rating: 1,
                           reviewCount: 0,
+                          cuisine: .All,
+                          category: .Desserts,
                           servingsQuantity: 8,
                           imageURL: NSURL(string: "http://www.google.com")!)]
         

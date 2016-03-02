@@ -151,6 +151,8 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             cell.recipeNameLabel.text = recipeListing.name
             cell.thumbnailImageView.af_setImageWithURL(recipeListing.imageURL, placeholderImage: nil) // TODO: Add placeholder image
             
+            cell.courseLabel.text = recipeListing.category == .All ? "" : recipeListing.category.rawValue   // Don't bother displaying "All Categories"
+            
             cell.servingSizeLabel.text = recipeListing.presentableServingsText
             
             let ratingLabels = Utils.getLabelsForRating(recipeListing.presentableRating)

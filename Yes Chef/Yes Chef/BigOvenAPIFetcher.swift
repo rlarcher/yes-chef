@@ -125,7 +125,10 @@ class BigOvenAPIFetcher: NSObject
                     {
                         let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                         
-                        let listing = RecipeListing(recipeId: String(rawRecipeID), name: recipeName, rating: rating, reviewCount: reviewCount, servingsQuantity: yieldNumber, imageURL: imageURL)
+                        let cuisine = parseCuisineFromData(recipeData)
+                        let course = parseCourseFromData(recipeData)
+                        
+                        let listing = RecipeListing(recipeId: String(rawRecipeID), name: recipeName, rating: rating, reviewCount: reviewCount, cuisine: cuisine, category: course, servingsQuantity: yieldNumber, imageURL: imageURL)
                         recipeListings.append(listing)
                     }
                 }
@@ -165,21 +168,8 @@ class BigOvenAPIFetcher: NSObject
                 let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                 let preparationSteps = parsePreparationSteps(rawInstructions)
                 
-                var cuisine = Cuisine.All
-                if
-                    let cuisineString = root["Cuisine"]?.string,                // Could be nil, empty (""), or a proper string.
-                    let parsedCuisine = Cuisine(rawValue: cuisineString)        // If `cuisineString` is a proper string, we should be able to create a Cuisine out of it.
-                {
-                    cuisine = parsedCuisine
-                }
-                
-                var category = Category.All
-                if
-                    let categoryString = root["Category"]?.string,              // Could be nil, empty (""), or a proper string.
-                    let parsedCategory = Category(rawValue: categoryString)     // If `categoryString` is a proper string, we should be able to create a Category out of it.
-                {
-                    category = parsedCategory
-                }
+                let cuisine = parseCuisineFromData(root)
+                let course = parseCourseFromData(root)
                 
                 let subcategory             = root["Subcategory"]?.string ?? ""
                 
@@ -189,7 +179,7 @@ class BigOvenAPIFetcher: NSObject
                                     reviewCount: reviewCount,
                                     description: description,
                                     cuisine: cuisine,
-                                    category: category,
+                                    category: course,
                                     subcategory: subcategory,
                                     ingredients: ingredients,
                                     preparationSteps: preparationSteps,
@@ -249,6 +239,32 @@ class BigOvenAPIFetcher: NSObject
         let steps = cleanedInstructions.componentsSeparatedByString(".")
         
         return steps
+    }
+    
+    private func parseCuisineFromData(root: [String: JSON]) -> Cuisine
+    {
+        var cuisine = Cuisine.All
+        if
+            let cuisineString = root["Cuisine"]?.string,                      // Could be nil, empty (""), or a proper string.
+            let parsedCuisine = Cuisine(rawValue: cuisineString)              // If `cuisineString` is a proper string, we should be able to create a Cuisine out of it.
+        {
+            cuisine = parsedCuisine
+        }
+        
+        return cuisine
+    }
+    
+    private func parseCourseFromData(root: [String: JSON]) -> Category
+    {
+        var category = Category.All
+        if
+            let categoryString = root["Category"]?.string,                    // Could be nil, empty (""), or a proper string.
+            let parsedCategory = Category(rawValue: categoryString)           // If `categoryString` is a proper string, we should be able to create a Category out of it.
+        {
+            category = parsedCategory
+        }
+        
+        return category
     }
     
     // MARK: Error Handling
