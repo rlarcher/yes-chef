@@ -175,4 +175,22 @@ class RecipeCell: UITableViewCell
     @IBOutlet weak var servingSizeLabel: UILabel!
     @IBOutlet weak var ingredientsLabel: UILabel!
     @IBOutlet weak var itemNumberLabel: UILabel!
+    @IBOutlet weak var courseLabel: UILabel!
+    @IBOutlet weak var backdropView: UIView!
+    
+    override func setHighlighted(highlighted: Bool, animated: Bool)
+    {
+        // Workaround for bug (feature?) that sets any subviews' backgroundColor to (0,0,0,0) when its parent cell is selected.
+        let backgroundColor = backdropView.backgroundColor
+        super.setHighlighted(highlighted, animated: animated)
+        backdropView.backgroundColor = backgroundColor
+    }
+    
+    override func setSelected(selected: Bool, animated: Bool)
+    {
+        // Workaround for bug (feature?) that sets any subviews' backgroundColor to (0,0,0,0) when its parent cell is selected.
+        let backgroundColor = backdropView.backgroundColor
+        super.setSelected(selected, animated: animated)
+        backdropView.backgroundColor = backgroundColor
+    }
 }

@@ -145,7 +145,7 @@ extension Utils
                           cuisine: .All,
                           category: .Desserts,
                           servingsQuantity: 12,
-                          imageURL: NSURL(string: "http://www.google.com")!),
+                          imageURL: NSURL(string: "http://images.bigoven.com/image/upload/blueberry-muffins-low-carb-easy-2.jpg")!),
             RecipeListing(recipeId: "87654321",
                           name: "Raspberry Muffins",
                           rating: 1,
@@ -153,7 +153,7 @@ extension Utils
                           cuisine: .All,
                           category: .Desserts,
                           servingsQuantity: 8,
-                          imageURL: NSURL(string: "http://www.google.com")!)]
+                          imageURL: NSURL(string: "http://images.bigoven.com/image/upload/lemon-raspberry-muffins-2.jpg")!)]
         
         return stubRecipeListings
     }
@@ -190,7 +190,7 @@ extension Utils
                    servingsQuantity: 12,
                    servingsUnit: "Servings",
                    calories: 265,
-                   heroImageURL: NSURL(string: "http://www.google.com")!),
+                   heroImageURL: NSURL(string: "http://images.bigoven.com/image/upload/blueberry-muffins-low-carb-easy-2.jpg")!),
             Recipe(recipeId: "87654321",
                    name: "Raspberry Muffins",
                    rating: 1,
@@ -206,7 +206,7 @@ extension Utils
                    servingsQuantity: 8,
                    servingsUnit: "Servings",
                    calories: 310,
-                   heroImageURL: NSURL(string: "http://www.google.com")!)]
+                   heroImageURL: NSURL(string: "http://images.bigoven.com/image/upload/lemon-raspberry-muffins-2.jpg")!)]
         
         return stubRecipes
     }
