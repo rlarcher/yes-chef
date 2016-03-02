@@ -277,6 +277,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
 class RecipeListingCell: UITableViewCell
 {
     @IBOutlet weak var recipeNameLabel: UILabel!
+    @IBOutlet weak var courseLabel: UILabel!
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var servingSizeLabel: UILabel!
