@@ -20,14 +20,10 @@ struct RecipeListing
     let imageURL: NSURL
     
     var speakableString: String {
-        var string = "\(name)."
+        var string = "\(name)"
         
         if reviewCount > 0 {
-            string = "\(string) \(rating) out of 5 stars."
-        }
-        
-        if servingsQuantity > 0 {
-            string = "\(string) \(presentableServingsText)"
+            string = "\(string): \(rating) out of 5 stars."
         }
         
         return string
