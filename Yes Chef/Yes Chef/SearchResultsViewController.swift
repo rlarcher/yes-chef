@@ -149,7 +149,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         {
             let recipeListing = recipeListings[index]
             cell.recipeNameLabel.text = recipeListing.name
-            cell.thumbnailImageView.af_setImageWithURL(recipeListing.thumbnailImageURL, placeholderImage: nil) // TODO: Add placeholder image
+            cell.thumbnailImageView.af_setImageWithURL(recipeListing.imageURL, placeholderImage: nil) // TODO: Add placeholder image
             
             cell.servingSizeLabel.text = recipeListing.presentableServingsText
             

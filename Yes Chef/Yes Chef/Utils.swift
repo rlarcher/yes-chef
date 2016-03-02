@@ -143,13 +143,13 @@ extension Utils
                           rating: 4,
                           reviewCount: 20,
                           servingsQuantity: 12,
-                          thumbnailImageURL: NSURL(string: "http://www.google.com")!),
+                          imageURL: NSURL(string: "http://www.google.com")!),
             RecipeListing(recipeId: "87654321",
                           name: "Raspberry Muffins",
                           rating: 1,
                           reviewCount: 0,
                           servingsQuantity: 8,
-                          thumbnailImageURL: NSURL(string: "http://www.google.com")!)]
+                          imageURL: NSURL(string: "http://www.google.com")!)]
         
         return stubRecipeListings
     }

@@ -15,7 +15,7 @@ struct RecipeListing
     let rating: Int
     let reviewCount: Int
     let servingsQuantity: Int
-    let thumbnailImageURL: NSURL
+    let imageURL: NSURL
     
     var speakableString: String {
         var string = "\(name)."
