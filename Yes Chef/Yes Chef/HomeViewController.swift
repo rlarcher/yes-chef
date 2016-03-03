@@ -11,8 +11,6 @@ import UIKit
 class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, SelectorPresenterEventHandler
 {
     @IBOutlet var searchBar: UISearchBar!
-    @IBOutlet var categoryButton: UIButton!
-    @IBOutlet var cuisineButton: UIButton!
 
     var homeConversationTopic: HomeConversationTopic!
     
@@ -27,8 +25,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     override func viewDidLoad()
     {
         searchBar.delegate = self
-        categoryButton.setTitle(searchParameters.course.rawValue, forState: .Normal)
-        cuisineButton.setTitle(searchParameters.cuisine.rawValue, forState: .Normal)
+
+        // Suppress some thin lines that appear at the top and bottom of the search bar:
+        searchBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
     }
     
     override func viewDidAppear(animated: Bool)
@@ -40,11 +39,14 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         
         selectedNewCuisine(.All)
         selectedNewCategory(.All)
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool)
     {
         homeConversationTopic.topicDidLoseFocus()
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     // MARK: HomeConversationTopicEventHandler Protocol Methods
@@ -98,6 +100,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         presentSavedRecipes()
     }
     
+    @IBAction func menuButtonTapped(sender: AnyObject)
+    {
+        // TODO
+        print("HomeViewController menuButtonTapped")
+    }
     // MARK: UISearchBarDelegate Protocol Methods
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool
@@ -172,17 +179,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     func selectedNewCategory(category: Category)
     {
         searchParameters.course = category
-        dispatch_async(dispatch_get_main_queue()) {
-            self.categoryButton.setTitle(category.rawValue, forState: .Normal)
-        }
     }
     
     func selectedNewCuisine(cuisine: Cuisine)
     {
         searchParameters.cuisine = cuisine
-        dispatch_async(dispatch_get_main_queue()) {
-            self.cuisineButton.setTitle(cuisine.rawValue, forState: .Normal)
-        }
     }
     
     func selectorCancelButtonTapped()
