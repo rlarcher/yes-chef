@@ -98,7 +98,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CJP-5U-Y0a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277" y="-323"/>
+            <point key="canvasLocation" x="-603" y="-387"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="epY-87-WLM">
@@ -114,7 +114,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ow-si-jxG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-458" y="357"/>
+            <point key="canvasLocation" x="-1390" y="357"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="ZtL-LX-NDh">
@@ -125,14 +125,67 @@
                         <viewControllerLayoutGuide type="bottom" id="evY-q6-7yh"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="VBx-1Q-y7K">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="350" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nXM-gR-XhU">
+                                <rect key="frame" x="131" y="28" width="88" height="88"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="88" id="Dhb-OK-74k"/>
+                                    <constraint firstAttribute="width" secondItem="nXM-gR-XhU" secondAttribute="height" multiplier="1:1" id="ztD-Fb-ol1"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TIK-Ea-DjV">
+                                <rect key="frame" x="32" y="148" width="113" height="30"/>
+                                <state key="normal" title="Favorite Recipes"/>
+                                <connections>
+                                    <action selector="favoriteRecipesButtonTapped:" destination="Jne-j2-CMm" eventType="touchUpInside" id="xGE-xJ-XW1"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhe-Z2-68K">
+                                <rect key="frame" x="32" y="194" width="84" height="30"/>
+                                <state key="normal" title="Grocery List"/>
+                                <connections>
+                                    <action selector="groceryListButtonTapped:" destination="Jne-j2-CMm" eventType="touchUpInside" id="pkf-dS-KXs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wY-dC-86F">
+                                <rect key="frame" x="32" y="240" width="32" height="30"/>
+                                <state key="normal" title="Help"/>
+                                <connections>
+                                    <action selector="helpButtonTapped:" destination="Jne-j2-CMm" eventType="touchUpInside" id="3ms-ze-wUM"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ExO-pI-nvR">
+                                <rect key="frame" x="32" y="286" width="56" height="30"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Settings"/>
+                                <connections>
+                                    <action selector="settingsButtonTapped:" destination="Jne-j2-CMm" eventType="touchUpInside" id="TCC-e9-nyo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ExO-pI-nvR" firstAttribute="leading" secondItem="4wY-dC-86F" secondAttribute="leading" id="6nV-AX-xI1"/>
+                            <constraint firstItem="nXM-gR-XhU" firstAttribute="top" secondItem="Xa1-5C-h4R" secondAttribute="bottom" constant="8" id="DiJ-hh-wUm"/>
+                            <constraint firstItem="nXM-gR-XhU" firstAttribute="centerX" secondItem="VBx-1Q-y7K" secondAttribute="centerX" id="HXB-O7-4wS"/>
+                            <constraint firstItem="TIK-Ea-DjV" firstAttribute="top" secondItem="nXM-gR-XhU" secondAttribute="bottom" constant="32" id="Kc2-oG-dOQ"/>
+                            <constraint firstItem="TIK-Ea-DjV" firstAttribute="leading" secondItem="VBx-1Q-y7K" secondAttribute="leadingMargin" constant="16" id="Qeu-9G-Hlt"/>
+                            <constraint firstItem="zhe-Z2-68K" firstAttribute="leading" secondItem="TIK-Ea-DjV" secondAttribute="leading" id="WJq-qR-Inp"/>
+                            <constraint firstItem="zhe-Z2-68K" firstAttribute="top" secondItem="TIK-Ea-DjV" secondAttribute="bottom" constant="16" id="XfH-MN-9Im"/>
+                            <constraint firstItem="4wY-dC-86F" firstAttribute="top" secondItem="zhe-Z2-68K" secondAttribute="bottom" constant="16" id="dEr-5R-TMc"/>
+                            <constraint firstItem="ExO-pI-nvR" firstAttribute="top" secondItem="4wY-dC-86F" secondAttribute="bottom" constant="16" id="pOk-HC-hOP"/>
+                            <constraint firstItem="4wY-dC-86F" firstAttribute="leading" secondItem="zhe-Z2-68K" secondAttribute="leading" id="wLC-3e-e1t"/>
+                        </constraints>
                     </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="350" height="600"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EYq-Yu-p2v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-585" y="1174"/>
+            <point key="canvasLocation" x="-595" y="1092"/>
         </scene>
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
@@ -166,7 +219,7 @@
                                         <color key="barTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </searchBar>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9J-tD-g9o">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w9J-tD-g9o">
                                         <rect key="frame" x="249" y="17" width="101" height="30"/>
                                         <state key="normal" title="Saved Recipes"/>
                                         <connections>
@@ -283,7 +336,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277" y="357"/>
+            <point key="canvasLocation" x="-595" y="357"/>
         </scene>
         <!--Search Results View Controller-->
         <scene sceneID="NoA-ea-t2m">
@@ -415,7 +468,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eKd-Qz-eAa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277" y="1082"/>
+            <point key="canvasLocation" x="193" y="357"/>
         </scene>
         <!--Ingredients-->
         <scene sceneID="qXu-nL-c1U">
@@ -507,7 +560,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SbL-ke-NGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1934" y="357"/>
+            <point key="canvasLocation" x="1850" y="357"/>
         </scene>
         <!--Nutrition-->
         <scene sceneID="BTr-ge-sly">
@@ -550,7 +603,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b4g-xC-lbL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1934" y="-387"/>
+            <point key="canvasLocation" x="1850" y="-387"/>
         </scene>
         <!--Recipe Tab Bar Controller-->
         <scene sceneID="gTK-pv-tM7">
@@ -570,7 +623,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6kc-X2-tSA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1062" y="357"/>
+            <point key="canvasLocation" x="978" y="357"/>
         </scene>
         <!--Preparation-->
         <scene sceneID="fzE-cx-L8F">
@@ -662,7 +715,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jxq-C9-FYX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1934" y="1082"/>
+            <point key="canvasLocation" x="1850" y="1082"/>
         </scene>
     </scenes>
 </document>
