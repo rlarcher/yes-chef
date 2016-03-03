@@ -107,9 +107,9 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     @IBAction func menuButtonTapped(sender: AnyObject)
     {
-        // TODO
-        print("HomeViewController menuButtonTapped")
+        presentMenu()
     }
+    
     // MARK: UISearchBarDelegate Protocol Methods
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool
@@ -191,6 +191,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         }
     }
     
+    private func presentMenu()
+    {
+        if let menuViewController = storyboard?.instantiateViewControllerWithIdentifier("MenuViewController") as? MenuViewController {
+            let presentationController = MenuPresentationController(presentedViewController: menuViewController, presentingViewController: self)
+            menuViewController.transitioningDelegate = presentationController
+            
+            presentViewController(menuViewController, animated: true, completion: nil)
+        }
+    }
+    
     // MARK: UITableViewDelegate Protocol Methods
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
@@ -239,7 +249,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     {
         return 1
     }
-
     
     // MARK: CategoryCuisinePresenter Protocol Methods
     
