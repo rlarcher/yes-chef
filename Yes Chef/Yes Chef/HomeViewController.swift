@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, SelectorPresenterEventHandler, UITableViewDataSource, UITableViewDelegate
+class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, SelectorPresenterEventHandler, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate
 {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -196,6 +196,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         if let menuViewController = storyboard?.instantiateViewControllerWithIdentifier("MenuViewController") as? MenuViewController {
             let presentationController = MenuPresentationController(presentedViewController: menuViewController, presentingViewController: self)
             menuViewController.transitioningDelegate = presentationController
+            menuViewController.selectionDelegate = self
             
             presentViewController(menuViewController, animated: true, completion: nil)
         }
@@ -267,6 +268,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         dispatch_async(dispatch_get_main_queue()) {
             self.dismissViewControllerAnimated(true, completion: nil)
         }
+    }
+    
+    // MARK: MenuViewControllerDelegate Protocol Methods
+    
+    func requestedPresentSavedRecipes()
+    {
+        presentSavedRecipes()
     }
     
     // MARK: Helpers

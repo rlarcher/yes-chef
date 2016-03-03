@@ -143,21 +143,21 @@
                                     <action selector="favoriteRecipesButtonTapped:" destination="Jne-j2-CMm" eventType="touchUpInside" id="xGE-xJ-XW1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhe-Z2-68K">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zhe-Z2-68K">
                                 <rect key="frame" x="32" y="194" width="84" height="30"/>
                                 <state key="normal" title="Grocery List"/>
                                 <connections>
                                     <action selector="groceryListButtonTapped:" destination="Jne-j2-CMm" eventType="touchUpInside" id="pkf-dS-KXs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wY-dC-86F">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="4wY-dC-86F">
                                 <rect key="frame" x="32" y="240" width="32" height="30"/>
                                 <state key="normal" title="Help"/>
                                 <connections>
                                     <action selector="helpButtonTapped:" destination="Jne-j2-CMm" eventType="touchUpInside" id="3ms-ze-wUM"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ExO-pI-nvR">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="ExO-pI-nvR">
                                 <rect key="frame" x="32" y="286" width="56" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Settings"/>
@@ -169,14 +169,18 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ExO-pI-nvR" firstAttribute="leading" secondItem="4wY-dC-86F" secondAttribute="leading" id="6nV-AX-xI1"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="4wY-dC-86F" secondAttribute="trailing" constant="16" id="8Pk-EE-LtY"/>
                             <constraint firstItem="nXM-gR-XhU" firstAttribute="top" secondItem="Xa1-5C-h4R" secondAttribute="bottom" constant="8" id="DiJ-hh-wUm"/>
                             <constraint firstItem="nXM-gR-XhU" firstAttribute="centerX" secondItem="VBx-1Q-y7K" secondAttribute="centerX" id="HXB-O7-4wS"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="zhe-Z2-68K" secondAttribute="trailing" constant="16" id="IpL-16-bSC"/>
                             <constraint firstItem="TIK-Ea-DjV" firstAttribute="top" secondItem="nXM-gR-XhU" secondAttribute="bottom" constant="32" id="Kc2-oG-dOQ"/>
                             <constraint firstItem="TIK-Ea-DjV" firstAttribute="leading" secondItem="VBx-1Q-y7K" secondAttribute="leadingMargin" constant="16" id="Qeu-9G-Hlt"/>
                             <constraint firstItem="zhe-Z2-68K" firstAttribute="leading" secondItem="TIK-Ea-DjV" secondAttribute="leading" id="WJq-qR-Inp"/>
                             <constraint firstItem="zhe-Z2-68K" firstAttribute="top" secondItem="TIK-Ea-DjV" secondAttribute="bottom" constant="16" id="XfH-MN-9Im"/>
                             <constraint firstItem="4wY-dC-86F" firstAttribute="top" secondItem="zhe-Z2-68K" secondAttribute="bottom" constant="16" id="dEr-5R-TMc"/>
                             <constraint firstItem="ExO-pI-nvR" firstAttribute="top" secondItem="4wY-dC-86F" secondAttribute="bottom" constant="16" id="pOk-HC-hOP"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="TIK-Ea-DjV" secondAttribute="trailing" constant="16" id="rOu-nz-7mD"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="ExO-pI-nvR" secondAttribute="trailing" constant="16" id="rvZ-ht-fNO"/>
                             <constraint firstItem="4wY-dC-86F" firstAttribute="leading" secondItem="zhe-Z2-68K" secondAttribute="leading" id="wLC-3e-e1t"/>
                         </constraints>
                     </view>

@@ -10,10 +10,13 @@ import Foundation
 
 class MenuViewController: UIViewController
 {
+    var selectionDelegate: MenuViewControllerDelegate?
+    
     @IBAction func favoriteRecipesButtonTapped(sender: AnyObject)
     {
-        // TODO
-        print("MenuViewController favoriteRecipesButtonTapped")
+        presentingViewController?.dismissViewControllerAnimated(true) {
+            self.selectionDelegate?.requestedPresentSavedRecipes()
+        }
     }
     
     @IBAction func groceryListButtonTapped(sender: AnyObject)
@@ -33,4 +36,9 @@ class MenuViewController: UIViewController
         // TODO
         print("MenuViewController settingsButtonTapped")
     }
+}
+
+protocol MenuViewControllerDelegate
+{
+    func requestedPresentSavedRecipes()
 }
