@@ -101,6 +101,17 @@ struct Recipe
             return nil
         }
     }
+    
+    var listing: RecipeListing {
+        return RecipeListing(recipeId: recipeId,
+                             name: name,
+                             rating: rating,
+                             reviewCount: reviewCount,
+                             cuisine: cuisine,
+                             category: category,
+                             servingsQuantity: servingsQuantity,
+                             imageURL: heroImageURL)
+    }
 }
 
 struct Ingredient

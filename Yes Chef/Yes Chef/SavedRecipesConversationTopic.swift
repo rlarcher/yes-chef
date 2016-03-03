@@ -23,7 +23,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     func updateSavedRecipes(recipes: [Recipe])
     {
         self.recipes = recipes
-        listSubtopic?.items = recipes.map({ $0.speakableString })
+        listSubtopic?.items = recipes.map({ $0.listing.speakableString })
     }
     
     func speakSavedRecipes()
@@ -129,7 +129,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     
     private func buildSavedListSubtopic() -> ListConversationTopic
     {
-        let listTopic = ListConversationTopic(items: recipes.map({ $0.speakableString }), listIsMutable: true, eventHandler: self)
+        let listTopic = ListConversationTopic(items: recipes.map({ $0.listing.speakableString }), listIsMutable: true, eventHandler: self)
         listTopic.introString = recipes.count > 0 ?
                                     "You have \(recipes.count.withSuffix("saved item")):" :
                                     "You have no saved items."

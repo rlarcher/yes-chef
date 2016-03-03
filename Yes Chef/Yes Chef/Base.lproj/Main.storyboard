@@ -46,24 +46,6 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="45 minutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fbT-im-bdO">
-                                                    <rect key="frame" x="131" y="30" width="73" height="17"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6 Ingredients" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0MO-Te-mjS">
-                                                    <rect key="frame" x="220" y="30" width="85" height="17"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Serves: 12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4kI-8G-GD3">
-                                                    <rect key="frame" x="321" y="30" width="67" height="17"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="5.0 ☆" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kp7-ax-OQN">
                                                     <rect key="frame" x="554" y="22" width="38" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
@@ -74,20 +56,13 @@
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstItem="2Yi-IS-XM2" firstAttribute="top" secondItem="JEn-qj-w6g" secondAttribute="bottom" constant="2" id="3dk-0r-DfM"/>
-                                                <constraint firstItem="fbT-im-bdO" firstAttribute="leading" secondItem="2Yi-IS-XM2" secondAttribute="trailing" constant="32" id="4YM-MW-29l"/>
                                                 <constraint firstItem="Kp7-ax-OQN" firstAttribute="centerY" secondItem="g1X-bY-CZU" secondAttribute="centerY" id="Cvc-Si-D37"/>
                                                 <constraint firstItem="Kp7-ax-OQN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JEn-qj-w6g" secondAttribute="trailing" constant="8" id="H0l-zW-Dq5"/>
                                                 <constraint firstItem="JEn-qj-w6g" firstAttribute="top" secondItem="g1X-bY-CZU" secondAttribute="top" constant="8" id="H3S-8C-jtt"/>
                                                 <constraint firstItem="kal-qm-UwY" firstAttribute="leading" secondItem="g1X-bY-CZU" secondAttribute="leading" constant="8" id="J2u-fY-jL8"/>
                                                 <constraint firstAttribute="height" constant="60" id="LJ7-Os-av1"/>
                                                 <constraint firstItem="JEn-qj-w6g" firstAttribute="leading" secondItem="kal-qm-UwY" secondAttribute="trailing" constant="20" id="PVT-M6-efr"/>
-                                                <constraint firstItem="4kI-8G-GD3" firstAttribute="leading" secondItem="0MO-Te-mjS" secondAttribute="trailing" constant="16" id="XvZ-I7-bZ3"/>
-                                                <constraint firstItem="0MO-Te-mjS" firstAttribute="centerY" secondItem="fbT-im-bdO" secondAttribute="centerY" id="Yo1-FA-f81"/>
                                                 <constraint firstItem="kal-qm-UwY" firstAttribute="centerY" secondItem="g1X-bY-CZU" secondAttribute="centerY" id="bia-dc-nlN"/>
-                                                <constraint firstItem="Kp7-ax-OQN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4kI-8G-GD3" secondAttribute="trailing" constant="8" id="gJp-Ob-mSB"/>
-                                                <constraint firstItem="4kI-8G-GD3" firstAttribute="centerY" secondItem="0MO-Te-mjS" secondAttribute="centerY" id="iAd-GF-Sze"/>
-                                                <constraint firstItem="0MO-Te-mjS" firstAttribute="leading" secondItem="fbT-im-bdO" secondAttribute="trailing" constant="16" id="ncz-O8-L4Y"/>
-                                                <constraint firstItem="fbT-im-bdO" firstAttribute="centerY" secondItem="2Yi-IS-XM2" secondAttribute="centerY" id="pQK-xP-qcD"/>
                                                 <constraint firstItem="2Yi-IS-XM2" firstAttribute="leading" secondItem="JEn-qj-w6g" secondAttribute="leading" id="uAT-x2-7rz"/>
                                                 <constraint firstAttribute="trailing" secondItem="Kp7-ax-OQN" secondAttribute="trailing" constant="8" id="w5T-cP-tpF"/>
                                             </constraints>
@@ -106,13 +81,10 @@
                                 <connections>
                                     <outlet property="backdropView" destination="g1X-bY-CZU" id="zGh-iG-NTW"/>
                                     <outlet property="courseLabel" destination="2Yi-IS-XM2" id="KO3-b4-S5h"/>
-                                    <outlet property="ingredientsLabel" destination="0MO-Te-mjS" id="VeH-eG-jKz"/>
                                     <outlet property="itemNumberLabel" destination="kal-qm-UwY" id="vPv-Dw-9U3"/>
                                     <outlet property="ratingLabel" destination="Kp7-ax-OQN" id="XlJ-6Y-0jB"/>
                                     <outlet property="recipeNameLabel" destination="JEn-qj-w6g" id="D3H-Fw-fu5"/>
-                                    <outlet property="servingSizeLabel" destination="4kI-8G-GD3" id="nQ8-y8-560"/>
                                     <outlet property="thumbnailImageView" destination="jA6-Mc-fSh" id="nCd-W0-cR3"/>
-                                    <outlet property="totalPreparationTimeLabel" destination="fbT-im-bdO" id="HAV-AA-qKd"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -292,12 +264,6 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Serves: 12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vh5-Zq-ziN">
-                                                    <rect key="frame" x="261" y="20" width="79" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="1." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="465-al-Tvu">
                                                     <rect key="frame" x="8" y="20" width="13" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -311,9 +277,7 @@
                                                 <constraint firstAttribute="height" constant="60" id="KEA-Et-Nvk"/>
                                                 <constraint firstItem="ktp-Q6-B3g" firstAttribute="top" secondItem="w3s-xR-58L" secondAttribute="top" constant="8" id="MUA-OX-AtK"/>
                                                 <constraint firstItem="2n8-Dl-kK0" firstAttribute="top" secondItem="ktp-Q6-B3g" secondAttribute="bottom" constant="2" id="QJb-bJ-R5s"/>
-                                                <constraint firstItem="Vh5-Zq-ziN" firstAttribute="centerY" secondItem="w3s-xR-58L" secondAttribute="centerY" id="SxV-Eb-xI0"/>
                                                 <constraint firstItem="465-al-Tvu" firstAttribute="leading" secondItem="w3s-xR-58L" secondAttribute="leading" constant="8" id="YmS-lo-81s"/>
-                                                <constraint firstItem="Vh5-Zq-ziN" firstAttribute="centerX" secondItem="w3s-xR-58L" secondAttribute="centerX" id="ZDs-ku-zYV"/>
                                                 <constraint firstItem="2n8-Dl-kK0" firstAttribute="leading" secondItem="ktp-Q6-B3g" secondAttribute="leading" id="beQ-iQ-IpK"/>
                                                 <constraint firstItem="IbH-1F-OOD" firstAttribute="centerY" secondItem="w3s-xR-58L" secondAttribute="centerY" id="f3x-e8-y0x"/>
                                                 <constraint firstItem="ktp-Q6-B3g" firstAttribute="leading" secondItem="465-al-Tvu" secondAttribute="trailing" constant="20" id="lnJ-0r-3Qv"/>
@@ -338,7 +302,6 @@
                                     <outlet property="itemNumberLabel" destination="465-al-Tvu" id="yaQ-3O-bMa"/>
                                     <outlet property="ratingLabel" destination="IbH-1F-OOD" id="7dR-b8-IIW"/>
                                     <outlet property="recipeNameLabel" destination="ktp-Q6-B3g" id="5iQ-kn-NDc"/>
-                                    <outlet property="servingSizeLabel" destination="Vh5-Zq-ziN" id="lKR-Lo-hXJ"/>
                                     <outlet property="thumbnailImageView" destination="1Sd-Ob-Pk2" id="M1y-fu-fuq"/>
                                 </connections>
                             </tableViewCell>

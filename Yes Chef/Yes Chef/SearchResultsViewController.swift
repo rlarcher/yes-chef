@@ -153,8 +153,6 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
             
             cell.courseLabel.text = recipeListing.category == .All ? "" : recipeListing.category.rawValue   // Don't bother displaying "All Categories"
             
-            cell.servingSizeLabel.text = recipeListing.presentableServingsText
-            
             let ratingLabels = Utils.getLabelsForRating(recipeListing.presentableRating)
             cell.ratingLabel.text = ratingLabels.textLabel
             cell.ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
@@ -282,7 +280,6 @@ class RecipeListingCell: UITableViewCell
     @IBOutlet weak var courseLabel: UILabel!
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var ratingLabel: UILabel!
-    @IBOutlet weak var servingSizeLabel: UILabel!
     @IBOutlet weak var itemNumberLabel: UILabel!
     @IBOutlet weak var backdropView: UIView!
     
