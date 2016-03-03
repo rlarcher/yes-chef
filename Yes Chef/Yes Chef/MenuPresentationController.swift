@@ -35,4 +35,25 @@ class MenuPresentationController: UIPresentationController, UIViewControllerTran
     {
         return self
     }
+    
+    override func presentationTransitionWillBegin()
+    {
+        // Add an underlay that dismisses the presented view controller the user taps outside of the Menu.
+        if let containerView = self.containerView {
+            let underlayView = UIView(frame: containerView.bounds)
+            underlayView.backgroundColor = UIColor.clearColor()
+            underlayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "underlayViewTapped:"))
+            
+            containerView.addSubview(underlayView)
+        }
+    }
+    
+    // MARK: Helpers
+    
+    func underlayViewTapped(sender: UITapGestureRecognizer)
+    {
+        presentingViewController.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    private var underlayView: UIView!
 }
