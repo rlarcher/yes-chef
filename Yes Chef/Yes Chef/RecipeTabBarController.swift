@@ -35,6 +35,15 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     override func viewDidLoad()
     {
         navigationItem.title = recipe.name
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "♡", style: .Plain, target: self, action: "favoriteButtonTapped")
+        navigationItem.rightBarButtonItem?.enabled = false  // TODO: Activate this
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "X", style: .Plain, target: self, action: "backButtonTapped") // TODO: Just customize the existing back button, with proper image.
+        
+        // Roundabout way to make the navigation bar's background completely invisible:
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func viewDidAppear(animated: Bool)
@@ -94,6 +103,17 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
             self.selectedViewController = selectedVC
             tabViewController.didGainFocus(completionBlock)                
         }
+    }
+    
+    func favoriteButtonTapped()
+    {
+        // TODO
+        print("RecipeTabBarController favoriteButtonTapped")
+    }
+    
+    func backButtonTapped()
+    {
+        navigationController?.popViewControllerAnimated(true)
     }
     
     private func captureTabs()
