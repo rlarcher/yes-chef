@@ -67,6 +67,12 @@ class BigOvenAPIManager
         }
     }
     
+    func fetchRecommendedRecipes(completion: (SearchResponse -> Void))
+    {
+        // TODO
+        completion(.Success(recipeListings: Utils.stubRecipeListings()))
+    }
+    
     private let apiFetcher: BigOvenAPIFetcher
     static private var underlyingInstance: BigOvenAPIManager?
     

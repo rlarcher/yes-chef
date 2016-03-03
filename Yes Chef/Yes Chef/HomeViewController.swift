@@ -8,9 +8,10 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, SelectorPresenterEventHandler
+class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, SelectorPresenterEventHandler, UITableViewDataSource, UITableViewDelegate
 {
     @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
 
     var homeConversationTopic: HomeConversationTopic!
     
@@ -25,9 +26,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     override func viewDidLoad()
     {
         searchBar.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
 
         // Suppress some thin lines that appear at the top and bottom of the search bar:
         searchBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
+        
+        refreshRecommendedRecipes()
     }
     
     override func viewDidAppear(animated: Bool)
@@ -174,6 +179,68 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         }
     }
     
+    private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
+    {
+        BigOvenAPIManager.sharedManager.fetchRecipe(recipeListing.recipeId) { response -> Void in
+            switch response {
+            case .Success(let recipe):
+                self.presentRecipeDetails(recipe, shouldPopViewController: false)
+            case .Failure(let errorMessage, _):
+                self.presentErrorMessage(errorMessage)
+            }
+        }
+    }
+    
+    // MARK: UITableViewDelegate Protocol Methods
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    {
+        let index = indexPath.row
+        if index < recommendedListings.count {
+            let recipeListing = recommendedListings[index]
+            requestedRecipePresentationForListing(recipeListing)
+        }
+    }
+    
+    // MARK: UITableViewDataSource Protocol Methods
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let index = indexPath.row
+        if
+            let cell = tableView.dequeueReusableCellWithIdentifier("RecipeListingCell") as? RecipeListingCell
+            where index < recommendedListings.count
+        {
+            let recipeListing = recommendedListings[index]
+            cell.recipeNameLabel.text = recipeListing.name
+            cell.thumbnailImageView.af_setImageWithURL(recipeListing.imageURL, placeholderImage: nil) // TODO: Add placeholder image
+            
+            cell.courseLabel.text = recipeListing.category == .All ? "" : recipeListing.category.rawValue   // Don't bother displaying "All Categories"
+            
+            let ratingLabels = Utils.getLabelsForRating(recipeListing.presentableRating)
+            cell.ratingLabel.text = ratingLabels.textLabel
+            cell.ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
+            
+            cell.itemNumberLabel.text = "\(index + 1)."   // Convert 0-based index to 1-based item number.
+            
+            return cell
+        }
+        else {
+            return UITableViewCell()
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return recommendedListings.count
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
+        return 1
+    }
+
+    
     // MARK: CategoryCuisinePresenter Protocol Methods
     
     func selectedNewCategory(category: Category)
@@ -212,6 +279,19 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         }
     }
     
+    private func refreshRecommendedRecipes()
+    {
+        BigOvenAPIManager.sharedManager.fetchRecommendedRecipes() { response in
+            switch response {
+            case .Success(let recipeListings):
+                self.recommendedListings = recipeListings
+                self.tableView.reloadData()
+            case .Failure(let errorMessage, _):
+                self.presentErrorMessage(errorMessage)
+            }
+        }
+    }
+    
     private func presentErrorMessage(message: String)
     {
         // TODO: GUI component? Popup?
@@ -224,6 +304,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         homeConversationTopic.speakNoResultsForSearchParameters(parameters)
     }
     
+    private var recommendedListings = [RecipeListing]()
     private var selectorPresenter: SelectorPresenter!
     private var searchParameters = SearchParameters.emptyParameters()
     private var shouldSpeakFirstTimeIntroduction = true
