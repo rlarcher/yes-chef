@@ -12,7 +12,7 @@ struct Recipe
 {
     let recipeId: String
     let name: String
-    let rating: Int
+    let rating: Float
     let reviewCount: Int
     let description: String
     let cuisine: Cuisine
@@ -33,8 +33,8 @@ struct Recipe
         var string = "\(name)."
         
         // Append rating, if there have been any reviews (suppress 0-star rating due to 0 reviews).
-        if reviewCount > 0 {
-            string = "\(string) \(rating.withSuffix("star"))"
+        if let presentableRating = self.presentableRating {
+            string = "\(string) \(presentableRating) out of 5 stars."
         }
         
         if servingsQuantity > 0 {
@@ -87,9 +87,19 @@ struct Recipe
         }
     }
     
-    var presentableRating: Int?
+    var presentableRating: String?
     {
-        return reviewCount > 0 ? rating : nil
+        if reviewCount > 0 {
+            if rating % 1 > 0 {
+                return String(format: "%.1f", rating)
+            }
+            else {
+                return String(format: "%.0f", rating)
+            }
+        }
+        else {
+            return nil
+        }
     }
 }
 

@@ -117,14 +117,12 @@ class BigOvenAPIFetcher: NSObject
                     if
                         let rawRecipeID         = recipeData["RecipeID"]?.int,
                         let recipeName          = recipeData["Title"]?.string,
-                        let ratingFloat         = recipeData["StarRating"]?.float,
+                        let rating              = recipeData["StarRating"]?.float,
                         let reviewCount         = recipeData["ReviewCount"]?.int,
                         let yieldNumber         = recipeData["YieldNumber"]?.int,
                         let imageURLString      = recipeData["ImageURL"]?.string,
                         let imageURL            = NSURL(string: imageURLString)
                     {
-                        let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
-                        
                         let cuisine = parseCuisineFromData(recipeData)
                         let course = parseCourseFromData(recipeData)
                         
@@ -149,7 +147,7 @@ class BigOvenAPIFetcher: NSObject
                 let rawRecipeId             = root["RecipeID"]?.int,
                 let recipeName              = root["Title"]?.string,
                 let description             = root["Description"]?.string,
-                let ratingFloat             = root["StarRating"]?.float,
+                let rating                  = root["StarRating"]?.float,
                 let heroImageURLString      = root["HeroPhotoUrl"]?.string,
                 let heroImageURL            = NSURL(string: heroImageURLString),
                 let ingredientsData         = root["Ingredients"]?.arrayValue,
@@ -165,7 +163,6 @@ class BigOvenAPIFetcher: NSObject
                 let rawActivePrepTime = root["ActiveMinutes"]?.int                            // Could be nil, 0, or a proper number.
                 let activePreparationTime = rawActivePrepTime == 0 ? nil : rawActivePrepTime  // If BigOven's time is 0, just set ours to nil.
                 
-                let rating = Int(round(ratingFloat))    // TODO: Revisit rounding? Maybe we want to round to nearest half?
                 let preparationSteps = parsePreparationSteps(rawInstructions)
                 
                 let cuisine = parseCuisineFromData(root)
