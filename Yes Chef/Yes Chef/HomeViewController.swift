@@ -51,7 +51,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     override func viewWillDisappear(animated: Bool)
     {
         homeConversationTopic.topicDidLoseFocus()
-        navigationController?.setNavigationBarHidden(false, animated: true)
+
     }
     
     // MARK: HomeConversationTopicEventHandler Protocol Methods

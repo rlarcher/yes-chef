@@ -40,6 +40,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidAppear(animated: Bool)
     {
         searchResultsConversationTopic.topicDidGainFocus()
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -176,6 +177,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     // MARK: Navigation Helpers
+    
+    @IBAction func backButtonTapped(sender: AnyObject)
+    {
+        navigationController?.popViewControllerAnimated(true)
+    }
     
     private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
     {

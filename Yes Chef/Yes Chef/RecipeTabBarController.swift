@@ -50,11 +50,15 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
     {
         // Note: When the TabBarController is first pushed on the stack, this `viewDidAppear` is triggered, but not any of its tabs' `viewDidAppears`, until we manually switch to a new tab. This is the one and only time `RecipeTabBarController` will "appear".
         recipeOverviewVC.didGainFocus(nil)
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool)
     {
         recipeNavigationConversationTopic.topicDidLoseFocus()
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     // MARK: RecipeNavigationConversationTopicEventHandler Protocol Methods
