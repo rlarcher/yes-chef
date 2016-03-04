@@ -116,6 +116,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     {
         searchBar.setShowsCancelButton(true, animated: true)
         
+        presentSearchOptions()
+        
         return true
     }
     
@@ -123,13 +125,16 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
+        dismissViewControllerAnimated(true, completion: nil)    // Dismisses the SearchOptionsController
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
-        if let query = searchBar.text {
-            searchParameters.query = query
-            searchUsingParameters(searchParameters)
+        dismissViewControllerAnimated(true) {    // Dismisses the SearchOptionsController
+            if let query = searchBar.text {
+                self.searchParameters.query = query
+                self.searchUsingParameters(self.searchParameters)
+            }
         }
         
         searchBar.setShowsCancelButton(false, animated: true)
@@ -200,6 +205,26 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
             
             presentViewController(menuViewController, animated: true, completion: nil)
         }
+    }
+    
+    private func presentSearchOptions()
+    {
+        let cuisineViewController = CuisineSelectorViewController()
+        cuisineViewController.tabBarItem.title = "Cuisine"
+        
+        let courseViewController = CategorySelectorViewController()
+        courseViewController.tabBarItem.title = "Course"
+     
+        let searchOptionsController = UITabBarController()
+        searchOptionsController.setViewControllers([cuisineViewController, courseViewController], animated: false)
+        
+        let presentationController = SearchOptionsPresentationController(presentedViewController: searchOptionsController, presentingViewController: self)
+        presentationController.presentationFrame = tableView.frame
+        presentationController.passthroughViews = [searchBar]
+        
+        searchOptionsController.transitioningDelegate = presentationController
+
+        presentViewController(searchOptionsController, animated: true, completion: nil)
     }
     
     // MARK: UITableViewDelegate Protocol Methods

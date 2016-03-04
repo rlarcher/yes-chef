@@ -39,6 +39,7 @@
 		83A6A6CB1C74D79F003B559D /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6A6CA1C74D79F003B559D /* String+Utils.swift */; };
 		83B56A0D1C88B71300A185F0 /* MenuPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B56A0C1C88B71300A185F0 /* MenuPresentationController.swift */; };
 		83B56A0F1C88BC6D00A185F0 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B56A0E1C88BC6D00A185F0 /* MenuViewController.swift */; };
+		83B56A131C88D3E100A185F0 /* SearchOptionsPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */; };
 		83CC6EA21C6D194B00EB7DCC /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; };
 		83CC6EA31C6D194B00EB7DCC /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
@@ -99,6 +100,7 @@
 		83A6A6CA1C74D79F003B559D /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		83B56A0C1C88B71300A185F0 /* MenuPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuPresentationController.swift; sourceTree = "<group>"; };
 		83B56A0E1C88BC6D00A185F0 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsPresentationController.swift; sourceTree = "<group>"; };
 		83CC6EA01C6D193900EB7DCC /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
 		83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListing.swift; sourceTree = "<group>"; };
@@ -172,11 +174,8 @@
 			children = (
 				8348DECD1C6146870009C7DF /* HomeViewController.swift */,
 				8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */,
-				83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */,
-				83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */,
-				83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */,
-				83B56A0C1C88B71300A185F0 /* MenuPresentationController.swift */,
-				83B56A0E1C88BC6D00A185F0 /* MenuViewController.swift */,
+				83B56A101C88D30300A185F0 /* Menu */,
+				83B56A111C88D30D00A185F0 /* Search Options */,
 			);
 			name = "Home Scene";
 			sourceTree = "<group>";
@@ -235,6 +234,26 @@
 				836447D31C76299F000BEB90 /* StringScore.swift */,
 			);
 			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		83B56A101C88D30300A185F0 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				83B56A0E1C88BC6D00A185F0 /* MenuViewController.swift */,
+				83B56A0C1C88B71300A185F0 /* MenuPresentationController.swift */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
+		83B56A111C88D30D00A185F0 /* Search Options */ = {
+			isa = PBXGroup;
+			children = (
+				83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */,
+				83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */,
+				83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */,
+				83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */,
+			);
+			name = "Search Options";
 			sourceTree = "<group>";
 		};
 		83D1B5021C628755008D95F4 /* Private */ = {
@@ -383,6 +402,7 @@
 			files = (
 				83B56A0D1C88B71300A185F0 /* MenuPresentationController.swift in Sources */,
 				831E367F1C69325E00DA63AB /* ConversationalTabBarViewController.swift in Sources */,
+				83B56A131C88D3E100A185F0 /* SearchOptionsPresentationController.swift in Sources */,
 				8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */,
 				8348DF061C614B510009C7DF /* SearchResultsConversationTopic.swift in Sources */,
 				83B56A0F1C88BC6D00A185F0 /* MenuViewController.swift in Sources */,
