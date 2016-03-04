@@ -12,7 +12,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
 {
     var searchResultsConversationTopic: SearchResultsConversationTopic!
     
-    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBarOverlay: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: Lifecycle
@@ -211,7 +212,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         
         let presentationController = SearchOptionsPresentationController(presentedViewController: searchOptionsController, presentingViewController: self)
         presentationController.presentationFrame = tableView.frame
-        presentationController.passthroughViews = [searchBar]
+        presentationController.passthroughViews = [searchBarOverlay]
         
         searchOptionsController.transitioningDelegate = presentationController
         

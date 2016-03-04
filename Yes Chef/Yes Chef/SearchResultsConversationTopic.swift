@@ -150,7 +150,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         }
         
         listSubtopic?.introString = recipeListings.count > 0 ?
-                                        "I found \(recipeListings.count.withSuffix("result")) for \"\(searchParameters.presentableString)\":" :
+                                        "I found \(recipeListings.count.withSuffix("result")) for \"\(searchParameters.presentableString)\"" :
                                         "There were no results for \"\(searchParameters.presentableString)\"."
         listSubtopic?.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
         listSubtopic?.outroString = "Say \"More\" for more recipes (coming soon)."

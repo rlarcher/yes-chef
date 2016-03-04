@@ -10,9 +10,10 @@ import UIKit
 
 class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate
 {
-    @IBOutlet var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBarOverlay: UIView!
     @IBOutlet weak var tableView: UITableView!
-
+    
     var homeConversationTopic: HomeConversationTopic!
     
     required init?(coder aDecoder: NSCoder)
