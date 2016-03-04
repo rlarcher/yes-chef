@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, SelectorPresenterEventHandler, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate
+class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate
 {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -20,7 +20,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         // Called as part of `storyboard.instantiateViewControllerWithIdentifier:` method.
         super.init(coder: aDecoder)
         self.homeConversationTopic = HomeConversationTopic(eventHandler: self)
-        self.selectorPresenter = SelectorPresenter(presentingViewController: self, eventHandler: self)
     }
     
     override func viewDidLoad()
@@ -86,28 +85,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         
         // TODO: Present intermediate "Loading" scene
         searchUsingParameters(searchParameters)
-    }
-    
-    // MARK: IBAction Methods
-    
-    @IBAction func categoryButtonTapped(sender: AnyObject)
-    {
-        selectorPresenter.presentCategorySelector(initialCategory: searchParameters.course)
-    }
-    
-    @IBAction func cuisineButtonTapped(sender: AnyObject)
-    {
-        selectorPresenter.presentCuisineSelector(initialCuisine: searchParameters.cuisine)
-    }
-    
-    @IBAction func savedRecipesButtonTapped(sender: AnyObject)
-    {
-        presentSavedRecipes()
-    }
-    
-    @IBAction func menuButtonTapped(sender: AnyObject)
-    {
-        presentMenu()
     }
     
     // MARK: UISearchBarDelegate Protocol Methods
@@ -209,22 +186,13 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     private func presentSearchOptions()
     {
-        let cuisineViewController = CuisineSelectorViewController()
-        cuisineViewController.tabBarItem.title = "Cuisine"
-        cuisineViewController.selectedRow = Cuisine.orderedValues.indexOf(searchParameters.cuisine)
-        cuisineViewController.selectionBlock = { selectedCuisine in
+        let searchOptionsController = SearchOptionsController(searchParameters: searchParameters)
+        searchOptionsController.cuisineSelectionBlock = { selectedCuisine in
             self.searchParameters.cuisine = selectedCuisine
         }
-        
-        let courseViewController = CategorySelectorViewController()
-        courseViewController.tabBarItem.title = "Course"
-        courseViewController.selectedRow = Category.orderedValues.indexOf(searchParameters.course)
-        courseViewController.selectionBlock = { selectedCourse in
+        searchOptionsController.courseSelectionBlock = { selectedCourse in
             self.searchParameters.course = selectedCourse
         }
-     
-        let searchOptionsController = UITabBarController()
-        searchOptionsController.setViewControllers([cuisineViewController, courseViewController], animated: false)
         
         let presentationController = SearchOptionsPresentationController(presentedViewController: searchOptionsController, presentingViewController: self)
         presentationController.presentationFrame = tableView.frame
@@ -296,13 +264,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         searchParameters.cuisine = cuisine
     }
     
-    func selectorCancelButtonTapped()
-    {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-    }
-    
     // MARK: MenuViewControllerDelegate Protocol Methods
     
     func requestedPresentSavedRecipes()
@@ -355,7 +316,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     }
     
     private var recommendedListings = [RecipeListing]()
-    private var selectorPresenter: SelectorPresenter!
     private var searchParameters = SearchParameters.emptyParameters()
     private var shouldSpeakFirstTimeIntroduction = true
 }

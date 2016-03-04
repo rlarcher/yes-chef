@@ -8,13 +8,12 @@
 
 import UIKit
 
-class SearchResultsViewController: UITableViewController, SearchResultsConversationTopicEventHandler, UISearchBarDelegate, SelectorPresenterEventHandler
+class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SearchResultsConversationTopicEventHandler, UISearchBarDelegate
 {
     var searchResultsConversationTopic: SearchResultsConversationTopic!
     
     @IBOutlet var searchBar: UISearchBar!
-    @IBOutlet var categoryButton: UIButton!
-    @IBOutlet var cuisineButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     // MARK: Lifecycle
     
@@ -22,23 +21,16 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     {
         super.init(coder: aDecoder)
         self.searchResultsConversationTopic = SearchResultsConversationTopic(eventHandler: self)
-        self.selectorPresenter = SelectorPresenter(presentingViewController: self, eventHandler: self)
-    }
-    
-    // Must be called immediately after instantiating the VC
-    func setRecipeListings(recipeListings: [RecipeListing], forSearchParameters parameters: SearchParameters)
-    {
-        self.recipeListings = recipeListings
-        self.searchParameters = parameters
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.tableView?.reloadData()
-        }
     }
     
     override func viewDidLoad()
     {
         searchBar.delegate = self
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        // Suppress some thin lines that appear at the top and bottom of the search bar:
+        searchBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         
         selectedNewCategory(searchParameters.course)
         selectedNewCuisine(searchParameters.cuisine)
@@ -54,23 +46,24 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         searchResultsConversationTopic.topicDidLoseFocus()
     }
     
-    // MARK: IBAction Methods
-    
-    @IBAction func categoryButtonTapped(sender: AnyObject)
+    // Must be called immediately after instantiating the VC
+    func setRecipeListings(recipeListings: [RecipeListing], forSearchParameters parameters: SearchParameters)
     {
-        selectorPresenter.presentCategorySelector(initialCategory: searchParameters.course)
+        self.recipeListings = recipeListings
+        self.searchParameters = parameters
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView?.reloadData()
+        }
     }
     
-    @IBAction func cuisineButtonTapped(sender: AnyObject)
-    {
-        selectorPresenter.presentCuisineSelector(initialCuisine: searchParameters.cuisine)
-    }
-    
-    // MARK: UISearchBarDelegate Protocol Methods
+     // MARK: UISearchBarDelegate Protocol Methods
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool
     {
         searchBar.setShowsCancelButton(true, animated: true)
+        
+        presentSearchOptions()
         
         return true
     }
@@ -79,13 +72,16 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
+        dismissViewControllerAnimated(true, completion: nil)    // Dismisses the SearchOptionsController
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar)
     {
-        if let query = searchBar.text {
-            searchParameters.query = query
-            searchUsingParameters(searchParameters)
+        dismissViewControllerAnimated(true) {    // Dismisses the SearchOptionsController
+            if let query = searchBar.text {
+                self.searchParameters.query = query
+                self.searchUsingParameters(self.searchParameters)
+            }
         }
         
         searchBar.setShowsCancelButton(false, animated: true)
@@ -129,7 +125,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     // MARK: UITableViewDelegate Protocol Methods
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
     {
         let index = indexPath.row
         if index < recipeListings.count {
@@ -140,7 +136,7 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     
     // MARK: UITableViewDataSource Protocol Methods
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let index = indexPath.row
         if
@@ -166,12 +162,12 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         }
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         return recipeListings.count
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
     {
         return 1
     }
@@ -201,6 +197,25 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         }
     }
     
+    private func presentSearchOptions()
+    {
+        let searchOptionsController = SearchOptionsController(searchParameters: searchParameters)
+        searchOptionsController.cuisineSelectionBlock = { selectedCuisine in
+            self.searchParameters.cuisine = selectedCuisine
+        }
+        searchOptionsController.courseSelectionBlock = { selectedCourse in
+            self.searchParameters.course = selectedCourse
+        }
+        
+        let presentationController = SearchOptionsPresentationController(presentedViewController: searchOptionsController, presentingViewController: self)
+        presentationController.presentationFrame = tableView.frame
+        presentationController.passthroughViews = [searchBar]
+        
+        searchOptionsController.transitioningDelegate = presentationController
+        
+        presentViewController(searchOptionsController, animated: true, completion: nil)
+    }
+    
     private func presentErrorMessage(message: String)
     {
         // TODO: GUI component? Popup?
@@ -212,26 +227,11 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
     func selectedNewCategory(category: Category)
     {
         searchParameters.course = category
-        dispatch_async(dispatch_get_main_queue()) {
-            self.categoryButton.setTitle(category.rawValue, forState: .Normal)
-            self.categoryButton.updateConstraints()
-        }
     }
     
     func selectedNewCuisine(cuisine: Cuisine)
     {
         searchParameters.cuisine = cuisine
-        dispatch_async(dispatch_get_main_queue()) {
-            self.cuisineButton.setTitle(cuisine.rawValue, forState: .Normal)
-            self.cuisineButton.updateConstraints()
-        }
-    }
-    
-    func selectorCancelButtonTapped()
-    {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
     }
     
     private func searchUsingParameters(parameters: SearchParameters)
@@ -257,8 +257,6 @@ class SearchResultsViewController: UITableViewController, SearchResultsConversat
         // TODO: If search was performed via search bar, re-highlight the search bar?
         searchResultsConversationTopic.speakNoResultsForSearchParameters(parameters)
     }
-    
-    private var selectorPresenter: SelectorPresenter!
     
     private var recipeListings: [RecipeListing]! {
         didSet {
