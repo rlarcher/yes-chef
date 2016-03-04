@@ -10,18 +10,24 @@ import UIKit
 
 class CategorySelectorViewController: UITableViewController {
     
-    var categories: [Category] = []
+    var categories = Category.orderedValues
     var selectedRow: Int?
     
     var selectionBlock: (Category -> ())?
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        tableView.selectRowAtIndexPath(NSIndexPath(forRow: selectedRow ?? 0, inSection: 0), animated: true, scrollPosition: .None)
+    }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let category = categories[indexPath.row]
         let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
         cell.textLabel?.text = category.rawValue
+        cell.textLabel?.textAlignment = .Center
         if (indexPath.row == selectedRow) {
-            cell.accessoryType = .Checkmark
+            tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .None)
         }
         return cell
     }

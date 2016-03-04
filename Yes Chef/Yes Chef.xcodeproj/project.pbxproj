@@ -249,8 +249,8 @@
 			isa = PBXGroup;
 			children = (
 				83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */,
-				83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */,
 				83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */,
+				83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */,
 				83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */,
 			);
 			name = "Search Options";

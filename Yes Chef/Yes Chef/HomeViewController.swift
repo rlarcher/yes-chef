@@ -211,9 +211,17 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     {
         let cuisineViewController = CuisineSelectorViewController()
         cuisineViewController.tabBarItem.title = "Cuisine"
+        cuisineViewController.selectedRow = Cuisine.orderedValues.indexOf(searchParameters.cuisine)
+        cuisineViewController.selectionBlock = { selectedCuisine in
+            self.searchParameters.cuisine = selectedCuisine
+        }
         
         let courseViewController = CategorySelectorViewController()
         courseViewController.tabBarItem.title = "Course"
+        courseViewController.selectedRow = Category.orderedValues.indexOf(searchParameters.course)
+        courseViewController.selectionBlock = { selectedCourse in
+            self.searchParameters.course = selectedCourse
+        }
      
         let searchOptionsController = UITabBarController()
         searchOptionsController.setViewControllers([cuisineViewController, courseViewController], animated: false)
