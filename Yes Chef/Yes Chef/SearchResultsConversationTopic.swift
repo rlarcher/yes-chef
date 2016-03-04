@@ -20,13 +20,18 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     }
     
     // This must be called before attempting to speak.
+    func updateListings(results: [RecipeListing], forSearchParameters parameters: SearchParameters)
+    {
+        updateResults(results)
+        updateSearchParameters(parameters)
+        syncListSubtopic()
+    }
+    
     func updateResults(results: [RecipeListing])
     {
         self.recipeListings = results
-        listSubtopic?.items = recipeListings.map({ $0.speakableString })
     }
 
-    // This must be called before attempting to speak.
     func updateSearchParameters(parameters: SearchParameters)
     {
         self.searchParameters = parameters
@@ -34,6 +39,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func speakResults()
     {
+        syncListSubtopic()
         listSubtopic?.speakItems()
     }
     
@@ -51,7 +57,6 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func topicDidGainFocus()
     {
-        listSubtopic = buildResultsListSubtopic()
         addSubtopic(listSubtopic!)
         speakResults()
     }
@@ -135,16 +140,21 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
     }
     
-    private func buildResultsListSubtopic() -> ListConversationTopic
+    private func syncListSubtopic()
     {
-        let listTopic = ListConversationTopic(items: recipeListings.map({ $0.speakableString }), eventHandler: self)
-        listTopic.introString = recipeListings.count > 0 ?
-                                    "I found \(recipeListings.count.withSuffix("result")) for \"\(searchParameters.presentableString)\":" :
-                                    "There were no results for \"\(searchParameters.presentableString)\"."
-        listTopic.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
-        listTopic.outroString = "Say \"More\" for more recipes (coming soon)."
+        if listSubtopic == nil {
+            listSubtopic = ListConversationTopic(items: recipeListings.map({ $0.speakableString }), eventHandler: self)
+        }
+        else {
+            listSubtopic?.items = recipeListings.map({ $0.speakableString })
+        }
         
-        return listTopic
+        listSubtopic?.introString = recipeListings.count > 0 ?
+                                        "I found \(recipeListings.count.withSuffix("result")) for \"\(searchParameters.presentableString)\":" :
+                                        "There were no results for \"\(searchParameters.presentableString)\"."
+        listSubtopic?.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
+        listSubtopic?.outroString = "Say \"More\" for more recipes (coming soon)."
+        
     }
     
     private func speakSelectionFailed(name: String?, index: Int?)

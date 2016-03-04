@@ -47,10 +47,12 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     // Must be called immediately after instantiating the VC
-    func setRecipeListings(recipeListings: [RecipeListing], forSearchParameters parameters: SearchParameters)
+    func updateListings(recipeListings: [RecipeListing], forSearchParameters parameters: SearchParameters)
     {
         self.recipeListings = recipeListings
         self.searchParameters = parameters
+        
+        self.searchResultsConversationTopic.updateListings(recipeListings, forSearchParameters: parameters)
         
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView?.reloadData()
@@ -240,7 +242,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             switch response {
             case .Success(let recipeListings):
                 if recipeListings.count > 0 {
-                    self.setRecipeListings(recipeListings, forSearchParameters: parameters)
+                    self.updateListings(recipeListings, forSearchParameters: parameters)
                     self.searchResultsConversationTopic.speakResults()
                 }
                 else {

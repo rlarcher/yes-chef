@@ -153,7 +153,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     private func presentSearchResults(results: [RecipeListing], forSearchParameters parameters: SearchParameters)
     {
         if let searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier("SearchResultsViewController") as? SearchResultsViewController {
-            searchResultsVC.setRecipeListings(results, forSearchParameters: parameters)
+            searchResultsVC.updateListings(results, forSearchParameters: parameters)
             dispatch_async(dispatch_get_main_queue()) {
                 self.navigationController?.popToRootThenPushViewController(searchResultsVC, animated: true) // Note: We use `popToRootThenPushVC` to avoid deep stacks of `SearchResultsVC`s when performing multiple searches in a row.
                 self.homeConversationTopic.addSubtopic(searchResultsVC.searchResultsConversationTopic)
