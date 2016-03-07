@@ -166,6 +166,8 @@
 				8348DEF31C6149990009C7DF /* Saved Recipes Scene */,
 				8348DEF41C6149A00009C7DF /* Search Results Scene */,
 				8348DEF51C6149AB0009C7DF /* Recipe Details Scene */,
+				83D568C61C8DC7AE00EDDD17 /* Common Scene Components */,
+				8348DF031C614B330009C7DF /* ListConversationTopic.swift */,
 				8348DEF61C6149E50009C7DF /* Data */,
 				83D1B5021C628755008D95F4 /* Private */,
 				8348DECF1C6146870009C7DF /* Main.storyboard */,
@@ -184,7 +186,6 @@
 				8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */,
 				83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */,
 				83B56A101C88D30300A185F0 /* Menu */,
-				83B56A111C88D30D00A185F0 /* Search Options */,
 			);
 			name = "Home Scene";
 			sourceTree = "<group>";
@@ -194,7 +195,6 @@
 			children = (
 				8348DEE51C61489B0009C7DF /* SavedRecipesViewController.swift */,
 				8348DF011C614AFE0009C7DF /* SavedRecipesConversationTopic.swift */,
-				8348DF031C614B330009C7DF /* ListConversationTopic.swift */,
 			);
 			name = "Saved Recipes Scene";
 			sourceTree = "<group>";
@@ -278,6 +278,14 @@
 				836EC68F1C68EC2E00FC74F7 /* Utils.swift */,
 			);
 			name = Private;
+			sourceTree = "<group>";
+		};
+		83D568C61C8DC7AE00EDDD17 /* Common Scene Components */ = {
+			isa = PBXGroup;
+			children = (
+				83B56A111C88D30D00A185F0 /* Search Options */,
+			);
+			name = "Common Scene Components";
 			sourceTree = "<group>";
 		};
 		9A758F01EA9CE9D2AF3F5898 /* Pods */ = {
