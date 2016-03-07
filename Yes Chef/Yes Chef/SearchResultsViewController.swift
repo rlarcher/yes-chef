@@ -22,6 +22,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     {
         super.init(coder: aDecoder)
         self.searchResultsConversationTopic = SearchResultsConversationTopic(eventHandler: self)
+        self.presenter = SearchResultsPresenter(viewController: self, conversationTopic: self.searchResultsConversationTopic)
     }
     
     override func viewDidLoad()
@@ -67,7 +68,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     {
         searchBar.setShowsCancelButton(true, animated: true)
         
-        presentSearchOptions()
+        presenter.presentSearchOptions(searchParameters, presentationFrame: tableView.frame, passthroughViews: [searchBarOverlay])
         
         return true
     }
@@ -175,62 +176,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     {
         return 1
     }
-    
-    // MARK: Navigation Helpers
-    
-    @IBAction func backButtonTapped(sender: AnyObject)
-    {
-        navigationController?.popViewControllerAnimated(true)
-    }
-    
-    private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
-    {
-        BigOvenAPIManager.sharedManager.fetchRecipe(recipeListing.recipeId) { response -> Void in
-            switch response {
-            case .Success(let recipe):
-                self.presentRecipe(recipe)
-            case .Failure(let errorMessage, _):
-                self.presentErrorMessage(errorMessage)
-            }
-        }
-    }
-    
-    private func presentRecipe(recipe: Recipe)
-    {
-        if let recipeTabBarController = storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
-            recipeTabBarController.setRecipe(recipe)
-            dispatch_async(dispatch_get_main_queue()) {
-                self.navigationController?.pushViewController(recipeTabBarController, animated: true)
-                self.searchResultsConversationTopic.addSubtopic(recipeTabBarController.recipeNavigationConversationTopic)
-            }
-        }
-    }
-    
-    private func presentSearchOptions()
-    {
-        let searchOptionsController = SearchOptionsController(searchParameters: searchParameters)
-        searchOptionsController.cuisineSelectionBlock = { selectedCuisine in
-            self.searchParameters.cuisine = selectedCuisine
-        }
-        searchOptionsController.courseSelectionBlock = { selectedCourse in
-            self.searchParameters.course = selectedCourse
-        }
         
-        let presentationController = SearchOptionsPresentationController(presentedViewController: searchOptionsController, presentingViewController: self)
-        presentationController.presentationFrame = tableView.frame
-        presentationController.passthroughViews = [searchBarOverlay]
-        
-        searchOptionsController.transitioningDelegate = presentationController
-        
-        presentViewController(searchOptionsController, animated: true, completion: nil)
-    }
-    
-    private func presentErrorMessage(message: String)
-    {
-        // TODO: GUI component? Popup?
-        searchResultsConversationTopic.speakErrorMessage(message)
-    }
-    
     // MARK: Helpers
     
     func selectedNewCategory(category: Category)
@@ -241,6 +187,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func selectedNewCuisine(cuisine: Cuisine)
     {
         searchParameters.cuisine = cuisine
+    }
+    
+    @IBAction func backButtonTapped(sender: AnyObject)
+    {
+        presenter.popBack()
     }
     
     private func searchUsingParameters(parameters: SearchParameters)
@@ -256,7 +207,19 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                     self.notifyNoResultsForSearchParameters(parameters)
                 }
             case .Failure(let errorMessage, _):
-                self.presentErrorMessage(errorMessage)
+                self.presenter.presentErrorMessage(errorMessage)
+            }
+        }
+    }
+    
+    private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
+    {
+        BigOvenAPIManager.sharedManager.fetchRecipe(recipeListing.recipeId) { response -> Void in
+            switch response {
+            case .Success(let recipe):
+                self.presenter.presentRecipe(recipe)
+            case .Failure(let errorMessage, _):
+                self.presenter.presentErrorMessage(errorMessage)
             }
         }
     }
@@ -279,6 +242,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             searchResultsConversationTopic.updateSearchParameters(searchParameters)
         }
     }
+    
+    private var presenter: SearchResultsPresenter!
 }
 
 class RecipeListingCell: UITableViewCell

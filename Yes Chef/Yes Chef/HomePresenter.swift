@@ -10,10 +10,10 @@ import Foundation
 
 class HomePresenter: MenuViewControllerDelegate
 {
-    init(homeViewController: HomeViewController, homeConversationTopic: HomeConversationTopic)
+    init(viewController: HomeViewController, conversationTopic: HomeConversationTopic)
     {
-        self.homeViewController = homeViewController
-        self.homeConversationTopic = homeConversationTopic
+        self.homeViewController = viewController
+        self.homeConversationTopic = conversationTopic
     }
     
     func presentSavedRecipes()

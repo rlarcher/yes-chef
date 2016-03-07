@@ -45,6 +45,7 @@
 		83D568BF1C8DBAEC00EDDD17 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */; };
 		83D568C11C8DC1F700EDDD17 /* Cuisine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C01C8DC1F700EDDD17 /* Cuisine.swift */; };
 		83D568C31C8DC1FF00EDDD17 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C21C8DC1FF00EDDD17 /* Category.swift */; };
+		83D568C51C8DC41A00EDDD17 /* SearchResultsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C41C8DC41A00EDDD17 /* SearchResultsPresenter.swift */; };
 		83E52A0C1C89E7BF0067F6DF /* SearchOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */; };
 		83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */; };
 		83FF39581C72535700755AD3 /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */; };
@@ -108,6 +109,7 @@
 		83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		83D568C01C8DC1F700EDDD17 /* Cuisine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cuisine.swift; sourceTree = "<group>"; };
 		83D568C21C8DC1FF00EDDD17 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		83D568C41C8DC41A00EDDD17 /* SearchResultsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsPresenter.swift; sourceTree = "<group>"; };
 		83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsController.swift; sourceTree = "<group>"; };
 		83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListing.swift; sourceTree = "<group>"; };
 		83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			children = (
 				8348DEE71C6148D50009C7DF /* SearchResultsViewController.swift */,
 				8348DF051C614B510009C7DF /* SearchResultsConversationTopic.swift */,
+				83D568C41C8DC41A00EDDD17 /* SearchResultsPresenter.swift */,
 				8393341B1C85E3DC004A99EE /* SearchParameters.swift */,
 			);
 			name = "Search Results Scene";
@@ -432,6 +435,7 @@
 				83A6A6CB1C74D79F003B559D /* String+Utils.swift in Sources */,
 				83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */,
 				8348DEFC1C614A6D0009C7DF /* BigOvenAPIFetcher.swift in Sources */,
+				83D568C51C8DC41A00EDDD17 /* SearchResultsPresenter.swift in Sources */,
 				83987D771C78DCFF00E3BBE9 /* Int+Utils.swift in Sources */,
 				8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */,
 				834F3A991C8A2F81005B3EE9 /* TopTabBarController.swift in Sources */,

@@ -21,7 +21,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         // Called as part of `storyboard.instantiateViewControllerWithIdentifier:` method.
         super.init(coder: aDecoder)
         self.homeConversationTopic = HomeConversationTopic(eventHandler: self)
-        self.presenter = HomePresenter(homeViewController: self, homeConversationTopic: self.homeConversationTopic)
+        self.presenter = HomePresenter(viewController: self, conversationTopic: self.homeConversationTopic)
     }
     
     override func viewDidLoad()
