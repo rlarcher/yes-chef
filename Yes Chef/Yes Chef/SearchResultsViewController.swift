@@ -231,7 +231,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchResultsConversationTopic.speakErrorMessage(message)
     }
     
-    // MARK: SelectorPresenterEventHandler Protocol Methods
+    // MARK: Helpers
     
     func selectedNewCategory(category: Category)
     {

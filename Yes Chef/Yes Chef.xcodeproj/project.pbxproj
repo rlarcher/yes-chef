@@ -35,7 +35,6 @@
 		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
 		8393341C1C85E3DC004A99EE /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8393341B1C85E3DC004A99EE /* SearchParameters.swift */; };
 		83987D771C78DCFF00E3BBE9 /* Int+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83987D761C78DCFF00E3BBE9 /* Int+Utils.swift */; };
-		83987D791C7903D600E3BBE9 /* SelectorPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */; };
 		83A6A6CB1C74D79F003B559D /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6A6CA1C74D79F003B559D /* String+Utils.swift */; };
 		83B56A0D1C88B71300A185F0 /* MenuPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B56A0C1C88B71300A185F0 /* MenuPresentationController.swift */; };
 		83B56A0F1C88BC6D00A185F0 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B56A0E1C88BC6D00A185F0 /* MenuViewController.swift */; };
@@ -44,6 +43,8 @@
 		83CC6EA31C6D194B00EB7DCC /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
 		83D568BF1C8DBAEC00EDDD17 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */; };
+		83D568C11C8DC1F700EDDD17 /* Cuisine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C01C8DC1F700EDDD17 /* Cuisine.swift */; };
+		83D568C31C8DC1FF00EDDD17 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C21C8DC1FF00EDDD17 /* Category.swift */; };
 		83E52A0C1C89E7BF0067F6DF /* SearchOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */; };
 		83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */; };
 		83FF39581C72535700755AD3 /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */; };
@@ -98,7 +99,6 @@
 		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8393341B1C85E3DC004A99EE /* SearchParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParameters.swift; sourceTree = "<group>"; };
 		83987D761C78DCFF00E3BBE9 /* Int+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Utils.swift"; sourceTree = "<group>"; };
-		83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectorPresenter.swift; sourceTree = "<group>"; };
 		83A6A6CA1C74D79F003B559D /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
 		83B56A0C1C88B71300A185F0 /* MenuPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuPresentationController.swift; sourceTree = "<group>"; };
 		83B56A0E1C88BC6D00A185F0 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +106,8 @@
 		83CC6EA01C6D193900EB7DCC /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
 		83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		83D568C01C8DC1F700EDDD17 /* Cuisine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cuisine.swift; sourceTree = "<group>"; };
+		83D568C21C8DC1FF00EDDD17 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsController.swift; sourceTree = "<group>"; };
 		83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListing.swift; sourceTree = "<group>"; };
 		83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +228,8 @@
 			children = (
 				83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */,
 				8348DEF71C614A3D0009C7DF /* Recipe.swift */,
+				83D568C01C8DC1F700EDDD17 /* Cuisine.swift */,
+				83D568C21C8DC1FF00EDDD17 /* Category.swift */,
 				8348DEF91C614A5F0009C7DF /* BigOvenAPIManager.swift */,
 				8348DEFB1C614A6D0009C7DF /* BigOvenAPIFetcher.swift */,
 				8348DEFD1C614ABC0009C7DF /* SavedRecipesManager.swift */,
@@ -254,7 +258,6 @@
 			isa = PBXGroup;
 			children = (
 				83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */,
-				83987D781C7903D600E3BBE9 /* SelectorPresenter.swift */,
 				83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */,
 				83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */,
 				83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */,
@@ -424,6 +427,7 @@
 				8348DEFE1C614ABC0009C7DF /* SavedRecipesManager.swift in Sources */,
 				83FF39581C72535700755AD3 /* CategorySelectorViewController.swift in Sources */,
 				83D568BF1C8DBAEC00EDDD17 /* HomePresenter.swift in Sources */,
+				83D568C11C8DC1F700EDDD17 /* Cuisine.swift in Sources */,
 				8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */,
 				83A6A6CB1C74D79F003B559D /* String+Utils.swift in Sources */,
 				83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */,
@@ -440,7 +444,7 @@
 				8348DF001C614ADE0009C7DF /* HomeConversationTopic.swift in Sources */,
 				8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */,
 				8393341C1C85E3DC004A99EE /* SearchParameters.swift in Sources */,
-				83987D791C7903D600E3BBE9 /* SelectorPresenter.swift in Sources */,
+				83D568C31C8DC1FF00EDDD17 /* Category.swift in Sources */,
 				8348DEEA1C6148FC0009C7DF /* RecipeTabBarController.swift in Sources */,
 				8348DEFA1C614A5F0009C7DF /* BigOvenAPIManager.swift in Sources */,
 			);
