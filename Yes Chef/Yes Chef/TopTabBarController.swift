@@ -8,6 +8,12 @@
 
 import Foundation
 
+enum TabBarPosition
+{
+    case Top
+    case Bottom
+}
+
 class TopTabBarController: UITabBarController
 {
     override func viewDidLoad()
@@ -26,6 +32,8 @@ class TopTabBarController: UITabBarController
         wrapperView.addSubview(underlayView)
         
         view = wrapperView
+        self.contentView = contentView
+        self.underlayView = underlayView
         
         super.viewDidLoad()
     }
@@ -33,12 +41,55 @@ class TopTabBarController: UITabBarController
     // We're not strictly allowed to mess with the tab bar positions, per Apple's documentation. For instance, we can't add constraints to it. Next best thing is forcing the frame positions to where we want them to be.
     override func viewDidLayoutSubviews()
     {
-        tabBar.frame.origin.y = -barOffset  // This moves the tab bar outside of its containing view. But at least we're guaranteed not to interfere with any content.
+        refreshTabBarPosition()
+    }
+    
+    func setTabBarToTop()
+    {
+        contentView.frame.origin.y = barOffset
+        if navigationController?.navigationBar.hidden == true {
+            underlayView.frame.origin.y = view.frame.origin.y
+        }
+        else {
+            underlayView.frame.origin.y = view.frame.origin.y + navigationController!.navigationBar.frame.height
+        }
+        
+        tabBarPosition = .Top
+        refreshTabBarPosition()
+    }
+    
+    func setTabBarToBottom()
+    {
+        contentView.frame.origin.y = view.frame.origin.y
+        underlayView.frame.origin.y = view.frame.size.height - barOffset
+        underlayView.backgroundColor = UIColor.redColor()
+        
+        tabBarPosition = .Bottom
+        refreshTabBarPosition()
+    }
+    
+    private func refreshTabBarPosition()
+    {
+        if tabBarPosition == .Top {
+            if navigationController?.navigationBar.hidden == true {
+                tabBar.frame.origin.y = -barOffset  // This moves the tab bar outside of its containing view. But at least we're guaranteed not to interfere with any content.
+            }
+            else {
+                tabBar.frame.origin.y = -barOffset + navigationController!.navigationBar.frame.height
+            }
+        }
+        else {
+            tabBar.frame.origin.y = view.frame.size.height - barOffset
+        }
     }
     
     private var barOffset: CGFloat {
         return tabBar.frame.size.height
     }
+    
+    private var contentView: UIView!
+    private var underlayView: UIView!
+    private var tabBarPosition: TabBarPosition = .Top
 }
 
 class TapInterceptorView: UIView

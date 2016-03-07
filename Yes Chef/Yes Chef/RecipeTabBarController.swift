@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, RecipeNavigationConversationTopicEventHandler
+class RecipeTabBarController: TopTabBarController, /*UITabBarController,*/ UITabBarControllerDelegate, RecipeNavigationConversationTopicEventHandler
 {
     var recipeNavigationConversationTopic: RecipeNavigationConversationTopic!
     
@@ -44,6 +44,19 @@ class RecipeTabBarController: UITabBarController, UITabBarControllerDelegate, Re
         // Roundabout way to make the navigation bar's background completely invisible:
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationController?.navigationBar.shadowImage = UIImage()
+        
+        super.viewDidLoad()
+    }
+    
+    // TODO: Clean this up
+    private static var didLayout = false
+    override func viewDidLayoutSubviews()
+    {
+        if !RecipeTabBarController.didLayout {
+            // Only want to set this once.
+            RecipeTabBarController.didLayout = true
+            setTabBarToBottom()
+        }
     }
     
     override func viewDidAppear(animated: Bool)
