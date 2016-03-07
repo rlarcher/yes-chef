@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, UITableViewDataSource, UITableViewDelegate, MenuViewControllerDelegate
+class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversationTopicEventHandler, UITableViewDataSource, UITableViewDelegate
 {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchBarOverlay: UIView!
@@ -21,6 +21,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         // Called as part of `storyboard.instantiateViewControllerWithIdentifier:` method.
         super.init(coder: aDecoder)
         self.homeConversationTopic = HomeConversationTopic(eventHandler: self)
+        self.presenter = HomePresenter(homeViewController: self, homeConversationTopic: self.homeConversationTopic)
     }
     
     override func viewDidLoad()
@@ -94,7 +95,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     {
         searchBar.setShowsCancelButton(true, animated: true)
         
-        presentSearchOptions()
+        presenter.presentSearchOptions(searchParameters, presentationFrame: tableView.frame, passthroughViews: [searchBar])
         
         return true
     }
@@ -117,91 +118,6 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.resignFirstResponder()
-    }
-    
-    // MARK: Navigation Helpers
-
-    private func presentSavedRecipes()
-    {
-        if let savedRecipesVC = storyboard?.instantiateViewControllerWithIdentifier("SavedRecipesViewController") as? SavedRecipesViewController {
-            savedRecipesVC.selectionBlock = { selectedRecipe in
-                self.presentRecipeDetails(selectedRecipe, shouldPopViewController: true)
-            }
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.navigationController?.pushViewController(savedRecipesVC, animated: true)
-                self.homeConversationTopic.addSubtopic(savedRecipesVC.savedRecipesConversationTopic)
-            }
-        }
-    }
-    
-    private func presentRecipeDetails(recipe: Recipe, shouldPopViewController: Bool)
-    {
-        if let recipeTabBarController = storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
-            recipeTabBarController.setRecipe(recipe)
-            dispatch_async(dispatch_get_main_queue()) {
-                if shouldPopViewController {
-                    self.navigationController?.popThenPushViewController(recipeTabBarController, animated: true)
-                }
-                else {
-                    self.navigationController?.pushViewController(recipeTabBarController, animated: true)
-                }
-                self.homeConversationTopic.addSubtopic(recipeTabBarController.recipeNavigationConversationTopic)
-            }
-        }
-    }
-    
-    private func presentSearchResults(results: [RecipeListing], forSearchParameters parameters: SearchParameters)
-    {
-        if let searchResultsVC = storyboard?.instantiateViewControllerWithIdentifier("SearchResultsViewController") as? SearchResultsViewController {
-            searchResultsVC.updateListings(results, forSearchParameters: parameters)
-            dispatch_async(dispatch_get_main_queue()) {
-                self.navigationController?.popToRootThenPushViewController(searchResultsVC, animated: true) // Note: We use `popToRootThenPushVC` to avoid deep stacks of `SearchResultsVC`s when performing multiple searches in a row.
-                self.homeConversationTopic.addSubtopic(searchResultsVC.searchResultsConversationTopic)
-            }
-        }
-    }
-    
-    private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
-    {
-        BigOvenAPIManager.sharedManager.fetchRecipe(recipeListing.recipeId) { response -> Void in
-            switch response {
-            case .Success(let recipe):
-                self.presentRecipeDetails(recipe, shouldPopViewController: false)
-            case .Failure(let errorMessage, _):
-                self.presentErrorMessage(errorMessage)
-            }
-        }
-    }
-    
-    private func presentMenu()
-    {
-        if let menuViewController = storyboard?.instantiateViewControllerWithIdentifier("MenuViewController") as? MenuViewController {
-            let presentationController = MenuPresentationController(presentedViewController: menuViewController, presentingViewController: self)
-            menuViewController.transitioningDelegate = presentationController
-            menuViewController.selectionDelegate = self
-            
-            presentViewController(menuViewController, animated: true, completion: nil)
-        }
-    }
-    
-    private func presentSearchOptions()
-    {
-        let searchOptionsController = SearchOptionsController(searchParameters: searchParameters)
-        searchOptionsController.cuisineSelectionBlock = { selectedCuisine in
-            self.searchParameters.cuisine = selectedCuisine
-        }
-        searchOptionsController.courseSelectionBlock = { selectedCourse in
-            self.searchParameters.course = selectedCourse
-        }
-        
-        let presentationController = SearchOptionsPresentationController(presentedViewController: searchOptionsController, presentingViewController: self)
-        presentationController.presentationFrame = tableView.frame
-        presentationController.passthroughViews = [searchBar]
-        
-        searchOptionsController.transitioningDelegate = presentationController
-
-        presentViewController(searchOptionsController, animated: true, completion: nil)
     }
     
     // MARK: UITableViewDelegate Protocol Methods
@@ -253,7 +169,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         return 1
     }
     
-    // MARK: CategoryCuisinePresenter Protocol Methods
+    // MARK: Helpers
     
     func selectedNewCategory(category: Category)
     {
@@ -265,28 +181,19 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         searchParameters.cuisine = cuisine
     }
     
-    // MARK: MenuViewControllerDelegate Protocol Methods
-    
-    func requestedPresentSavedRecipes()
-    {
-        presentSavedRecipes()
-    }
-    
-    // MARK: Helpers
-    
     private func searchUsingParameters(parameters: SearchParameters)
     {
         BigOvenAPIManager.sharedManager.searchForRecipeWithParameters(parameters) { response -> Void in
             switch response {
             case .Success(let recipeListings):
                 if recipeListings.count > 0 {
-                    self.presentSearchResults(recipeListings, forSearchParameters: parameters)
+                    self.presenter.presentSearchResults(recipeListings, forSearchParameters: parameters)
                 }
                 else {
                     self.notifyNoResultsForSearchParameters(parameters)
                 }
             case .Failure(let errorMessage, _):
-                self.presentErrorMessage(errorMessage)
+                self.presenter.presentErrorMessage(errorMessage)
             }
         }
     }
@@ -299,15 +206,21 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
                 self.recommendedListings = recipeListings
                 self.tableView.reloadData()
             case .Failure(let errorMessage, _):
-                self.presentErrorMessage(errorMessage)
+                self.presenter.presentErrorMessage(errorMessage)
             }
         }
     }
     
-    private func presentErrorMessage(message: String)
+    private func requestedRecipePresentationForListing(recipeListing: RecipeListing)
     {
-        // TODO: GUI component? Popup?
-        homeConversationTopic.speakErrorMessage(message)
+        BigOvenAPIManager.sharedManager.fetchRecipe(recipeListing.recipeId) { response -> Void in
+            switch response {
+            case .Success(let recipe):
+                self.presenter.presentRecipeDetails(recipe, shouldPopViewController: false)
+            case .Failure(let errorMessage, _):
+                self.presenter.presentErrorMessage(errorMessage)
+            }
+        }
     }
     
     private func notifyNoResultsForSearchParameters(parameters: SearchParameters)
@@ -319,4 +232,5 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     private var recommendedListings = [RecipeListing]()
     private var searchParameters = SearchParameters.emptyParameters()
     private var shouldSpeakFirstTimeIntroduction = true
+    private var presenter: HomePresenter!
 }

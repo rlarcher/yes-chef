@@ -43,6 +43,7 @@
 		83CC6EA21C6D194B00EB7DCC /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; };
 		83CC6EA31C6D194B00EB7DCC /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
+		83D568BF1C8DBAEC00EDDD17 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */; };
 		83E52A0C1C89E7BF0067F6DF /* SearchOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */; };
 		83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */; };
 		83FF39581C72535700755AD3 /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */; };
@@ -104,6 +105,7 @@
 		83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsPresentationController.swift; sourceTree = "<group>"; };
 		83CC6EA01C6D193900EB7DCC /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
+		83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsController.swift; sourceTree = "<group>"; };
 		83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListing.swift; sourceTree = "<group>"; };
 		83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				8348DECD1C6146870009C7DF /* HomeViewController.swift */,
 				8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */,
+				83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */,
 				83B56A101C88D30300A185F0 /* Menu */,
 				83B56A111C88D30D00A185F0 /* Search Options */,
 			);
@@ -420,12 +423,14 @@
 				8348DEF01C61496A0009C7DF /* RecipePreparationViewController.swift in Sources */,
 				8348DEFE1C614ABC0009C7DF /* SavedRecipesManager.swift in Sources */,
 				83FF39581C72535700755AD3 /* CategorySelectorViewController.swift in Sources */,
+				83D568BF1C8DBAEC00EDDD17 /* HomePresenter.swift in Sources */,
 				8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */,
 				83A6A6CB1C74D79F003B559D /* String+Utils.swift in Sources */,
 				83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */,
 				8348DEFC1C614A6D0009C7DF /* BigOvenAPIFetcher.swift in Sources */,
 				83987D771C78DCFF00E3BBE9 /* Int+Utils.swift in Sources */,
 				8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */,
+				834F3A991C8A2F81005B3EE9 /* TopTabBarController.swift in Sources */,
 				8348DF041C614B330009C7DF /* ListConversationTopic.swift in Sources */,
 				8348DEF81C614A3D0009C7DF /* Recipe.swift in Sources */,
 				8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */,
