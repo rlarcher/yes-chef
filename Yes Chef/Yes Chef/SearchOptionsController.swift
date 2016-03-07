@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SearchOptionsController: UITabBarController
+class SearchOptionsController: TopTabBarController
 {
     var cuisineSelectionBlock: (Cuisine -> ())? {
         didSet {
@@ -43,7 +43,9 @@ class SearchOptionsController: UITabBarController
         courseViewController.tabBarItem.title = "Course"
         courseViewController.selectedRow = Category.orderedValues.indexOf(initialSearchParameters.course)
         
-        setViewControllers([cuisineViewController, courseViewController], animated: false)
+        setViewControllers([cuisineViewController, courseViewController], animated: false)        
+                
+        super.viewDidLoad()
     }
     
     private var courseViewController: CategorySelectorViewController!
