@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SearchOptionsController: TopTabBarController
+class SearchOptionsController: SearchOptionsTabBarController
 {
     var cuisineSelectionBlock: (Cuisine -> ())? {
         didSet {

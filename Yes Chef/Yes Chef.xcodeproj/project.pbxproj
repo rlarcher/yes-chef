@@ -32,6 +32,7 @@
 		8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */; };
 		8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */; };
 		834F3A991C8A2F81005B3EE9 /* TopTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F3A981C8A2F81005B3EE9 /* TopTabBarController.swift */; };
+		8350EC901C8F458C008B9161 /* SearchOptionsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8350EC8F1C8F458C008B9161 /* SearchOptionsTabBarController.swift */; };
 		8350EC921C8F4735008B9161 /* PassthroughOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */; };
 		836447D41C76299F000BEB90 /* StringScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836447D31C76299F000BEB90 /* StringScore.swift */; };
 		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
@@ -99,6 +100,7 @@
 		8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeIngredientsConversationTopic.swift; sourceTree = "<group>"; };
 		8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationConversationTopic.swift; sourceTree = "<group>"; };
 		834F3A981C8A2F81005B3EE9 /* TopTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTabBarController.swift; sourceTree = "<group>"; };
+		8350EC8F1C8F458C008B9161 /* SearchOptionsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsTabBarController.swift; sourceTree = "<group>"; };
 		8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughOverlay.swift; sourceTree = "<group>"; };
 		836447D31C76299F000BEB90 /* StringScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringScore.swift; sourceTree = "<group>"; };
 		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */,
 				83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */,
 				83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */,
+				8350EC8F1C8F458C008B9161 /* SearchOptionsTabBarController.swift */,
 			);
 			name = "Search Options";
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */,
 				8348DF0A1C614BC20009C7DF /* RecipeOverviewConversationTopic.swift in Sources */,
 				83E52A0C1C89E7BF0067F6DF /* SearchOptionsController.swift in Sources */,
+				8350EC901C8F458C008B9161 /* SearchOptionsTabBarController.swift in Sources */,
 				836447D41C76299F000BEB90 /* StringScore.swift in Sources */,
 				8348DF001C614ADE0009C7DF /* HomeConversationTopic.swift in Sources */,
 				8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */,
