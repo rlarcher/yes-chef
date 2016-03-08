@@ -42,6 +42,8 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     {
         super.viewDidAppear(animated)
         
+        // TODO: Move to didLayout?        
+        (tabBarController as? RecipeTabBarController)?.setTabBarToTop()
     }
     
     override func viewDidDisappear(animated: Bool)

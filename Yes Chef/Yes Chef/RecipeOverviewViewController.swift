@@ -45,6 +45,8 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     {
         super.viewDidAppear(animated)
         
+        // TODO: Move to didLayout?
+        (tabBarController as? RecipeTabBarController)?.setTabBarToBottom()
     }
     
     override func viewDidDisappear(animated: Bool)

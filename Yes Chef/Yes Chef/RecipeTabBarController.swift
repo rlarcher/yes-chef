@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecipeTabBarController: TopTabBarController, /*UITabBarController,*/ UITabBarControllerDelegate, RecipeNavigationConversationTopicEventHandler
+class RecipeTabBarController: AdjustableTabBarController, UITabBarControllerDelegate, RecipeNavigationConversationTopicEventHandler
 {
     var recipeNavigationConversationTopic: RecipeNavigationConversationTopic!
     

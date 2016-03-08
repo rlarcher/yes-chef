@@ -60,7 +60,6 @@ class SearchOptionsTabBarController: UITabBarController
         if navigationController?.navigationBar.hidden == true {
             // Don't include navigationBar height
             tabBarFrame = CGRectMake(view.bounds.origin.x,
-                //                                     view.frame.origin.y - barOffset,
                 view.bounds.origin.y,
                 tabBar.frame.size.width,
                 tabBar.frame.size.height)
@@ -70,9 +69,8 @@ class SearchOptionsTabBarController: UITabBarController
                 view.frame.size.height - tabBarFrame.size.height)
         }
         else {
-            let topBarHeight = (navigationController?.navigationBar.frame.height ?? 0.0) //+ UIApplication.sharedApplication().statusBarFrame.height
+            let topBarHeight = (navigationController?.navigationBar.frame.height ?? 0.0)
             tabBarFrame = CGRectMake(view.bounds.origin.x,
-                //                                     view.frame.origin.y - barOffset + navBarHeight,
                 view.bounds.origin.y + topBarHeight,
                 tabBar.frame.size.width,
                 tabBar.frame.size.height)

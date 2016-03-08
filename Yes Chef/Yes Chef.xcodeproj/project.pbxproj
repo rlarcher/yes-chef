@@ -31,7 +31,7 @@
 		8348DF0A1C614BC20009C7DF /* RecipeOverviewConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF091C614BC20009C7DF /* RecipeOverviewConversationTopic.swift */; };
 		8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */; };
 		8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */; };
-		834F3A991C8A2F81005B3EE9 /* TopTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F3A981C8A2F81005B3EE9 /* TopTabBarController.swift */; };
+		834F3A991C8A2F81005B3EE9 /* AdjustableTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F3A981C8A2F81005B3EE9 /* AdjustableTabBarController.swift */; };
 		8350EC901C8F458C008B9161 /* SearchOptionsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8350EC8F1C8F458C008B9161 /* SearchOptionsTabBarController.swift */; };
 		8350EC921C8F4735008B9161 /* PassthroughOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */; };
 		836447D41C76299F000BEB90 /* StringScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836447D31C76299F000BEB90 /* StringScore.swift */; };
@@ -99,7 +99,7 @@
 		8348DF091C614BC20009C7DF /* RecipeOverviewConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeOverviewConversationTopic.swift; sourceTree = "<group>"; };
 		8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeIngredientsConversationTopic.swift; sourceTree = "<group>"; };
 		8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationConversationTopic.swift; sourceTree = "<group>"; };
-		834F3A981C8A2F81005B3EE9 /* TopTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTabBarController.swift; sourceTree = "<group>"; };
+		834F3A981C8A2F81005B3EE9 /* AdjustableTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdjustableTabBarController.swift; sourceTree = "<group>"; };
 		8350EC8F1C8F458C008B9161 /* SearchOptionsTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsTabBarController.swift; sourceTree = "<group>"; };
 		8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughOverlay.swift; sourceTree = "<group>"; };
 		836447D31C76299F000BEB90 /* StringScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringScore.swift; sourceTree = "<group>"; };
@@ -174,7 +174,6 @@
 				8348DEF51C6149AB0009C7DF /* Recipe Details Scene */,
 				83D568C61C8DC7AE00EDDD17 /* Common Scene Components */,
 				8348DF031C614B330009C7DF /* ListConversationTopic.swift */,
-				834F3A981C8A2F81005B3EE9 /* TopTabBarController.swift */,
 				8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */,
 				8348DEF61C6149E50009C7DF /* Data */,
 				83D1B5021C628755008D95F4 /* Private */,
@@ -230,6 +229,7 @@
 				8348DEEF1C61496A0009C7DF /* RecipePreparationViewController.swift */,
 				8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */,
 				831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */,
+				834F3A981C8A2F81005B3EE9 /* AdjustableTabBarController.swift */,
 			);
 			name = "Recipe Details Scene";
 			sourceTree = "<group>";
@@ -456,7 +456,7 @@
 				83D568C51C8DC41A00EDDD17 /* SearchResultsPresenter.swift in Sources */,
 				83987D771C78DCFF00E3BBE9 /* Int+Utils.swift in Sources */,
 				8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */,
-				834F3A991C8A2F81005B3EE9 /* TopTabBarController.swift in Sources */,
+				834F3A991C8A2F81005B3EE9 /* AdjustableTabBarController.swift in Sources */,
 				8348DF041C614B330009C7DF /* ListConversationTopic.swift in Sources */,
 				8348DEF81C614A3D0009C7DF /* Recipe.swift in Sources */,
 				8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */,
