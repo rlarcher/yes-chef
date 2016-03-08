@@ -181,6 +181,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         searchParameters.cuisine = cuisine
     }
     
+    @IBAction func menuButtonTapped(sender: AnyObject)
+    {
+        presenter.presentMenu()
+    }    
+    
     private func searchUsingParameters(parameters: SearchParameters)
     {
         BigOvenAPIManager.sharedManager.searchForRecipeWithParameters(parameters) { response -> Void in
