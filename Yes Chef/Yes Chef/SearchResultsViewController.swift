@@ -27,6 +27,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad()
     {
+        super.viewDidLoad()
+        
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
@@ -40,6 +42,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidAppear(animated: Bool)
     {
+        super.viewDidAppear(animated)
+        
         searchResultsConversationTopic.topicDidGainFocus()
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
@@ -47,6 +51,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewWillDisappear(animated: Bool)
     {
         searchResultsConversationTopic.topicDidLoseFocus()
+        
+        super.viewWillDisappear(animated)
     }
     
     // Must be called immediately after instantiating the VC

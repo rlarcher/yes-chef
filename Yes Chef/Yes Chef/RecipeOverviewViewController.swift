@@ -32,6 +32,8 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     
     override func viewDidLoad()
     {
+        super.viewDidLoad()
+        
         let ratingLabels = Utils.getLabelsForRating(recipe.presentableRating)
         ratingLabel.text = ratingLabels.textLabel
         ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
@@ -41,12 +43,13 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     
     override func viewDidAppear(animated: Bool)
     {
-
+        super.viewDidAppear(animated)
+        
     }
     
     override func viewDidDisappear(animated: Bool)
     {
-
+        super.viewDidDisappear(animated)
     }
     
     // MARK: ConversationTabBarViewController Methods

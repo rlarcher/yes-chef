@@ -28,6 +28,8 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     
     override func viewDidLoad()
     {
+        super.viewDidLoad()
+        
         if let activePrepTime = recipe.activePreparationTime {
             self.activeTimeLabel.text = "\(activePrepTime.withSuffix("minute"))"
         }
@@ -38,12 +40,13 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     
     override func viewDidAppear(animated: Bool)
     {
-
+        super.viewDidAppear(animated)
+        
     }
     
     override func viewDidDisappear(animated: Bool)
     {
-
+        super.viewDidDisappear(animated)
     }
     
     // MARK: ConversationTabBarViewController Methods

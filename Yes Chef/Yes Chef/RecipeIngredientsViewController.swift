@@ -30,17 +30,20 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     override func viewDidLoad()
     {
+        super.viewDidLoad()
+        
         servingsCountLabel.text = recipe.presentableServingsText
     }
     
     override func viewDidAppear(animated: Bool)
     {
+        super.viewDidAppear(animated)
         
     }
     
     override func viewWillDisappear(animated: Bool)
     {
-
+        super.viewWillDisappear(animated)
     }
     
     // MARK: ConversationTabBarViewController Methods

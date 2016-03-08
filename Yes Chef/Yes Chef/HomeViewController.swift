@@ -26,6 +26,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     override func viewDidLoad()
     {
+        super.viewDidLoad()
+        
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
@@ -38,6 +40,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     override func viewDidAppear(animated: Bool)
     {
+        super.viewDidAppear(animated)        
+        
         homeConversationTopic.topicDidGainFocus()
         
         homeConversationTopic.speakIntroduction(shouldSpeakFirstTimeIntroduction)
@@ -52,7 +56,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     override func viewWillDisappear(animated: Bool)
     {
         homeConversationTopic.topicDidLoseFocus()
-
+        
+        super.viewWillDisappear(animated)
     }
     
     // MARK: HomeConversationTopicEventHandler Protocol Methods

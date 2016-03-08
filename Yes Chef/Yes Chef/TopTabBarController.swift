@@ -18,6 +18,8 @@ class TopTabBarController: UITabBarController
 {
     override func viewDidLoad()
     {
+        super.viewDidLoad()
+        
         // Wrap our view in an empty view, but with space for the relocated tab bar.
         let wrapperView = UIView(frame: view.frame)
         
@@ -42,6 +44,7 @@ class TopTabBarController: UITabBarController
     override func viewDidLayoutSubviews()
     {
         refreshTabBarPosition()
+        super.viewDidLayoutSubviews()
     }
     
     func setTabBarToTop()

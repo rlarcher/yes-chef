@@ -34,6 +34,8 @@ class RecipeTabBarController: TopTabBarController, /*UITabBarController,*/ UITab
     
     override func viewDidLoad()
     {
+        super.viewDidLoad()
+        
         navigationItem.title = recipe.name
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "♡", style: .Plain, target: self, action: "favoriteButtonTapped")
@@ -44,14 +46,14 @@ class RecipeTabBarController: TopTabBarController, /*UITabBarController,*/ UITab
         // Roundabout way to make the navigation bar's background completely invisible:
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        
-        super.viewDidLoad()
     }
     
     // TODO: Clean this up
     private static var didLayout = false
     override func viewDidLayoutSubviews()
     {
+        super.viewDidLayoutSubviews()
+        
         if !RecipeTabBarController.didLayout {
             // Only want to set this once.
             RecipeTabBarController.didLayout = true
@@ -61,6 +63,8 @@ class RecipeTabBarController: TopTabBarController, /*UITabBarController,*/ UITab
     
     override func viewDidAppear(animated: Bool)
     {
+        super.viewDidAppear(animated)
+        
         // Note: When the TabBarController is first pushed on the stack, this `viewDidAppear` is triggered, but not any of its tabs' `viewDidAppears`, until we manually switch to a new tab. This is the one and only time `RecipeTabBarController` will "appear".
         recipeOverviewVC.didGainFocus(nil)
         
@@ -72,6 +76,8 @@ class RecipeTabBarController: TopTabBarController, /*UITabBarController,*/ UITab
         recipeNavigationConversationTopic.topicDidLoseFocus()
         
         navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        super.viewWillDisappear(animated)
     }
     
     // MARK: RecipeNavigationConversationTopicEventHandler Protocol Methods

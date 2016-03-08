@@ -23,6 +23,8 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     
     override func viewDidLoad()
     {
+        super.viewDidLoad()        
+        
         searchController = UISearchController(searchResultsController: nil)
         savedRecipes = SavedRecipesManager.sharedManager.loadSavedRecipes()
         
@@ -31,12 +33,16 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
     
     override func viewDidAppear(animated: Bool)
     {
+        super.viewDidAppear(animated)
+        
         savedRecipesConversationTopic.topicDidGainFocus()
     }
     
     override func viewWillDisappear(animated: Bool)
     {
         savedRecipesConversationTopic.topicDidLoseFocus()
+        
+        super.viewWillDisappear(animated)
     }
     
     deinit {
