@@ -632,10 +632,10 @@
             </objects>
             <point key="canvasLocation" x="978" y="357"/>
         </scene>
-        <!--View Controller-->
+        <!--Recipe Container View Controller-->
         <scene sceneID="KWo-Nj-jiJ">
             <objects>
-                <viewController id="fPZ-JN-fOI" sceneMemberID="viewController">
+                <viewController id="fPZ-JN-fOI" customClass="RecipeContainerViewController" customModule="Yes_Chef" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4qy-kQ-ZiP"/>
                         <viewControllerLayoutGuide type="bottom" id="NwU-Qe-YL3"/>
@@ -662,7 +662,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnU-5M-JiO">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnU-5M-JiO" userLabel="Rating Positioning View">
                                         <rect key="frame" x="550" y="0.0" width="50" height="76"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="5.0 ☆" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfz-jG-GBd">
@@ -691,6 +691,9 @@
                                                 </fragment>
                                             </attributedString>
                                         </state>
+                                        <connections>
+                                            <action selector="ingredientsButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="Unm-O7-RI5"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lYh-We-sKQ">
                                         <rect key="frame" x="240" y="76" width="120" height="32"/>
@@ -704,6 +707,9 @@
                                                 </fragment>
                                             </attributedString>
                                         </state>
+                                        <connections>
+                                            <action selector="preparationButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="wV8-dP-ZG9"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7VO-Hl-Cw5">
                                         <rect key="frame" x="498" y="76" width="86" height="32"/>
@@ -717,6 +723,9 @@
                                                 </fragment>
                                             </attributedString>
                                         </state>
+                                        <connections>
+                                            <action selector="caloriesButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="T7K-Uf-V90"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -752,6 +761,15 @@
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="caloriesButton" destination="7VO-Hl-Cw5" id="iXY-tJ-h0m"/>
+                        <outlet property="containerView" destination="2tH-4D-wCK" id="8bT-8z-fsc"/>
+                        <outlet property="ingredientsButton" destination="QL5-YB-oVB" id="2KL-ge-Pyg"/>
+                        <outlet property="preparationButton" destination="lYh-We-sKQ" id="QA5-MS-iLE"/>
+                        <outlet property="recipeCourseLabel" destination="vjJ-tV-1q4" id="Gp5-XI-OYo"/>
+                        <outlet property="recipeNameLabel" destination="9A5-kB-78w" id="ipo-iD-hv5"/>
+                        <outlet property="recipeRatingLabel" destination="dfz-jG-GBd" id="bQj-Qz-2DU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6SV-7x-vUd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
