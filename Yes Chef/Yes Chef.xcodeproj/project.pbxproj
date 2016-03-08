@@ -32,6 +32,7 @@
 		8348DF0C1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */; };
 		8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */; };
 		834F3A991C8A2F81005B3EE9 /* TopTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834F3A981C8A2F81005B3EE9 /* TopTabBarController.swift */; };
+		8350EC921C8F4735008B9161 /* PassthroughOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */; };
 		836447D41C76299F000BEB90 /* StringScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836447D31C76299F000BEB90 /* StringScore.swift */; };
 		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
 		8393341C1C85E3DC004A99EE /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8393341B1C85E3DC004A99EE /* SearchParameters.swift */; };
@@ -98,6 +99,7 @@
 		8348DF0B1C614BD10009C7DF /* RecipeIngredientsConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeIngredientsConversationTopic.swift; sourceTree = "<group>"; };
 		8348DF0D1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationConversationTopic.swift; sourceTree = "<group>"; };
 		834F3A981C8A2F81005B3EE9 /* TopTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopTabBarController.swift; sourceTree = "<group>"; };
+		8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassthroughOverlay.swift; sourceTree = "<group>"; };
 		836447D31C76299F000BEB90 /* StringScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringScore.swift; sourceTree = "<group>"; };
 		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		8393341B1C85E3DC004A99EE /* SearchParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParameters.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				83D568C61C8DC7AE00EDDD17 /* Common Scene Components */,
 				8348DF031C614B330009C7DF /* ListConversationTopic.swift */,
 				834F3A981C8A2F81005B3EE9 /* TopTabBarController.swift */,
+				8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */,
 				8348DEF61C6149E50009C7DF /* Data */,
 				83D1B5021C628755008D95F4 /* Private */,
 				8348DECF1C6146870009C7DF /* Main.storyboard */,
@@ -424,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83B56A0D1C88B71300A185F0 /* MenuPresentationController.swift in Sources */,
+				8350EC921C8F4735008B9161 /* PassthroughOverlay.swift in Sources */,
 				831E367F1C69325E00DA63AB /* ConversationalTabBarViewController.swift in Sources */,
 				83B56A131C88D3E100A185F0 /* SearchOptionsPresentationController.swift in Sources */,
 				8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */,

@@ -13,7 +13,7 @@ class SearchOptionsPresentationController: UIPresentationController, UIViewContr
     var presentationFrame = CGRectZero
     var passthroughViews = [UIView]() {
         didSet {
-            passthroughOverlay.passthroughViews = passthroughViews
+            passthroughOverlay.listeningViews = passthroughViews
             passthroughOverlay.frame = passthroughViews[0].frame    // In our case, this will be the search bar.
         }
     }
@@ -48,26 +48,4 @@ class SearchOptionsPresentationController: UIPresentationController, UIViewContr
     }
     
     private var passthroughOverlay: PassthroughOverlay!
-}
-
-class PassthroughOverlay: UIView
-{
-    var passthroughViews = [UIView]()
-    
-    // Hack to allow the presentedVC's taps to be handled by the underlying presentingVC. Typically, the popover's container view will prevent any taps from trickling down.
-    override func hitTest(point: CGPoint, withEvent event: UIEvent?) -> UIView?
-    {
-        if let hitView = super.hitTest(point, withEvent: event) where hitView == self {
-            for passthroughView in passthroughViews {
-                if let hitPassthroughView = passthroughView.hitTest(convertPoint(point, toView: passthroughView), withEvent: event) {
-                    return hitPassthroughView
-                }
-            }
-            
-            return hitView
-        }
-        else {
-            return nil
-        }
-    }
 }
