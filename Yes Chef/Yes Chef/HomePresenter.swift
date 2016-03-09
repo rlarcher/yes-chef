@@ -32,16 +32,16 @@ class HomePresenter: MenuViewControllerDelegate
     
     func presentRecipeDetails(recipe: Recipe, shouldPopViewController: Bool)
     {
-        if let recipeTabBarController = homeViewController.storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
-            recipeTabBarController.setRecipe(recipe)
+        if let recipeContainerViewController = homeViewController.storyboard?.instantiateViewControllerWithIdentifier("RecipeContainerViewController") as? RecipeContainerViewController {
+            recipeContainerViewController.setRecipe(recipe)
             dispatch_async(dispatch_get_main_queue()) {
                 if shouldPopViewController {
-                    self.homeViewController.navigationController?.popThenPushViewController(recipeTabBarController, animated: true)
+                    self.homeViewController.navigationController?.popThenPushViewController(recipeContainerViewController, animated: true)
                 }
                 else {
-                    self.homeViewController.navigationController?.pushViewController(recipeTabBarController, animated: true)
+                    self.homeViewController.navigationController?.pushViewController(recipeContainerViewController, animated: true)
                 }
-                self.homeConversationTopic.addSubtopic(recipeTabBarController.recipeNavigationConversationTopic)
+                self.homeConversationTopic.addSubtopic(recipeContainerViewController.recipeNavigationConversationTopic)
             }
         }
     }

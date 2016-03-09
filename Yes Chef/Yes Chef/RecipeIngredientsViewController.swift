@@ -11,6 +11,7 @@ import UIKit
 class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsConversationTopicEventHandler, ConversationalTabBarViewController
 {
     var recipeIngredientsConversationTopic: RecipeIngredientsConversationTopic!
+    var delegate: RecipeContainerViewDelegate?
     
     @IBOutlet var servingsCountLabel: UILabel!
     
@@ -40,7 +41,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
         super.viewDidAppear(animated)
         
         // TODO: Move to didLayout?        
-        (tabBarController as? RecipeTabBarController)?.setTabBarToTop()
+//        (tabBarController as? RecipeTabBarController)?.setTabBarToTop()
     }
     
     override func viewWillDisappear(animated: Bool)
@@ -74,7 +75,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     func handleServingsCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeIngredientsConversationTopic.speakServings()
         }
     }
@@ -82,7 +83,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     func handleIngredientQueryCommand(command: SAYCommand)
     {
         if let ingredient = command.parameters["ingredient"] as? String {
-            (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+            delegate?.requestedSwitchToTab(self) {
                 self.recipeIngredientsConversationTopic.speakIngredient(ingredient)
             }
         }
@@ -90,7 +91,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     func handleIngredientsCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeIngredientsConversationTopic.speakIngredients()
         }
     }

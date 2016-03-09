@@ -11,6 +11,7 @@ import UIKit
 class RecipeOverviewViewController: UIViewController, RecipeOverviewConversationTopicEventHandler, ConversationalTabBarViewController
 {
     var recipeOverviewConversationTopic: RecipeOverviewConversationTopic!
+    var delegate: RecipeContainerViewDelegate?
     
     @IBOutlet var recipeImageView: UIImageView!
     @IBOutlet var ratingLabel: UILabel!
@@ -34,11 +35,7 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     {
         super.viewDidLoad()
         
-        let ratingLabels = Utils.getLabelsForRating(recipe.presentableRating)
-        ratingLabel.text = ratingLabels.textLabel
-        ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
-        
-        recipeImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil) // TODO: Add placeholder image
+        updateGUI(recipe)
     }
     
     override func viewDidAppear(animated: Bool)
@@ -46,7 +43,7 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
         super.viewDidAppear(animated)
         
         // TODO: Move to didLayout?
-        (tabBarController as? RecipeTabBarController)?.setTabBarToBottom()
+//        (tabBarController as? RecipeTabBarController)?.setTabBarToBottom()
     }
     
     override func viewDidDisappear(animated: Bool)
@@ -79,53 +76,66 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     // MARK: RecipeOverviewConversationTopicEventHandler Protocol Methods
     
     func handleOverviewCommand()
-    {        
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+    {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeOverviewConversationTopic.speakOverview()
         }
     }
     
     func handleRatingCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeOverviewConversationTopic.speakRating()
         }
     }
     
     func handleRecipeNameCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeOverviewConversationTopic.speakRecipeName()
         }
     }
     
     func handleCaloriesCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeOverviewConversationTopic.speakCalories()
         }
     }
     
     func handleCuisineCategoryCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeOverviewConversationTopic.speakCuisineCategory()
         }
     }
     
     func handleNutritionInfoCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeOverviewConversationTopic.speakNutritionInfo()
         }
     }
     
     func handleDescriptionCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipeOverviewConversationTopic.speakDescription()
         }
     }
     
-    private var recipe: Recipe!
+    // MARK: Helpers
+    
+    private func updateGUI(recipe: Recipe?)
+    {
+        if let newRecipe = recipe {
+            let ratingLabels = Utils.getLabelsForRating(newRecipe.presentableRating)
+            ratingLabel.text = ratingLabels.textLabel
+            ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
+            
+            recipeImageView.af_setImageWithURL(newRecipe.heroImageURL, placeholderImage: nil) // TODO: Add placeholder image
+        }
+    }
+    
+    private var recipe: Recipe?
 }

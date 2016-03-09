@@ -11,6 +11,7 @@ import UIKit
 class RecipePreparationViewController: UITableViewController, RecipePreparationConversationTopicEventHandler, ConversationalTabBarViewController
 {
     var recipePreparationConversationTopic: RecipePreparationConversationTopic!
+    var delegate: RecipeContainerViewDelegate?
     
     @IBOutlet var activeTimeLabel: UILabel!
     
@@ -43,7 +44,7 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
         super.viewDidAppear(animated)
         
         // TODO: Move to didLayout?        
-        (tabBarController as? RecipeTabBarController)?.setTabBarToTop()
+//        (tabBarController as? RecipeTabBarController)?.setTabBarToTop()
     }
     
     override func viewDidDisappear(animated: Bool)
@@ -77,14 +78,14 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     
     func handleWhatDoIDoCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipePreparationConversationTopic.speakPreparationSteps()
         }
     }
     
     func handleOvenTemperatureCommand()
     {
-        (tabBarController as? RecipeTabBarController)?.switchToTab(self) {
+        delegate?.requestedSwitchToTab(self) {
             self.recipePreparationConversationTopic.speakOvenTemperature()
         }
     }

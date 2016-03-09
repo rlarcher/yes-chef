@@ -23,11 +23,11 @@ class SearchResultsPresenter
     
     func presentRecipe(recipe: Recipe)
     {
-        if let recipeTabBarController = searchResultsViewController.storyboard?.instantiateViewControllerWithIdentifier("RecipeTabBarController") as? RecipeTabBarController {
-            recipeTabBarController.setRecipe(recipe)
+        if let recipeContainerViewController = searchResultsViewController.storyboard?.instantiateViewControllerWithIdentifier("RecipeContainerViewController") as? RecipeContainerViewController {
+            recipeContainerViewController.setRecipe(recipe)
             dispatch_async(dispatch_get_main_queue()) {
-                self.searchResultsViewController.navigationController?.pushViewController(recipeTabBarController, animated: true)
-                self.searchResultsConversationTopic.addSubtopic(recipeTabBarController.recipeNavigationConversationTopic)
+                self.searchResultsViewController.navigationController?.pushViewController(recipeContainerViewController, animated: true)
+                self.searchResultsConversationTopic.addSubtopic(recipeContainerViewController.recipeNavigationConversationTopic)
             }
         }
     }
