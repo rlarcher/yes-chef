@@ -127,9 +127,7 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     
     private func updateGUI(recipe: Recipe?)
     {
-        if let newRecipe = recipe {
-            recipeImageView.af_setImageWithURL(newRecipe.heroImageURL, placeholderImage: nil) // TODO: Add placeholder image
-        }
+        // TODO: Deprecated. Remove?
     }
     
     private var recipe: Recipe?

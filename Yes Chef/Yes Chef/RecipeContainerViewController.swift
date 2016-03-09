@@ -13,6 +13,8 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     var recipeNavigationConversationTopic: RecipeNavigationConversationTopic!    
     
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var infoStripView: UIView!
+    @IBOutlet weak var backgroundImageView: UIImageView!
     
     @IBOutlet weak var recipeNameLabel: UILabel!
     @IBOutlet weak var recipeCourseLabel: UILabel!
@@ -39,6 +41,8 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         setupConversationTopic()
         setupNavigationBar()
         
+        backgroundImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil)
+        
         self.edgesForExtendedLayout = .Top
         
         view.addSubview(recipeOverviewVC.view)
@@ -52,6 +56,8 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
             didInitialLayout = true
             recipeOverviewVC.view.frame = containerView.frame
         }
+        
+        view.bringSubviewToFront(infoStripView)
     }
     
     override func viewDidAppear(animated: Bool)
