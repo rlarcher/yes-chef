@@ -14,7 +14,6 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     var delegate: RecipeContainerViewDelegate?
     
     @IBOutlet var recipeImageView: UIImageView!
-    @IBOutlet var ratingLabel: UILabel!
     
     // MARK: Lifecycle
     
@@ -129,10 +128,6 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     private func updateGUI(recipe: Recipe?)
     {
         if let newRecipe = recipe {
-            let ratingLabels = Utils.getLabelsForRating(newRecipe.presentableRating)
-            ratingLabel.text = ratingLabels.textLabel
-            ratingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
-            
             recipeImageView.af_setImageWithURL(newRecipe.heroImageURL, placeholderImage: nil) // TODO: Add placeholder image
         }
     }

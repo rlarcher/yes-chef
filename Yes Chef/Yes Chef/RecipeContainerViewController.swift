@@ -37,12 +37,21 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         
         instantiateChildrenViewControllers()
         setupConversationTopic()
+        setupNavigationBar()
         
-        // Start by showing the OverviewVC in our container.
-        addChildViewController(recipeOverviewVC)
-        recipeOverviewVC.view.frame = containerView.frame
+        self.edgesForExtendedLayout = .Top
+        
         view.addSubview(recipeOverviewVC.view)
-        recipeOverviewVC.didMoveToParentViewController(self)
+    }
+    
+    override func viewDidLayoutSubviews()
+    {
+        super.viewDidLayoutSubviews()
+        
+        if !didInitialLayout {
+            didInitialLayout = true
+            recipeOverviewVC.view.frame = containerView.frame
+        }
     }
     
     override func viewDidAppear(animated: Bool)
@@ -91,6 +100,17 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         }
     }
     
+    func favoriteButtonTapped()
+    {
+        // TODO
+        print("RecipeTabBarController favoriteButtonTapped")
+    }
+    
+    func backButtonTapped()
+    {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     // MARK: Navigation
     
     func switchToTab(tabViewController: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
@@ -110,12 +130,18 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
                 toViewController: newVC,
                 duration: 0.25,
                 options: .CurveEaseInOut,
-                animations: nil,
+                animations: { () -> Void in
+                    newVC.view.frame = self.containerView.frame
+                },
                 completion: { (finished) -> Void in
-                    // TODO
                     oldVC.removeFromParentViewController()
+                    oldVC.view.removeFromSuperview()
                     newVC.didMoveToParentViewController(self)
+                    self.view.addSubview(newVC.view)
                     tabViewController.didGainFocus(completionBlock)
+                    
+                    self.view.setNeedsUpdateConstraints()
+                    self.view.layoutIfNeeded()
                 })
         }
     }
@@ -175,6 +201,22 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         recipeNavigationConversationTopic.addSubtopic(recipeIngredientsVC.recipeIngredientsConversationTopic)
         recipeNavigationConversationTopic.addSubtopic(recipePreparationVC.recipePreparationConversationTopic)
     }
+    
+    private func setupNavigationBar()
+    {
+        navigationItem.title = ""
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "♡", style: .Plain, target: self, action: "favoriteButtonTapped")
+        navigationItem.rightBarButtonItem?.enabled = false  // TODO: Activate this
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "X", style: .Plain, target: self, action: "backButtonTapped") // TODO: Just customize the existing back button, with proper image.
+        
+        // Roundabout way to make the navigation bar's background completely invisible:
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        navigationController?.navigationBar.shadowImage = UIImage()
+    }
+    
+    private var didInitialLayout: Bool = false
     
     private var recipe: Recipe!
     private weak var recipeOverviewVC: RecipeOverviewViewController!
