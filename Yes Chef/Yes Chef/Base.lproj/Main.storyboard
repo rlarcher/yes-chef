@@ -566,7 +566,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SbL-ke-NGN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="909" y="1645"/>
+            <point key="canvasLocation" x="909" y="2373"/>
         </scene>
         <!--Recipe Overview View Controller-->
         <scene sceneID="BTr-ge-sly">
@@ -577,14 +577,14 @@
                         <viewControllerLayoutGuide type="bottom" id="jRb-p1-xjx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ley-Tm-Mw2">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="429"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b4g-xC-lbL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="909" y="998"/>
+            <point key="canvasLocation" x="909" y="1602"/>
         </scene>
         <!--Recipe Container View Controller-->
         <scene sceneID="KWo-Nj-jiJ">
@@ -601,127 +601,139 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n6U-o9-NeP">
                                 <rect key="frame" x="0.0" y="-24" width="600" height="624"/>
                             </imageView>
-                            <containerView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2tH-4D-wCK">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <connections>
-                                    <segue destination="clu-wP-n6T" kind="embed" id="Oed-NN-J4C"/>
-                                </connections>
-                            </containerView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h76-Pi-hIT">
-                                <rect key="frame" x="0.0" y="455" width="600" height="145"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VVi-95-sTW" userLabel="Movable View">
+                                <rect key="frame" x="0.0" y="493" width="600" height="536"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blueberry Muffins" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="9A5-kB-78w">
-                                        <rect key="frame" x="16" y="16" width="136" height="19.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Desserts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vjJ-tV-1q4">
-                                        <rect key="frame" x="16" y="43.5" width="57.5" height="17"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnU-5M-JiO" userLabel="Rating Positioning View">
-                                        <rect key="frame" x="550" y="0.0" width="50" height="96.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h76-Pi-hIT">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="107"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="5.0 ☆" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfz-jG-GBd">
-                                                <rect key="frame" x="0.0" y="40" width="38" height="17"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blueberry Muffins" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="9A5-kB-78w">
+                                                <rect key="frame" x="16" y="16" width="136" height="19.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Desserts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vjJ-tV-1q4">
+                                                <rect key="frame" x="16" y="43" width="57.5" height="17"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnU-5M-JiO" userLabel="Rating Positioning View">
+                                                <rect key="frame" x="550" y="0.0" width="50" height="58.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="5.0 ☆" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dfz-jG-GBd">
+                                                        <rect key="frame" x="0.0" y="21" width="38" height="17"/>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="dfz-jG-GBd" firstAttribute="leading" secondItem="cnU-5M-JiO" secondAttribute="leading" id="0bR-VN-p8M"/>
+                                                    <constraint firstItem="dfz-jG-GBd" firstAttribute="centerY" secondItem="cnU-5M-JiO" secondAttribute="centerY" id="2A1-nX-hke"/>
+                                                    <constraint firstAttribute="trailing" secondItem="dfz-jG-GBd" secondAttribute="trailing" constant="12" id="cAg-9F-01X"/>
+                                                </constraints>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QL5-YB-oVB">
+                                                <rect key="frame" x="16" y="58.5" width="99" height="32.5"/>
+                                                <state key="normal">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content="10 Ingredients">
+                                                            <attributes>
+                                                                <font key="NSFont" size="15" name="AvenirNext-Regular"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                </state>
+                                                <connections>
+                                                    <action selector="ingredientsButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="Unm-O7-RI5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lYh-We-sKQ">
+                                                <rect key="frame" x="240" y="58.5" width="120" height="32.5"/>
+                                                <state key="normal">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content="45 min Prep Time">
+                                                            <attributes>
+                                                                <font key="NSFont" size="15" name="AvenirNext-Regular"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                </state>
+                                                <connections>
+                                                    <action selector="preparationButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="wV8-dP-ZG9"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7VO-Hl-Cw5">
+                                                <rect key="frame" x="498" y="58.5" width="86" height="32.5"/>
+                                                <state key="normal">
+                                                    <attributedString key="attributedTitle">
+                                                        <fragment content="265 Calories">
+                                                            <attributes>
+                                                                <font key="NSFont" size="15" name="AvenirNext-Regular"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                </state>
+                                                <connections>
+                                                    <action selector="caloriesButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="T7K-Uf-V90"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="dfz-jG-GBd" firstAttribute="leading" secondItem="cnU-5M-JiO" secondAttribute="leading" id="0bR-VN-p8M"/>
-                                            <constraint firstItem="dfz-jG-GBd" firstAttribute="centerY" secondItem="cnU-5M-JiO" secondAttribute="centerY" id="2A1-nX-hke"/>
-                                            <constraint firstAttribute="trailing" secondItem="dfz-jG-GBd" secondAttribute="trailing" constant="12" id="cAg-9F-01X"/>
+                                            <constraint firstItem="vjJ-tV-1q4" firstAttribute="leading" secondItem="h76-Pi-hIT" secondAttribute="leading" constant="16" id="2Bx-pf-yKF"/>
+                                            <constraint firstItem="9A5-kB-78w" firstAttribute="top" secondItem="h76-Pi-hIT" secondAttribute="top" constant="16" id="Fj6-Ax-bzL"/>
+                                            <constraint firstItem="lYh-We-sKQ" firstAttribute="centerX" secondItem="h76-Pi-hIT" secondAttribute="centerX" id="KxB-oH-jRW"/>
+                                            <constraint firstAttribute="bottom" secondItem="7VO-Hl-Cw5" secondAttribute="bottom" constant="16" id="UCs-1x-etW"/>
+                                            <constraint firstItem="cnU-5M-JiO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9A5-kB-78w" secondAttribute="trailing" constant="8" id="X3m-qn-foS"/>
+                                            <constraint firstAttribute="bottom" secondItem="QL5-YB-oVB" secondAttribute="bottom" constant="16" id="a4j-IP-DIq"/>
+                                            <constraint firstItem="QL5-YB-oVB" firstAttribute="leading" secondItem="h76-Pi-hIT" secondAttribute="leading" constant="16" id="aXF-sE-vet"/>
+                                            <constraint firstAttribute="bottom" secondItem="lYh-We-sKQ" secondAttribute="bottom" constant="16" id="d7t-cU-rOc"/>
+                                            <constraint firstAttribute="trailing" secondItem="7VO-Hl-Cw5" secondAttribute="trailing" constant="16" id="eDk-jF-vWU"/>
+                                            <constraint firstItem="vjJ-tV-1q4" firstAttribute="top" secondItem="9A5-kB-78w" secondAttribute="bottom" constant="8" id="lZk-xK-QNP"/>
+                                            <constraint firstItem="cnU-5M-JiO" firstAttribute="top" secondItem="h76-Pi-hIT" secondAttribute="top" id="lhD-y3-DiL"/>
+                                            <constraint firstItem="7VO-Hl-Cw5" firstAttribute="top" secondItem="cnU-5M-JiO" secondAttribute="bottom" id="nal-8N-c8i"/>
+                                            <constraint firstItem="9A5-kB-78w" firstAttribute="leading" secondItem="h76-Pi-hIT" secondAttribute="leading" constant="16" id="rPs-JP-hJ8"/>
+                                            <constraint firstAttribute="trailing" secondItem="cnU-5M-JiO" secondAttribute="trailing" id="rRI-ka-mAj"/>
+                                            <constraint firstItem="cnU-5M-JiO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vjJ-tV-1q4" secondAttribute="trailing" constant="8" id="uLT-Eb-W5i"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QL5-YB-oVB">
-                                        <rect key="frame" x="16" y="96.5" width="99" height="32.5"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="10 Ingredients">
-                                                    <attributes>
-                                                        <font key="NSFont" size="15" name="AvenirNext-Regular"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
+                                    <containerView autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2tH-4D-wCK">
+                                        <rect key="frame" x="0.0" y="107" width="600" height="429"/>
                                         <connections>
-                                            <action selector="ingredientsButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="Unm-O7-RI5"/>
+                                            <segue destination="clu-wP-n6T" kind="embed" id="Oed-NN-J4C"/>
                                         </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lYh-We-sKQ">
-                                        <rect key="frame" x="240" y="96.5" width="120" height="32.5"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="45 min Prep Time">
-                                                    <attributes>
-                                                        <font key="NSFont" size="15" name="AvenirNext-Regular"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="preparationButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="wV8-dP-ZG9"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7VO-Hl-Cw5">
-                                        <rect key="frame" x="498" y="96.5" width="86" height="32.5"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="265 Calories">
-                                                    <attributes>
-                                                        <font key="NSFont" size="15" name="AvenirNext-Regular"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                        </state>
-                                        <connections>
-                                            <action selector="caloriesButtonTapped:" destination="fPZ-JN-fOI" eventType="touchUpInside" id="T7K-Uf-V90"/>
-                                        </connections>
-                                    </button>
+                                    </containerView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="vjJ-tV-1q4" firstAttribute="leading" secondItem="h76-Pi-hIT" secondAttribute="leading" constant="16" id="2Bx-pf-yKF"/>
-                                    <constraint firstItem="9A5-kB-78w" firstAttribute="top" secondItem="h76-Pi-hIT" secondAttribute="top" constant="16" id="Fj6-Ax-bzL"/>
-                                    <constraint firstItem="lYh-We-sKQ" firstAttribute="centerX" secondItem="h76-Pi-hIT" secondAttribute="centerX" id="KxB-oH-jRW"/>
-                                    <constraint firstAttribute="bottom" secondItem="7VO-Hl-Cw5" secondAttribute="bottom" constant="16" id="UCs-1x-etW"/>
-                                    <constraint firstItem="cnU-5M-JiO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="9A5-kB-78w" secondAttribute="trailing" constant="8" id="X3m-qn-foS"/>
-                                    <constraint firstAttribute="bottom" secondItem="QL5-YB-oVB" secondAttribute="bottom" constant="16" id="a4j-IP-DIq"/>
-                                    <constraint firstItem="QL5-YB-oVB" firstAttribute="leading" secondItem="h76-Pi-hIT" secondAttribute="leading" constant="16" id="aXF-sE-vet"/>
-                                    <constraint firstAttribute="bottom" secondItem="lYh-We-sKQ" secondAttribute="bottom" constant="16" id="d7t-cU-rOc"/>
-                                    <constraint firstAttribute="trailing" secondItem="7VO-Hl-Cw5" secondAttribute="trailing" constant="16" id="eDk-jF-vWU"/>
-                                    <constraint firstItem="vjJ-tV-1q4" firstAttribute="top" secondItem="9A5-kB-78w" secondAttribute="bottom" constant="8" id="lZk-xK-QNP"/>
-                                    <constraint firstItem="cnU-5M-JiO" firstAttribute="top" secondItem="h76-Pi-hIT" secondAttribute="top" id="lhD-y3-DiL"/>
-                                    <constraint firstItem="7VO-Hl-Cw5" firstAttribute="top" secondItem="cnU-5M-JiO" secondAttribute="bottom" id="nal-8N-c8i"/>
-                                    <constraint firstItem="9A5-kB-78w" firstAttribute="leading" secondItem="h76-Pi-hIT" secondAttribute="leading" constant="16" id="rPs-JP-hJ8"/>
-                                    <constraint firstAttribute="trailing" secondItem="cnU-5M-JiO" secondAttribute="trailing" id="rRI-ka-mAj"/>
-                                    <constraint firstItem="cnU-5M-JiO" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vjJ-tV-1q4" secondAttribute="trailing" constant="8" id="uLT-Eb-W5i"/>
+                                    <constraint firstItem="2tH-4D-wCK" firstAttribute="top" secondItem="h76-Pi-hIT" secondAttribute="bottom" id="ANb-Hm-NRN"/>
+                                    <constraint firstItem="h76-Pi-hIT" firstAttribute="leading" secondItem="VVi-95-sTW" secondAttribute="leading" id="HOt-yQ-TAn"/>
+                                    <constraint firstAttribute="bottom" secondItem="2tH-4D-wCK" secondAttribute="bottom" id="Uj5-Zf-e6I"/>
+                                    <constraint firstItem="h76-Pi-hIT" firstAttribute="height" secondItem="2tH-4D-wCK" secondAttribute="height" multiplier="0.25" id="ds7-oJ-frY"/>
+                                    <constraint firstAttribute="trailing" secondItem="2tH-4D-wCK" secondAttribute="trailing" id="mfs-Fc-ny4"/>
+                                    <constraint firstAttribute="trailing" secondItem="h76-Pi-hIT" secondAttribute="trailing" id="nmw-MB-7US"/>
+                                    <constraint firstItem="h76-Pi-hIT" firstAttribute="top" secondItem="VVi-95-sTW" secondAttribute="top" id="rDG-PX-gao"/>
+                                    <constraint firstItem="2tH-4D-wCK" firstAttribute="leading" secondItem="VVi-95-sTW" secondAttribute="leading" id="vol-Eb-ZPV"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="n6U-o9-NeP" firstAttribute="leading" secondItem="nnA-YN-0u0" secondAttribute="leadingMargin" constant="-20" id="3sq-Wb-wco"/>
-                            <constraint firstItem="NwU-Qe-YL3" firstAttribute="top" secondItem="2tH-4D-wCK" secondAttribute="bottom" identifier="ContainerBottomToBottomGuideConstraint" id="66y-U4-IXK"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="h76-Pi-hIT" secondAttribute="trailing" constant="-20" id="Bdy-rN-Eqm"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="n6U-o9-NeP" secondAttribute="trailing" constant="-20" id="Ou3-7S-mCp"/>
-                            <constraint firstItem="h76-Pi-hIT" firstAttribute="height" secondItem="2tH-4D-wCK" secondAttribute="height" multiplier="0.25" identifier="ProportionalConstraint" id="VpD-0j-3Ab"/>
-                            <constraint firstItem="2tH-4D-wCK" firstAttribute="top" secondItem="4qy-kQ-ZiP" secondAttribute="bottom" priority="999" placeholder="YES" id="gAs-bJ-J8B"/>
-                            <constraint firstItem="2tH-4D-wCK" firstAttribute="leading" secondItem="nnA-YN-0u0" secondAttribute="leadingMargin" constant="-20" id="gLA-bB-C9j"/>
-                            <constraint firstItem="NwU-Qe-YL3" firstAttribute="top" secondItem="h76-Pi-hIT" secondAttribute="bottom" priority="999" placeholder="YES" id="lV7-Pa-9b7"/>
-                            <constraint firstItem="h76-Pi-hIT" firstAttribute="leading" secondItem="nnA-YN-0u0" secondAttribute="leadingMargin" constant="-20" id="pln-4v-doj"/>
-                            <constraint firstItem="NwU-Qe-YL3" firstAttribute="top" secondItem="n6U-o9-NeP" secondAttribute="bottom" id="s6k-pH-6ng"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="2tH-4D-wCK" secondAttribute="trailing" constant="-20" id="ugX-wz-wDU"/>
-                            <constraint firstItem="n6U-o9-NeP" firstAttribute="top" secondItem="4qy-kQ-ZiP" secondAttribute="bottom" constant="-44" id="xZN-Fq-bsC"/>
+                            <constraint firstItem="n6U-o9-NeP" firstAttribute="leading" secondItem="nnA-YN-0u0" secondAttribute="leadingMargin" constant="-20" identifier="backgroundImageViewToSuperviewLeadingConstraint" id="3sq-Wb-wco"/>
+                            <constraint firstItem="NwU-Qe-YL3" firstAttribute="top" secondItem="VVi-95-sTW" secondAttribute="top" priority="999" constant="107" placeholder="YES" identifier="TEMPbottomLayoutGuideToMovableViewTopConstraint" id="Gcc-az-7yy"/>
+                            <constraint firstItem="VVi-95-sTW" firstAttribute="height" secondItem="nnA-YN-0u0" secondAttribute="height" constant="-64" identifier="movableViewHeightConstraint" id="K94-8p-PtR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="n6U-o9-NeP" secondAttribute="trailing" constant="-20" identifier="superviewTrailingToBackgroundImageTrailingConstraint" id="Ou3-7S-mCp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="VVi-95-sTW" secondAttribute="trailing" constant="-20" identifier="superviewTrailingToMovableViewTrailingConstraint" id="UJj-G1-xv6"/>
+                            <constraint firstItem="VVi-95-sTW" firstAttribute="leading" secondItem="nnA-YN-0u0" secondAttribute="leadingMargin" constant="-20" identifier="movableViewLeadingToSuperviewLeadingConstraint" id="jf7-X6-QTH"/>
+                            <constraint firstItem="NwU-Qe-YL3" firstAttribute="top" secondItem="n6U-o9-NeP" secondAttribute="bottom" identifier="bottomLayoutGuideToBackgroundImageViewBottomConstraint" id="s6k-pH-6ng"/>
+                            <constraint firstItem="n6U-o9-NeP" firstAttribute="top" secondItem="4qy-kQ-ZiP" secondAttribute="bottom" constant="-44" identifier="backgroundImageViewTopToTopLayoutGuideConstraint" id="xZN-Fq-bsC"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -732,6 +744,7 @@
                         <outlet property="containerView" destination="2tH-4D-wCK" id="8bT-8z-fsc"/>
                         <outlet property="infoStripView" destination="h76-Pi-hIT" id="JsK-fg-ZgS"/>
                         <outlet property="ingredientsButton" destination="QL5-YB-oVB" id="2KL-ge-Pyg"/>
+                        <outlet property="movableView" destination="VVi-95-sTW" id="Zwd-gh-jcT"/>
                         <outlet property="preparationButton" destination="lYh-We-sKQ" id="QA5-MS-iLE"/>
                         <outlet property="recipeCourseLabel" destination="vjJ-tV-1q4" id="Gp5-XI-OYo"/>
                         <outlet property="recipeNameLabel" destination="9A5-kB-78w" id="ipo-iD-hv5"/>
@@ -831,7 +844,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jxq-C9-FYX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="909" y="2374"/>
+            <point key="canvasLocation" x="909" y="3102"/>
         </scene>
     </scenes>
 </document>
