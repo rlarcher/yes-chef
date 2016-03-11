@@ -45,17 +45,8 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         
         backgroundImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil)
         
-        self.edgesForExtendedLayout = .Top
-        
-//        view.addSubview(recipeOverviewVC.view)
-        
-//        infoStripBottomToBottomLayoutGuideConstraint?.active = true
+        // This constraint is defined programmatically so that its constant will reflect the height of the infoStripView, which is proportional to the screen size.
         movableViewTopToBottomLayoutGuideConstraint?.active = true
-//        containerViewTopToTopLayoutGuideConstraint?.active = true
-        self.view.setNeedsUpdateConstraints()
-        self.view.updateConstraintsIfNeeded()
-        self.view.setNeedsLayout()
-        self.view.layoutIfNeeded()
     }
     
     override func viewDidLayoutSubviews()
@@ -64,12 +55,7 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         
         if !didInitialLayout {
             didInitialLayout = true
-//            recipeOverviewVC.view.frame = containerView.frame
             movableViewTopToBottomLayoutGuideConstraint?.constant = -infoStripView.frame.size.height
-            self.view.setNeedsUpdateConstraints()
-            self.view.updateConstraintsIfNeeded()
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
         }
         
         view.bringSubviewToFront(infoStripView)
@@ -142,161 +128,31 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         {
             self.view.layoutIfNeeded()
             
-//            var startEndFrameBelowScreen = containerView.frame
-//            startEndFrameBelowScreen.origin.y = containerView.frame.origin.y + containerView.frame.size.height
-//            
-//            let fullContainerFrame = containerView.frame
-//            
-//            var shortenedContainerFrame = containerView.frame
-//            shortenedContainerFrame.origin.y = infoStripView.frame.size.height
-//            shortenedContainerFrame.size.height -= infoStripView.frame.size.height
-            
             oldVC.willMoveToParentViewController(nil)
             (oldVC as? ConversationalTabBarViewController)?.didLoseFocus(nil)
             
             addChildViewController(newVC)
             
-//            containerView = newVC.view
-//            newVC.view.frame = containerView.frame
-//            self.view.addSubview(newVC.view)
-        
-//            self.infoStripBottomToContainerViewTopConstraint?.active = true
-            
-            self.view.layoutIfNeeded()
-            
-            // TODO: Setup start/end frames for animation here
-            
             transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
-//                    newVC.view.frame = self.containerView.frame
+                    // Transition in the new view controller's content view by setting constraints. Trying to set this by frame doesn't work well with the animation of the movableView's constraints in the completion block.
                     newVC.view.translatesAutoresizingMaskIntoConstraints = false
-                    let newViewTopConstraint = NSLayoutConstraint(item: newVC.view, attribute: .Top, relatedBy: .Equal, toItem: self.containerView, attribute: .Top, multiplier: 1.0, constant: 0.0)
-                    newViewTopConstraint.identifier = "newViewTopConstraint"
                 
-                    let newViewBottomConstraint = NSLayoutConstraint(item: newVC.view, attribute: .Bottom, relatedBy: .Equal, toItem: self.containerView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
-                    newViewBottomConstraint.identifier = "newViewBottomConstraint"
-                
-                    let newViewLeftConstraint = NSLayoutConstraint(item: newVC.view, attribute: .Left, relatedBy: .Equal, toItem: self.containerView, attribute: .Left, multiplier: 1.0, constant: 0.0)
-                    newViewLeftConstraint.identifier = "newViewLeftConstraint"
-                
-                    let newViewRightConstraint = NSLayoutConstraint(item: newVC.view, attribute: .Right, relatedBy: .Equal, toItem: self.containerView, attribute: .Right, multiplier: 1.0, constant: 0.0)
-                    newViewRightConstraint.identifier = "newViewRightConstraint"
-                
-                    NSLayoutConstraint.activateConstraints([newViewTopConstraint, newViewBottomConstraint, newViewLeftConstraint, newViewRightConstraint])
-                    print("Blah blah")
+                    let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
+                    NSLayoutConstraint.activateConstraints(fillConstraints)
                 }, completion: { (finished) -> Void in
                     oldVC.removeFromParentViewController()
                     oldVC.view.removeFromSuperview()
                     newVC.didMoveToParentViewController(self)
-//                    self.view.addSubview(newVC.view)
                     tabViewController.didGainFocus(completionBlock)
-//            })
             
-//            transitionFromViewController(oldVC, toViewController: newVC, duration: 2.5, options: .CurveEaseInOut, animations: { () -> Void in
-            UIView.animateWithDuration(2.5, delay: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
-//                    self.infoStripBottomToBottomLayoutGuideConstraint?.active = false
-//                    self.containerViewTopToTopLayoutGuideConstraint?.active = false
-//                    self.infoStripBottomToContainerViewTopConstraint?.active = true
-//                    self.containerViewTopToInfoStripBottomConstraint.constant = 0 // Shouldn't be needed.
-//                    self.infoStripTopToTopLayoutGuideConstraint?.active = true
-//                    self.containerViewBottomToBottomLayoutGuideConstraint?.active = true
-                    self.movableViewTopToBottomLayoutGuideConstraint?.active = false
-                    self.movableViewTopToTopLayoutGuideConstraint?.active = true
-                
-//                    newVC.view.frame = self.containerView.frame
-                
-//                    self.containerView.frame = shortenedContainerFrame
-                
-//                    self.containerView.frame.origin.y = self.infoStripView.frame.origin.y + self.infoStripView.frame.size.height
-                
-                    self.view.setNeedsLayout()
-                    self.view.layoutIfNeeded()
-//                    self.view.setNeedsUpdateConstraints()                
-//                    self.view.updateConstraints()
-                }, completion: { (finished) -> Void in
-//                    self.infoStripBottomToContainerViewTopConstraint?.active = true
-//                    self.containerViewTopToTopLayoutGuideConstraint?.active = true
+                    UIView.animateWithDuration(0.35) {
+                        self.movableViewTopToBottomLayoutGuideConstraint?.active = false
+                        self.movableViewTopToTopLayoutGuideConstraint?.active = true
                     
-//                    self.view.setNeedsUpdateConstraints()
-//                    self.view.updateConstraints()
-//                    
-//                    oldVC.removeFromParentViewController()
-//                    oldVC.view.removeFromSuperview()
-//                    newVC.didMoveToParentViewController(self)
-//                    self.view.addSubview(newVC.view)
-//                    tabViewController.didGainFocus(completionBlock)
-                    
-//                    self.view.setNeedsLayout()
-//                    self.view.layoutIfNeeded()
-                }
-            )
+                        self.view.setNeedsLayout()
+                        self.view.layoutIfNeeded()
+                    }
             })
-//            UIView.animateWithDuration(2.5) {
-//                self.infoStripBottomToBottomLayoutGuideConstraint?.active = false
-//                self.infoStripBottomToContainerViewTopConstraint?.active = true
-//                self.infoStripTopToTopLayoutGuideConstraint?.active = true
-//                self.containerViewTopToTopLayoutGuideConstraint?.active = false
-//                
-//                //                self.infoStripView.frame.origin.y = self.view.frame.origin.y
-//                //                self.containerView.frame.origin.y += self.infoStripView.frame.size.height
-//                //                self.containerView.frame.size.height -= self.infoStripView.frame.size.height
-//                
-//                self.view.setNeedsLayout()
-//                self.view.layoutIfNeeded()
-//            }
-        
-//            newVC.view.frame = startEndFrameBelowScreen
-//            newVC.view.frame = containerView.frame
-            
-//            transitionFromViewController(oldVC,
-//                toViewController: newVC,
-//                duration: 2.5,
-//                options: [.CurveEaseInOut],
-//                animations: { () -> Void in
-////                    newVC.view.frame = self.containerView.frame
-////                    newVC.view.frame = upperContainerFrame
-//                    
-//                    // TODO - Transition infoStrip from bottom to Top:
-//                    // Change infoStrip's bottom constraint's target to containerView
-//                    // AKA
-//                    // Enable infoStripBottomToContainerViewTopConstraint
-//                    // Disable infoStripBottomToBottomLayoutGuideConstraint
-//                    // Disable containerViewTopToTopLayoutGuideConstraint
-////                    self.infoStripView.frame.origin.y = self.view.frame.origin.y
-////                    self.containerView.frame.origin.y += self.infoStripView.frame.size.height
-////                    self.containerView.frame.size.height -= self.infoStripView.frame.size.height
-////                    
-////                    self.view.setNeedsLayout()
-////                    self.view.layoutIfNeeded()
-//                    
-////                    self.infoStripBottomToBottomLayoutGuideConstraint?.active = false
-////                    self.containerViewTopToTopLayoutGuideConstraint?.active = false
-////                    self.infoStripBottomToContainerViewTopConstraint?.active = true
-////                    self.view.layoutIfNeeded()
-////                    self.view.setNeedsUpdateConstraints()
-//                    
-//                    // TODO - Transition infoStrip from Top to Bottom:
-//                    // Change infoStrip's bottom constraint's target to superview
-//                    // Change containerView's top constraint's target to superview
-//                    // AKA
-//                    // Disable infoStripBottomToContainerViewTopConstraint
-//                    // Enable infoStripBottomToBottomLayoutGuideConstraint
-//                    // Enable containerViewTopToTopLayoutGuideConstraint
-//                },
-//                completion: { (finished) -> Void in
-//                    oldVC.removeFromParentViewController()
-//                    oldVC.view.removeFromSuperview()
-//                    newVC.didMoveToParentViewController(self)
-//                    self.view.addSubview(newVC.view)
-//                    tabViewController.didGainFocus(completionBlock)
-//                    
-////                    self.infoStripBottomToBottomLayoutGuideConstraint?.active = false
-////                    self.containerViewTopToTopLayoutGuideConstraint?.active = false
-////                    self.infoStripBottomToContainerViewTopConstraint?.active = true
-//                    
-////                    self.view.setNeedsUpdateConstraints()
-////                    self.view.layoutIfNeeded()
-//
-//                })
         }
     }
     
@@ -368,25 +224,13 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         // Roundabout way to make the navigation bar's background completely invisible:
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         navigationController?.navigationBar.shadowImage = UIImage()
+        
+        // Have content underlap the translucent navigation bar.
+        edgesForExtendedLayout = .Top
     }
     
     private func setupConstraints()
     {
-        infoStripBottomToBottomLayoutGuideConstraint = NSLayoutConstraint(item: infoStripView, attribute: .Bottom, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Top, multiplier: 1.0, constant: 0.0)
-        infoStripBottomToBottomLayoutGuideConstraint?.identifier = "infoStripBottomToBottomLayoutGuideConstraint"
-        
-//        infoStripBottomToContainerViewTopConstraint = NSLayoutConstraint(item: infoStripView, attribute: .Bottom, relatedBy: .Equal, toItem: containerView, attribute: .Top, multiplier: 1.0, constant: 0.0)
-//        infoStripBottomToContainerViewTopConstraint?.identifier = "infoStripBottomToContainerViewTopConstraint"
-        
-        containerViewBottomToBottomLayoutGuideConstraint = NSLayoutConstraint(item: containerView, attribute: .Bottom, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Top, multiplier: 1.0, constant: 0.0)
-        containerViewBottomToBottomLayoutGuideConstraint?.identifier = "containerViewBottomToBottomLayoutGuideConstraint"
-        
-        infoStripTopToTopLayoutGuideConstraint = NSLayoutConstraint(item: infoStripView, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
-        infoStripTopToTopLayoutGuideConstraint?.identifier = "infoStripTopToTopLayoutGuideConstraint"
-        
-//        containerViewTopToTopLayoutGuideConstraint = NSLayoutConstraint(item: containerView, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
-//        containerViewTopToTopLayoutGuideConstraint?.identifier = "containerViewTopToTopLayoutGuideConstraint"
-        
         movableViewTopToBottomLayoutGuideConstraint = NSLayoutConstraint(item: movableView, attribute: .Top, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Top, multiplier: 1.0, constant: -infoStripView.frame.size.height)
         movableViewTopToBottomLayoutGuideConstraint?.identifier = "movableViewTopToBottomLayoutGuideConstraint"
         
@@ -394,15 +238,19 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         movableViewTopToTopLayoutGuideConstraint?.identifier = "movableViewTopToTopLayoutGuideConstraint"
     }
     
-    private var infoStripBottomToBottomLayoutGuideConstraint: NSLayoutConstraint?
-//    private var infoStripBottomToContainerViewTopConstraint: NSLayoutConstraint?
-    private var infoStripTopToTopLayoutGuideConstraint: NSLayoutConstraint?
-//    private var containerViewTopToTopLayoutGuideConstraint: NSLayoutConstraint?
-    private var containerViewBottomToBottomLayoutGuideConstraint: NSLayoutConstraint?
+    private func buildConstraintsToFillContainerView(firstView: UIView, withView secondView: UIView) -> [NSLayoutConstraint]
+    {
+        let topConstraint = NSLayoutConstraint(item: firstView, attribute: .Top, relatedBy: .Equal, toItem: secondView, attribute: .Top, multiplier: 1.0, constant: 0.0)
+        let bottomConstraint = NSLayoutConstraint(item: firstView, attribute: .Bottom, relatedBy: .Equal, toItem: secondView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+        let leftConstraint = NSLayoutConstraint(item: firstView, attribute: .Left, relatedBy: .Equal, toItem: secondView, attribute: .Left, multiplier: 1.0, constant: 0.0)
+        let rightConstraint = NSLayoutConstraint(item: firstView, attribute: .Right, relatedBy: .Equal, toItem: secondView, attribute: .Right, multiplier: 1.0, constant: 0.0)
+        
+        return [topConstraint, bottomConstraint, leftConstraint, rightConstraint]
+    }
+    
     private var movableViewTopToBottomLayoutGuideConstraint: NSLayoutConstraint?
     private var movableViewTopToTopLayoutGuideConstraint: NSLayoutConstraint?
-    
-    @IBOutlet weak var containerViewTopToInfoStripBottomConstraint: NSLayoutConstraint!
+
     private var didInitialLayout: Bool = false
     
     private var recipe: Recipe!

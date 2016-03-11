@@ -711,7 +711,6 @@
                                         </connections>
                                     </containerView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="2tH-4D-wCK" firstAttribute="top" secondItem="h76-Pi-hIT" secondAttribute="bottom" id="ANb-Hm-NRN"/>
                                     <constraint firstItem="h76-Pi-hIT" firstAttribute="leading" secondItem="VVi-95-sTW" secondAttribute="leading" id="HOt-yQ-TAn"/>
@@ -738,6 +737,8 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
                     <connections>
                         <outlet property="backgroundImageView" destination="n6U-o9-NeP" id="qfY-Xb-8y2"/>
                         <outlet property="caloriesButton" destination="7VO-Hl-Cw5" id="iXY-tJ-h0m"/>
