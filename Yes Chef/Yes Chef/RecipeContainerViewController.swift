@@ -133,26 +133,15 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
             
             addChildViewController(newVC)
             
-            transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut, animations: { () -> Void in
-                    // Transition in the new view controller's content view by setting constraints. Trying to set this by frame doesn't work well with the animation of the movableView's constraints in the completion block.
-                    newVC.view.translatesAutoresizingMaskIntoConstraints = false
-                
-                    let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
-                    NSLayoutConstraint.activateConstraints(fillConstraints)
-                }, completion: { (finished) -> Void in
-                    oldVC.removeFromParentViewController()
-                    oldVC.view.removeFromSuperview()
-                    newVC.didMoveToParentViewController(self)
-                    tabViewController.didGainFocus(completionBlock)
-            
-                    UIView.animateWithDuration(0.35) {
-                        self.movableViewTopToBottomLayoutGuideConstraint?.active = false
-                        self.movableViewTopToTopLayoutGuideConstraint?.active = true
-                    
-                        self.view.setNeedsLayout()
-                        self.view.layoutIfNeeded()
-                    }
-            })
+            if oldVC is RecipeOverviewViewController {
+                transitionFromOverview(oldVC, toNewViewController: newVC, usingTabViewController: tabViewController, then: completionBlock)
+            }
+            else if newVC is RecipeOverviewViewController {
+                transitionToOverview(newVC, fromOldViewController: oldVC, usingTabViewController: tabViewController, then: completionBlock)
+            }
+            else {
+                transitionBetweenDetailScreensFrom(oldVC, toNewViewController: newVC, usingTabViewController: tabViewController, then: completionBlock)
+            }
         }
     }
     
@@ -177,6 +166,81 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     func requestedSwitchToTab(tab: ConversationalTabBarViewController, completion: () -> Void)
     {
         switchToTab(tab, then: completion)
+    }
+    
+    // MARK: Transition Methods
+    
+    // When this transition starts, the details page is off screen.
+    // 1) Instantly transition in the newVC's content view (while still off screen).
+    // 2) Then animate the movableView up into visible space.
+    private func transitionFromOverview(oldVC: UIViewController, toNewViewController newVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+    {
+        transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut,
+            animations: { () -> Void in
+                // Transition in the new view controller's content view by setting constraints. Trying to set this by frame doesn't work well with the animation of the movableView's constraints in the completion block.
+                newVC.view.translatesAutoresizingMaskIntoConstraints = false
+                let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
+                NSLayoutConstraint.activateConstraints(fillConstraints)
+            }, completion: { (finished) -> Void in
+                oldVC.removeFromParentViewController()
+                oldVC.view.removeFromSuperview()
+                newVC.didMoveToParentViewController(self)
+                tabVC.didGainFocus(completionBlock)
+                
+                UIView.animateWithDuration(0.35) {
+                    self.movableViewTopToBottomLayoutGuideConstraint?.active = false
+                    self.movableViewTopToTopLayoutGuideConstraint?.active = true
+                    
+                    self.view.setNeedsLayout()
+                    self.view.layoutIfNeeded()
+                }
+        })
+    }
+    
+    // When this transition starts, the details page is on screen.
+    // 1) Animate the movableView down off screen.
+    // 2) Then instantly transition the newVC's content view into place (won't be visible anyways!).
+    private func transitionToOverview(newVC: UIViewController, fromOldViewController oldVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+    {
+        UIView.animateWithDuration(0.35, animations: { () -> Void in
+            self.movableViewTopToTopLayoutGuideConstraint?.active = false
+            self.movableViewTopToBottomLayoutGuideConstraint?.active = true
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }) { (finished) -> Void in
+            self.transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut,
+                animations: { () -> Void in
+                    newVC.view.translatesAutoresizingMaskIntoConstraints = false
+                    let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
+                    NSLayoutConstraint.activateConstraints(fillConstraints)
+                }, completion: { (finished) -> Void in
+                    oldVC.removeFromParentViewController()
+                    oldVC.view.removeFromSuperview()
+                    newVC.didMoveToParentViewController(self)
+                    tabVC.didGainFocus(completionBlock)
+            })
+        }
+    }
+    
+    // Ingredients -> Preparation, and Preparation -> Ingredients
+    // When this transition starts, the details page is on screen.
+    // 1) Transition over time the newVC.
+    // 2) That's it!
+    private func transitionBetweenDetailScreensFrom(oldVC: UIViewController, toNewViewController newVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+    {
+        // TODO: Add some movement animation to this. Enter left, exit right or vice versa.
+        self.transitionFromViewController(oldVC, toViewController: newVC, duration: 2.5, options: .CurveEaseInOut,
+            animations: { () -> Void in
+                newVC.view.translatesAutoresizingMaskIntoConstraints = false
+                let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
+                NSLayoutConstraint.activateConstraints(fillConstraints)
+            }, completion: { (finished) -> Void in
+                oldVC.removeFromParentViewController()
+                oldVC.view.removeFromSuperview()
+                newVC.didMoveToParentViewController(self)
+                tabVC.didGainFocus(completionBlock)
+        })
     }
     
     // MARK: Helpers
