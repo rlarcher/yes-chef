@@ -41,6 +41,7 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         instantiateChildrenViewControllers()
         setupConversationTopic()
         setupNavigationBar()
+        setupInfoStripLabels()
         setupConstraints()
         
         backgroundImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil)
@@ -291,6 +292,37 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         
         // Have content underlap the translucent navigation bar.
         edgesForExtendedLayout = .Top
+    }
+    
+    // NOTE: This must be called before `setupConstraints()`, so that the buttons are resized to fit their labels prior to adjusting constraints.
+    private func setupInfoStripLabels()
+    {
+        dispatch_async(dispatch_get_main_queue()) {
+            // Upper info strip:
+            self.recipeNameLabel.text = self.recipe.name
+            self.recipeCourseLabel.text = self.recipe.category.rawValue
+            let ratingLabels = Utils.getLabelsForRating(self.recipe.presentableRating)
+            self.recipeRatingLabel.text = ratingLabels.textLabel
+            self.recipeRatingLabel.accessibilityLabel = ratingLabels.accessibilityLabel
+            
+            // Lower info strip:
+            
+            let paragraphAttributes = NSMutableParagraphStyle()
+            paragraphAttributes.alignment = .Center
+            
+            // Ingredients Button
+            self.ingredientsButton.setAttributedTitle(NSAttributedString(string: self.recipe.ingredients.count.withSuffix("\nIngredient"), attributes: [NSParagraphStyleAttributeName: paragraphAttributes]), forState: .Normal)
+            self.ingredientsButton.sizeToFit()
+            
+            // Prep Time Button
+            let prepTimeLabel = (self.recipe.totalPreparationTime != nil) ? "\(self.recipe.totalPreparationTime!) min\nPrep Time" : "Unknown\nPrep Time"
+            self.preparationButton.setAttributedTitle(NSAttributedString(string: prepTimeLabel, attributes: [NSParagraphStyleAttributeName: paragraphAttributes]), forState: .Normal)
+            self.preparationButton.sizeToFit()
+            
+            // Calories (Overview) Button
+            self.caloriesButton.setAttributedTitle(NSAttributedString(string: self.recipe.calories.withSuffix("\nCalorie"), attributes: [NSParagraphStyleAttributeName: paragraphAttributes]), forState: .Normal)
+            self.caloriesButton.sizeToFit()
+        }
     }
     
     private func setupConstraints()

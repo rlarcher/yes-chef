@@ -36,6 +36,7 @@ class SavedRecipesViewController: UITableViewController, UISearchResultsUpdating
         super.viewDidAppear(animated)
         
         savedRecipesConversationTopic.topicDidGainFocus()
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewWillDisappear(animated: Bool)
