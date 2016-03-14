@@ -124,6 +124,14 @@ extension Utils
     static func stubRecipeListings() -> [RecipeListing]
     {
         let stubRecipeListings = [
+            RecipeListing(recipeId: "171326",
+                          name: "Skewered Honey-Balsamic Chicken",
+                          rating: 4.3,
+                          reviewCount: 184,
+                          cuisine: .Asian,
+                          category: .Appetizers,
+                          servingsQuantity: 6,
+                          imageURL: NSURL(string: "http://photos.bigoven.com/recipe/hero/skewered-honey-balsamic-chicken-6.jpg")!),
             RecipeListing(recipeId: "12345678",
                           name: "Blueberry Muffins",
                           rating: 4,
