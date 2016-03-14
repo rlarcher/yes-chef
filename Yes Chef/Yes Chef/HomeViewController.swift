@@ -94,6 +94,45 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         searchUsingParameters(searchParameters)
     }
     
+    func selectedRecommendedRecipeListing(selectedRecommendation: RecipeListing?)
+    {
+        if let recommendation = selectedRecommendation {
+            requestedRecipePresentationForListing(recommendation)
+        }
+        else {
+            // TODO: Visual feedback?
+            print("HomeVC selectedRecommendedRecipeListing, couldn't select a listing.")
+        }
+    }
+    
+    func itemSelectionFailedWithMessage(selectionFailureMessage: String)
+    {
+        // TODO: Visual feedback?
+        homeConversationTopic.speakErrorMessage(selectionFailureMessage)
+    }
+    
+    func handlePlayCommand()
+    {
+        print("HomeVC handlePlayCommand")
+        // TODO: Interact with the command bar playback controls - change middle button to Pause
+    }
+    
+    func handlePauseCommand()
+    {
+        print("HomeVC handlePauseCommand")
+        // TODO: Interact with the command bar playback controls - change middle button to Play
+    }
+    
+    func beganSpeakingItemAtIndex(index: Int)
+    {
+        tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)
+    }
+    
+    func finishedSpeakingItemAtIndex(index: Int)
+    {
+        tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
+    }
+    
     // MARK: UISearchBarDelegate Protocol Methods
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool
@@ -174,6 +213,12 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         return 1
     }
     
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    {
+        // TODO: Replace this with a proper heading
+        return "Try one of these recommended recipes:"
+    }
+    
     // MARK: Helpers
     
     func selectedNewCategory(category: Category)
@@ -215,6 +260,7 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
             case .Success(let recipeListings):
                 self.recommendedListings = recipeListings
                 self.tableView.reloadData()
+                self.homeConversationTopic.updateListings(recipeListings)
             case .Failure(let errorMessage, _):
                 self.presenter.presentErrorMessage(errorMessage)
             }

@@ -46,6 +46,7 @@
 		83CC6EA21C6D194B00EB7DCC /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; };
 		83CC6EA31C6D194B00EB7DCC /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
+		83D2381B1C97371C00AA6F4E /* HomeListTopicManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D2381A1C97371C00AA6F4E /* HomeListTopicManager.swift */; };
 		83D568BF1C8DBAEC00EDDD17 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */; };
 		83D568C11C8DC1F700EDDD17 /* Cuisine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C01C8DC1F700EDDD17 /* Cuisine.swift */; };
 		83D568C31C8DC1FF00EDDD17 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C21C8DC1FF00EDDD17 /* Category.swift */; };
@@ -114,6 +115,7 @@
 		83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsPresentationController.swift; sourceTree = "<group>"; };
 		83CC6EA01C6D193900EB7DCC /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
+		83D2381A1C97371C00AA6F4E /* HomeListTopicManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeListTopicManager.swift; sourceTree = "<group>"; };
 		83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		83D568C01C8DC1F700EDDD17 /* Cuisine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cuisine.swift; sourceTree = "<group>"; };
 		83D568C21C8DC1FF00EDDD17 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -175,8 +177,6 @@
 				8348DEF41C6149A00009C7DF /* Search Results Scene */,
 				8348DEF51C6149AB0009C7DF /* Recipe Details Scene */,
 				83D568C61C8DC7AE00EDDD17 /* Common Scene Components */,
-				8348DF031C614B330009C7DF /* ListConversationTopic.swift */,
-				8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */,
 				8348DEF61C6149E50009C7DF /* Data */,
 				83D1B5021C628755008D95F4 /* Private */,
 				8348DECF1C6146870009C7DF /* Main.storyboard */,
@@ -193,6 +193,7 @@
 			children = (
 				8348DECD1C6146870009C7DF /* HomeViewController.swift */,
 				8348DEFF1C614ADE0009C7DF /* HomeConversationTopic.swift */,
+				83D2381A1C97371C00AA6F4E /* HomeListTopicManager.swift */,
 				83D568BE1C8DBAEC00EDDD17 /* HomePresenter.swift */,
 				83B56A101C88D30300A185F0 /* Menu */,
 			);
@@ -296,6 +297,8 @@
 			isa = PBXGroup;
 			children = (
 				83B56A111C88D30D00A185F0 /* Search Options */,
+				8348DF031C614B330009C7DF /* ListConversationTopic.swift */,
+				8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */,
 			);
 			name = "Common Scene Components";
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				83B56A0D1C88B71300A185F0 /* MenuPresentationController.swift in Sources */,
 				8350EC921C8F4735008B9161 /* PassthroughOverlay.swift in Sources */,
 				831E367F1C69325E00DA63AB /* ConversationalTabBarViewController.swift in Sources */,
+				83D2381B1C97371C00AA6F4E /* HomeListTopicManager.swift in Sources */,
 				83B56A131C88D3E100A185F0 /* SearchOptionsPresentationController.swift in Sources */,
 				8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */,
 				8348DF061C614B510009C7DF /* SearchResultsConversationTopic.swift in Sources */,

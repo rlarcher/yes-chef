@@ -15,6 +15,7 @@ class HomeConversationTopic: SAYConversationTopic
     init(eventHandler: HomeConversationTopicEventHandler)
     {
         self.eventHandler = eventHandler
+        self.listManager = HomeListTopicManager(eventHandler: eventHandler)
         
         super.init()
         
@@ -60,11 +61,27 @@ class HomeConversationTopic: SAYConversationTopic
             ]))
         featureQueryRecognizer.addMenuItemWithLabel("What is...")
         addCommandRecognizer(featureQueryRecognizer)
+        
+        let recommendationsRecognizer = SAYCustomCommandRecognizer(customType: "Recommendations", responseTarget: self, action: "handleRecommendationsCommand")
+        recommendationsRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
+            if text.containsAny(["recommendation", "recommendations", "recommend"]) {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
+            }
+            else {
+                return SAYCommandSuggestion(confidence: kSAYCommandConfidenceNone)
+            }
+        }))
+        recommendationsRecognizer.addMenuItemWithLabel("Recommendations")
+        addCommandRecognizer(recommendationsRecognizer)
     }
     
     func topicDidGainFocus()
     {
         removeAllSubtopics() // TODO: Think of a better way to clean up popped subtopics. Override navigation methods? Independent navigation management?
+        
+        if let listSubtopic = listManager.listSubtopic {
+            addSubtopic(listSubtopic)
+        }
         
         let categoriesRecognizer = SAYCustomCommandRecognizer(customType: "Categories") { _ in self.handleCategoriesCommand() }
         categoriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -95,12 +112,22 @@ class HomeConversationTopic: SAYConversationTopic
     
     func topicDidLoseFocus()
     {
+        if let listSubtopic = listManager.listSubtopic {
+            removeSubtopic(listSubtopic)
+        }
+        
         for recognizer in focusedRecognizers {
             removeCommandRecognizer(recognizer)
         }
         focusedRecognizers.removeAll()
         
         searchRecognizer?.removeTextMatcher(HomeConversationTopic.fallthroughTextMatcher)
+    }
+
+    // This must be called before attempting to speak.
+    func updateListings(listings: [RecipeListing])
+    {
+        listManager.updateListings(listings)
     }
     
     // MARK: Speech Methods
@@ -113,7 +140,7 @@ class HomeConversationTopic: SAYConversationTopic
             sequence.addEvent(SAYSpeechEvent(utteranceString: "Welcome to \"Yes Chef\"!"))
         }
         
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\" Say \"Help\" for more details."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\" Say \"Help\" for more details. Feeling adventurous? Ask about our \"recommended recipes\""))
         postEvents(sequence)
     }
     
@@ -144,6 +171,11 @@ class HomeConversationTopic: SAYConversationTopic
             }
             postEvents(sequence)
         }
+    }
+    
+    func speakRecommendedRecipes()
+    {
+        listManager.speakRecommendations()
     }
     
     func speakErrorMessage(message: String)
@@ -234,6 +266,11 @@ class HomeConversationTopic: SAYConversationTopic
         }
     }
     
+    func handleRecommendationsCommand()
+    {
+        speakRecommendedRecipes()
+    }
+    
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)
     {
         let outgoingSequence = sequence
@@ -303,6 +340,7 @@ class HomeConversationTopic: SAYConversationTopic
         })
     }()
     
+    private let listManager: HomeListTopicManager
     private var searchRecognizer: YesChefSearchCuisineCourseCommandRecognizer?
     private var focusedRecognizers = [SAYVerbalCommandRecognizer]() // Recognizers that we only want active while this CT is focused.
 }
@@ -314,4 +352,13 @@ protocol HomeConversationTopicEventHandler: class
     func requestedSearchUsingParameters(searchParameters: SearchParameters)
     func handleHomeCommand()
     func handleBackCommand()
+    
+    func selectedRecommendedRecipeListing(selectedRecommendation: RecipeListing?)
+    func itemSelectionFailedWithMessage(selectionFailureMessage: String)
+    
+    func handlePlayCommand()
+    func handlePauseCommand()
+    
+    func beganSpeakingItemAtIndex(index: Int)
+    func finishedSpeakingItemAtIndex(index: Int)
 }
