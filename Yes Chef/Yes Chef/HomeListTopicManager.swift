@@ -92,7 +92,7 @@ class HomeListTopicManager: NSObject, ListConversationTopicEventHandler
     private func syncListSubtopic()
     {
         if listSubtopic == nil {
-            listSubtopic = ListConversationTopic(items: recommendedListings.map({ $0.speakableString }), eventHandler: self)
+            listSubtopic = ListConversationTopic(items: recommendedListings.map({ $0.speakableString }), listIsMutable: false, shouldUseFallthroughForSelection: false, eventHandler: self)
         }
         else {
             listSubtopic?.items = recommendedListings.map({ $0.speakableString })
