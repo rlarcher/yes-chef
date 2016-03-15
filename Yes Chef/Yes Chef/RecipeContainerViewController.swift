@@ -126,7 +126,19 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     
     func switchToTab(tabViewController: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
     {
-        moveTabIndicatorToTab(tabViewController)
+        let tab: RecipeTab
+        if tabViewController is RecipeOverviewViewController {
+            tab = .Overview
+        }
+        else if tabViewController is RecipeIngredientsViewController {
+            tab = .Ingredients
+        }
+        else {
+            tab = .Preparation
+        }
+        
+        moveTabIndicatorToTab(tab)
+        updateTabFontAttributes(tab)
         
         if
             let newVC = tabViewController as? UIViewController,
@@ -354,19 +366,8 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         }
     }
     
-    private func moveTabIndicatorToTab(tabVC: ConversationalTabBarViewController)
+    private func moveTabIndicatorToTab(tab: RecipeTab)
     {
-        let tab: RecipeTab
-        if tabVC is RecipeOverviewViewController {
-            tab = .Overview
-        }
-        else if tabVC is RecipeIngredientsViewController {
-            tab = .Ingredients
-        }
-        else {
-            tab = .Preparation
-        }
-        
         UIView.animateWithDuration(0.3) {
             switch tab {
             case .Overview:
@@ -382,6 +383,34 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
                 self.tabIndicatorAlignCenterXToOverviewButtonConstraint?.active = false
                 self.tabIndicatorAlignCenterXToPreparationButtonConstraint?.active = true
             }
+        }
+    }
+    
+    private func updateTabFontAttributes(tab: RecipeTab)
+    {
+        switch tab {
+        case .Overview:
+            setAttributedTitleOfButton(caloriesButton, toColor: UIColor.darkTextColor())
+            setAttributedTitleOfButton(ingredientsButton, toColor: UIColor.darkTextColor())
+            setAttributedTitleOfButton(preparationButton, toColor: UIColor.darkTextColor())
+        case .Ingredients:
+            setAttributedTitleOfButton(caloriesButton, toColor: UIColor.lightGrayColor())
+            setAttributedTitleOfButton(ingredientsButton, toColor: UIColor.darkTextColor())
+            setAttributedTitleOfButton(preparationButton, toColor: UIColor.lightGrayColor())
+        case .Preparation:
+            setAttributedTitleOfButton(caloriesButton, toColor: UIColor.lightGrayColor())
+            setAttributedTitleOfButton(ingredientsButton, toColor: UIColor.lightGrayColor())
+            setAttributedTitleOfButton(preparationButton, toColor: UIColor.darkTextColor())
+        }
+    }
+    
+    private func setAttributedTitleOfButton(button: UIButton, toColor color: UIColor)
+    {
+        if let currentAttributedTitle = button.currentAttributedTitle {
+            let titleTextRange = NSMakeRange(0, NSString(string: currentAttributedTitle.string).length)
+            let newAttributedText = NSMutableAttributedString(attributedString: currentAttributedTitle)
+            newAttributedText.addAttributes([NSForegroundColorAttributeName: color], range: titleTextRange)
+            button.setAttributedTitle(newAttributedText, forState: .Normal)
         }
     }
     
