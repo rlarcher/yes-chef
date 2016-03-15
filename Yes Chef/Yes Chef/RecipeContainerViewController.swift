@@ -16,6 +16,7 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     @IBOutlet weak var movableView: UIView!
     @IBOutlet weak var infoStripView: UIView!
     @IBOutlet weak var backgroundImageView: UIImageView!
+    @IBOutlet weak var selectedTabIndicatorView: UIImageView!
     
     @IBOutlet weak var recipeNameLabel: UILabel!
     @IBOutlet weak var recipeCourseLabel: UILabel!
@@ -47,7 +48,9 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         backgroundImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil)
         
         // This constraint is defined programmatically so that its constant will reflect the height of the infoStripView, which is proportional to the screen size.
-        movableViewTopToBottomLayoutGuideConstraint?.active = true
+        dispatch_async(dispatch_get_main_queue()) {
+            self.movableViewTopToBottomLayoutGuideConstraint?.active = true
+        }
     }
     
     override func viewDidLayoutSubviews()
@@ -123,6 +126,8 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     
     func switchToTab(tabViewController: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
     {
+        moveTabIndicatorToTab(tabViewController)
+        
         if
             let newVC = tabViewController as? UIViewController,
             let oldVC = childViewControllers.first
@@ -176,26 +181,28 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     // 2) Then animate the movableView up into visible space.
     private func transitionFromOverview(oldVC: UIViewController, toNewViewController newVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
     {
-        transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut,
-            animations: { () -> Void in
-                // Transition in the new view controller's content view by setting constraints. Trying to set this by frame doesn't work well with the animation of the movableView's constraints in the completion block.
-                newVC.view.translatesAutoresizingMaskIntoConstraints = false
-                let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
-                NSLayoutConstraint.activateConstraints(fillConstraints)
-            }, completion: { (finished) -> Void in
-                oldVC.removeFromParentViewController()
-                oldVC.view.removeFromSuperview()
-                newVC.didMoveToParentViewController(self)
-                tabVC.didGainFocus(completionBlock)
-                
-                UIView.animateWithDuration(0.35) {
-                    self.movableViewTopToBottomLayoutGuideConstraint?.active = false
-                    self.movableViewTopToTopLayoutGuideConstraint?.active = true
+        dispatch_async(dispatch_get_main_queue()) {
+            self.transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut,
+                animations: { () -> Void in
+                    // Transition in the new view controller's content view by setting constraints. Trying to set this by frame doesn't work well with the animation of the movableView's constraints in the completion block.
+                    newVC.view.translatesAutoresizingMaskIntoConstraints = false
+                    let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
+                    NSLayoutConstraint.activateConstraints(fillConstraints)
+                }, completion: { (finished) -> Void in
+                    oldVC.removeFromParentViewController()
+                    oldVC.view.removeFromSuperview()
+                    newVC.didMoveToParentViewController(self)
+                    tabVC.didGainFocus(completionBlock)
                     
-                    self.view.setNeedsLayout()
-                    self.view.layoutIfNeeded()
-                }
-        })
+                    UIView.animateWithDuration(0.35) {
+                        self.movableViewTopToBottomLayoutGuideConstraint?.active = false
+                        self.movableViewTopToTopLayoutGuideConstraint?.active = true
+                        
+                        self.view.setNeedsLayout()
+                        self.view.layoutIfNeeded()
+                    }
+            })
+        }
     }
     
     // When this transition starts, the details page is on screen.
@@ -322,16 +329,64 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
             // Calories (Overview) Button
             self.caloriesButton.setAttributedTitle(NSAttributedString(string: self.recipe.calories.withSuffix("\nCalorie"), attributes: [NSParagraphStyleAttributeName: paragraphAttributes]), forState: .Normal)
             self.caloriesButton.sizeToFit()
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func moveTabIndicatorToTab(tabVC: ConversationalTabBarViewController)
+    {
+        let tab: RecipeTab
+        if tabVC is RecipeOverviewViewController {
+            tab = .Overview
+        }
+        else if tabVC is RecipeIngredientsViewController {
+            tab = .Ingredients
+        }
+        else {
+            tab = .Preparation
+        }
+        
+        UIView.animateWithDuration(0.3) {
+            switch tab {
+            case .Overview:
+                self.tabIndicatorAlignCenterXToPreparationButtonConstraint?.active = false
+                self.tabIndicatorAlignCenterXToIngredientsButtonConstraint?.active = false
+                self.tabIndicatorAlignCenterXToOverviewButtonConstraint?.active = true
+            case .Ingredients:
+                self.tabIndicatorAlignCenterXToPreparationButtonConstraint?.active = false
+                self.tabIndicatorAlignCenterXToOverviewButtonConstraint?.active = false
+                self.tabIndicatorAlignCenterXToIngredientsButtonConstraint?.active = true
+            case .Preparation:
+                self.tabIndicatorAlignCenterXToIngredientsButtonConstraint?.active = false
+                self.tabIndicatorAlignCenterXToOverviewButtonConstraint?.active = false
+                self.tabIndicatorAlignCenterXToPreparationButtonConstraint?.active = true
+            }
         }
     }
     
     private func setupConstraints()
     {
-        movableViewTopToBottomLayoutGuideConstraint = NSLayoutConstraint(item: movableView, attribute: .Top, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Top, multiplier: 1.0, constant: -infoStripView.frame.size.height)
-        movableViewTopToBottomLayoutGuideConstraint?.identifier = "movableViewTopToBottomLayoutGuideConstraint"
-        
-        movableViewTopToTopLayoutGuideConstraint = NSLayoutConstraint(item: movableView, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
-        movableViewTopToTopLayoutGuideConstraint?.identifier = "movableViewTopToTopLayoutGuideConstraint"
+        dispatch_async(dispatch_get_main_queue()) {
+            self.movableViewTopToBottomLayoutGuideConstraint = NSLayoutConstraint(item: self.movableView, attribute: .Top, relatedBy: .Equal, toItem: self.bottomLayoutGuide, attribute: .Top, multiplier: 1.0, constant: -self.infoStripView.frame.size.height)
+            self.movableViewTopToBottomLayoutGuideConstraint?.identifier = "movableViewTopToBottomLayoutGuideConstraint"
+            
+            self.movableViewTopToTopLayoutGuideConstraint = NSLayoutConstraint(item: self.movableView, attribute: .Top, relatedBy: .Equal, toItem: self.topLayoutGuide, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+            self.movableViewTopToTopLayoutGuideConstraint?.identifier = "movableViewTopToTopLayoutGuideConstraint"
+            
+            self.tabIndicatorAlignCenterXToOverviewButtonConstraint = NSLayoutConstraint(item: self.selectedTabIndicatorView, attribute: .CenterX, relatedBy: .Equal, toItem: self.caloriesButton, attribute: .CenterX, multiplier: 1.0, constant: 0.0)
+            self.tabIndicatorAlignCenterXToOverviewButtonConstraint?.identifier = "tabIndicatorAlignCenterXToOverviewButtonConstraint"
+            
+            self.tabIndicatorAlignCenterXToIngredientsButtonConstraint = NSLayoutConstraint(item: self.selectedTabIndicatorView, attribute: .CenterX, relatedBy: .Equal, toItem: self.ingredientsButton, attribute: .CenterX, multiplier: 1.0, constant: 0.0)
+            self.tabIndicatorAlignCenterXToIngredientsButtonConstraint?.identifier = "tabIndicatorAlignCenterXToIngredientsButtonConstraint"
+            
+            self.tabIndicatorAlignCenterXToPreparationButtonConstraint = NSLayoutConstraint(item: self.selectedTabIndicatorView, attribute: .CenterX, relatedBy: .Equal, toItem: self.preparationButton, attribute: .CenterX, multiplier: 1.0, constant: 0.0)
+            self.tabIndicatorAlignCenterXToPreparationButtonConstraint?.identifier = "tabIndicatorAlignCenterXToPreparationButtonConstraint"
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func buildConstraintsToFillContainerView(firstView: UIView, withView secondView: UIView) -> [NSLayoutConstraint]
@@ -343,6 +398,10 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         
         return [topConstraint, bottomConstraint, leftConstraint, rightConstraint]
     }
+    
+    private var tabIndicatorAlignCenterXToOverviewButtonConstraint: NSLayoutConstraint?
+    private var tabIndicatorAlignCenterXToPreparationButtonConstraint: NSLayoutConstraint?
+    private var tabIndicatorAlignCenterXToIngredientsButtonConstraint: NSLayoutConstraint?
     
     private var movableViewTopToBottomLayoutGuideConstraint: NSLayoutConstraint?
     private var movableViewTopToTopLayoutGuideConstraint: NSLayoutConstraint?
