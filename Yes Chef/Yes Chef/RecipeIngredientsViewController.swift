@@ -36,19 +36,6 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
         servingsCountLabel.text = recipe.presentableServingsText
     }
     
-    override func viewDidAppear(animated: Bool)
-    {
-        super.viewDidAppear(animated)
-        
-        // TODO: Move to didLayout?        
-//        (tabBarController as? RecipeTabBarController)?.setTabBarToTop()
-    }
-    
-    override func viewWillDisappear(animated: Bool)
-    {
-        super.viewWillDisappear(animated)
-    }
-    
     // MARK: ConversationTabBarViewController Methods
     
     func didGainFocus(completion: (() -> Void)?)
@@ -75,7 +62,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     func handleServingsCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Ingredients) {
             self.recipeIngredientsConversationTopic.speakServings()
         }
     }
@@ -83,7 +70,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     func handleIngredientQueryCommand(command: SAYCommand)
     {
         if let ingredient = command.parameters["ingredient"] as? String {
-            delegate?.requestedSwitchToTab(self) {
+            delegate?.requestedSwitchTab(.Ingredients) {
                 self.recipeIngredientsConversationTopic.speakIngredient(ingredient)
             }
         }
@@ -91,7 +78,7 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
     
     func handleIngredientsCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Ingredients) {
             self.recipeIngredientsConversationTopic.speakIngredients()
         }
     }

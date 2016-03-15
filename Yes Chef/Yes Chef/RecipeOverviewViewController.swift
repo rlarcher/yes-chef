@@ -37,19 +37,6 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
         updateGUI(recipe)
     }
     
-    override func viewDidAppear(animated: Bool)
-    {
-        super.viewDidAppear(animated)
-        
-        // TODO: Move to didLayout?
-//        (tabBarController as? RecipeTabBarController)?.setTabBarToBottom()
-    }
-    
-    override func viewDidDisappear(animated: Bool)
-    {
-        super.viewDidDisappear(animated)
-    }
-    
     // MARK: ConversationTabBarViewController Methods
     
     func didGainFocus(completion: (() -> Void)?)
@@ -76,49 +63,49 @@ class RecipeOverviewViewController: UIViewController, RecipeOverviewConversation
     
     func handleOverviewCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Overview) {
             self.recipeOverviewConversationTopic.speakOverview()
         }
     }
     
     func handleRatingCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Overview) {
             self.recipeOverviewConversationTopic.speakRating()
         }
     }
     
     func handleRecipeNameCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Overview) {
             self.recipeOverviewConversationTopic.speakRecipeName()
         }
     }
     
     func handleCaloriesCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Overview) {
             self.recipeOverviewConversationTopic.speakCalories()
         }
     }
     
     func handleCuisineCategoryCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Overview) {
             self.recipeOverviewConversationTopic.speakCuisineCategory()
         }
     }
     
     func handleNutritionInfoCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Overview) {
             self.recipeOverviewConversationTopic.speakNutritionInfo()
         }
     }
     
     func handleDescriptionCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Overview) {
             self.recipeOverviewConversationTopic.speakDescription()
         }
     }

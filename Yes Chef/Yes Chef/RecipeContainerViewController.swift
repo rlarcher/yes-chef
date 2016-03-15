@@ -93,28 +93,28 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     @IBAction func ingredientsButtonTapped(sender: AnyObject)
     {
         if let currentVC = childViewControllers.first where !(currentVC is RecipeIngredientsViewController) {
-            switchToTab(recipeIngredientsVC, then: nil)
+            switchToTab(.Ingredients, then: nil)
         }
     }
     
     @IBAction func preparationButtonTapped(sender: AnyObject)
     {
         if let currentVC = childViewControllers.first where !(currentVC is RecipePreparationViewController) {
-            switchToTab(recipePreparationVC, then: nil)
+            switchToTab(.Preparation, then: nil)
         }
     }
     
     @IBAction func caloriesButtonTapped(sender: AnyObject)
     {
         if let currentVC = childViewControllers.first where !(currentVC is RecipeOverviewViewController) {
-            switchToTab(recipeOverviewVC, then: nil)
+            switchToTab(.Overview, then: nil)
         }
     }
     
     func favoriteButtonTapped()
     {
         // TODO
-        print("RecipeTabBarController favoriteButtonTapped")
+        print("RecipeContainerViewController favoriteButtonTapped")
     }
     
     func backButtonTapped()
@@ -123,28 +123,24 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     }
     
     // MARK: Navigation
-    
-    func switchToTab(tabViewController: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+
+    func switchToTab(tab: RecipeTab, then completionBlock: (() -> Void)?)
     {
-        let tab: RecipeTab
-        if tabViewController is RecipeOverviewViewController {
-            tab = .Overview
-        }
-        else if tabViewController is RecipeIngredientsViewController {
-            tab = .Ingredients
-        }
-        else {
-            tab = .Preparation
-        }
-        
-        moveTabIndicatorToTab(tab)
-        updateTabFontAttributes(tab)
-        
-        if
-            let newVC = tabViewController as? UIViewController,
-            let oldVC = childViewControllers.first
-        {
+        if let oldVC = childViewControllers.first where currentlySelectedTab != tab {
             self.view.layoutIfNeeded()
+            
+            let newVC: UIViewController
+            switch tab {
+            case .Overview:
+                newVC = recipeOverviewVC
+            case .Ingredients:
+                newVC = recipeIngredientsVC
+            case .Preparation:
+                newVC = recipePreparationVC
+            }
+            
+            moveTabIndicatorToTab(tab)
+            updateTabFontAttributes(tab)
             
             oldVC.willMoveToParentViewController(nil)
             (oldVC as? ConversationalTabBarViewController)?.didLoseFocus(nil)
@@ -152,38 +148,29 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
             addChildViewController(newVC)
             
             if oldVC is RecipeOverviewViewController {
-                transitionFromOverview(oldVC, toNewViewController: newVC, usingTabViewController: tabViewController, then: completionBlock)
+                transitionFromOverview(oldVC, toNewViewController: newVC, then: completionBlock)
             }
             else if newVC is RecipeOverviewViewController {
-                transitionToOverview(newVC, fromOldViewController: oldVC, usingTabViewController: tabViewController, then: completionBlock)
+                transitionToOverview(newVC, fromOldViewController: oldVC, then: completionBlock)
             }
             else {
-                transitionBetweenDetailScreensFrom(oldVC, toNewViewController: newVC, usingTabViewController: tabViewController, then: completionBlock)
+                transitionBetweenDetailScreensFrom(oldVC, toNewViewController: newVC, then: completionBlock)
             }
+            
+            self.currentlySelectedTab = tab
+        }
+        else {
+            // We're already on the requested tab, so just fire the completion block, if any.
+            completionBlock?()
         }
     }
     
-    // MARK: RecipeNavigationConversationTopicEventHandler Protocol Methods
+    // MARK: RecipeNavigationConversationTopicEventHandler and RecipeContainerViewDelegate Protocol Methods
     
-    // This method is called when the user speaks a command to focus on a certain tab.
-    func requestedSwitchTab(newTab: RecipeTab)
+    // This method is called when the user speaks a command to focus on a certain tab, or when a child view controller wants to change the focused tab.
+    func requestedSwitchTab(newTab: RecipeTab, completion: (() -> Void)?)
     {
-        switch newTab {
-        case .Overview:
-            switchToTab(recipeOverviewVC, then: nil)
-        case .Preparation:
-            switchToTab(recipePreparationVC, then: nil)
-        case .Ingredients:
-            switchToTab(recipeIngredientsVC, then: nil)
-        }
-    }
-    
-    // MARK: RecipeContainerViewDelegate Protocol Methods
-    
-    // This method is called when a child view controller wants to change the focused tab.
-    func requestedSwitchToTab(tab: ConversationalTabBarViewController, completion: () -> Void)
-    {
-        switchToTab(tab, then: completion)
+        switchToTab(newTab, then: completion)
     }
     
     // MARK: Transition Methods
@@ -191,8 +178,10 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     // When this transition starts, the details page is off screen.
     // 1) Instantly transition in the newVC's content view (while still off screen).
     // 2) Then animate the movableView up into visible space.
-    private func transitionFromOverview(oldVC: UIViewController, toNewViewController newVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+    private func transitionFromOverview(oldVC: UIViewController, toNewViewController newVC: UIViewController, /*usingTabViewController tabVC: ConversationalTabBarViewController,*/ then completionBlock: (() -> Void)?)
     {
+        assert(newVC is ConversationalTabBarViewController)
+        
         dispatch_async(dispatch_get_main_queue()) {
             self.transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut,
                 animations: { () -> Void in
@@ -204,7 +193,7 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
                     oldVC.removeFromParentViewController()
                     oldVC.view.removeFromSuperview()
                     newVC.didMoveToParentViewController(self)
-                    tabVC.didGainFocus(completionBlock)
+                    (newVC as! ConversationalTabBarViewController).didGainFocus(completionBlock)
                     
                     UIView.animateWithDuration(0.35) {
                         self.movableViewTopToBottomLayoutGuideConstraint?.active = false
@@ -220,8 +209,10 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     // When this transition starts, the details page is on screen.
     // 1) Animate the movableView down off screen.
     // 2) Then instantly transition the newVC's content view into place (won't be visible anyways!).
-    private func transitionToOverview(newVC: UIViewController, fromOldViewController oldVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+    private func transitionToOverview(newVC: UIViewController, fromOldViewController oldVC: UIViewController, /*usingTabViewController tabVC: ConversationalTabBarViewController,*/ then completionBlock: (() -> Void)?)
     {
+        assert(newVC is ConversationalTabBarViewController)
+        
         dispatch_async(dispatch_get_main_queue()) {
             UIView.animateWithDuration(0.35, animations: { () -> Void in
                 self.movableViewTopToTopLayoutGuideConstraint?.active = false
@@ -239,7 +230,7 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
                         oldVC.removeFromParentViewController()
                         oldVC.view.removeFromSuperview()
                         newVC.didMoveToParentViewController(self)
-                        tabVC.didGainFocus(completionBlock)
+                        (newVC as! ConversationalTabBarViewController).didGainFocus(completionBlock)
                 })
             }
         }
@@ -249,8 +240,10 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     // When this transition starts, the details page is on screen.
     // 1) Transition over time the newVC.
     // 2) That's it!
-    private func transitionBetweenDetailScreensFrom(oldVC: UIViewController, toNewViewController newVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+    private func transitionBetweenDetailScreensFrom(oldVC: UIViewController, toNewViewController newVC: UIViewController, /*usingTabViewController tabVC: ConversationalTabBarViewController,*/ then completionBlock: (() -> Void)?)
     {
+        assert(newVC is ConversationalTabBarViewController)
+        
         dispatch_async(dispatch_get_main_queue()) {
             // TODO: Add some movement animation to this. Enter left, exit right or vice versa.
             self.transitionFromViewController(oldVC, toViewController: newVC, duration: 0.35, options: .CurveEaseInOut,
@@ -262,7 +255,7 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
                     oldVC.removeFromParentViewController()
                     oldVC.view.removeFromSuperview()
                     newVC.didMoveToParentViewController(self)
-                    tabVC.didGainFocus(completionBlock)
+                    (newVC as! ConversationalTabBarViewController).didGainFocus(completionBlock)
             })
         }
     }
@@ -461,6 +454,7 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     private var didInitialLayout: Bool = false
     
     private var recipe: Recipe!
+    private var currentlySelectedTab: RecipeTab = .Overview
     private weak var recipeOverviewVC: RecipeOverviewViewController!
     private weak var recipeIngredientsVC: RecipeIngredientsViewController!
     private weak var recipePreparationVC: RecipePreparationViewController!
@@ -468,5 +462,17 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
 
 protocol RecipeContainerViewDelegate
 {
-    func requestedSwitchToTab(tab: ConversationalTabBarViewController, completion: () -> Void)
+    func requestedSwitchTab(newTab: RecipeTab, completion: (() -> Void)?)
+}
+
+enum RecipeTab: String
+{
+    case Overview = "Overview"
+    case Preparation = "Preparation"
+    case Ingredients = "Ingredients"
+    
+    static func orderedCases() -> [RecipeTab]
+    {
+        return [.Overview, .Preparation, .Ingredients]
+    }
 }

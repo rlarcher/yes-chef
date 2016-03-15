@@ -65,7 +65,7 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
             let tabNames = RecipeTab.orderedCases().map({ $0.rawValue })
             if let tabIndex = Utils.fuzzyIndexOfItemWithName(tabName, inList: tabNames) {
                 let newTab = RecipeTab.orderedCases()[tabIndex]
-                eventHandler.requestedSwitchTab(newTab)
+                eventHandler.requestedSwitchTab(newTab, completion: nil)
                 return
             }
         }
@@ -73,7 +73,7 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
             let index = max(tabNumber.integerValue - 1, 0)    // Assume the user spoke a 1-based tab number. Translate it here to a 0-based index.
             if index >= 0 && index < RecipeTab.orderedCases().count {
                 let newTab = RecipeTab.orderedCases()[index]
-                eventHandler.requestedSwitchTab(newTab)
+                eventHandler.requestedSwitchTab(newTab, completion: nil)
                 return
             }
         }
@@ -103,5 +103,5 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
 
 protocol RecipeNavigationConversationTopicEventHandler: class
 {
-    func requestedSwitchTab(newTab: RecipeTab)
+    func requestedSwitchTab(newTab: RecipeTab, completion: (() -> Void)?)
 }

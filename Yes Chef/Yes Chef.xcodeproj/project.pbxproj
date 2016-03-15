@@ -15,7 +15,6 @@
 		8348DED61C6146870009C7DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8348DED41C6146870009C7DF /* LaunchScreen.storyboard */; };
 		8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE51C61489B0009C7DF /* SavedRecipesViewController.swift */; };
 		8348DEE81C6148D50009C7DF /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE71C6148D50009C7DF /* SearchResultsViewController.swift */; };
-		8348DEEA1C6148FC0009C7DF /* RecipeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEE91C6148FC0009C7DF /* RecipeTabBarController.swift */; };
 		8348DEEC1C6149230009C7DF /* RecipeOverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEEB1C6149230009C7DF /* RecipeOverviewViewController.swift */; };
 		8348DEEE1C6149520009C7DF /* RecipeIngredientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEED1C6149520009C7DF /* RecipeIngredientsViewController.swift */; };
 		8348DEF01C61496A0009C7DF /* RecipePreparationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DEEF1C61496A0009C7DF /* RecipePreparationViewController.swift */; };
@@ -85,7 +84,6 @@
 		8348DEE21C6147620009C7DF /* Yes Chef-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yes Chef-Bridging-Header.h"; sourceTree = "<group>"; };
 		8348DEE51C61489B0009C7DF /* SavedRecipesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedRecipesViewController.swift; sourceTree = "<group>"; };
 		8348DEE71C6148D50009C7DF /* SearchResultsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
-		8348DEE91C6148FC0009C7DF /* RecipeTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeTabBarController.swift; sourceTree = "<group>"; };
 		8348DEEB1C6149230009C7DF /* RecipeOverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeOverviewViewController.swift; sourceTree = "<group>"; };
 		8348DEED1C6149520009C7DF /* RecipeIngredientsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeIngredientsViewController.swift; sourceTree = "<group>"; };
 		8348DEEF1C61496A0009C7DF /* RecipePreparationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipePreparationViewController.swift; sourceTree = "<group>"; };
@@ -224,7 +222,6 @@
 			isa = PBXGroup;
 			children = (
 				8350EC931C8F7E1C008B9161 /* RecipeContainerViewController.swift */,
-				8348DEE91C6148FC0009C7DF /* RecipeTabBarController.swift */,
 				8348DF071C614BAF0009C7DF /* RecipeNavigationConversationTopic.swift */,
 				8348DEEB1C6149230009C7DF /* RecipeOverviewViewController.swift */,
 				8348DF091C614BC20009C7DF /* RecipeOverviewConversationTopic.swift */,
@@ -477,7 +474,6 @@
 				8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */,
 				8393341C1C85E3DC004A99EE /* SearchParameters.swift in Sources */,
 				83D568C31C8DC1FF00EDDD17 /* Category.swift in Sources */,
-				8348DEEA1C6148FC0009C7DF /* RecipeTabBarController.swift in Sources */,
 				8348DEFA1C614A5F0009C7DF /* BigOvenAPIManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

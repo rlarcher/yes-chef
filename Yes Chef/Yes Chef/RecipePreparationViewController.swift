@@ -39,19 +39,6 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
         }
     }
     
-    override func viewDidAppear(animated: Bool)
-    {
-        super.viewDidAppear(animated)
-        
-        // TODO: Move to didLayout?        
-//        (tabBarController as? RecipeTabBarController)?.setTabBarToTop()
-    }
-    
-    override func viewDidDisappear(animated: Bool)
-    {
-        super.viewDidDisappear(animated)
-    }
-    
     // MARK: ConversationTabBarViewController Methods
     
     func didGainFocus(completion: (() -> Void)?)
@@ -78,14 +65,14 @@ class RecipePreparationViewController: UITableViewController, RecipePreparationC
     
     func handleWhatDoIDoCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Preparation) {
             self.recipePreparationConversationTopic.speakPreparationSteps()
         }
     }
     
     func handleOvenTemperatureCommand()
     {
-        delegate?.requestedSwitchToTab(self) {
+        delegate?.requestedSwitchTab(.Preparation) {
             self.recipePreparationConversationTopic.speakOvenTemperature()
         }
     }
