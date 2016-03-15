@@ -242,7 +242,11 @@ class ListConversationTopic: SAYConversationTopic
         isFlushingOldAudioSequence = true
         
         // TODO: Better way to interrupt speech on transitioning?
-        postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+        let interruptingSequence = SAYAudioEventSequence()
+        interruptingSequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
+            self.isFlushingOldAudioSequence = false     // Once all previous events have been flushed out, release the lock.
+        }
+        postEvents(interruptingSequence)
     }
     
     private func speakItems(startingAtIndex startIndex: Int)
@@ -302,44 +306,48 @@ class ListConversationTopic: SAYConversationTopic
             // If no help messages have been defined, do nothing.
             return sequence
         }
-        
-        var outgoingEvents = sequence.items().map({ $0.event })
+
+        var outgoingEventItems = sequence.items()
         
         // Insert help and outro message events.
         if items.count > 5 {    // Arbitrary! If there's more than this many items, we don't need to worry about the Help and Outro messages being spoken too close together.
             // Long List. If defined, speak a help message after the third item, and an outro message at the end of the list.
             if let help = intermediateHelpString {
-                outgoingEvents.insert(SAYSpeechEvent(utteranceString: help), atIndex: helpIndex)
+                outgoingEventItems.insert(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: help)), atIndex: helpIndex)
             }
             if let outro = outroString {
-                outgoingEvents.append(SAYSpeechEvent(utteranceString: outro))
+                outgoingEventItems.append(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: outro)))
             }
         }
         else if items.count > helpIndex {
             // Medium-length List. If defined, speak a help message after the third item. If the outro message is unique, speak it at the end of the list (ie, if the outro is the same as the help message, we'd be repeating our message from just a few items ago).
             if let help = intermediateHelpString {
-                outgoingEvents.insert(SAYSpeechEvent(utteranceString: help), atIndex: helpIndex)
+                outgoingEventItems.insert(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: help)), atIndex: helpIndex)
             }
             if let outro = outroString where outro != intermediateHelpString {
-                outgoingEvents.append(SAYSpeechEvent(utteranceString: outro))
+                outgoingEventItems.append(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: outro)))
             }
         }
         else {
             // Short List. If defined, speak a help message at the end of the list. If the outro message is unique, speak it also (ie, if the outro is the same as the help message, we'd be saying the same thing twice).
             if let help = intermediateHelpString {
-                outgoingEvents.append(SAYSpeechEvent(utteranceString: help))
+                outgoingEventItems.insert(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: help)), atIndex: helpIndex)
             }
             if let outro = outroString where outro != intermediateHelpString {
-                outgoingEvents.append(SAYSpeechEvent(utteranceString: outro))
+                outgoingEventItems.append(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: outro)))
             }
         }
         
         // Insert introduction message event.
         if let intro = introString where shouldSpeakIntroduction {
-            outgoingEvents.insert(SAYSpeechEvent(utteranceString: intro), atIndex: 0)
+            outgoingEventItems.insert(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: intro)), atIndex: 0)
         }
         
-        return SAYAudioEventSequence(events: outgoingEvents)
+        let audioEventSequenceWithHelpMessages = SAYAudioEventSequence()
+        for eventItem in outgoingEventItems {
+            audioEventSequenceWithHelpMessages.addEvent(eventItem.event, withCompletionBlock: eventItem.completionBlock)
+        }
+        return audioEventSequenceWithHelpMessages
     }
     
     private var headIndex = 0   // The index currently being read
