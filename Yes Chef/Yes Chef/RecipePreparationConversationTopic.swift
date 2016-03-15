@@ -36,7 +36,7 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         let whatDoIDoRecognizer = SAYCustomCommandRecognizer(customType: "WhatDoIDo", responseTarget: eventHandler, action: "handleWhatDoIDoCommand")
         whatDoIDoRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             // Recognize phrases like "What do I do?", "What are the steps?"
-            if text.containsAny(["what do I do", "what do", "what steps", "what are the steps", "steps"]) {
+            if text.containsAny(["what do I do", "what do", "what steps", "what are the steps", "steps", "make"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {

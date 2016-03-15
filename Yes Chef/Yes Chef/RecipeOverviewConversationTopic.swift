@@ -187,7 +187,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
     func speakDescription()
     {
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: recipe.description))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: recipe.presentableDescription))
         postEvents(sequence)
     }
     

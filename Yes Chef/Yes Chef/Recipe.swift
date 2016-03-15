@@ -72,6 +72,16 @@ struct Recipe
         }
     }
     
+    var presentableDescription: String
+    {
+        if description.isBlank {
+            return "Words cannot describe this recipe."
+        }
+        else {
+            return description
+        }
+    }
+    
     var presentableServingsText: String
     {
         if servingsQuantity > 0 {

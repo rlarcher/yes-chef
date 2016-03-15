@@ -126,7 +126,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         
     func beganSpeakingItemAtIndex(index: Int)
     {
-        print("SearchResultsVC beganSpeakingItemAtIndex: \(index)")
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView?.selectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true, scrollPosition: UITableViewScrollPosition.Middle)
         }
@@ -134,7 +133,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     func finishedSpeakingItemAtIndex(index: Int)
     {
-        print("SearchResultsVC finishedSpeakingItemAtIndex: \(index)")
         dispatch_async(dispatch_get_main_queue()) {
             self.tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
         }
