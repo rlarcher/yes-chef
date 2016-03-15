@@ -24,11 +24,38 @@ extension String
     func fuzzyContains(other: String, useLowercase shouldUseLowercase: Bool = true) -> Bool
     {
         if shouldUseLowercase {
-            return self.lowercaseString.score(other.lowercaseString, fuzziness: 0.7) > Utils.kFuzzyScoreThreshold
+            return self.lowercaseString.scoreByTokens(other.lowercaseString) > Utils.kFuzzyScoreThreshold
         }
         else {
-            return self.score(other, fuzziness: 0.7) > Utils.kFuzzyScoreThreshold
+            return self.scoreByTokens(other) > Utils.kFuzzyScoreThreshold
         }
+    }
+    
+    // Also does token-wise checking when calculating score, instead of just checking against the entire string.
+    func scoreByTokens(other: String) -> Double
+    {
+        var highestScore = 0.0
+        var currentScore = 0.0
+        
+        // Start by scoring the entire string
+        currentScore = self.score(other, fuzziness: 0.7)
+        if currentScore > highestScore {
+            highestScore = currentScore
+        }
+        
+        let selfTokens = self.componentsSeparatedByCharactersInSet(NSCharacterSet.letterCharacterSet().invertedSet)
+        let otherTokens = other.componentsSeparatedByCharactersInSet(NSCharacterSet.letterCharacterSet().invertedSet)
+        
+        for selfToken in selfTokens {
+            for otherToken in otherTokens {
+                currentScore = selfToken.score(otherToken, fuzziness: 0.7)
+                if currentScore > highestScore {
+                    highestScore = currentScore
+                }
+            }
+        }
+        
+        return highestScore
     }
     
     // Returns true if this string is empty or contains only whitespace.
