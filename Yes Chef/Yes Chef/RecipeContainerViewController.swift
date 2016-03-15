@@ -222,14 +222,38 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     // 2) Then instantly transition the newVC's content view into place (won't be visible anyways!).
     private func transitionToOverview(newVC: UIViewController, fromOldViewController oldVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
     {
-        UIView.animateWithDuration(0.35, animations: { () -> Void in
-            self.movableViewTopToTopLayoutGuideConstraint?.active = false
-            self.movableViewTopToBottomLayoutGuideConstraint?.active = true
-            
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
-        }) { (finished) -> Void in
-            self.transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut,
+        dispatch_async(dispatch_get_main_queue()) {
+            UIView.animateWithDuration(0.35, animations: { () -> Void in
+                self.movableViewTopToTopLayoutGuideConstraint?.active = false
+                self.movableViewTopToBottomLayoutGuideConstraint?.active = true
+                
+                self.view.setNeedsLayout()
+                self.view.layoutIfNeeded()
+            }) { (finished) -> Void in
+                self.transitionFromViewController(oldVC, toViewController: newVC, duration: 0.0, options: .CurveEaseInOut,
+                    animations: { () -> Void in
+                        newVC.view.translatesAutoresizingMaskIntoConstraints = false
+                        let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
+                        NSLayoutConstraint.activateConstraints(fillConstraints)
+                    }, completion: { (finished) -> Void in
+                        oldVC.removeFromParentViewController()
+                        oldVC.view.removeFromSuperview()
+                        newVC.didMoveToParentViewController(self)
+                        tabVC.didGainFocus(completionBlock)
+                })
+            }
+        }
+    }
+    
+    // Ingredients -> Preparation, and Preparation -> Ingredients
+    // When this transition starts, the details page is on screen.
+    // 1) Transition over time the newVC.
+    // 2) That's it!
+    private func transitionBetweenDetailScreensFrom(oldVC: UIViewController, toNewViewController newVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
+    {
+        dispatch_async(dispatch_get_main_queue()) {
+            // TODO: Add some movement animation to this. Enter left, exit right or vice versa.
+            self.transitionFromViewController(oldVC, toViewController: newVC, duration: 0.35, options: .CurveEaseInOut,
                 animations: { () -> Void in
                     newVC.view.translatesAutoresizingMaskIntoConstraints = false
                     let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
@@ -241,26 +265,6 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
                     tabVC.didGainFocus(completionBlock)
             })
         }
-    }
-    
-    // Ingredients -> Preparation, and Preparation -> Ingredients
-    // When this transition starts, the details page is on screen.
-    // 1) Transition over time the newVC.
-    // 2) That's it!
-    private func transitionBetweenDetailScreensFrom(oldVC: UIViewController, toNewViewController newVC: UIViewController, usingTabViewController tabVC: ConversationalTabBarViewController, then completionBlock: (() -> Void)?)
-    {
-        // TODO: Add some movement animation to this. Enter left, exit right or vice versa.
-        self.transitionFromViewController(oldVC, toViewController: newVC, duration: 2.5, options: .CurveEaseInOut,
-            animations: { () -> Void in
-                newVC.view.translatesAutoresizingMaskIntoConstraints = false
-                let fillConstraints = self.buildConstraintsToFillContainerView(self.containerView, withView: newVC.view)
-                NSLayoutConstraint.activateConstraints(fillConstraints)
-            }, completion: { (finished) -> Void in
-                oldVC.removeFromParentViewController()
-                oldVC.view.removeFromSuperview()
-                newVC.didMoveToParentViewController(self)
-                tabVC.didGainFocus(completionBlock)
-        })
     }
     
     // MARK: Helpers
