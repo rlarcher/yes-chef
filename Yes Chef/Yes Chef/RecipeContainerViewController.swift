@@ -316,18 +316,37 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
             
             let paragraphAttributes = NSMutableParagraphStyle()
             paragraphAttributes.alignment = .Center
+            let defaultAttributes = [NSParagraphStyleAttributeName: paragraphAttributes,
+                                     NSForegroundColorAttributeName: UIColor.darkTextColor(),
+                                     NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleCaption1)]
+            let countAttributes = [NSParagraphStyleAttributeName: paragraphAttributes,
+                                   NSForegroundColorAttributeName: UIColor.darkTextColor(),
+                                   NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleBody)]
             
             // Ingredients Button
-            self.ingredientsButton.setAttributedTitle(NSAttributedString(string: self.recipe.ingredients.count.withSuffix("\nIngredient"), attributes: [NSParagraphStyleAttributeName: paragraphAttributes]), forState: .Normal)
+            let ingredientsNSString = NSString(string: self.recipe.ingredients.count.withSuffix("\nIngredient"))
+            let ingredientsCountRange = ingredientsNSString.rangeOfString("\(self.recipe.ingredients.count)")
+            let ingredientsTitle = NSMutableAttributedString(string: ingredientsNSString as String, attributes: defaultAttributes)
+            ingredientsTitle.setAttributes(countAttributes, range: ingredientsCountRange)
+            self.ingredientsButton.setAttributedTitle(ingredientsTitle, forState: .Normal)
             self.ingredientsButton.sizeToFit()
             
             // Prep Time Button
-            let prepTimeLabel = (self.recipe.totalPreparationTime != nil) ? "\(self.recipe.totalPreparationTime!) min\nPrep Time" : "Unknown\nPrep Time"
-            self.preparationButton.setAttributedTitle(NSAttributedString(string: prepTimeLabel, attributes: [NSParagraphStyleAttributeName: paragraphAttributes]), forState: .Normal)
+            let prepTimeCount = (self.recipe.totalPreparationTime != nil) ? "\(self.recipe.totalPreparationTime!) min" : "Unknown"
+            let prepTimeNSString  = NSString(string: "\(prepTimeCount)\nPrep Time")
+            let prepTimeCountRange = prepTimeNSString.rangeOfString(prepTimeCount)
+            let prepTimeTitle = NSMutableAttributedString(string: prepTimeNSString as String, attributes: defaultAttributes)
+            prepTimeTitle.setAttributes(countAttributes, range: prepTimeCountRange)
+            self.preparationButton.setAttributedTitle(prepTimeTitle, forState: .Normal)
             self.preparationButton.sizeToFit()
             
             // Calories (Overview) Button
-            self.caloriesButton.setAttributedTitle(NSAttributedString(string: self.recipe.calories.withSuffix("\nCalorie"), attributes: [NSParagraphStyleAttributeName: paragraphAttributes]), forState: .Normal)
+            let caloriesCount = (self.recipe.calories == 0) ? "Unknown" : "\(self.recipe.calories)"
+            let caloriesNSString = NSString(string: "\(caloriesCount)\nCalories")
+            let caloriesCountRange = caloriesNSString.rangeOfString(caloriesCount)
+            let caloriesTitle = NSMutableAttributedString(string: caloriesNSString as String, attributes: defaultAttributes)
+            caloriesTitle.setAttributes(countAttributes, range: caloriesCountRange)
+            self.caloriesButton.setAttributedTitle(caloriesTitle, forState: .Normal)
             self.caloriesButton.sizeToFit()
             
             self.view.setNeedsLayout()
