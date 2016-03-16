@@ -231,9 +231,12 @@ class BigOvenAPIFetcher: NSObject
         var cleanedInstructions = rawInstructions
         cleanedInstructions = cleanedInstructions.stringByReplacingOccurrencesOfString("\r", withString: "")
         cleanedInstructions = cleanedInstructions.stringByReplacingOccurrencesOfString("\n", withString: "")
-        cleanedInstructions = cleanedInstructions.stringByReplacingOccurrencesOfString("\\d+.", withString: "", options: .RegularExpressionSearch, range: nil)
+        cleanedInstructions = cleanedInstructions.stringByReplacingOccurrencesOfString("\\d+\\.", withString: "", options: .RegularExpressionSearch, range: nil)
         
-        let steps = cleanedInstructions.componentsSeparatedByString(".")
+        var steps = cleanedInstructions.componentsSeparatedByString(". ")   // Simply split by sentences for now
+        steps = steps.map({ $0.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) })  // Trim any starting and ending white space
+        steps = steps.filter({ return !$0.isBlank })    // Remove any blank steps (typically the final step, due to how we used `componentsSeparatedByString`)
+        steps = steps.map({ "\($0)." }) // Add a period to the end of each sentence (was stripped during `componentsSeparatedByString`)
         
         return steps
     }

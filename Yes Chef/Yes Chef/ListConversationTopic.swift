@@ -302,14 +302,14 @@ class ListConversationTopic: SAYConversationTopic
     
     private func insertHelpMessagesIntoSequence(sequence: SAYAudioEventSequence, speakIntroduction shouldSpeakIntroduction: Bool) -> SAYAudioEventSequence
     {
-        let helpIndex = 2
-        
         if introString == nil && intermediateHelpString == nil && outroString == nil {
             // If no help messages have been defined, do nothing.
             return sequence
         }
 
         var outgoingEventItems = sequence.items()
+        
+        let helpIndex = 2
         
         // Insert help and outro message events.
         if items.count > 5 {    // Arbitrary! If there's more than this many items, we don't need to worry about the Help and Outro messages being spoken too close together.
@@ -333,7 +333,7 @@ class ListConversationTopic: SAYConversationTopic
         else {
             // Short List. If defined, speak a help message at the end of the list. If the outro message is unique, speak it also (ie, if the outro is the same as the help message, we'd be saying the same thing twice).
             if let help = intermediateHelpString {
-                outgoingEventItems.insert(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: help)), atIndex: helpIndex)
+                outgoingEventItems.append(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: help)))
             }
             if let outro = outroString where outro != intermediateHelpString {
                 outgoingEventItems.append(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: outro)))
