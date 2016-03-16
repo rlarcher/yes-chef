@@ -41,7 +41,7 @@ enum Category: String
     static func categoryFoundInText(text: String) -> Category?
     {
         let categoryNames = Category.orderedValues.map({ $0.rawValue })
-        if let index = Utils.fuzzyIndexOfItemWithName(text, inList: categoryNames) {
+        if let index = Utils.fuzzyIndexOfItemWithName(text, inList: categoryNames, fuzziness: 0.5, minThreshold: 0.8) {
             return Category.orderedValues[index]
         }
         

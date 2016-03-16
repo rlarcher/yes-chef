@@ -109,7 +109,7 @@ enum Cuisine: String
     static func cuisineFoundInText(text: String) -> Cuisine?
     {
         let cuisineNames = Cuisine.orderedValues.map({ $0.rawValue })
-        if let index = Utils.fuzzyIndexOfItemWithName(text, inList: cuisineNames) {
+        if let index = Utils.fuzzyIndexOfItemWithName(text, inList: cuisineNames, fuzziness: 0.5, minThreshold: 0.8) {
             return Cuisine.orderedValues[index]
         }
         

@@ -32,13 +32,13 @@ extension String
     }
     
     // Also does token-wise checking when calculating score, instead of just checking against the entire string.
-    func scoreByTokens(other: String) -> Double
+    func scoreByTokens(other: String, fuzziness: Double = 0.7) -> Double
     {
         var highestScore = 0.0
         var currentScore = 0.0
         
         // Start by scoring the entire string
-        currentScore = self.score(other, fuzziness: 0.7)
+        currentScore = self.score(other, fuzziness: fuzziness)
         if currentScore > highestScore {
             highestScore = currentScore
         }
@@ -48,7 +48,7 @@ extension String
         
         for selfToken in selfTokens {
             for otherToken in otherTokens {
-                currentScore = selfToken.score(otherToken, fuzziness: 0.7)
+                currentScore = selfToken.score(otherToken, fuzziness: fuzziness)
                 if currentScore > highestScore {
                     highestScore = currentScore
                 }

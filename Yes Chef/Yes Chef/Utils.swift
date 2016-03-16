@@ -22,7 +22,7 @@ class Utils: NSObject
     
     static var kFuzzyScoreThreshold = 0.45  // Arbitrary!
     
-    static func fuzzyIndexOfItemWithName(name: String, inList itemList: [String]) -> Int?
+    static func fuzzyIndexOfItemWithName(name: String, inList itemList: [String], fuzziness: Double = 0.7, minThreshold: Double = kFuzzyScoreThreshold) -> Int?
     {
         var bestScore = 0.0
         var bestIndex: Int? = nil
@@ -32,8 +32,8 @@ class Utils: NSObject
         for (index, item) in itemList.enumerate() {
             let lowerItem = item.lowercaseString
             
-            let forwardScore = lowerItem.scoreByTokens(lowerName)
-            let backwardScore = lowerName.scoreByTokens(lowerItem)
+            let forwardScore = lowerItem.scoreByTokens(lowerName, fuzziness: fuzziness)
+            let backwardScore = lowerName.scoreByTokens(lowerItem, fuzziness: fuzziness)
             let score = max(forwardScore, backwardScore)
             
             if score > bestScore {
@@ -42,7 +42,7 @@ class Utils: NSObject
             }
         }
         
-        return bestScore > kFuzzyScoreThreshold ? bestIndex : nil
+        return bestScore > minThreshold ? bestIndex : nil
     }
 }
 
