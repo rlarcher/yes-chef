@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-        let homeViewController = navigationController.topViewController as! HomeViewController
+        let introViewController = navigationController.topViewController as! IntroViewController
         
         // Wrap initial view controller in a command bar controller
         let commandBarController = SAYCommandBarController()
@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Initial setup of the SAYConversationManager, with a Conversation Topic as
         // command registry and main audio source.
         let systemManager = SAYConversationManager.systemManager()
-        let rootTopic = homeViewController.homeConversationTopic
+        let rootTopic = introViewController.introConversationTopic
         systemManager.commandRegistry = rootTopic
         systemManager.addAudioSource(rootTopic, forTrack:SAYAudioTrackMainIdentifier)
         
