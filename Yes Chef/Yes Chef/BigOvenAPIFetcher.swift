@@ -12,13 +12,13 @@ import SwiftyJSON
 
 class BigOvenAPIFetcher: NSObject
 {
-    func searchForRecipeWithParameters(parameters: SearchParameters, completion: (BigOvenAPISearchResponse -> ()))
+    func searchForRecipeWithParameters(searchParameters: SearchParameters, completion: (BigOvenAPISearchResponse -> ()))
     {
         if let apiKey = BigOvenAPIFetcher.kAPIKey {
             
-            var searchQuery = parameters.query
-            let cuisine = parameters.cuisine
-            let course = parameters.course
+            var searchQuery = searchParameters.query
+            let cuisine = searchParameters.cuisine
+            let course = searchParameters.course
             
             // Since we can't yet search by Cuisine, prefix the search query with the cuisine. Should result in queries like "Japanese shrimp", "Cuban pastries".
             if cuisine != .All && !searchQuery.fuzzyContains(cuisine.rawValue) { // If the search query already contains the cuisine's name, we don't need to do add it.

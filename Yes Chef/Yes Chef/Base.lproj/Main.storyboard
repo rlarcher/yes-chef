@@ -974,6 +974,7 @@ Prep Time</string>
                             <constraint firstItem="PiV-Kk-Yo1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ifn-pT-VfI" secondAttribute="leadingMargin" constant="32" id="OsH-4k-xTn"/>
                             <constraint firstItem="Omm-7h-N1n" firstAttribute="centerX" secondItem="Ifn-pT-VfI" secondAttribute="centerX" id="R2t-TL-Odo"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="tVk-KJ-AVv" secondAttribute="trailing" constant="32" id="Xmm-lV-x2d"/>
+                            <constraint firstItem="IOi-ex-jL9" firstAttribute="top" relation="greaterThanOrEqual" secondItem="PiV-Kk-Yo1" secondAttribute="bottom" constant="8" id="aRg-4E-dbF"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="PiV-Kk-Yo1" secondAttribute="trailing" constant="32" id="b2z-5Q-Tzb"/>
                             <constraint firstItem="Omm-7h-N1n" firstAttribute="top" secondItem="IOi-ex-jL9" secondAttribute="bottom" constant="16" id="gFi-hR-PQL"/>
                             <constraint firstItem="tVk-KJ-AVv" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ifn-pT-VfI" secondAttribute="leadingMargin" constant="32" id="j2t-30-JKK"/>
@@ -1054,6 +1055,7 @@ Prep Time</string>
                             <constraint firstItem="bkf-EV-ILt" firstAttribute="top" secondItem="rgD-1c-P3S" secondAttribute="bottom" constant="16" id="8gK-OX-4O6"/>
                             <constraint firstItem="iCN-Gs-jNc" firstAttribute="top" secondItem="Ify-Mp-VMO" secondAttribute="topMargin" constant="24" id="CQz-Tf-fuH"/>
                             <constraint firstItem="iCN-Gs-jNc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ify-Mp-VMO" secondAttribute="leadingMargin" constant="32" id="MDo-6D-ewT"/>
+                            <constraint firstItem="rgD-1c-P3S" firstAttribute="top" relation="greaterThanOrEqual" secondItem="oE4-FS-ifP" secondAttribute="bottom" constant="8" id="TIh-Ku-BZV"/>
                             <constraint firstItem="bkf-EV-ILt" firstAttribute="centerX" secondItem="Ify-Mp-VMO" secondAttribute="centerX" id="acG-lb-vFB"/>
                             <constraint firstItem="oE4-FS-ifP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Ify-Mp-VMO" secondAttribute="leadingMargin" constant="32" id="iED-k0-DUd"/>
                             <constraint firstItem="oE4-FS-ifP" firstAttribute="top" secondItem="iCN-Gs-jNc" secondAttribute="bottom" constant="16" id="lXl-dS-OKi"/>
@@ -1091,6 +1093,12 @@ Prep Time</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Once you find a recipe you like, select it and ask, &quot;How do I make this?&quot; Yes Chef will walk you through the steps." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLZ-1s-zih">
+                                <rect key="frame" x="57" y="60" width="490" height="36"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4D1-DC-jJc">
                                 <rect key="frame" x="36" y="187" width="532" height="32"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -1109,12 +1117,6 @@ Prep Time</string>
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Once you find a recipe you like, select it and ask, &quot;How do I make this?&quot; Yes Chef will walk you through the steps." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLZ-1s-zih">
-                                <rect key="frame" x="57" y="60" width="490" height="36"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1128,6 +1130,7 @@ Prep Time</string>
                             <constraint firstAttribute="bottomMargin" secondItem="Ph4-Ca-Jb4" secondAttribute="bottom" constant="8" id="Owu-eG-fSm"/>
                             <constraint firstItem="Ph4-Ca-Jb4" firstAttribute="centerX" secondItem="ded-1i-Ycb" secondAttribute="centerX" id="RPY-2l-wJo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4D1-DC-jJc" secondAttribute="trailing" constant="16" id="UI0-lR-DOQ"/>
+                            <constraint firstItem="4D1-DC-jJc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="CLZ-1s-zih" secondAttribute="bottom" constant="8" id="WL8-tA-Upe"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="hdA-Le-C4I" secondAttribute="trailing" constant="32" id="YLb-ym-sbS"/>
                             <constraint firstItem="Ph4-Ca-Jb4" firstAttribute="top" secondItem="4D1-DC-jJc" secondAttribute="bottom" constant="16" id="YXt-bz-Jk4"/>
                             <constraint firstItem="CLZ-1s-zih" firstAttribute="centerX" secondItem="ded-1i-Ycb" secondAttribute="centerX" id="ZVb-0u-fcw"/>

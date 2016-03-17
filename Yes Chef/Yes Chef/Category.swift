@@ -45,6 +45,30 @@ enum Category: String
             return Category.orderedValues[index]
         }
         
+        // Also check the text against any known synonyms.
+        // TODO: Combine this with `fuzzyIndexOfItemWithName` to make a more focused one-off method that also checks synonyms.
+        for category in Category.orderedValues {
+            for synonym in category.synonyms() {
+                if text.fuzzyContains(synonym) || synonym.fuzzyContains(text) {
+                    return category
+                }
+            }
+        }
+        
         return nil
+    }
+    
+    private func synonyms() -> [String]
+    {
+        switch self {
+        case .MainDish:
+            return ["dinner", "lunch", "supper", "meal", "main course", "main"]
+        case .Soup:
+            return ["stew", "chili"]
+        case .Marinade:
+            return ["sauce"]
+        default:
+            return []
+        }
     }
 }
