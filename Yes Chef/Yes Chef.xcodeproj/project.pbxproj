@@ -36,6 +36,7 @@
 		8350EC941C8F7E1C008B9161 /* RecipeContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8350EC931C8F7E1C008B9161 /* RecipeContainerViewController.swift */; };
 		836447D41C76299F000BEB90 /* StringScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836447D31C76299F000BEB90 /* StringScore.swift */; };
 		836EC6901C68EC2E00FC74F7 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836EC68F1C68EC2E00FC74F7 /* Utils.swift */; };
+		837E38711C9AD5FA00804091 /* IntroPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837E38701C9AD5FA00804091 /* IntroPresentationController.swift */; };
 		8393341C1C85E3DC004A99EE /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8393341B1C85E3DC004A99EE /* SearchParameters.swift */; };
 		83987D771C78DCFF00E3BBE9 /* Int+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83987D761C78DCFF00E3BBE9 /* Int+Utils.swift */; };
 		83A6A6CB1C74D79F003B559D /* String+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A6A6CA1C74D79F003B559D /* String+Utils.swift */; };
@@ -112,6 +113,7 @@
 		8350EC931C8F7E1C008B9161 /* RecipeContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeContainerViewController.swift; sourceTree = "<group>"; };
 		836447D31C76299F000BEB90 /* StringScore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringScore.swift; sourceTree = "<group>"; };
 		836EC68F1C68EC2E00FC74F7 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		837E38701C9AD5FA00804091 /* IntroPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroPresentationController.swift; sourceTree = "<group>"; };
 		8393341B1C85E3DC004A99EE /* SearchParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParameters.swift; sourceTree = "<group>"; };
 		83987D761C78DCFF00E3BBE9 /* Int+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Utils.swift"; sourceTree = "<group>"; };
 		83A6A6CA1C74D79F003B559D /* String+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utils.swift"; sourceTree = "<group>"; };
@@ -272,6 +274,18 @@
 			name = "Third Party";
 			sourceTree = "<group>";
 		};
+		837E38721C9AD89F00804091 /* Intro Pages */ = {
+			isa = PBXGroup;
+			children = (
+				83E95D741C99C80500D48B95 /* IntroPageViewController.swift */,
+				83E95D7C1C99CAD900D48B95 /* IntroPage.swift */,
+				83E95D761C99C90D00D48B95 /* WelcomeIntroViewController.swift */,
+				83E95D781C99C91B00D48B95 /* SearchIntroViewController.swift */,
+				83E95D7A1C99C92E00D48B95 /* PreparationIntroViewController.swift */,
+			);
+			name = "Intro Pages";
+			sourceTree = "<group>";
+		};
 		83B56A101C88D30300A185F0 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,12 +333,9 @@
 			isa = PBXGroup;
 			children = (
 				83E95D7E1C99D4DF00D48B95 /* IntroViewController.swift */,
+				837E38701C9AD5FA00804091 /* IntroPresentationController.swift */,
 				83E95D801C99D4E900D48B95 /* IntroConversationTopic.swift */,
-				83E95D741C99C80500D48B95 /* IntroPageViewController.swift */,
-				83E95D7C1C99CAD900D48B95 /* IntroPage.swift */,
-				83E95D761C99C90D00D48B95 /* WelcomeIntroViewController.swift */,
-				83E95D781C99C91B00D48B95 /* SearchIntroViewController.swift */,
-				83E95D7A1C99C92E00D48B95 /* PreparationIntroViewController.swift */,
+				837E38721C9AD89F00804091 /* Intro Pages */,
 			);
 			name = "Intro Scene";
 			sourceTree = "<group>";
@@ -508,6 +519,7 @@
 				8348DF001C614ADE0009C7DF /* HomeConversationTopic.swift in Sources */,
 				8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */,
 				8393341C1C85E3DC004A99EE /* SearchParameters.swift in Sources */,
+				837E38711C9AD5FA00804091 /* IntroPresentationController.swift in Sources */,
 				83D568C31C8DC1FF00EDDD17 /* Category.swift in Sources */,
 				83E95D751C99C80500D48B95 /* IntroPageViewController.swift in Sources */,
 				8348DEFA1C614A5F0009C7DF /* BigOvenAPIManager.swift in Sources */,

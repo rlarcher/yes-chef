@@ -10,12 +10,16 @@ import Foundation
 
 class IntroPageViewController: UIPageViewController, IntroPageEventHandler, UIPageViewControllerDataSource, UIPageViewControllerDelegate
 {
+    var dismissalBlock: (() -> Void)?
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         self.dataSource = self
         self.delegate = self
+        
+        self.view.backgroundColor = UIColor.whiteColor()
         
         // TODO: If we want to add any more customization (like positioning), probably better off just making my own subclass of UIPageControl
         let pageControlAppearance = UIPageControl.appearanceWhenContainedInInstancesOfClasses([IntroPageViewController.self])
@@ -54,13 +58,7 @@ class IntroPageViewController: UIPageViewController, IntroPageEventHandler, UIPa
     // "Discard" the intro scene. Don't forget to set a new root topic in the conversation manager.
     func requestedExitIntro()
     {
-        if let homeVC = storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as? HomeViewController {
-            let newRootTopic = homeVC.homeConversationTopic
-            let systemManager = SAYConversationManager.systemManager()
-            systemManager.commandRegistry = newRootTopic
-            systemManager.addAudioSource(newRootTopic, forTrack: SAYAudioTrackMainIdentifier)
-            navigationController?.setViewControllers([homeVC], animated: true)
-        }
+        presentingViewController?.dismissViewControllerAnimated(true, completion: dismissalBlock)
     }
     
     // MARK: UIPageViewControllerDataSource Protocol Methods

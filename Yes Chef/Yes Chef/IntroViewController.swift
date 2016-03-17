@@ -34,4 +34,35 @@ class IntroViewController: UIViewController
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
+    override func viewDidAppear(animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        
+        presentIntroPages()
+    }
+    
+    // MARK: Helpers
+    
+    func presentIntroPages()
+    {
+        if let introPageViewController = storyboard?.instantiateViewControllerWithIdentifier("IntroPageViewController") as? IntroPageViewController {
+            let presentationController = IntroPresentationController(presentedViewController: introPageViewController, presentingViewController: self)
+            introPageViewController.transitioningDelegate = presentationController
+            introPageViewController.dismissalBlock = transitionToHome
+            
+            presentViewController(introPageViewController, animated: true, completion: nil)
+        }
+    }
+    
+    private func transitionToHome()
+    {
+        if let homeVC = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as? HomeViewController {
+            let newRootTopic = homeVC.homeConversationTopic
+            let systemManager = SAYConversationManager.systemManager()
+            systemManager.commandRegistry = newRootTopic
+            systemManager.addAudioSource(newRootTopic, forTrack: SAYAudioTrackMainIdentifier)
+            self.navigationController?.setViewControllers([homeVC], animated: true)
+        }
+    }
 }

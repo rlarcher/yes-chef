@@ -87,6 +87,17 @@ class HomePresenter: MenuViewControllerDelegate
         homeViewController.presentViewController(searchOptionsController, animated: true, completion: nil)
     }
     
+    func presentIntroSlides()
+    {
+        if let introPageViewController = homeViewController.storyboard?.instantiateViewControllerWithIdentifier("IntroPageViewController") as? IntroPageViewController {
+            let presentationController = IntroPresentationController(presentedViewController: introPageViewController, presentingViewController: homeViewController)
+            introPageViewController.transitioningDelegate = presentationController
+            introPageViewController.dismissalBlock = nil
+            
+            homeViewController.presentViewController(introPageViewController, animated: true, completion: nil)
+        }
+    }
+    
     func presentErrorMessage(message: String)
     {
         // TODO: GUI component? Popup?
@@ -98,6 +109,11 @@ class HomePresenter: MenuViewControllerDelegate
     func requestedPresentSavedRecipes()
     {
         presentSavedRecipes()
+    }
+    
+    func requestedPresentIntroSlides()
+    {
+        presentIntroSlides()
     }
     
     private let homeConversationTopic: HomeConversationTopic

@@ -27,8 +27,9 @@ class MenuViewController: UIViewController
     
     @IBAction func helpButtonTapped(sender: AnyObject)
     {
-        // TODO
-        print("MenuViewController helpButtonTapped")
+        presentingViewController?.dismissViewControllerAnimated(true) {
+            self.selectionDelegate?.requestedPresentIntroSlides()
+        }
     }
     
     @IBAction func settingsButtonTapped(sender: AnyObject)
@@ -41,4 +42,5 @@ class MenuViewController: UIViewController
 protocol MenuViewControllerDelegate
 {
     func requestedPresentSavedRecipes()
+    func requestedPresentIntroSlides()
 }

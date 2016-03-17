@@ -125,23 +125,12 @@
                                     <constraint firstAttribute="width" constant="64" id="cng-z3-hie"/>
                                 </constraints>
                             </imageView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvg-Lt-Rn5">
-                                <rect key="frame" x="-2" y="330" width="604" height="270"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="y2l-Ip-lM9" kind="embed" id="uHe-qI-yZc"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="pvg-Lt-Rn5" firstAttribute="height" secondItem="qt8-y3-55s" secondAttribute="height" multiplier="0.45" id="0Xd-sO-de3"/>
-                            <constraint firstItem="pvg-Lt-Rn5" firstAttribute="leading" secondItem="qt8-y3-55s" secondAttribute="leadingMargin" constant="-22" id="FSs-Ct-txq"/>
                             <constraint firstItem="Mgy-UD-GK8" firstAttribute="leading" secondItem="qt8-y3-55s" secondAttribute="leadingMargin" constant="-22" id="Joq-1l-nca"/>
                             <constraint firstItem="Etx-ZA-Vj4" firstAttribute="top" secondItem="Mgy-UD-GK8" secondAttribute="bottom" constant="-2" id="K84-Cw-Zwp"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="pvg-Lt-Rn5" secondAttribute="trailing" constant="-22" id="N1j-pV-e3s"/>
                             <constraint firstItem="7A5-78-qts" firstAttribute="top" secondItem="NPP-4x-h28" secondAttribute="bottom" constant="88" id="Sbg-UN-KL3"/>
-                            <constraint firstItem="Etx-ZA-Vj4" firstAttribute="top" secondItem="pvg-Lt-Rn5" secondAttribute="bottom" id="Ssv-P0-Oum"/>
                             <constraint firstItem="7A5-78-qts" firstAttribute="centerX" secondItem="qt8-y3-55s" secondAttribute="centerX" id="gJr-hp-1hk"/>
                             <constraint firstItem="Mgy-UD-GK8" firstAttribute="top" secondItem="NPP-4x-h28" secondAttribute="bottom" id="hMt-es-ZiP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Mgy-UD-GK8" secondAttribute="trailing" constant="-22" id="tT7-mB-7NO"/>
@@ -204,7 +193,7 @@
                                     <action selector="groceryListButtonTapped:" destination="Jne-j2-CMm" eventType="touchUpInside" id="pkf-dS-KXs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="4wY-dC-86F">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="4wY-dC-86F">
                                 <rect key="frame" x="32" y="240" width="32" height="30"/>
                                 <state key="normal" title="Help"/>
                                 <connections>
@@ -1005,7 +994,10 @@ Prep Time</string>
         <!--Intro Page View Controller-->
         <scene sceneID="IMg-Wc-jL9">
             <objects>
-                <pageViewController storyboardIdentifier="IntroPageViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="y2l-Ip-lM9" customClass="IntroPageViewController" customModule="Yes_Chef" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="IntroPageViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="y2l-Ip-lM9" customClass="IntroPageViewController" customModule="Yes_Chef" customModuleProvider="target" sceneMemberID="viewController">
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="604" height="270"/>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vhh-um-dzg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1439" y="943"/>
