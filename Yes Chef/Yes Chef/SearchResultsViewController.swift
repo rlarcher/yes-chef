@@ -160,7 +160,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         {
             let recipeListing = recipeListings[index]
             cell.recipeNameLabel.text = recipeListing.name
-            cell.thumbnailImageView.af_setImageWithURL(recipeListing.imageURL, placeholderImage: nil) // TODO: Add placeholder image
+            cell.thumbnailImageView.af_setImageWithURL(recipeListing.imageURL, placeholderImage: Utils.placeholderImage())
             
             cell.courseLabel.text = recipeListing.category == .All ? "" : recipeListing.category.rawValue   // Don't bother displaying "All Categories"
             

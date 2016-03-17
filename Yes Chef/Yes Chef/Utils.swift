@@ -44,6 +44,11 @@ class Utils: NSObject
         
         return bestScore > minThreshold ? bestIndex : nil
     }
+    
+    static func placeholderImage() -> UIImage
+    {
+        return UIImage(color: UIColor.lightGrayColor())     // TODO: Add a real placeholder image
+    }
 }
 
 // Parsing

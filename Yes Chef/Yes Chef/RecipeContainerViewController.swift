@@ -45,7 +45,7 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
         setupInfoStripLabels()
         setupConstraints()
         
-        backgroundImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: nil)
+        backgroundImageView.af_setImageWithURL(recipe.heroImageURL, placeholderImage: Utils.placeholderImage())
         
         // This constraint is defined programmatically so that its constant will reflect the height of the infoStripView, which is proportional to the screen size.
         dispatch_async(dispatch_get_main_queue()) {
