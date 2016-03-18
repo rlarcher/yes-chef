@@ -157,6 +157,16 @@ class RecipeIngredientsViewController: UITableViewController, RecipeIngredientsC
         return 1
     }
     
+    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return 44.0
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return UITableViewAutomaticDimension
+    }
+    
     // MARK: Helpers
     
     func ingredientWithName(name: String) -> Ingredient?
