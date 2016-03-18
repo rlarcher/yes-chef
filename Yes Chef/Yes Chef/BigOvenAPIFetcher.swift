@@ -14,8 +14,13 @@ class BigOvenAPIFetcher: NSObject
 {
     func searchForRecipeWithParameters(searchParameters: SearchParameters, completion: (BigOvenAPISearchResponse -> ()))
     {
+        searchForRecipeWithParameters(searchParameters, pageNumber: 1, completion: completion)
+    }
+    
+    func searchForRecipeWithParameters(searchParameters: SearchParameters, pageNumber: Int, completion: (BigOvenAPISearchResponse -> ()))
+    {
         if let apiKey = BigOvenAPIFetcher.kAPIKey {
-            var parameters = ["api_key": apiKey, "pg": 1, "rpp": 10] as [String: AnyObject]
+            var parameters = ["api_key": apiKey, "pg": pageNumber, "rpp": 10] as [String: AnyObject]
             
             // Since we can't yet search by Cuisine, prefix the search query with the cuisine. Should result in queries like "Japanese shrimp", "Cuban pastries".
             if let searchQuery = searchParameters.searchStringWithCuisine {

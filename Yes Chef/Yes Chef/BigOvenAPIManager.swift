@@ -28,21 +28,16 @@ class BigOvenAPIManager
     
     func searchForRecipeWithParameters(parameters: SearchParameters, completion: (SearchResponse -> Void))
     {
-        apiFetcher.searchForRecipeWithParameters(parameters) { (response) -> () in
-            switch response {
-            case .Success(let recipeListings):
-                for listing in recipeListings {
-                    self.fetchRecipe(listing.recipeId, completion: nil) // Prefetch corresponding recipes
-                }
-                completion(.Success(recipeListings: recipeListings))
-            case .ConnectionError(let error):
-                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while searching for recipes. Please try again later."
-                completion(.Failure(message: errorMessage, error: error))
-            case .UnexpectedBodyFormat(let error):
-                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while searching for recipes."
-                completion(.Failure(message: errorMessage, error: error))
-            }
-        }
+        searchForRecipeWithParameters(parameters, pageNumber: 1, completion: completion)
+    }
+    
+    // Performs an empty search for a random page, containing recipes determined by BigOven's default sorting algorithm.
+    func fetchRecommendedRecipes(completion: (SearchResponse -> Void))
+    {
+        let emptySearchParameters = SearchParameters.emptyParameters()
+        let randomPage = Int(arc4random_uniform(51) + 1) // Return one of the first 50 pages of a blank search
+        
+        searchForRecipeWithParameters(emptySearchParameters, pageNumber: randomPage, completion: completion)
     }
     
     func fetchRecipe(recipeId: String, completion: (RecipeResponse -> Void)?)
@@ -66,11 +61,24 @@ class BigOvenAPIManager
             })
         }
     }
-    
-    func fetchRecommendedRecipes(completion: (SearchResponse -> Void))
+
+    private func searchForRecipeWithParameters(parameters: SearchParameters, pageNumber: Int, completion: (SearchResponse -> Void))
     {
-        // TODO
-        completion(.Success(recipeListings: Utils.stubRecipeListings()))
+        apiFetcher.searchForRecipeWithParameters(parameters, pageNumber: pageNumber) { (response) -> () in
+            switch response {
+            case .Success(let recipeListings):
+                for listing in recipeListings {
+                    self.fetchRecipe(listing.recipeId, completion: nil) // Prefetch corresponding recipes
+                }
+                completion(.Success(recipeListings: recipeListings))
+            case .ConnectionError(let error):
+                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while searching for recipes. Please try again later."
+                completion(.Failure(message: errorMessage, error: error))
+            case .UnexpectedBodyFormat(let error):
+                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while searching for recipes."
+                completion(.Failure(message: errorMessage, error: error))
+            }
+        }
     }
     
     private let apiFetcher: BigOvenAPIFetcher
