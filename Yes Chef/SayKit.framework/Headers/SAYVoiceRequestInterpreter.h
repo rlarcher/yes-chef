@@ -17,9 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The `SAYVoiceRequestInterpreter` protocol describes a class capable of transforming the raw results of speech recognition into a more useful form for the application to use. This higher-level form is encapsulated in a `SAYInterpretation`, which holds the result as well as other relevant data discovered during the interpretation process.
  
-    For example, an interpreter might be tasked with classify speech as either having a "yes" or "no" intent, transforming the text into a boolean value stored inside the `SAYInterpretation`. If the user speech has no clear intent, the interpretation could instead hold a validation error describing the reason no intent could be interpreted.
+    For example, an interpreter might be tasked with classifying speech as either having a "yes" or "no" intent, transforming the text into a boolean value. This value is passed along inside the resulting `SAYInterpretation`. If the user speech has no clear intent, the interpretation could instead hold a validation error describing the reason no intent could be interpreted.
  
-    Interpreters are al
+    The interpreter is not responsible for taking any action with the interpreted value -- in a voice reqiest cycle, this role falls on the `SAYVoiceRequestResponder`.
  */
 @protocol SAYVoiceRequestInterpreter <NSObject>
 

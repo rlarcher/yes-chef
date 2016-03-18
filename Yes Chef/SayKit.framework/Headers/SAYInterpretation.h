@@ -34,11 +34,35 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, readonly) BOOL isValid;
 
+/**
+ *  Factory initializer for an interpretation containing a value and no validation errors.
+ *
+ *  @param value Intepreted value
+ *
+ *  @return A new interpretation with the given value.
+ */
 + (instancetype)interpretationWithValue:(nullable id)value;
+
+/**
+ *  Factory initializer for an interpretation containing validation errors and no value.
+ *
+ *  @param validationErrors List of errors encountered that prevented a value from being interpreted
+ *
+ *  @return A new interpretation with the given validation errors
+ */
 + (instancetype)interpretationWithErrors:(NSArray<SAYValidationError *> *)validationErrors;
 
+/**
+ *  Initializes a new interpretation. Typically, at least one of the parameters are nil.
+ *
+ *  @param value            Interpretated value
+ *  @param validationErrors List of validation errors (which typically prevented a value from being interpreted)
+ *
+ *  @return A new interpretation
+ */
 - (instancetype)initWithValue:(nullable id)value validationErrors:(NSArray<SAYValidationError *> *)validationErrors NS_DESIGNATED_INITIALIZER;
 
+/// Unsupported. Use either a factory method or the designated initializer.
 - (instancetype)init NS_UNAVAILABLE;
 
 @end

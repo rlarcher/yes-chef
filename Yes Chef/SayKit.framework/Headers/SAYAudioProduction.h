@@ -24,7 +24,9 @@
 #import <SayKit/SAYAudioEventSequenceItem.h>
 #import <SayKit/SAYAudioEventSource.h>
 #import <SayKit/SAYAudioEventListener.h>
+
 #import <SayKit/SAYSoundBoard.h>
+#import <SayKit/SAYAudioSequenceGenerator.h>
 
 #import <SayKit/SAYSpeechSynthesizerProxy.h>
 #import <SayKit/SAYManagedSynthesizer.h>

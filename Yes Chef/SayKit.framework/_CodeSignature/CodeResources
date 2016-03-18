@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		Gp1D7i+YaYDY+O0gDFHKPZSrPYI=
+		nZ0wPTxgspRI5B9HRY7Pi6j9tyw=
 		</data>
 		<key>Headers/SAYAPIKeyManager.h</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Headers/SAYAudioEventSequence.h</key>
 		<data>
-		H/aV5KhPlAk8nNTDDQ2X6vtAhVk=
+		E/Iw70g35hblPBfM4vj3NaSC7UQ=
 		</data>
 		<key>Headers/SAYAudioEventSequenceItem.h</key>
 		<data>
@@ -38,7 +38,11 @@
 		</data>
 		<key>Headers/SAYAudioProduction.h</key>
 		<data>
-		dJQt6HFF+lULthGUYdtOso9PsSg=
+		03rhHWzGA/8RPdIKt7DlLfy4kaI=
+		</data>
+		<key>Headers/SAYAudioSequenceGenerator.h</key>
+		<data>
+		fo4lbLaNWDbQeHXNTU5uLBPZ+u4=
 		</data>
 		<key>Headers/SAYAudioTrack.h</key>
 		<data>
@@ -142,7 +146,7 @@
 		</data>
 		<key>Headers/SAYInterpretation.h</key>
 		<data>
-		nxDkFG1J2HzZVq1QameGBUATdqU=
+		a5RtmgilY4tave3cfW6qGELENFo=
 		</data>
 		<key>Headers/SAYManagedSynthesizer.h</key>
 		<data>
@@ -294,7 +298,7 @@
 		</data>
 		<key>Headers/SAYValidationError.h</key>
 		<data>
-		rmWdHqgxtF2t3DpP92rx2aL7eKQ=
+		eaxVaJXAFOkAd3oMs4ivPNbC3EQ=
 		</data>
 		<key>Headers/SAYVerbalCommandRecognizer.h</key>
 		<data>
@@ -322,7 +326,7 @@
 		</data>
 		<key>Headers/SAYVoiceRequestInterpreter.h</key>
 		<data>
-		fMz3GFUhhNtNHYn7snp6i2LUfWg=
+		df7Y+85la5A+7EZbfYGS20r8aTQ=
 		</data>
 		<key>Headers/SAYVoiceRequestPresenter.h</key>
 		<data>
@@ -330,7 +334,7 @@
 		</data>
 		<key>Headers/SAYVoiceRequestResponder.h</key>
 		<data>
-		N6BmOrHbNUc0dPALxLZNIGzRlME=
+		cLPRQoBurmiq5Pve/J81tmnwrjk=
 		</data>
 		<key>Headers/SAYVoiceRequestResponse.h</key>
 		<data>
@@ -362,7 +366,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		dgL8ZcjV9uVcn6fvGpSH+6gabvU=
+		i9do5rzBPOJJHn1M0ZvA35bV+oI=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -402,15 +406,15 @@
 		</data>
 		<key>SAYCommandBar.nib</key>
 		<data>
-		LY9wuaKgUQFx45udcMx7Ujesyzw=
+		gIu0TCqz8wyWdQbm4+v6G70hfqU=
 		</data>
 		<key>SAYConfirmationContentViewController.nib</key>
 		<data>
-		aI9JI3pk+kzRj0KHti3R4mWJv88=
+		rYOcA6cGAC9//1BCxJySf7+Ykac=
 		</data>
 		<key>SAYVoiceRequestView.nib</key>
 		<data>
-		yTrobCrZ7RMGVoFRIzJpmRcO8D0=
+		6Ab/i152xxjH3CQaSqftRL+lLA8=
 		</data>
 		<key>SayKitAPIServer.cer</key>
 		<data>
@@ -437,7 +441,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		Gp1D7i+YaYDY+O0gDFHKPZSrPYI=
+		nZ0wPTxgspRI5B9HRY7Pi6j9tyw=
 		</data>
 		<key>Headers/SAYAPIKeyManager.h</key>
 		<data>
@@ -453,7 +457,7 @@
 		</data>
 		<key>Headers/SAYAudioEventSequence.h</key>
 		<data>
-		H/aV5KhPlAk8nNTDDQ2X6vtAhVk=
+		E/Iw70g35hblPBfM4vj3NaSC7UQ=
 		</data>
 		<key>Headers/SAYAudioEventSequenceItem.h</key>
 		<data>
@@ -469,7 +473,11 @@
 		</data>
 		<key>Headers/SAYAudioProduction.h</key>
 		<data>
-		dJQt6HFF+lULthGUYdtOso9PsSg=
+		03rhHWzGA/8RPdIKt7DlLfy4kaI=
+		</data>
+		<key>Headers/SAYAudioSequenceGenerator.h</key>
+		<data>
+		fo4lbLaNWDbQeHXNTU5uLBPZ+u4=
 		</data>
 		<key>Headers/SAYAudioTrack.h</key>
 		<data>
@@ -573,7 +581,7 @@
 		</data>
 		<key>Headers/SAYInterpretation.h</key>
 		<data>
-		nxDkFG1J2HzZVq1QameGBUATdqU=
+		a5RtmgilY4tave3cfW6qGELENFo=
 		</data>
 		<key>Headers/SAYManagedSynthesizer.h</key>
 		<data>
@@ -725,7 +733,7 @@
 		</data>
 		<key>Headers/SAYValidationError.h</key>
 		<data>
-		rmWdHqgxtF2t3DpP92rx2aL7eKQ=
+		eaxVaJXAFOkAd3oMs4ivPNbC3EQ=
 		</data>
 		<key>Headers/SAYVerbalCommandRecognizer.h</key>
 		<data>
@@ -753,7 +761,7 @@
 		</data>
 		<key>Headers/SAYVoiceRequestInterpreter.h</key>
 		<data>
-		fMz3GFUhhNtNHYn7snp6i2LUfWg=
+		df7Y+85la5A+7EZbfYGS20r8aTQ=
 		</data>
 		<key>Headers/SAYVoiceRequestPresenter.h</key>
 		<data>
@@ -761,7 +769,7 @@
 		</data>
 		<key>Headers/SAYVoiceRequestResponder.h</key>
 		<data>
-		N6BmOrHbNUc0dPALxLZNIGzRlME=
+		cLPRQoBurmiq5Pve/J81tmnwrjk=
 		</data>
 		<key>Headers/SAYVoiceRequestResponse.h</key>
 		<data>
@@ -829,15 +837,15 @@
 		</data>
 		<key>SAYCommandBar.nib</key>
 		<data>
-		LY9wuaKgUQFx45udcMx7Ujesyzw=
+		gIu0TCqz8wyWdQbm4+v6G70hfqU=
 		</data>
 		<key>SAYConfirmationContentViewController.nib</key>
 		<data>
-		aI9JI3pk+kzRj0KHti3R4mWJv88=
+		rYOcA6cGAC9//1BCxJySf7+Ykac=
 		</data>
 		<key>SAYVoiceRequestView.nib</key>
 		<data>
-		yTrobCrZ7RMGVoFRIzJpmRcO8D0=
+		6Ab/i152xxjH3CQaSqftRL+lLA8=
 		</data>
 		<key>SayKitAPIServer.cer</key>
 		<data>

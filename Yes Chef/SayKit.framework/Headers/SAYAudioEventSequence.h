@@ -11,6 +11,9 @@
 #import "SAYAudioEvent.h"
 @class SAYAudioEventSequenceItem;
 
+/**
+ *  A sequence of audio events
+ */
 @interface SAYAudioEventSequence : NSObject
 
 - (void)addEvent:(id<SAYAudioEvent>)event;
