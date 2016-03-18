@@ -50,7 +50,15 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     
     func speakNoResultsForSearchParameters(parameters: SearchParameters)
     {
-        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "Sorry, I couldn't find any recipes for \"\(parameters.presentableString)\". Please try another search.")]))
+        let utterance: String
+        if let presentableString = parameters.presentableString {
+            utterance = "Sorry, I couldn't find any recipes for \"\(presentableString)\" Please try another search."
+        }
+        else {
+            utterance = "Sorry, I couldn't find any recipes by that name. Please try another search."
+        }
+        
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utterance)]))
     }
     
     // MARK: Lifecycle
@@ -149,9 +157,24 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
             listSubtopic?.items = recipeListings.map({ $0.speakableString })
         }
         
-        listSubtopic?.introString = recipeListings.count > 0 ?
-                                        "I found \(recipeListings.count.withSuffix("result")) for \"\(searchParameters.presentableString)\"" :
-                                        "There were no results for \"\(searchParameters.presentableString)\"."
+        let introString: String
+        if let parameterString = searchParameters.presentableString {
+            if recipeListings.count > 0 {
+                introString = "I found \(recipeListings.count.withSuffix("result")) for \"\(parameterString)\""
+            }
+            else {
+                introString = "There were no results for \"\(parameterString)\"."
+            }
+        }
+        else {
+            if recipeListings.count > 0 {
+                introString = "I found \(recipeListings.count.withSuffix("result"))"
+            }
+            else {
+                introString = "I couldn't find any recipes by that name."
+            }
+        }
+        listSubtopic?.introString = introString
         listSubtopic?.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
         listSubtopic?.outroString = "Say \"More\" for more recipes (coming soon)."
         

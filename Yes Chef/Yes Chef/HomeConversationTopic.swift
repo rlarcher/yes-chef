@@ -185,7 +185,15 @@ class HomeConversationTopic: SAYConversationTopic
     
     func speakNoResultsForSearchParameters(parameters: SearchParameters)
     {
-        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: "Sorry, I couldn't find any recipes for \"\(parameters.presentableString)\". Please try another search.")]))
+        let utterance: String
+        if let presentableString = parameters.presentableString {
+            utterance = "Sorry, I couldn't find any recipes for \"\(presentableString)\" Please try another search."
+        }
+        else {
+            utterance = "Sorry, I couldn't find any recipes by that name. Please try another search."
+        }
+        
+        postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utterance)]))
     }
     
     // MARK: Handle Commands
@@ -197,14 +205,15 @@ class HomeConversationTopic: SAYConversationTopic
         let course = parseCourseFromCommand(command)
         
         if searchQuery != nil || cuisine != nil || course != nil {
-            eventHandler.requestedSearchUsingParameters(SearchParameters(query: searchQuery ?? "", cuisine: cuisine ?? .All, course: course ?? .All))
+            // If at least one parameter is non-nil, we can perform a search.
+            eventHandler.requestedSearchUsingParameters(SearchParameters(query: searchQuery, cuisine: cuisine, course: course))
         }
         else {
             // We didn't understand a search query. Present a clarifying request.
             let request = SAYStringRequest(promptText: "What would you like to search for?", action: { spokenText -> Void in
                 if let text = spokenText where !text.isBlank {
-                    let cuisine = Cuisine.cuisineFoundInText(text) ?? .All
-                    let course = Category.categoryFoundInText(text) ?? .All
+                    let cuisine = Cuisine.cuisineFoundInText(text)
+                    let course = Category.categoryFoundInText(text)
                     
                     self.eventHandler.requestedSearchUsingParameters(SearchParameters(query: text, cuisine: cuisine, course: course))
                 }

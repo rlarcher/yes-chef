@@ -86,8 +86,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     
     func requestedSearchUsingParameters(searchParameters: SearchParameters)
     {
-        selectedNewCategory(searchParameters.course)
-        selectedNewCuisine(searchParameters.cuisine)
+        selectedNewCategory(searchParameters.course ?? .All)
+        selectedNewCuisine(searchParameters.cuisine ?? .All)
         self.searchParameters.query = searchParameters.query
         
         // TODO: Present intermediate "Loading" scene

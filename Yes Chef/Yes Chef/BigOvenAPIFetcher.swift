@@ -15,20 +15,15 @@ class BigOvenAPIFetcher: NSObject
     func searchForRecipeWithParameters(searchParameters: SearchParameters, completion: (BigOvenAPISearchResponse -> ()))
     {
         if let apiKey = BigOvenAPIFetcher.kAPIKey {
-            
-            var searchQuery = searchParameters.query
-            let cuisine = searchParameters.cuisine
-            let course = searchParameters.course
+            var parameters = ["api_key": apiKey, "pg": 1, "rpp": 10] as [String: AnyObject]
             
             // Since we can't yet search by Cuisine, prefix the search query with the cuisine. Should result in queries like "Japanese shrimp", "Cuban pastries".
-            if cuisine != .All && !searchQuery.fuzzyContains(cuisine.rawValue) { // If the search query already contains the cuisine's name, we don't need to do add it.
-                searchQuery = "\(cuisine) \(searchQuery)"
+            if let searchQuery = searchParameters.searchStringWithCuisine {
+                parameters["any_kw"] = searchQuery
             }
             // TODO: Add cuisine parameter for reals
             
-            var parameters = ["api_key": apiKey, "any_kw": searchQuery, "pg": 1, "rpp": 10] as [String: AnyObject]
-            
-            if course != .All {
+            if let course = searchParameters.course where course != .All {
                 parameters["include_primarycat"] = course.rawValue
             }
             

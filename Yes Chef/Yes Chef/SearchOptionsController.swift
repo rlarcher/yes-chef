@@ -37,11 +37,11 @@ class SearchOptionsController: SearchOptionsTabBarController
     {
         cuisineViewController = CuisineSelectorViewController()
         cuisineViewController.tabBarItem.title = "Cuisine"
-        cuisineViewController.selectedRow = Cuisine.orderedValues.indexOf(initialSearchParameters.cuisine)
+        cuisineViewController.selectedRow = Cuisine.orderedValues.indexOf(initialSearchParameters.cuisine ?? .All)
         
         courseViewController = CategorySelectorViewController()
         courseViewController.tabBarItem.title = "Course"
-        courseViewController.selectedRow = Category.orderedValues.indexOf(initialSearchParameters.course)
+        courseViewController.selectedRow = Category.orderedValues.indexOf(initialSearchParameters.course ?? .All)
         
         setViewControllers([cuisineViewController, courseViewController], animated: false)        
                 

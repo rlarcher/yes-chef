@@ -36,8 +36,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         // Suppress some thin lines that appear at the top and bottom of the search bar:
         searchBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         
-        selectedNewCategory(searchParameters.course)
-        selectedNewCuisine(searchParameters.cuisine)
+        selectedNewCategory(searchParameters.course ?? .All)
+        selectedNewCuisine(searchParameters.cuisine ?? .All)
     }
     
     override func viewDidAppear(animated: Bool)
