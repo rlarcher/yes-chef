@@ -115,6 +115,7 @@ class HomeConversationTopic: SAYConversationTopic
     {
         if let listSubtopic = listManager.listSubtopic {
             removeSubtopic(listSubtopic)
+            CommandBarController.setPlaybackControlsDelegate(nil)
         }
         
         for recognizer in focusedRecognizers {
@@ -371,4 +372,6 @@ protocol HomeConversationTopicEventHandler: class
     
     func beganSpeakingItemAtIndex(index: Int)
     func finishedSpeakingItemAtIndex(index: Int)
+    
+    func requestedAddListSubtopic(subtopic: SAYConversationTopic)
 }

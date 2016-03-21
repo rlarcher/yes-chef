@@ -170,11 +170,13 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     func pauseSpeaking()
     {
         stopSpeaking()
+        updatePlaybackButtons()
     }
     
     func resumeSpeaking()
     {
         speakItems(startingAtIndex: headIndex)
+        updatePlaybackButtons()
     }
     
     // MARK: Handle Commands
@@ -262,12 +264,12 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     private func stopSpeaking()
     {
         isFlushingOldAudioSequence = true
+        isSpeaking = false
         
         // TODO: Better way to interrupt speech on transitioning?
         let interruptingSequence = SAYAudioEventSequence()
         interruptingSequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
             self.isFlushingOldAudioSequence = false     // Once all previous events have been flushed out, release the lock.
-            self.isSpeaking = false
             CommandBarController.updatePlaybackState(shouldDisplayPlayIcon: false, previousEnabled: false, forwardEnabled: false)
         }
         postEvents(interruptingSequence)
@@ -399,7 +401,12 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         return audioEventSequenceWithHelpMessages
     }
     
-    private var isSpeaking: Bool = false
+    private var isSpeaking: Bool = false {
+        didSet {
+            updatePlaybackButtons()
+            print("isSpeaking: \(isSpeaking)")
+        }
+    }
     private var headIndex = 0   // The index currently being read
     private var isFlushingOldAudioSequence: Bool = false    // Hack to suppress speech event completion blocks when we don't care about them (ie, when interrupting the sequence with a new one).
 }

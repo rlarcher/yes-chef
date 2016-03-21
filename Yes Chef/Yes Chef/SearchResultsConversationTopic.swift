@@ -66,6 +66,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     func topicDidGainFocus()
     {
         addSubtopic(listSubtopic!)
+        CommandBarController.setPlaybackControlsDelegate(listSubtopic!)
         speakResults()
     }
     
@@ -74,6 +75,7 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         stopSpeaking()
         if let subtopic = listSubtopic {
             removeSubtopic(subtopic)
+            CommandBarController.setPlaybackControlsDelegate(nil)
         }
     }
 
@@ -152,10 +154,13 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     {
         if listSubtopic == nil {
             listSubtopic = ListConversationTopic(items: recipeListings.map({ $0.speakableString }), eventHandler: self)
+            addSubtopic(listSubtopic!)
         }
         else {
             listSubtopic?.items = recipeListings.map({ $0.speakableString })
         }
+        
+        CommandBarController.setPlaybackControlsDelegate(listSubtopic!)
         
         let introString: String
         if let parameterString = searchParameters.presentableString {

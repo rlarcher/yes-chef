@@ -75,12 +75,14 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     {
         listSubtopic = buildIngredientsListSubtopic()
         addSubtopic(listSubtopic!)
+        CommandBarController.setPlaybackControlsDelegate(listSubtopic!)
     }
     
     func topicDidLoseFocus()
     {
         stopSpeaking()        
         removeAllSubtopics()
+        CommandBarController.setPlaybackControlsDelegate(nil)
     }
     
     override func subtopic(subtopic: SAYConversationTopic, didPostEventSequence sequence: SAYAudioEventSequence)

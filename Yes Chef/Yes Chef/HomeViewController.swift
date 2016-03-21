@@ -133,6 +133,11 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
         tableView?.deselectRowAtIndexPath(NSIndexPath(forRow: index, inSection: 0), animated: true)
     }
     
+    func requestedAddListSubtopic(subtopic: SAYConversationTopic)
+    {
+        homeConversationTopic.addSubtopic(subtopic)
+    }
+    
     // MARK: UISearchBarDelegate Protocol Methods
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool

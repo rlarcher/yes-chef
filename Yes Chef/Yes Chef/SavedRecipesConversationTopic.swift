@@ -37,6 +37,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     {
         listSubtopic = buildSavedListSubtopic()
         addSubtopic(listSubtopic!)
+        CommandBarController.setPlaybackControlsDelegate(listSubtopic)        
         speakSavedRecipes()
     }
     
@@ -44,6 +45,7 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     {
         stopSpeaking()
         removeAllSubtopics()
+        CommandBarController.setPlaybackControlsDelegate(nil)        
     }
     
     // MARK: Subtopic Handling

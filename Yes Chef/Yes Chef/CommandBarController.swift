@@ -52,15 +52,20 @@ class CommandBarController: SAYCommandBarController, CustomCommandBarDelegate
     static func updatePlaybackState(shouldDisplayPlayIcon shouldDisplayPlayIcon: Bool, previousEnabled: Bool, forwardEnabled: Bool)
     {
         if let instance = CommandBarController.underlyingInstance {
-            (instance.commandBar as? CustomCommandBar)?.previousButton.enabled = previousEnabled
-            (instance.commandBar as? CustomCommandBar)?.forwardButton.enabled = forwardEnabled
-            (instance.commandBar as? CustomCommandBar)?.playPauseButton.enabled = true
-            
-            if shouldDisplayPlayIcon {
-                (instance.commandBar as? CustomCommandBar)?.playPauseButton.setImage(nil, forState: .Normal) // TODO: Set Play image
-            }
-            else {
-                (instance.commandBar as? CustomCommandBar)?.playPauseButton.setImage(nil, forState: .Normal) // TODO: Set Pause image
+            print("Updating playback state. Play: \(shouldDisplayPlayIcon). Previous enabled: \(previousEnabled). Forward enabled: \(forwardEnabled)")
+            dispatch_async(dispatch_get_main_queue()) {
+                (instance.commandBar as? CustomCommandBar)?.previousButton.enabled = previousEnabled
+                (instance.commandBar as? CustomCommandBar)?.forwardButton.enabled = forwardEnabled
+                (instance.commandBar as? CustomCommandBar)?.playPauseButton.enabled = true
+                
+                if shouldDisplayPlayIcon {
+    //                (instance.commandBar as? CustomCommandBar)?.playPauseButton.setImage(nil, forState: .Normal) // TODO: Set Play image
+                    (instance.commandBar as? CustomCommandBar)?.playPauseButton.backgroundColor = UIColor.redColor()
+                }
+                else {
+    //                (instance.commandBar as? CustomCommandBar)?.playPauseButton.setImage(nil, forState: .Normal) // TODO: Set Pause image
+                    (instance.commandBar as? CustomCommandBar)?.playPauseButton.backgroundColor = UIColor.greenColor()
+                }
             }
         }
     }
@@ -97,9 +102,11 @@ class CommandBarController: SAYCommandBarController, CustomCommandBarDelegate
     private var playbackControlsDelegate: PlaybackControlsDelegate? {
         didSet {
             let playbackButtonsEnabled = (playbackControlsDelegate != nil)
-            (self.commandBar as? CustomCommandBar)?.previousButton.enabled = playbackButtonsEnabled
-            (self.commandBar as? CustomCommandBar)?.forwardButton.enabled = playbackButtonsEnabled
-            (self.commandBar as? CustomCommandBar)?.playPauseButton.enabled = playbackButtonsEnabled
+            dispatch_async(dispatch_get_main_queue()) {
+                (self.commandBar as? CustomCommandBar)?.previousButton.enabled = playbackButtonsEnabled
+                (self.commandBar as? CustomCommandBar)?.forwardButton.enabled = playbackButtonsEnabled
+                (self.commandBar as? CustomCommandBar)?.playPauseButton.enabled = playbackButtonsEnabled
+            }
         }
     }
     
