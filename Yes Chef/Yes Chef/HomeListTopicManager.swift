@@ -29,6 +29,7 @@ class HomeListTopicManager: NSObject, ListConversationTopicEventHandler
     func speakRecommendations()
     {
         syncListSubtopic()
+        CommandBarController.setPlaybackControlsDelegate(listSubtopic!)
         listSubtopic?.speakItems()
     }
     
@@ -98,8 +99,6 @@ class HomeListTopicManager: NSObject, ListConversationTopicEventHandler
         else {
             listSubtopic?.items = recommendedListings.map({ $0.speakableString })
         }
-        
-        CommandBarController.setPlaybackControlsDelegate(listSubtopic!)
         
         listSubtopic?.introString = recommendedListings.count > 0 ?
             "I have \(recommendedListings.count.withSuffix("recommendations")) for you." :

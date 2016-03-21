@@ -27,7 +27,7 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zRV-b7-TRQ">
                     <rect key="frame" x="280" y="8" width="40" height="84"/>
-                    <state key="normal" image="play"/>
+                    <state key="normal" image="pause"/>
                     <connections>
                         <action selector="playPauseButtonTapped:" destination="iN0-l3-epB" eventType="touchUpInside" id="c3V-3s-oBu"/>
                     </connections>
@@ -83,7 +83,7 @@
         <image name="commands" width="60" height="60"/>
         <image name="ff-arrow" width="40" height="40"/>
         <image name="microphone" width="60" height="60"/>
-        <image name="play" width="40" height="40"/>
+        <image name="pause" width="40" height="40"/>
         <image name="rewind-arrow" width="40" height="40"/>
     </resources>
 </document>

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HomeConversationTopic: SAYConversationTopic
+class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
 {
     let eventHandler: HomeConversationTopicEventHandler
     
@@ -81,8 +81,10 @@ class HomeConversationTopic: SAYConversationTopic
         
         if let listSubtopic = listManager.listSubtopic {
             addSubtopic(listSubtopic)
-            CommandBarController.setPlaybackControlsDelegate(listSubtopic)
         }
+        
+        CommandBarController.setPlaybackControlsDelegate(self)
+        CommandBarController.updatePlaybackState(shouldDisplayPlayIcon: false, previousEnabled: false, forwardEnabled: false)
         
         let categoriesRecognizer = SAYCustomCommandRecognizer(customType: "Categories") { _ in self.handleCategoriesCommand() }
         categoriesRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -136,13 +138,17 @@ class HomeConversationTopic: SAYConversationTopic
     
     func speakIntroduction(shouldIncludeWelcomeMessage: Bool)
     {
+        isSpeaking = true
+        
         let sequence = SAYAudioEventSequence()
         
         if shouldIncludeWelcomeMessage {
             sequence.addEvent(SAYSpeechEvent(utteranceString: "Welcome to \"Yes Chef\"!"))
         }
         
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\" Say \"Help\" for more details. Feeling adventurous? Ask about our \"recommended recipes\""))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\" Say \"Help\" for more details. Feeling adventurous? Ask about our \"recommended recipes\"")) {
+            self.isSpeaking = false
+        }
         postEvents(sequence)
     }
     
@@ -196,6 +202,29 @@ class HomeConversationTopic: SAYConversationTopic
         }
         
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utterance)]))
+    }
+    
+    // MARK: PlaybackControlsDelegate Protocol Methods
+    
+    func commandBarRequestedPreviousPlaybackControl()
+    {
+        // Do nothing (button disabled)
+    }
+    
+    func commandBarRequestedForwardPlaybackControl()
+    {
+        // Do nothing (button disabled)
+    }
+    
+    func commandBarRequestedPlayPausePlaybackControl()
+    {
+        if isSpeaking {
+            postEvents(SAYAudioEventSequence(events: [SAYSilenceEvent(interval: 0.0)]))
+            isSpeaking = false
+        }
+        else {
+            speakIntroduction(false)
+        }
     }
     
     // MARK: Handle Commands
@@ -338,6 +367,11 @@ class HomeConversationTopic: SAYConversationTopic
         return course
     }
     
+    private func updatePlaybackButtons()
+    {
+        CommandBarController.updatePlaybackState(shouldDisplayPlayIcon: !isSpeaking, previousEnabled: false, forwardEnabled: false)
+    }
+    
     private static var fallthroughTextMatcher: SAYBlockCommandMatcher = {
         // This is a "fallthrough" text matcher for extending the standard search recognizer. It will attempt to use the entire spoken text as a parameter for performing a search. It has a very low confidence, since it shouldn't take precedence over well-recognized commands.
         return SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
@@ -350,6 +384,12 @@ class HomeConversationTopic: SAYConversationTopic
             }
         })
     }()
+    
+    private var isSpeaking: Bool = true {
+        didSet {
+            updatePlaybackButtons()
+        }
+    }
     
     private let listManager: HomeListTopicManager
     private var searchRecognizer: YesChefSearchCuisineCourseCommandRecognizer?

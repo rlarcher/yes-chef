@@ -151,6 +151,7 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
             isFlushingOldAudioSequence = true
         }
         speakItems(startingAtIndex: 0, withIntroduction: true)
+        updatePlaybackButtons()
     }
     
     func speakNextItem()
