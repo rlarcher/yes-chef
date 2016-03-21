@@ -81,6 +81,7 @@ class HomeConversationTopic: SAYConversationTopic
         
         if let listSubtopic = listManager.listSubtopic {
             addSubtopic(listSubtopic)
+            CommandBarController.setPlaybackControlsDelegate(listSubtopic)
         }
         
         let categoriesRecognizer = SAYCustomCommandRecognizer(customType: "Categories") { _ in self.handleCategoriesCommand() }

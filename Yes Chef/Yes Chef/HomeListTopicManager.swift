@@ -93,6 +93,7 @@ class HomeListTopicManager: NSObject, ListConversationTopicEventHandler
     {
         if listSubtopic == nil {
             listSubtopic = ListConversationTopic(items: recommendedListings.map({ $0.speakableString }), listIsMutable: false, shouldUseFallthroughForSelection: false, eventHandler: self)
+            CommandBarController.setPlaybackControlsDelegate(listSubtopic!)
         }
         else {
             listSubtopic?.items = recommendedListings.map({ $0.speakableString })

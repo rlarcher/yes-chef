@@ -10,7 +10,7 @@ import Foundation
 
 /// `ListConversationTopic` is a conversation topic that handles many common list-based commands and behaviors, such as playback controls, selection, item reading, and help messaging.
 /// This is a working prototype. Stay tuned for a pre-packaged SAYListConversationTopic!
-class ListConversationTopic: SAYConversationTopic
+class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
 {
     let eventHandler: ListConversationTopicEventHandler
     
@@ -141,7 +141,7 @@ class ListConversationTopic: SAYConversationTopic
     var items: [String] {
         didSet {
             stopSpeaking()  // Don't continue with any existing speakItems sequence, else we might go out of bounds.
-            headIndex = 0   // Reset head
+            resetHeadIndex()
         }
     }
     
@@ -162,9 +162,7 @@ class ListConversationTopic: SAYConversationTopic
     
     func speakPreviousItem()
     {
-        if headIndex > 0 {
-            headIndex--
-        }
+        decrementHeadIndex()
         isFlushingOldAudioSequence = true
         speakItems(startingAtIndex: headIndex)
     }
@@ -237,6 +235,28 @@ class ListConversationTopic: SAYConversationTopic
         eventHandler.requestedRemoveItemWithName(nil, index: headIndex) // Temp.
     }
     
+    // MARK: PlaybackControlsDelegate Protocol Methods
+    
+    func commandBarRequestedPreviousPlaybackControl()
+    {
+        speakPreviousItem()
+    }
+    
+    func commandBarRequestedForwardPlaybackControl()
+    {
+        speakNextItem()
+    }
+    
+    func commandBarRequestedPlayPausePlaybackControl()
+    {
+        if isSpeaking {
+            pauseSpeaking()
+        }
+        else {
+            resumeSpeaking()
+        }
+    }
+    
     // MARK: Speech
     
     private func stopSpeaking()
@@ -247,6 +267,8 @@ class ListConversationTopic: SAYConversationTopic
         let interruptingSequence = SAYAudioEventSequence()
         interruptingSequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
             self.isFlushingOldAudioSequence = false     // Once all previous events have been flushed out, release the lock.
+            self.isSpeaking = false
+            CommandBarController.updatePlaybackState(shouldDisplayPlayIcon: false, previousEnabled: false, forwardEnabled: false)
         }
         postEvents(interruptingSequence)
     }
@@ -261,6 +283,8 @@ class ListConversationTopic: SAYConversationTopic
         if items.count > 0 && startIndex < items.count {
             var sequence = SAYAudioEventSequence()
             headIndex = startIndex
+     
+            isSpeaking = true
             
             for (index, item) in items.enumerate() {
                 if index < startIndex { continue }  // Skip anything before the startIndex (but keep incrementing `index`)
@@ -284,6 +308,7 @@ class ListConversationTopic: SAYConversationTopic
             // Terminal event to release the flushing lock
             sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
                 self.isFlushingOldAudioSequence = false
+                self.isSpeaking = false
             }
             
             self.postEvents(sequence)
@@ -298,6 +323,28 @@ class ListConversationTopic: SAYConversationTopic
         if headIndex < items.count - 1 {
             headIndex++
         }
+        updatePlaybackButtons()
+    }
+    
+    private func decrementHeadIndex()
+    {
+        if headIndex > 0 {
+            headIndex--
+        }
+        updatePlaybackButtons()
+    }
+    
+    private func resetHeadIndex()
+    {
+        headIndex = 0
+        updatePlaybackButtons()
+    }
+    
+    private func updatePlaybackButtons()
+    {
+        let shouldEnablePreviousButton = headIndex > 0 && isSpeaking
+        let shouldEnableForwardButton = headIndex < items.count && isSpeaking
+        CommandBarController.updatePlaybackState(shouldDisplayPlayIcon: !isSpeaking, previousEnabled: shouldEnablePreviousButton, forwardEnabled: shouldEnableForwardButton)
     }
     
     private func insertHelpMessagesIntoSequence(sequence: SAYAudioEventSequence, speakIntroduction shouldSpeakIntroduction: Bool) -> SAYAudioEventSequence
@@ -352,6 +399,7 @@ class ListConversationTopic: SAYConversationTopic
         return audioEventSequenceWithHelpMessages
     }
     
+    private var isSpeaking: Bool = false
     private var headIndex = 0   // The index currently being read
     private var isFlushingOldAudioSequence: Bool = false    // Hack to suppress speech event completion blocks when we don't care about them (ie, when interrupting the sequence with a new one).
 }

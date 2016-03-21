@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let introViewController = navigationController.topViewController as! IntroViewController
         
         // Wrap initial view controller in a command bar controller
-        let commandBarController = SAYCommandBarController()
+        let commandBarController = CommandBarController()
         commandBarController.contentViewController = navigationController
         
         window?.rootViewController = commandBarController

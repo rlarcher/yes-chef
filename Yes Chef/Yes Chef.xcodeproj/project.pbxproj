@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8316A7FA1CA0486E0084B9AB /* CommandBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316A7F61CA0486E0084B9AB /* CommandBarController.swift */; };
+		8316A7FB1CA0486E0084B9AB /* CustomCommandBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8316A7F71CA0486E0084B9AB /* CustomCommandBarDelegate.swift */; };
 		831E367F1C69325E00DA63AB /* ConversationalTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */; };
 		8348DECC1C6146870009C7DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECB1C6146870009C7DF /* AppDelegate.swift */; };
 		8348DECE1C6146870009C7DF /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348DECD1C6146870009C7DF /* HomeViewController.swift */; };
@@ -61,6 +63,8 @@
 		83E95D7D1C99CAD900D48B95 /* IntroPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E95D7C1C99CAD900D48B95 /* IntroPage.swift */; };
 		83E95D7F1C99D4DF00D48B95 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E95D7E1C99D4DF00D48B95 /* IntroViewController.swift */; };
 		83E95D811C99D4E900D48B95 /* IntroConversationTopic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E95D801C99D4E900D48B95 /* IntroConversationTopic.swift */; };
+		83F5E6F31CA04CC3000EB248 /* CustomCommandBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F5E6F21CA04CC3000EB248 /* CustomCommandBar.swift */; };
+		83F5E6F51CA07197000EB248 /* CustomCommandBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83F5E6F41CA07197000EB248 /* CustomCommandBar.xib */; };
 		83FF39581C72535700755AD3 /* CategorySelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */; };
 		83FF395A1C72549400755AD3 /* CuisineSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */; };
 		E98EBA06DF207550497612D8 /* Pods_Yes_Chef.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */; };
@@ -82,6 +86,8 @@
 
 /* Begin PBXFileReference section */
 		179FDF0F0641DDB7B8EAAB74 /* Pods-Yes Chef.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yes Chef.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef.release.xcconfig"; sourceTree = "<group>"; };
+		8316A7F61CA0486E0084B9AB /* CommandBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandBarController.swift; sourceTree = "<group>"; };
+		8316A7F71CA0486E0084B9AB /* CustomCommandBarDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCommandBarDelegate.swift; sourceTree = "<group>"; };
 		831E367E1C69325E00DA63AB /* ConversationalTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationalTabBarViewController.swift; sourceTree = "<group>"; };
 		8348DEC81C6146870009C7DF /* Yes Chef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yes Chef.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8348DECB1C6146870009C7DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -138,6 +144,8 @@
 		83E95D7C1C99CAD900D48B95 /* IntroPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroPage.swift; sourceTree = "<group>"; };
 		83E95D7E1C99D4DF00D48B95 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		83E95D801C99D4E900D48B95 /* IntroConversationTopic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroConversationTopic.swift; sourceTree = "<group>"; };
+		83F5E6F21CA04CC3000EB248 /* CustomCommandBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCommandBar.swift; sourceTree = "<group>"; };
+		83F5E6F41CA07197000EB248 /* CustomCommandBar.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCommandBar.xib; sourceTree = "<group>"; };
 		83FF39571C72535700755AD3 /* CategorySelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorySelectorViewController.swift; sourceTree = "<group>"; };
 		83FF39591C72549400755AD3 /* CuisineSelectorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuisineSelectorViewController.swift; sourceTree = "<group>"; };
 		8A1C61401665FC2F52E9F27B /* Pods-Yes Chef.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yes Chef.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yes Chef/Pods-Yes Chef.debug.xcconfig"; sourceTree = "<group>"; };
@@ -163,6 +171,17 @@
 				98B7A1C9F142F9540B2A20E8 /* Pods_Yes_Chef.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		83317EC71CA026FE00EF4D6E /* Custom Command Bar */ = {
+			isa = PBXGroup;
+			children = (
+				83F5E6F21CA04CC3000EB248 /* CustomCommandBar.swift */,
+				83F5E6F41CA07197000EB248 /* CustomCommandBar.xib */,
+				8316A7F61CA0486E0084B9AB /* CommandBarController.swift */,
+				8316A7F71CA0486E0084B9AB /* CustomCommandBarDelegate.swift */,
+			);
+			name = "Custom Command Bar";
 			sourceTree = "<group>";
 		};
 		8348DEBF1C6146870009C7DF = {
@@ -326,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				83B56A111C88D30D00A185F0 /* Search Options */,
+				83317EC71CA026FE00EF4D6E /* Custom Command Bar */,
 				8348DF031C614B330009C7DF /* ListConversationTopic.swift */,
 				8350EC911C8F4735008B9161 /* PassthroughOverlay.swift */,
 			);
@@ -415,6 +435,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83F5E6F51CA07197000EB248 /* CustomCommandBar.xib in Resources */,
 				8348DED61C6146870009C7DF /* LaunchScreen.storyboard in Resources */,
 				8348DED31C6146870009C7DF /* Assets.xcassets in Resources */,
 				8348DED11C6146870009C7DF /* Main.storyboard in Resources */,
@@ -478,6 +499,7 @@
 			files = (
 				8350EC941C8F7E1C008B9161 /* RecipeContainerViewController.swift in Sources */,
 				83B56A0D1C88B71300A185F0 /* MenuPresentationController.swift in Sources */,
+				83F5E6F31CA04CC3000EB248 /* CustomCommandBar.swift in Sources */,
 				83E95D771C99C90D00D48B95 /* WelcomeIntroViewController.swift in Sources */,
 				8350EC921C8F4735008B9161 /* PassthroughOverlay.swift in Sources */,
 				831E367F1C69325E00DA63AB /* ConversationalTabBarViewController.swift in Sources */,
@@ -506,6 +528,7 @@
 				83A6A6CB1C74D79F003B559D /* String+Utils.swift in Sources */,
 				83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */,
 				837E38741C9AE4B400804091 /* UIImage+Utils.swift in Sources */,
+				8316A7FA1CA0486E0084B9AB /* CommandBarController.swift in Sources */,
 				8348DEFC1C614A6D0009C7DF /* BigOvenAPIFetcher.swift in Sources */,
 				83D568C51C8DC41A00EDDD17 /* SearchResultsPresenter.swift in Sources */,
 				83987D771C78DCFF00E3BBE9 /* Int+Utils.swift in Sources */,
@@ -515,6 +538,7 @@
 				8348DEF81C614A3D0009C7DF /* Recipe.swift in Sources */,
 				8348DF0E1C614BDF0009C7DF /* RecipePreparationConversationTopic.swift in Sources */,
 				8348DF0A1C614BC20009C7DF /* RecipeOverviewConversationTopic.swift in Sources */,
+				8316A7FB1CA0486E0084B9AB /* CustomCommandBarDelegate.swift in Sources */,
 				83E52A0C1C89E7BF0067F6DF /* SearchOptionsController.swift in Sources */,
 				8350EC901C8F458C008B9161 /* SearchOptionsTabBarController.swift in Sources */,
 				83E95D811C99D4E900D48B95 /* IntroConversationTopic.swift in Sources */,
