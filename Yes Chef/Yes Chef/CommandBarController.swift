@@ -58,12 +58,10 @@ class CommandBarController: SAYCommandBarController, CustomCommandBarDelegate
                 (instance.commandBar as? CustomCommandBar)?.playPauseButton.enabled = true
                 
                 if shouldDisplayPlayIcon {
-    //                (instance.commandBar as? CustomCommandBar)?.playPauseButton.setImage(nil, forState: .Normal) // TODO: Set Play image
-                    (instance.commandBar as? CustomCommandBar)?.playPauseButton.backgroundColor = UIColor.redColor()
+                    (instance.commandBar as? CustomCommandBar)?.playPauseButton.setImage(UIImage(named: "play"), forState: .Normal)
                 }
                 else {
-    //                (instance.commandBar as? CustomCommandBar)?.playPauseButton.setImage(nil, forState: .Normal) // TODO: Set Pause image
-                    (instance.commandBar as? CustomCommandBar)?.playPauseButton.backgroundColor = UIColor.greenColor()
+                    (instance.commandBar as? CustomCommandBar)?.playPauseButton.setImage(UIImage(named: "pause"), forState: .Normal)
                 }
             }
         }
