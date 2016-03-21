@@ -270,7 +270,7 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         let interruptingSequence = SAYAudioEventSequence()
         interruptingSequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
             self.isFlushingOldAudioSequence = false     // Once all previous events have been flushed out, release the lock.
-            CommandBarController.updatePlaybackState(shouldDisplayPlayIcon: false, previousEnabled: false, forwardEnabled: false)
+            CommandBarController.updatePlaybackState(shouldDisplayPlayIcon: true, previousEnabled: false, forwardEnabled: false)
         }
         postEvents(interruptingSequence)
     }
@@ -299,6 +299,7 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
                 
                 sequence.addEvent(SAYSpeechEvent(utteranceString: "\(index + 1): \(item)")) {   // Speak the 1-based version of the index.
                     if !self.isFlushingOldAudioSequence {
+                        self.isSpeaking = true
                         self.eventHandler.finishedSpeakingItemAtIndex(self.headIndex)
                         self.incrementHeadIndex()
                     }
@@ -310,7 +311,6 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
             // Terminal event to release the flushing lock
             sequence.addEvent(SAYSilenceEvent(interval: 0.0)) {
                 self.isFlushingOldAudioSequence = false
-                self.isSpeaking = false
             }
             
             self.postEvents(sequence)
@@ -345,7 +345,7 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     private func updatePlaybackButtons()
     {
         let shouldEnablePreviousButton = headIndex > 0 && isSpeaking
-        let shouldEnableForwardButton = headIndex < items.count && isSpeaking
+        let shouldEnableForwardButton = headIndex < (items.count - 1) && isSpeaking
         CommandBarController.updatePlaybackState(shouldDisplayPlayIcon: !isSpeaking, previousEnabled: shouldEnablePreviousButton, forwardEnabled: shouldEnableForwardButton)
     }
     
@@ -361,7 +361,7 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         let helpIndex = 2
         
         // Insert help and outro message events.
-        if items.count > 5 {    // Arbitrary! If there's more than this many items, we don't need to worry about the Help and Outro messages being spoken too close together.
+        if outgoingEventItems.count > 5 {    // Arbitrary! If there's more than this many items, we don't need to worry about the Help and Outro messages being spoken too close together.
             // Long List. If defined, speak a help message after the third item, and an outro message at the end of the list.
             if let help = intermediateHelpString {
                 outgoingEventItems.insert(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: help)), atIndex: helpIndex)
@@ -370,7 +370,7 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
                 outgoingEventItems.append(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: outro)))
             }
         }
-        else if items.count > helpIndex {
+        else if outgoingEventItems.count > helpIndex {
             // Medium-length List. If defined, speak a help message after the third item. If the outro message is unique, speak it at the end of the list (ie, if the outro is the same as the help message, we'd be repeating our message from just a few items ago).
             if let help = intermediateHelpString {
                 outgoingEventItems.insert(SAYAudioEventSequenceItem(event: SAYSpeechEvent(utteranceString: help)), atIndex: helpIndex)
@@ -404,7 +404,6 @@ class ListConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     private var isSpeaking: Bool = false {
         didSet {
             updatePlaybackButtons()
-            print("isSpeaking: \(isSpeaking)")
         }
     }
     private var headIndex = 0   // The index currently being read

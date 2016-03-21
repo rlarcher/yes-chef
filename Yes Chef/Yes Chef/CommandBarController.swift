@@ -52,7 +52,6 @@ class CommandBarController: SAYCommandBarController, CustomCommandBarDelegate
     static func updatePlaybackState(shouldDisplayPlayIcon shouldDisplayPlayIcon: Bool, previousEnabled: Bool, forwardEnabled: Bool)
     {
         if let instance = CommandBarController.underlyingInstance {
-            print("Updating playback state. Play: \(shouldDisplayPlayIcon). Previous enabled: \(previousEnabled). Forward enabled: \(forwardEnabled)")
             dispatch_async(dispatch_get_main_queue()) {
                 (instance.commandBar as? CustomCommandBar)?.previousButton.enabled = previousEnabled
                 (instance.commandBar as? CustomCommandBar)?.forwardButton.enabled = forwardEnabled
