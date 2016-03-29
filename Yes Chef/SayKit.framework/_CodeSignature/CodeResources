@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		Ms7jl5TNQ4m/5x1tW38jcd7cprA=
+		1sz5PuaY6Ah7K8EjceKzlgc5VMg=
 		</data>
 		<key>Headers/SAYAPIKeyManager.h</key>
 		<data>
@@ -110,7 +110,7 @@
 		</data>
 		<key>Headers/SAYConversationManager.h</key>
 		<data>
-		+sF5k234f1ASqDGWwi+HwMW2DCg=
+		41VIsrqMRBdD2u7Enrp48R1FXJo=
 		</data>
 		<key>Headers/SAYConversationTopic.h</key>
 		<data>
@@ -366,7 +366,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		i9do5rzBPOJJHn1M0ZvA35bV+oI=
+		e7CqPuLKyEFbwAgm/mQfBeexGF0=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -406,15 +406,15 @@
 		</data>
 		<key>SAYCommandBar.nib</key>
 		<data>
-		u7CRJCiXz5l2tnIoCiHUAfzEtek=
+		a1psenes6dei7BENu9cjIGTpHdk=
 		</data>
 		<key>SAYConfirmationContentViewController.nib</key>
 		<data>
-		Oe5ZJVrjIOXblvp140DxsAqsgRc=
+		nHGhDR/ogl3TUifcMm+uA8rktXM=
 		</data>
 		<key>SAYVoiceRequestView.nib</key>
 		<data>
-		EWk0FRKSwVWBxwWB7PDyAkw9ZXA=
+		9iYRpbDfE0nFj1+2zBwbxvAvmbg=
 		</data>
 		<key>SayKitAPIServer.cer</key>
 		<data>
@@ -430,7 +430,7 @@
 		</data>
 		<key>microphone.png</key>
 		<data>
-		Dd5HhSpT6nd9nxhsVdp1nQponPA=
+		geHyhyOpQe6UKZ1vnRku87aZueg=
 		</data>
 		<key>unknown_speech_command.wav</key>
 		<data>
@@ -441,7 +441,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		Ms7jl5TNQ4m/5x1tW38jcd7cprA=
+		1sz5PuaY6Ah7K8EjceKzlgc5VMg=
 		</data>
 		<key>Headers/SAYAPIKeyManager.h</key>
 		<data>
@@ -545,7 +545,7 @@
 		</data>
 		<key>Headers/SAYConversationManager.h</key>
 		<data>
-		+sF5k234f1ASqDGWwi+HwMW2DCg=
+		41VIsrqMRBdD2u7Enrp48R1FXJo=
 		</data>
 		<key>Headers/SAYConversationTopic.h</key>
 		<data>
@@ -837,15 +837,15 @@
 		</data>
 		<key>SAYCommandBar.nib</key>
 		<data>
-		u7CRJCiXz5l2tnIoCiHUAfzEtek=
+		a1psenes6dei7BENu9cjIGTpHdk=
 		</data>
 		<key>SAYConfirmationContentViewController.nib</key>
 		<data>
-		Oe5ZJVrjIOXblvp140DxsAqsgRc=
+		nHGhDR/ogl3TUifcMm+uA8rktXM=
 		</data>
 		<key>SAYVoiceRequestView.nib</key>
 		<data>
-		EWk0FRKSwVWBxwWB7PDyAkw9ZXA=
+		9iYRpbDfE0nFj1+2zBwbxvAvmbg=
 		</data>
 		<key>SayKitAPIServer.cer</key>
 		<data>
@@ -861,7 +861,7 @@
 		</data>
 		<key>microphone.png</key>
 		<data>
-		Dd5HhSpT6nd9nxhsVdp1nQponPA=
+		geHyhyOpQe6UKZ1vnRku87aZueg=
 		</data>
 		<key>unknown_speech_command.wav</key>
 		<data>

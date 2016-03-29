@@ -16,6 +16,7 @@
 @class SAYAudioTrackCoordinator;
 @class UIWindow;
 @class UIViewController;
+@class SAYVoiceRequestPresenter;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -82,6 +83,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @name Voice Request Presentation
  **/
+
+@property (nonatomic, strong, readonly, nonnull) SAYVoiceRequestPresenter *voiceRequestPresenter;
 
 /**
  *  Used as a provider for the application's root view controller, from which typical voice requests are presented.
