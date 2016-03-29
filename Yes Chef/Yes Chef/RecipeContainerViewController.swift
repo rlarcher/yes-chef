@@ -297,10 +297,10 @@ class RecipeContainerViewController: UIViewController, RecipeNavigationConversat
     {
         navigationItem.title = ""
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "♡", style: .Plain, target: self, action: "favoriteButtonTapped")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "♡", style: .Plain, target: self, action: #selector(favoriteButtonTapped))
         navigationItem.rightBarButtonItem?.enabled = false  // TODO: Activate this
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "X", style: .Plain, target: self, action: "backButtonTapped") // TODO: Just customize the existing back button, with proper image.
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "X", style: .Plain, target: self, action: #selector(backButtonTapped)) // TODO: Just customize the existing back button, with proper image.
         
         // Roundabout way to make the navigation bar's background completely invisible:
         navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)

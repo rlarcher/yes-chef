@@ -16,11 +16,11 @@ class RecipeNavigationConversationTopic: SAYConversationTopic
         
         super.init()
         
-        let switchTabRecognizer = SAYSwitchTabCommandRecognizer(responseTarget: self, action: "handleTabNavigationCommand:")
+        let switchTabRecognizer = SAYSwitchTabCommandRecognizer(responseTarget: self, action: #selector(handleTabNavigationCommand))
         switchTabRecognizer.addMenuItemWithLabel("Switch Tab...")        
         addCommandRecognizer(switchTabRecognizer)
 
-        let saveRecipeRecognizer = SAYCustomCommandRecognizer(customType: "SaveRecipe", responseTarget: self, action: "handleSaveRecipeCommand")
+        let saveRecipeRecognizer = SAYCustomCommandRecognizer(customType: "SaveRecipe", responseTarget: self, action: #selector(handleSaveRecipeCommand))
         saveRecipeRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
             if text.containsAny(["save", "keep", "favorite", "saved"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)

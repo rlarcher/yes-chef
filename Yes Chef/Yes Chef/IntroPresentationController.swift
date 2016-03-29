@@ -42,7 +42,7 @@ class IntroPresentationController: UIPresentationController, UIViewControllerTra
         if let containerView = self.containerView {
             let underlayView = UIView(frame: containerView.bounds)
             underlayView.backgroundColor = UIColor.clearColor()
-            underlayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "underlayViewTapped:"))
+            underlayView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(underlayViewTapped(_:))))
             
             containerView.addSubview(underlayView)
         }
