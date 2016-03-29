@@ -121,7 +121,7 @@ class BigOvenAPIFetcher: NSObject
                         let reviewCount         = recipeData["ReviewCount"]?.int,
                         let yieldNumber         = recipeData["YieldNumber"]?.int,
                         let imageURLString      = recipeData["ImageURL"]?.string,
-                        let imageURL            = NSURL(string: imageURLString)
+                        let imageURL            = buildThumbnailURLFrom(imageURLString)
                     {
                         let cuisine = parseCuisineFromData(recipeData)
                         let course = parseCourseFromData(recipeData)
@@ -265,6 +265,28 @@ class BigOvenAPIFetcher: NSObject
         }
         
         return category
+    }
+    
+    // Extracts the file name of the image ("tasty-food.jpg") and builds the URL to a properly sized version (e.g. 640x640 pixels) via the URL transformation parameter "t_recipe-640". See http://api.bigoven.com/documentation/recipe-images
+    private func buildThumbnailURLFrom(rawImageURLString: String) -> NSURL?
+    {
+        let imageURLNSString = NSString(string: rawImageURLString)
+        let imageURLStringRange = NSMakeRange(0, imageURLNSString.length)
+        
+        let fileNameRegex = try! NSRegularExpression(pattern: "(?<=/)[^/]*?\\.[a-z]{3}$", options: .CaseInsensitive)
+        
+        if let match = fileNameRegex.firstMatchInString(rawImageURLString, options: .ReportCompletion, range: imageURLStringRange) {
+            let fileNameRange = match.rangeAtIndex(0)
+            let fileName = imageURLNSString.substringWithRange(fileNameRange)
+            
+            let thumbnailPrefix = "http://images.bigoven.com/image/upload/t_recipe-640/"    // Available resolutions:  36, 48, 64, 128, 200, 256, 512, 640, 700, 960, 1000
+            let thumbnailURLString = "\(thumbnailPrefix)\(fileName)"
+            
+            return NSURL(string: thumbnailURLString)
+        }
+        else {
+            return nil
+        }
     }
     
     // MARK: Error Handling
