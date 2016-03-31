@@ -20,6 +20,7 @@ struct Recipe
     let subcategory: String
     let ingredients: [Ingredient]
     let preparationSteps: [String]
+    let rawPreparationSteps: String
     let totalPreparationTime: Int?  // in minutes. If nil, then the poster didn't define a time.
     let activePreparationTime: Int? // in minutes. If nil, then the poster didn't define a time.
     let servingsQuantity: Int
@@ -121,6 +122,11 @@ struct Recipe
                              category: category,
                              servingsQuantity: servingsQuantity,
                              imageURL: heroImageURL)
+    }
+    
+    var isUsable: Bool {
+        // If the preparation steps are just a link to an external site, count this recipe as unusable.
+        return !Utils.stringIsMostlyURL(self.rawPreparationSteps)
     }
 }
 

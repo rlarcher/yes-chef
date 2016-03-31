@@ -54,6 +54,7 @@
 		83D568C11C8DC1F700EDDD17 /* Cuisine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C01C8DC1F700EDDD17 /* Cuisine.swift */; };
 		83D568C31C8DC1FF00EDDD17 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C21C8DC1FF00EDDD17 /* Category.swift */; };
 		83D568C51C8DC41A00EDDD17 /* SearchResultsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D568C41C8DC41A00EDDD17 /* SearchResultsPresenter.swift */; };
+		83DCEDAF1CAD6A90001A99F8 /* RecipeListingsFetchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DCEDAE1CAD6A90001A99F8 /* RecipeListingsFetchManager.swift */; };
 		83E52A0C1C89E7BF0067F6DF /* SearchOptionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */; };
 		83E7C6AC1C6A7B940044A84C /* RecipeListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */; };
 		83E95D751C99C80500D48B95 /* IntroPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E95D741C99C80500D48B95 /* IntroPageViewController.swift */; };
@@ -135,6 +136,7 @@
 		83D568C01C8DC1F700EDDD17 /* Cuisine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cuisine.swift; sourceTree = "<group>"; };
 		83D568C21C8DC1FF00EDDD17 /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		83D568C41C8DC41A00EDDD17 /* SearchResultsPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsPresenter.swift; sourceTree = "<group>"; };
+		83DCEDAE1CAD6A90001A99F8 /* RecipeListingsFetchManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListingsFetchManager.swift; sourceTree = "<group>"; };
 		83E52A0B1C89E7BF0067F6DF /* SearchOptionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsController.swift; sourceTree = "<group>"; };
 		83E7C6AB1C6A7B940044A84C /* RecipeListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListing.swift; sourceTree = "<group>"; };
 		83E95D741C99C80500D48B95 /* IntroPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroPageViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				83D568C01C8DC1F700EDDD17 /* Cuisine.swift */,
 				83D568C21C8DC1FF00EDDD17 /* Category.swift */,
 				8348DEF91C614A5F0009C7DF /* BigOvenAPIManager.swift */,
+				83DCEDAE1CAD6A90001A99F8 /* RecipeListingsFetchManager.swift */,
 				8348DEFB1C614A6D0009C7DF /* BigOvenAPIFetcher.swift */,
 				8348DEFD1C614ABC0009C7DF /* SavedRecipesManager.swift */,
 			);
@@ -548,6 +551,7 @@
 				8348DEE61C61489B0009C7DF /* SavedRecipesViewController.swift in Sources */,
 				8393341C1C85E3DC004A99EE /* SearchParameters.swift in Sources */,
 				837E38711C9AD5FA00804091 /* IntroPresentationController.swift in Sources */,
+				83DCEDAF1CAD6A90001A99F8 /* RecipeListingsFetchManager.swift in Sources */,
 				83D568C31C8DC1FF00EDDD17 /* Category.swift in Sources */,
 				83E95D751C99C80500D48B95 /* IntroPageViewController.swift in Sources */,
 				8348DEFA1C614A5F0009C7DF /* BigOvenAPIManager.swift in Sources */,

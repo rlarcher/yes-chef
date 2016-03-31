@@ -49,6 +49,26 @@ class Utils: NSObject
     {
         return UIImage(color: UIColor.lightGrayColor())     // TODO: Add a real placeholder image
     }
+    
+    // If more than half of a string consists of a URL, returns true. Otherwise false.
+    // This is a pretty naive way to check if a URL makes up most of a string. But so far so good.
+    // Ex: "[Instructions are at http://www.marthastewart.com/891898/creamy-shells-tuna-and-spinach]"
+    static func stringIsMostlyURL(string: String) -> Bool
+    {
+        let rawLength = string.characters.count as Int
+        
+        let urlRegex = try! NSRegularExpression(pattern: "[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?", options: .CaseInsensitive) // Adapated from www.regexr.com's "URL Similar" regex. Matches URLs and strings similar to a url.
+        
+        let matches = urlRegex.matchesInString(string, options: .ReportCompletion, range: NSMakeRange(0, rawLength))
+        for match in matches {
+            let matchLength = match.range.length
+            if matchLength > rawLength / 2 {
+                return true
+            }
+        }
+        
+        return false
+    }
 }
 
 // Parsing
@@ -172,6 +192,7 @@ extension Utils
                        preparationNotes: "freshly picked")]
         
         let stubPrepSteps = ["Turn on oven", "Mix batter", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]
+        let stubRawPrepSteps = "Turn on oven. Mix batter. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         
         let stubRecipes = [
             Recipe(recipeId: "12345678",
@@ -184,6 +205,7 @@ extension Utils
                    subcategory: "Muffins",
                    ingredients: stubIngredients,
                    preparationSteps: stubPrepSteps,
+                   rawPreparationSteps: stubRawPrepSteps,
                    totalPreparationTime: 25,
                    activePreparationTime:  10,
                    servingsQuantity: 12,
@@ -200,6 +222,7 @@ extension Utils
                    subcategory: "Muffins",
                    ingredients: stubIngredients,
                    preparationSteps: stubPrepSteps,
+                   rawPreparationSteps: stubRawPrepSteps,
                    totalPreparationTime: 45,
                    activePreparationTime:  5,
                    servingsQuantity: 8,
