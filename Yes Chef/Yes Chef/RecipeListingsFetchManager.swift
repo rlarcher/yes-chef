@@ -81,45 +81,34 @@ class RecipeListingsFetchManager: NSObject
     private func validateListings(listings: [RecipeListing], completion: (SearchResponse -> Void))
     {
         var newlyValidatedListings = [RecipeListing]()
-        var operations = [NSBlockOperation]()
-        
-        // After all listings have been validated, call the given completion block with the validated listings.
-        let finalOp = NSBlockOperation(block: {
-            print("finalOp firing")
-            dispatch_async(dispatch_get_main_queue()) {
-                self.completion(.Success(recipeListings: newlyValidatedListings))
-            }
-        })
+        let fetchRecipeGroup = dispatch_group_create()
         
         // Fetch each listing's corresponding Recipe. If that recipe is usable, add the listing to the validatedListings array.
         for listing in listings {
-            let recipeOp = NSBlockOperation(block: {
-                self.apiManager.fetchRecipe(listing.recipeId, completion: { response in
-                    switch response {
-                    case .Success(let recipe):
-                        if recipe.isUsable {
-                            dispatch_async(self.listingValidationThread, {
-                                print("Adding newly validated listings")
-                                newlyValidatedListings.append(listing)
-                            })
-                        }
-                        else {
-                            print("Listing is invalid! [\(listing.name)]")
-                        }
-                    case .Failure(let errorMessage, let error):
-                        completion(.Failure(message: errorMessage, error: error))
+            dispatch_group_enter(fetchRecipeGroup)
+            self.apiManager.fetchRecipe(listing.recipeId, completion: { response in
+                switch response {
+                case .Success(let recipe):
+                    if recipe.isUsable {
+                        dispatch_async(self.listingValidationThread, {
+                            newlyValidatedListings.append(listing)
+                            dispatch_group_leave(fetchRecipeGroup)  // Only leave the group after we've updated `newlyValidatedListings`
+                        })
                     }
-                })
+                    else {
+                        dispatch_group_leave(fetchRecipeGroup)  // Leave the group immediately
+                    }
+                case .Failure(let errorMessage, let error):
+                    completion(.Failure(message: errorMessage, error: error))
+                    dispatch_group_leave(fetchRecipeGroup)
+                }
             })
-            operations.append(recipeOp)
-            finalOp.addDependency(recipeOp)
         }
         
-        operations.append(finalOp)
-        
-        // Start the operation queue
-        let operationQueue = NSOperationQueue()
-        operationQueue.addOperations(operations, waitUntilFinished: false)
+        // After all listings have been validated, call the given completion block with the validated listings.
+        dispatch_group_notify(fetchRecipeGroup, dispatch_get_main_queue()) {
+            self.completion(.Success(recipeListings: newlyValidatedListings))
+        }
     }
     
     private func finishedGatheringValidListings() -> Bool
