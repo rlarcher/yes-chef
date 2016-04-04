@@ -27,7 +27,10 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         availableCommandsRecognizer.addMenuItemWithLabel("Available Commands")
         addCommandRecognizer(availableCommandsRecognizer)
         
-        let searchRecognizer = YesChefSearchCuisineCourseCommandRecognizer(responseTarget: self, action: "handleSearchCommand:")
+        // TODO: Reenable when we restore full command handling
+//        let searchRecognizer = YesChefSearchCuisineCourseCommandRecognizer(responseTarget: self, action: "handleSearchCommand:")
+        let searchRecognizer = SAYCustomCommandRecognizer(customType: "basicSearch", responseTarget: self, action: #selector(handleSearchCommand))
+        searchRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPattern: "Search for @\(YesChefSearchCuisineCourseCommandRecognizerParameterQuery)"))
         searchRecognizer.addMenuItemWithLabel("Search...")
         addCommandRecognizer(searchRecognizer)
         self.searchRecognizer = searchRecognizer
@@ -396,7 +399,7 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     }
     
     private let listManager: HomeListTopicManager
-    private var searchRecognizer: YesChefSearchCuisineCourseCommandRecognizer?
+    private var searchRecognizer: SAYVerbalCommandRecognizer?
     private var focusedRecognizers = [SAYVerbalCommandRecognizer]() // Recognizers that we only want active while this CT is focused.
 }
 
