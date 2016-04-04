@@ -1,0 +1,217 @@
+//
+//  Prompts.strings
+//  Yes Chef
+//
+//  Created by Adam Larsen on 2016/4/4.
+//  Copyright © 2016 Conversant Labs. All rights reserved.
+//
+
+/* Header at the top of the Recommended Recipes list, notifying the user that these are recommendations */
+"home:recommended_recipes_header" = "Popular Recipes:";
+
+/* Welcome message on reaching the home screen for the first time */
+"home:welcome_message" = "Welcome to \"Yes Chef\"!";
+
+/* Call to action on reaching the home screen for the first time */
+"home:instructions" = "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\" Say \"Help\" for more details. Feeling adventurous? Ask about our \"recommended recipes\"";
+
+/* Help message on the home screen, presented after the user says "Help" */
+"home:help" = "You can say \"Categories\" or \"Cuisines\" to hear available filters for your search. Say \"Saved Recipes\" to explore your saved recipes list. Say \"Home\" at any time to return here.";
+
+/* Message spoken just before listing out all available commands */
+"home:X_available_commands" = "There are %d available commands:";
+
+/* Response for an unhandled "How do I X?" */
+"home:how_to_X_unknown" = "I don't know how to \"%@\", either.";
+
+/* Response for an unhandled "Tell me about X" */
+"home:feature_query_X_unknown" = "\"%@\" is a nice feature, but I don't know much beyond that.";
+
+/* Help message after a period of inactivity */
+"home:periodic_help" = "Let me know if you need help.";
+
+
+/* How we'll refer to a single search result in the next prompts */
+"search:results_alias" = "result";
+
+/* Intro string for the list of search results found using the given search parameters  */
+"search:found_X_results_for_parameters_Y" = "I found %@ for %@"; // "I found 3 results for Peanut Butter"; "I found 1 result for Peanut Butter"
+
+/* Intro string for the list of search results, where the search parameters are uncertain */
+"search:found_X_results" = "I found %@"; // "I found 3 results"; "I found 1 result"
+
+/* Spoken when no recipes were found for a given set of search parameters */
+"search:no_recipes_for_parameters_X" = "Sorry, I couldn't find any recipes for \"%@\" Please try another search.";
+
+/* Spoken when no recipes were found, for an unspecified set of search parameters */
+"search:no_recipes_found" = "Sorry, I couldn't find any recipes by that name. Please try another search.";
+
+/* Spoken after the first few items in the list of results */
+"search:intermediate_help" = "To inspect a recipe, say \"Select\" followed by the recipe's name or number.";
+
+/* Call to action after reading the list of search results */
+"search:outro" = "Say \"More\" for more recipes (coming soon).";
+
+/* Spoken in a followup request, after we couldn't understand what the user wanted to search for */
+"search:clarifying_prompt" = "What would you like to search for?";
+
+/* Response to what courses are available */
+"search:available_courses" = "You can search for recipes for the following courses:";
+
+/* Response to what cuisines are available */
+"search:available_cuisines" = "You can search for recipes according to the following cuisines:";
+
+
+
+/* How we'll refer to a single recommendation in the next prompt, recommendations:X_available */
+"recommendations:alias" = "recommendation";
+
+/* Intro string for the list of recommendations */
+"recommendations:X_available" = "I have %@ for you:"; // "I have 3 recommendations for you:"; "I have 1 recommendation for you:"
+
+/* Intro string for the (empty) list of recommendations */
+"recommendations:none_available" = "Sorry, I don't have any recommendations right now.";
+
+/* Spoken after the first few items in the list of recommendations */
+"recommendations:intermediate_help" = "To inspect a recipe, say \"Select\" followed by the recipe's name or number.";
+
+/* Call to action after reading the list of recommendations */
+"recommendations:outro" = "Say \"More\" for more recommendations (coming soon).";
+
+
+/* Spoken when we couldn't select an item by a given name */
+"list:unable_to_select_by_name_X" = "I couldn't select an item called \"%@\". Please try again.";
+
+/* Spoken when we couldn't select an item by its number in a list */
+"list:unable_to_select_by_number_X" = "I couldn't select item number \"%d\". Please try again.";
+
+/* Spoken when we couldn't select an item, and name/number are unknown */
+"list:unable_to_select" = "I couldn't select an item by that name or number. Please try again.";
+
+
+/* How we'll refer to a single Saved Recipe in the next prompt, saved_recipes:X_available */
+"saved_recipes:alias" = "saved recipe";
+
+/* Intro string for the list of saved recipes */
+"saved_recipes:X_available" = "You have %@:"; // "You have 3 saved recipes:"; "You have 1 saved recipe:"
+
+/* Intro string for the (empty) list of saved recipes */
+"saved_recipes:none_available" = "You have no saved recipes.";
+
+/* Spoken after the first few items in the list of saved recipes */
+"saved_recipes:intermediate_help" = "To inspect a recipe, say \"Select\" followed by the recipe's name or number.";
+
+/* Call to action after reading the list of saved recipes */
+"saved_recipes:outro" = "To inspect a recipe, say \"Select\" followed by the recipe's name or number.";
+
+
+/* Call to action after speaking a recipe's overview */
+"recipe_details:overview_call_to_action" = "Say \"Description\" to hear the entire description.";
+
+/* Presented instead of a blank description */
+"recipe_details:blank_description" = "Words cannot describe this recipe.";
+
+/* Spoken in response to "What's the rating?" */
+"recipe_details:rating_is_X" = "This recipe has %d out of 5 stars.";
+
+/* Spoken in response to "What's this recipe's name?" */
+"recipe_details:name_is_X" = "This recipe is called \"%@\".";
+
+/* Spoken in response to "How many calories?" */
+"recipe_details:calories" = "This recipe has %@."; // the word "calories" is added programmatically, to handle singular/plural. End result, "This recipe has 200 calories."
+
+/* Spoken in response to "What course/cuisine is this?" */
+"recipe_details:cuisine_is_X_course_is_Y" = "This is a \"%@\" dish, in the \"%@\" category.";
+
+/* Spoken in response to "What course/cuisine is this?" when only cuisine is known */
+"recipe_details:cuisine_is_X" = "This is a \"%@\" dish.";
+
+/* Spoken in response to "What course/cuisine is this?" when only course is known */
+"recipe_details:course_is_X" = "This dish is in the \"%@\" category.";
+
+/* Spoken in response to "What course/cuisine is this?" when both course and cuisine are unknown */
+"recipe_details:unknown_cuisine_course" = "I don't know what kind of dish this is.";
+
+/* Spoken in response to "What's the nutritional info?" */
+"recipe_details:nutrition_unknown" = "Sorry, I don't know this recipe's nutritional information.";
+
+/* Spoken when the recipe has unitless serving information */
+"recipe_details:serves_X" = "This recipe serves %d.";
+
+/* Spoken when the recipe has clearly defined quantity and unit */
+"recipe_details:makes_X_units_Y" = "This recipe makes %d %@."; // e.g. "This recipe makes 3 dozen"
+
+/* Spoken in response to a servings query, but serving size is unknown */
+"recipe_details:unknown_servings" = "This recipe has no serving information.";
+
+
+/* Response to asking if a recipe needs an ingredient X */
+"ingredients:recipe_includes_ingredient_X" = "The recipe calls for %@."; // "X" will depend on the ingredient's data, and may or may not include units. e.g. "The recipe calls for 3 cups sugar.", "The recipe calls for 2 eggs."
+
+/* Response when a recipe doen't need an ingredient X */
+"ingredients:recipe_does_not_include_ingredient_X" = "The recipe doesn't call for any %@.";
+
+/* Intro string for the list of ingredients */
+"ingredients:X_available" = "You need %@."; // The word "ingredient" is added programatically, to handle singular/plural. End result, "You need 3 ingredients" or "You need 1 ingredient"
+
+/* Intro string for the (empty) list of ingredients */
+"ingredients:none_available" = "There are no ingredients for this recipe.";
+
+/* Spoken after the first few items in an ingredients list */
+"ingredients:intermediate_help" = "You can say \"Pause\" at any time if you need a minute.";
+
+/* Call to action after reading the list of ingredients */
+"ingredients:outro" = "To add an ingredient to your grocery list, say \"Save\" followed by the ingredient's name or number (coming soon).";
+
+
+/* Response to a query about the oven temperature */
+"preparation:set_oven_to_X" = "You need to set the oven to %@.";
+
+/* Response when the oven temperature is unknown */
+"preparation:oven_unknown" = "Sorry, I don't know what temperature the oven should be.";
+
+/* Response to "How long will this take?" */
+"preparation:cook_time_total_X_active_Y" = "This recipe will take %@ to complete (%@ active).";
+
+/* Response to "How long will this take?" when only the total time is known */
+"preparation:cook_time_total_X" = "This recipe will take %@ to complete.";
+
+/* Response to "How long will this take?" when the time is unknown */
+"preparation:cook_time_unknown" = "I don't know how long this recipe will take.";
+
+/* How we'll refer to a single preparation step in the next prompt, preparation:X_steps_available */
+"preparation:alias" = "step";
+
+/* Intro string for the list of preparation steps */
+"preparation:X_steps_available" = "There %@ to this recipe:"; // A good chunk of this is done programmatically to handle pluralization of is/are and step/steps. e.g. "There is 1 step to this recipe"; "There are 7 steps to this recipe".
+
+/* Intro string for the (empty) list of preparation steps */
+"preparation:no_steps_available" = "There are no preparation steps for this recipe.";
+
+/* Spoken after the first few items in a preparation list */
+"preparation:intermediate_help" = "You can say \"Pause\" at any time if you need a minute.";
+
+/* Call to action after reading the list of preparation steps */
+"preparation:outro" = "You can say \"Repeat\" to listen to the instructions again, or skip around by saying \"What's the third step?\"";
+
+
+/* User-friendly message when we don't have an internet connection */
+"error:connection_offline" = "The internet connection appears to be offline. Please check your connection and try again.";
+
+/* User-friendly message when the internet connection times out */
+"error:connection_timed_out" = "The internet connection has timed out. Please check your connection and try again.";
+
+/* Catch-all user-friendly message when there's a generic problem connecting to the server */
+"error:server_connection" = "There was a problem connecting to the server. Please try again later.";
+
+/* Default message when we encounter a connection error during a recipe details search */
+"error:recipe_search_default_connection_error" = "I encountered a problem while looking up a recipe. Please try again later.";
+
+/* Default message when we encounter an unexpected error during a recipe details search */
+"error:recipe_search_default_unexpected_error" = "I encountered a problem while looking up a recipe.";
+
+/* Default message when we encounter a connection error during a recipe listings search */
+"error:listings_search_default_connection_error" = "I encountered a problem while searching for recipes. Please try again later.";
+
+/* Default message when we encounter an unexpected error during a recipe listings search */
+"error:listings_search_default_unexpected_error" = "I encountered a problem while searching for recipes.";

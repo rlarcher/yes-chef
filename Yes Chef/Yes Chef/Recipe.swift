@@ -76,7 +76,7 @@ struct Recipe
     var presentableDescription: String
     {
         if description.isBlank {
-            return "Words cannot describe this recipe."
+            return _prompt("recipe_details:blank_description", comment: "Presented instead of a blank description")
         }
         else {
             return description
@@ -95,6 +95,23 @@ struct Recipe
         }
         else {
             return ""
+        }
+    }
+    
+    var speakableServingsText: String
+    {
+        if servingsQuantity > 0 {
+            if servingsUnit.lowercaseString == "serving" || servingsUnit.lowercaseString == "servings" {
+                let format = _prompt("recipe_details:serves_X", comment: "Spoken when the recipe has unitless serving information")
+                return String(format: format, servingsQuantity)
+            }
+            else {
+                let format = _prompt("recipe_details:makes_X_units_Y", comment: "Spoken when the recipe has clearly defined quantity and unit")
+                return String(format: format, servingsQuantity, servingsUnit)
+            }
+        }
+        else {
+            return _prompt("recipe_details:unknown_servings", comment: "Spoken in response to a servings query, but serving size is unknown")
         }
     }
     

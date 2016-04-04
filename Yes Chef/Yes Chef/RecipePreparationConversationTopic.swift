@@ -135,7 +135,8 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     func speakOvenTemperature()
     {
-        postEvents(SAYAudioEventSequence(events:[SAYSpeechEvent(utteranceString: "Sorry, I don't know what temperature the oven should be.")]))
+        // TODO: Implement
+        postEvents(SAYAudioEventSequence(events:[SAYSpeechEvent(utteranceString: _prompt("preparation:oven_unknown", comment: "Response when the oven temperature is unknown"))]))
     }
     
     func speakPreparationTime()
@@ -145,14 +146,16 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
         let utteranceString: String
         if let totalPrepTime = recipe.totalPreparationTime {
             if let activePrepTime = recipe.activePreparationTime {
-                utteranceString = "This recipe will take \(totalPrepTime.withSuffix("minute")) to complete (\(activePrepTime.withSuffix("minute")) active)."
+                let format = _prompt("preparation:cook_time_total_X_active_Y", comment: "Response to \"How long will this take?\"")
+                utteranceString = String(format: format, totalPrepTime.withSuffix("minute"), activePrepTime.withSuffix("minute"))
             }
             else {
-                utteranceString = "This recipe will take \(totalPrepTime.withSuffix("minute")) to complete."
+                let format = _prompt("preparation:cook_time_total_X", comment: "Response to \"How long will this take?\" when only the total time is known")
+                utteranceString = String(format: format, totalPrepTime.withSuffix("minute"))
             }
         }
         else {
-            utteranceString = "I don't know how long this recipe will take."
+            utteranceString = _prompt("preparation:cook_time_unknown", comment: "Response to \"How long will this take?\" when the time is unknown")
         }
         
         sequence.addEvent(SAYSpeechEvent(utteranceString: utteranceString))
@@ -169,13 +172,16 @@ class RecipePreparationConversationTopic: SAYConversationTopic, ListConversation
     
     private func buildPreparationListSubtopic() -> ListConversationTopic
     {
+        let step = _prompt("preparation:alias", comment: "How we'll refer to a single preparation step in the next prompt, preparation:X_steps_available")
+        let introFormat = _prompt("preparation:X_steps_available", comment: "Intro string for the list of preparation steps")
+        
         let listTopic = ListConversationTopic(items: recipe.preparationSteps, eventHandler: self)
         let count = recipe.preparationSteps.count
         listTopic.introString = count > 0 ?
-                                    "There \("is".plural(count, pluralForm: "are")) \(count.withSuffix("step")) to this recipe:" :
-                                    "There are no preparation steps for this recipe."
-        listTopic.intermediateHelpString = "You can say \"Pause\" at any time if you need a minute."
-        listTopic.outroString = "You can say \"Repeat\" to listen to the instructions again, or skip around by saying \"What's the third step?\""
+            String(format: introFormat, "\("is".plural(count, pluralForm: "are")) \(count.withSuffix(step))") :
+            _prompt("preparation:no_steps_available", comment: "Intro string for the (empty) list of preparation steps")
+        listTopic.intermediateHelpString = _prompt("preparation:intermediate_help", comment: "Spoken after the first few items in a preparation list")
+        listTopic.outroString = _prompt("preparation:outro", comment: "Call to action after reading the list of preparation steps")
         
         return listTopic
     }

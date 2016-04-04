@@ -46,6 +46,7 @@
 		83B56A0D1C88B71300A185F0 /* MenuPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B56A0C1C88B71300A185F0 /* MenuPresentationController.swift */; };
 		83B56A0F1C88BC6D00A185F0 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B56A0E1C88BC6D00A185F0 /* MenuViewController.swift */; };
 		83B56A131C88D3E100A185F0 /* SearchOptionsPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */; };
+		83BD9CF21CB2A8F10045D8FF /* Prompts.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83BD9CF11CB2A8F10045D8FF /* Prompts.strings */; };
 		83CC6EA21C6D194B00EB7DCC /* SayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; };
 		83CC6EA31C6D194B00EB7DCC /* SayKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 83CC6EA01C6D193900EB7DCC /* SayKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		83D1B5041C62876E008D95F4 /* UINavigationController+PopThenPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */; };
@@ -129,6 +130,7 @@
 		83B56A0C1C88B71300A185F0 /* MenuPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuPresentationController.swift; sourceTree = "<group>"; };
 		83B56A0E1C88BC6D00A185F0 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		83B56A121C88D3E100A185F0 /* SearchOptionsPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOptionsPresentationController.swift; sourceTree = "<group>"; };
+		83BD9CF11CB2A8F10045D8FF /* Prompts.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Prompts.strings; sourceTree = "<group>"; };
 		83CC6EA01C6D193900EB7DCC /* SayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SayKit.framework; sourceTree = "<group>"; };
 		83D1B5031C62876E008D95F4 /* UINavigationController+PopThenPush.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopThenPush.swift"; sourceTree = "<group>"; };
 		83D2381A1C97371C00AA6F4E /* HomeListTopicManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeListTopicManager.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				83987D761C78DCFF00E3BBE9 /* Int+Utils.swift */,
 				837E38731C9AE4B400804091 /* UIImage+Utils.swift */,
 				836EC68F1C68EC2E00FC74F7 /* Utils.swift */,
+				83BD9CF11CB2A8F10045D8FF /* Prompts.strings */,
 			);
 			name = Private;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83F5E6F51CA07197000EB248 /* CustomCommandBar.xib in Resources */,
+				83BD9CF21CB2A8F10045D8FF /* Prompts.strings in Resources */,
 				8348DED61C6146870009C7DF /* LaunchScreen.storyboard in Resources */,
 				8348DED31C6146870009C7DF /* Assets.xcassets in Resources */,
 				8348DED11C6146870009C7DF /* Main.storyboard in Resources */,

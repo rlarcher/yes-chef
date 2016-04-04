@@ -71,6 +71,11 @@ class Utils: NSObject
     }
 }
 
+func _prompt(key: String, comment: String) -> String
+{
+    return NSLocalizedString(key, tableName: "Prompts", comment: comment)
+}
+
 // Parsing
 extension Utils
 {

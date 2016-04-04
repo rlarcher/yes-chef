@@ -141,7 +141,7 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     func speakServings()
     {
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe serves \(recipe.presentableServingsText)."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: recipe.speakableServingsText))
         postEvents(sequence)
     }
     
@@ -152,10 +152,12 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
         let ingredientNames = recipe.ingredients.map({ $0.name })
         if let matchingIndex = Utils.fuzzyIndexOfItemWithName(ingredientName, inList: ingredientNames) {
             let ingredient = recipe.ingredients[matchingIndex]
-            utteranceString = "The recipe calls for \(ingredient.speakableString)."
+            let format = _prompt("ingredients:recipe_includes_ingredient_X", comment: "Response to asking if a recipe needs an ingredient X")
+            utteranceString = String(format: format, ingredient.speakableString)
         }
         else {
-            utteranceString = "The recipe doesn't call for any \(ingredientName)."
+            let format = _prompt("ingredients:recipe_does_not_include_ingredient_X", comment: "Response when a recipe doen't need an ingredient X")
+            utteranceString = String(format: format, ingredientName)
         }
         
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utteranceString)]))
@@ -173,11 +175,12 @@ class RecipeIngredientsConversationTopic: SAYConversationTopic, ListConversation
     {
         let listTopic = ListConversationTopic(items: recipe.ingredients.map({ $0.speakableString }), eventHandler: self)
         let count = recipe.ingredients.count
+        let introFormat = _prompt("ingredients:X_available", comment: "Intro string for the list of ingredients")
         listTopic.introString = count > 0 ?
-                                    "You need \(count.withSuffix("ingredient")):" :
-                                    "There are no ingredients for this recipe."
-        listTopic.intermediateHelpString = "You can say \"Pause\" at any time if you need a minute."
-        listTopic.outroString = "To add an ingredient to your grocery list, say \"Save\" followed by the ingredient's name or number (coming soon)."
+            String(format: introFormat, count.withSuffix("ingredient")) :
+            _prompt("ingredients:none_available", comment: "Intro string for the (empty) list of ingredients")
+        listTopic.intermediateHelpString = _prompt("ingredients:intermediate_help", comment: "Spoken after the first few items in an ingredients list")
+        listTopic.outroString = _prompt("ingredients:outro", comment: "Call to action after reading the list of ingredients")
         
         return listTopic
     }

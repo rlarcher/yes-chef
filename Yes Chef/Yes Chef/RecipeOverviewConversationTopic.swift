@@ -128,29 +128,32 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         let sequence = SAYAudioEventSequence()
         sequence.addEvent(SAYSpeechEvent(utteranceString: recipe.speakableString))
         if recipe.truncatedDescriptionAvailable {
-            sequence.addEvent(SAYSpeechEvent(utteranceString: "Say \"Description\" to hear the entire description."))
+            sequence.addEvent(SAYSpeechEvent(utteranceString: _prompt("recipe_details:overview_call_to_action", comment: "Call to action after speaking a recipe's overview")))
         }
         postEvents(sequence)
     }
     
     func speakRating()
     {
+        let format = _prompt("recipe_details:rating_is_X", comment: "Spoken in response to \"What's the rating?\"")
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe has \(recipe.rating) out of 5 stars."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: String(format: format, recipe.rating)))
         postEvents(sequence)
     }
     
     func speakRecipeName()
     {
+        let format = _prompt("recipe_details:name_is_X", comment: "Spoken in response to \"What's this recipe's name?\"")
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe is called \"\(recipe.name)\"."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: String(format: format, recipe.name)))
         postEvents(sequence)
     }
     
     func speakCalories()
     {
+        let format = _prompt("recipe_details:calories", comment: "Spoken in response to \"How many calories?\"")
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "This recipe has \(recipe.calories.withSuffix("calorie"))."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: String(format: format, recipe.calories.withSuffix("calorie"))))
         postEvents(sequence)
     }
     
@@ -160,16 +163,19 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
         
         let utteranceString: String
         if recipe.cuisine != .All && recipe.category != .All {
-            utteranceString = "This is a \"\(recipe.cuisine)\" dish, in the \"\(recipe.category): \(recipe.subcategory)\" category."
+            let format = _prompt("recipe_details:cuisine_is_X_course_is_Y", comment: "Spoken in response to \"What course/cuisine is this?\"")
+            utteranceString = String(format: format, recipe.cuisine.rawValue, recipe.category.rawValue)
         }
         else if recipe.cuisine != .All {
-            utteranceString = "This is a \"\(recipe.cuisine)\" dish."
+            let format = _prompt("recipe_details:cuisine_is_X", comment: "Spoken in response to \"What course/cuisine is this?\" when only cuisine is known")
+            utteranceString = String(format: format, recipe.cuisine.rawValue)
         }
         else if recipe.category != .All {
-            utteranceString = "This dish is in the \"\(recipe.category): \(recipe.subcategory)\" category."
+            let format = _prompt("recipe_details_course_is_X", comment: "Spoken in response to \"What course/cuisine is this?\" when only course is known")
+            utteranceString = String(format: format, recipe.category.rawValue)
         }
         else {
-            utteranceString = "I don't know what kind of dish this is."
+            utteranceString = _prompt("recipe_details_unknown_cuisine_course", comment: "Spoken in response to \"What course/cuisine is this?\" when both course and cuisine are unknown")
         }
         
         sequence.addEvent(SAYSpeechEvent(utteranceString: utteranceString))
@@ -180,7 +186,7 @@ class RecipeOverviewConversationTopic: SAYConversationTopic
     {
         // TODO: Pending API upgrade
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "Sorry, I don't know this recipe's nutritional information."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: _prompt("recipe_details:nutrition_unknown", comment: "Spoken in response to \"What's the nutritional info?\"")))
         postEvents(sequence)
     }
     

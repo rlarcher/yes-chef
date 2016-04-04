@@ -132,13 +132,14 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     private func buildSavedListSubtopic() -> ListConversationTopic
     {
         let listTopic = ListConversationTopic(items: recipes.map({ $0.listing.speakableString }), listIsMutable: true, shouldUseFallthroughForSelection: true, eventHandler: self)
+        let savedRecipe = _prompt("saved_recipes:alias", comment: "How we'll refer to a single Saved Recipe in the next prompt, saved_recipes:X_available")
+        let introFormat = _prompt("saved_recipes:X_available", comment: "Intro string for the list of saved recipes")
         listTopic.introString = recipes.count > 0 ?
-                                    "You have \(recipes.count.withSuffix("saved item")):" :
-                                    "You have no saved items."
+            String(format: introFormat, recipes.count.withSuffix(savedRecipe)) :
+            _prompt("saved_recipes:none_available", comment: "Intro string for the (empty) list of saved recipes")
         
-        let helpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
-        listTopic.intermediateHelpString = helpString
-        listTopic.outroString = helpString
+        listTopic.intermediateHelpString = _prompt("saved_recipes:intermediate_help", comment: "Spoken after the first few items in the list of saved recipes")
+        listTopic.outroString = _prompt("saved_recipes:outro", comment: "Call to action after reading the list of saved recipes")
         
         return listTopic
     }
@@ -147,13 +148,15 @@ class SavedRecipesConversationTopic: SAYConversationTopic, ListConversationTopic
     {
         let utteranceString: String
         if let listingName = name {
-            utteranceString = "I couldn't select an item called \"\(listingName)\". Please try again."
+            let format = _prompt("list:unable_to_select_by_name_X", comment: "Spoken when we couldn't select an item by a given name")
+            utteranceString = String(format: format, listingName)
         }
         else if let listingIndex = index {
-            utteranceString = "I couldn't select item number \"\(listingIndex)\". Please try again."
+            let format = _prompt("list:unable_to_select_by_number_X", comment: "Spoken when we couldn't select an item by its number in a list")
+            utteranceString = String(format: format, listingIndex)
         }
         else {
-            utteranceString = "I couldn't select an item by that name or number. Please try again."
+            utteranceString = _prompt("list:unable_to_select", comment: "Spoken when we couldn't select an item, and name/number are unknown")
         }
         
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utteranceString)]))

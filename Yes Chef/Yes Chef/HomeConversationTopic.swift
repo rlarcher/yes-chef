@@ -143,10 +143,10 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         let sequence = SAYAudioEventSequence()
         
         if shouldIncludeWelcomeMessage {
-            sequence.addEvent(SAYSpeechEvent(utteranceString: "Welcome to \"Yes Chef\"!"))
+            sequence.addEvent(SAYSpeechEvent(utteranceString: _prompt("home:welcome_message", comment: "Welcome message on reaching the home screen for the first time")))
         }
         
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for a recipe by saying \"Search\" followed by a keyword. For a list of available commands, say \"What can I say?\" Say \"Help\" for more details. Feeling adventurous? Ask about our \"recommended recipes\"")) {
+        sequence.addEvent(SAYSpeechEvent(utteranceString: _prompt("home:instructions", comment: "Call to action on reaching the home screen for the first time"))) {
             self.isSpeaking = false
         }
         postEvents(sequence)
@@ -156,7 +156,7 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     {
         let sequence = SAYAudioEventSequence()
         
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can say \"Categories\" or \"Cuisines\" to hear available filters for your search. Say \"Saved Recipes\" to explore your saved recipes list. Say \"Home\" at any time to return here."))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: _prompt("home:help", comment: "Help message on the home screen")))
         postEvents(sequence)
     }
 
@@ -172,8 +172,9 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         }
         if availableCommands.count > 0 {
             // TODO: Use a listCT for speaking these?
+            let format = _prompt("home:X_available_commands", comment: "Message spoken just before listing out all available commands")
             let sequence = SAYAudioEventSequence()
-            sequence.addEvent(SAYSpeechEvent(utteranceString: "There are \(availableCommands.count) available commands:"))
+            sequence.addEvent(SAYSpeechEvent(utteranceString: String(format: format, availableCommands.count)))
             for commandName in availableCommands {
                 sequence.addEvent(SAYSpeechEvent(utteranceString: commandName))
             }
@@ -195,10 +196,11 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     {
         let utterance: String
         if let presentableString = parameters.presentableString {
-            utterance = "Sorry, I couldn't find any recipes for \"\(presentableString)\" Please try another search."
+            let format = _prompt("search:no_recipes_for_parameters_X", comment: "Spoken when no recipes were found for a given set of search parameters")
+            utterance = String(format: format, presentableString)
         }
         else {
-            utterance = "Sorry, I couldn't find any recipes by that name. Please try another search."
+            utterance = _prompt("search:no_recipes:found", comment: "Spoken when no recipes were found, for an unspecified set of search parameters")
         }
         
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utterance)]))
@@ -241,7 +243,7 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         }
         else {
             // We didn't understand a search query. Present a clarifying request.
-            let request = SAYStringRequest(promptText: "What would you like to search for?", action: { spokenText -> Void in
+            let request = SAYStringRequest(promptText: _prompt("search:clarifying_prompt", comment: "Spoken in a followup request, after we couldn't understand what the user wanted to search for"), action: { spokenText -> Void in
                 if let text = spokenText where !text.isBlank {
                     let cuisine = Cuisine.cuisineFoundInText(text)
                     let course = Category.categoryFoundInText(text)
@@ -260,7 +262,7 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     {
         // TODO: Do this inside a ListCT? For better control of long lists
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for recipes for the following courses:"))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: _prompt("search:available_courses", comment: "Response to what courses are available")))
         for category in Category.orderedValues {
             sequence.addEvent(SAYSpeechEvent(utteranceString: "\"\(category.rawValue)\""))
         }
@@ -271,7 +273,7 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     {
         // TODO: Do this inside a ListCT? For better control of long lists
         let sequence = SAYAudioEventSequence()
-        sequence.addEvent(SAYSpeechEvent(utteranceString: "You can search for recipes according to the following cuisines:"))
+        sequence.addEvent(SAYSpeechEvent(utteranceString: _prompt("search:available_cuisines", comment: "Response to what cuisines are available")))
         for cuisine in Cuisine.orderedValues {
             sequence.addEvent(SAYSpeechEvent(utteranceString: "\"\(cuisine.rawValue)\""))
         }
@@ -282,8 +284,9 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     {
         if let queriedAction = command.parameters["action"] as? String {
             // TODO: Define a proper response for various actions
+            let format = _prompt("home:how_to_X_unknown", comment: "Response for an unhandled \"How do I X?\"")
             let sequence = SAYAudioEventSequence()
-            sequence.addEvent(SAYSpeechEvent(utteranceString: "I don't know how to \"\(queriedAction)\", either."))
+            sequence.addEvent(SAYSpeechEvent(utteranceString: String(format: format, queriedAction)))
             postEvents(sequence)
         }
         else {
@@ -296,8 +299,9 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     {
         if let queriedFeature = command.parameters["feature"] as? String {
             // TODO: Define a proper response for various features
+            let format = _prompt("home:feature_query_X_unknown", comment: "Response for an unhandled \"Tell me about X\"")
             let sequence = SAYAudioEventSequence()
-            sequence.addEvent(SAYSpeechEvent(utteranceString: "\"\(queriedFeature)\" is a nice feature, but I don't know much beyond that."))
+            sequence.addEvent(SAYSpeechEvent(utteranceString: String(format: format, queriedFeature)))
             postEvents(sequence)
         }
         else {
@@ -316,7 +320,7 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         let outgoingSequence = sequence
         
         let silenceEvent = SAYSilenceEvent(interval: 7.0)
-        let helpMessageEvent = SAYSpeechEvent(utteranceString: "Let me know if you need help.")
+        let helpMessageEvent = SAYSpeechEvent(utteranceString: _prompt("home:periodic_help", comment: "Help message after a period of inactivity"))
     
         outgoingSequence.appendSequence(SAYAudioEventSequence(events: [silenceEvent, helpMessageEvent]))
         

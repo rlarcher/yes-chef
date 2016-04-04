@@ -52,10 +52,10 @@ class BigOvenAPIManager
                     self.addRecipeToCache(recipe)
                     completion?(.Success(recipe: recipe))
                 case .ConnectionError(let error):
-                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while looking up a recipe. Please try again later."
+                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? _prompt("error:recipe_search_default_connection_error", comment: "Default message when we encounter a connection error during a recipe details search")
                     completion?(.Failure(message: errorMessage, error: error))
                 case .UnexpectedBodyFormat(let error):
-                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while looking up a recipe."
+                    let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? _prompt("error:recipe_search_default_unexpected_error", comment: "Default message when we encounter an unexpected error during a recipe details search")
                     completion?(.Failure(message: errorMessage, error: error))
                 }
             })

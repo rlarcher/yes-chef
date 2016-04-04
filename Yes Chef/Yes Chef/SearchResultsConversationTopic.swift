@@ -52,10 +52,11 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
     {
         let utterance: String
         if let presentableString = parameters.presentableString {
-            utterance = "Sorry, I couldn't find any recipes for \"\(presentableString)\" Please try another search."
+            let format = _prompt("search:no_recipes_for_parameters_X", comment: "Spoken when no recipes were found for a given set of search parameters")
+            utterance = String(format: format, presentableString)
         }
         else {
-            utterance = "Sorry, I couldn't find any recipes by that name. Please try another search."
+            utterance = _prompt("search:no_recipes:found", comment: "Spoken when no recipes were found, for an unspecified set of search parameters")
         }
         
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utterance)]))
@@ -163,39 +164,44 @@ class SearchResultsConversationTopic: SAYConversationTopic, ListConversationTopi
         CommandBarController.setPlaybackControlsDelegate(listSubtopic!)
         
         let introString: String
+        let result = _prompt("search:results_alias", comment: "How we'll refer to a single search result in the next prompts")
         if let parameterString = searchParameters.presentableString {
             if recipeListings.count > 0 {
-                introString = "I found \(recipeListings.count.withSuffix("result")) for \"\(parameterString)\""
+                let introFormat = _prompt("search:found_X_results_for_parameters_Y", comment: "Intro string for the list of search results found using the given search parameters")
+                introString = String(format: introFormat, recipeListings.count.withSuffix(result), parameterString)
             }
             else {
-                introString = "There were no results for \"\(parameterString)\"."
+                let introFormat = _prompt("search:no_recipes_for_parameters_X", comment: "Spoken when no recipes were found for a given set of search parameters")
+                introString = String(format: introFormat, parameterString)
             }
         }
         else {
             if recipeListings.count > 0 {
-                introString = "I found \(recipeListings.count.withSuffix("result"))"
+                let introFormat = _prompt("search:found_X_results", comment: "Intro string for the list of search results, where the search parameters are uncertain")
+                introString = String(format: introFormat, recipeListings.count.withSuffix(result))
             }
             else {
-                introString = "I couldn't find any recipes by that name."
+                introString = _prompt("search:no_recipes_found", comment: "Spoken when no recipes were found, for an unspecified set of search parameters")
             }
         }
         listSubtopic?.introString = introString
-        listSubtopic?.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
-        listSubtopic?.outroString = "Say \"More\" for more recipes (coming soon)."
-        
+        listSubtopic?.intermediateHelpString = _prompt("search:intermediate_help", comment: "Spoken after the first few items in the list of results")
+        listSubtopic?.outroString = _prompt("search:outro", comment: "Call to action after reading the list of search results")
     }
     
     private func speakSelectionFailed(name: String?, index: Int?)
     {
         let utteranceString: String
         if let listingName = name {
-            utteranceString = "I couldn't select an item called \"\(listingName)\". Please try again."
+            let format = _prompt("list:unable_to_select_by_name_X", comment: "Spoken when we couldn't select an item by a given name")
+            utteranceString = String(format: format, listingName)
         }
         else if let listingIndex = index {
-            utteranceString = "I couldn't select item number \"\(listingIndex)\". Please try again."
+            let format = _prompt("list:unable_to_select_by_number_X", comment: "Spoken when we couldn't select an item by its number in a list")
+            utteranceString = String(format: format, listingIndex)
         }
         else {
-            utteranceString = "I couldn't select an item by that name or number. Please try again."
+            utteranceString = _prompt("list:unable_to_select", comment: "Spoken when we couldn't select an item, and name/number are unknown")
         }
         
         postEvents(SAYAudioEventSequence(events: [SAYSpeechEvent(utteranceString: utteranceString)]))

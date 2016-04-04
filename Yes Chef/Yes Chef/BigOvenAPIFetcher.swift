@@ -319,21 +319,21 @@ class BigOvenAPIFetcher: NSObject
             connectionError = NSError(
                 domain: kBigOvenAPIFetcherErrorDomain,
                 code: BigOvenAPIFetcherErrorCode.ConnectionOffline.rawValue,
-                userInfo: [kUserFriendlyErrorMessageKey: "The internet connection appears to be offline. Please check your connection and try again.",
+                userInfo: [kUserFriendlyErrorMessageKey: _prompt("error:connection_offline", comment: "User-friendly message when we don't have an internet connection"),
                     NSUnderlyingErrorKey: underlyingError])
         }
         else if underlyingError.domain == NSURLErrorDomain && underlyingError.code == NSURLErrorTimedOut {
             connectionError = NSError(
                 domain: kBigOvenAPIFetcherErrorDomain,
                 code: BigOvenAPIFetcherErrorCode.ConnectionTimedOut.rawValue,
-                userInfo: [kUserFriendlyErrorMessageKey: "The internet connection has timed out. Please check your connection and try again.",
+                userInfo: [kUserFriendlyErrorMessageKey: _prompt("error:connection_timed_out", comment: "User-friendly message when the internet connection times out"),
                     NSUnderlyingErrorKey: underlyingError])
         }
         else {
             connectionError = NSError(
                 domain: kBigOvenAPIFetcherErrorDomain,
                 code: BigOvenAPIFetcherErrorCode.ServerConnectionError.rawValue,
-                userInfo: [kUserFriendlyErrorMessageKey: "There was a problem connecting to the server. Please try again later.",
+                userInfo: [kUserFriendlyErrorMessageKey: _prompt("error:server_connection", comment: "Catch-all user-friendly message when there's a generic problem connecting to the server"),
                     NSUnderlyingErrorKey: underlyingError])
         }
         

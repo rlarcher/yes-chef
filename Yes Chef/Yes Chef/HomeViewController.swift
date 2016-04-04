@@ -221,7 +221,8 @@ class HomeViewController: UIViewController, UISearchBarDelegate, HomeConversatio
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
         // TODO: Replace this with a proper heading
-        return "Try one of these recommended recipes:"
+        return _prompt("home:recommended_recipes_header",
+                       comment: "Header at the top of the Recommended Recipes list, notifying the user that these are recommendations")
     }
     
     // MARK: Helpers

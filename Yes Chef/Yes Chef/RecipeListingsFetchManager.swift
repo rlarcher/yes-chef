@@ -48,10 +48,10 @@ class RecipeListingsFetchManager: NSObject
                     self.handleValidationResponse(validationResponse, parameters: parameters, pageNumber: pageNumber)
                 }
             case .ConnectionError(let error):
-                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while searching for recipes. Please try again later."
+                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? _prompt("error:listings_search_default_connection_error", comment: "Default message when we encounter a connection error during a recipe listings search")
                 self.completion(.Failure(message: errorMessage, error: error))
             case .UnexpectedBodyFormat(let error):
-                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? "I encountered a problem while searching for recipes."
+                let errorMessage = error.userInfo[kUserFriendlyErrorMessageKey] as? String ?? _prompt("error:listings_search_default_unexpected_error", comment: "Default message when we encounter an unexpected error during a recipe listings search")
                 self.completion(.Failure(message: errorMessage, error: error))
             }
         }

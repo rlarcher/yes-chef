@@ -100,24 +100,28 @@ class HomeListTopicManager: NSObject, ListConversationTopicEventHandler
             listSubtopic?.items = recommendedListings.map({ $0.speakableString })
         }
         
+        let recommendation = _prompt("recommendations:alias", comment: "How we'll refer to a single recommendation in the next prompt, recommendations:X_available")
+        let introFormat = _prompt("recommendations:X_available", comment: "Intro string for the list of recommendations")
         listSubtopic?.introString = recommendedListings.count > 0 ?
-            "I have \(recommendedListings.count.withSuffix("recommendations")) for you." :
-        "Sorry, I don't have any recommendations right now."
-        listSubtopic?.intermediateHelpString = "To inspect a recipe, say \"Select\" followed by the recipe's name or number."
-        listSubtopic?.outroString = "Say \"More\" for more recommendations (coming soon)."
+            String(format: introFormat, recommendedListings.count.withSuffix(recommendation)) :
+            _prompt("recommendations:none_available", comment: "Intro string for the (empty) list of recommendations")
+        listSubtopic?.intermediateHelpString = _prompt("recommendations:intermediate_help", comment: "Spoken after the first few items in the list of recommendations")
+        listSubtopic?.outroString = _prompt("recommendations:outro", comment: "Call to action after reading the list of recommendations")
     }
     
     private func speakSelectionFailed(name: String?, index: Int?)
     {
         let utteranceString: String
         if let listingName = name {
-            utteranceString = "I couldn't select an item called \"\(listingName)\". Please try again."
+            let format = _prompt("list:unable_to_select_by_name_X", comment: "Spoken when we couldn't select an item by a given name")
+            utteranceString = String(format: format, listingName)
         }
         else if let listingIndex = index {
-            utteranceString = "I couldn't select item number \"\(listingIndex)\". Please try again."
+            let format = _prompt("list:unable_to_select_by_number_X", comment: "Spoken when we couldn't select an item by its number in a list")
+            utteranceString = String(format: format, listingIndex)
         }
         else {
-            utteranceString = "I couldn't select an item by that name or number. Please try again."
+            utteranceString = _prompt("list:unable_to_select", comment: "Spoken when we couldn't select an item, and name/number are unknown")
         }
         
         eventHandler.itemSelectionFailedWithMessage(utteranceString)
