@@ -43,27 +43,29 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         backRecognizer.addMenuItemWithLabel("Back")
         addCommandRecognizer(backRecognizer)
         
-        let howToDoActionRecognizer = SAYCustomCommandRecognizer(customType: "HowToDoAction", responseTarget: self, action: "handleHowToDoActionCommand:")
-        howToDoActionRecognizer.addTextMatcher(SAYPatternCommandMatcher(patterns: [
-            "how do I @action",
-            "how can I @action",
-            "how would I @action",
-            "I don't know how to @action",
-            "tell me how to @action",
-            "tell me how @action"
-            ]))
-        howToDoActionRecognizer.addMenuItemWithLabel("How do I...")
-        addCommandRecognizer(howToDoActionRecognizer)
+        // TODO: Reenable when we restore full command handling
+//        let howToDoActionRecognizer = SAYCustomCommandRecognizer(customType: "HowToDoAction", responseTarget: self, action: "handleHowToDoActionCommand:")
+//        howToDoActionRecognizer.addTextMatcher(SAYPatternCommandMatcher(patterns: [
+//            "how do I @action",
+//            "how can I @action",
+//            "how would I @action",
+//            "I don't know how to @action",
+//            "tell me how to @action",
+//            "tell me how @action"
+//            ]))
+//        howToDoActionRecognizer.addMenuItemWithLabel("How do I...")
+//        addCommandRecognizer(howToDoActionRecognizer)
         
-        let featureQueryRecognizer = SAYCustomCommandRecognizer(customType: "FeatureQuery", responseTarget: self, action: "handleFeatureQueryCommand:")
-        featureQueryRecognizer.addTextMatcher(SAYPatternCommandMatcher(patterns: [
-            "what is @feature",
-            "what's the deal with @feature",
-            "what about @feature",
-            "tell me about @feature"
-            ]))
-        featureQueryRecognizer.addMenuItemWithLabel("What is...")
-        addCommandRecognizer(featureQueryRecognizer)
+        // TODO: Reenable when we restore full command handling
+//        let featureQueryRecognizer = SAYCustomCommandRecognizer(customType: "FeatureQuery", responseTarget: self, action: "handleFeatureQueryCommand:")
+//        featureQueryRecognizer.addTextMatcher(SAYPatternCommandMatcher(patterns: [
+//            "what is @feature",
+//            "what's the deal with @feature",
+//            "what about @feature",
+//            "tell me about @feature"
+//            ]))
+//        featureQueryRecognizer.addMenuItemWithLabel("What is...")
+//        addCommandRecognizer(featureQueryRecognizer)
         
         let recommendationsRecognizer = SAYCustomCommandRecognizer(customType: "Recommendations", responseTarget: self, action: "handleRecommendationsCommand")
         recommendationsRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
