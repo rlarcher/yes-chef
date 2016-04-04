@@ -67,9 +67,9 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
 //        featureQueryRecognizer.addMenuItemWithLabel("What is...")
 //        addCommandRecognizer(featureQueryRecognizer)
         
-        let recommendationsRecognizer = SAYCustomCommandRecognizer(customType: "Recommendations", responseTarget: self, action: "handleRecommendationsCommand")
+        let recommendationsRecognizer = SAYCustomCommandRecognizer(customType: "Recommendations", responseTarget: self, action: #selector(handleRecommendationsCommand))
         recommendationsRecognizer.addTextMatcher(SAYBlockCommandMatcher(block: { text -> SAYCommandSuggestion? in
-            if text.containsAny(["recommendation", "recommendations", "recommend"]) {
+            if text.containsAny(["what do you recommend", "recommendation", "recommendations", "recommend"]) {
                 return SAYCommandSuggestion(confidence: kSAYCommandConfidenceVeryLikely)
             }
             else {
