@@ -36,6 +36,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         // Suppress some thin lines that appear at the top and bottom of the search bar:
         searchBar.setBackgroundImage(UIImage(), forBarPosition: .Any, barMetrics: .Default)
         
+        syncSearchBar()
+        
         selectedNewCategory(searchParameters.course ?? .All)
         selectedNewCuisine(searchParameters.cuisine ?? .All)
     }
@@ -162,7 +164,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             cell.recipeNameLabel.text = recipeListing.name
             cell.thumbnailImageView.af_setImageWithURL(recipeListing.imageURL, placeholderImage: Utils.placeholderImage())
             
-            cell.courseLabel.text = recipeListing.category == .All ? "" : recipeListing.category.rawValue   // Don't bother displaying "All Categories"
+            cell.courseLabel.text = recipeListing.displayableCourseCuisine
             
             let ratingLabels = Utils.getLabelsForRating(recipeListing.presentableRating)
             cell.ratingLabel.text = ratingLabels.textLabel
@@ -197,6 +199,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func selectedNewCuisine(cuisine: Cuisine)
     {
         searchParameters.cuisine = cuisine
+    }
+    
+    private func syncSearchBar()
+    {
+        dispatch_async(dispatch_get_main_queue()) { 
+            self.searchBar.text = self.searchParameters.query
+        }
     }
     
     @IBAction func backButtonTapped(sender: AnyObject)

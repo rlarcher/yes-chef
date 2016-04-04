@@ -53,4 +53,23 @@ struct RecipeListing
             return nil
         }
     }
+    
+    // Builds a string to display a listing's cuisine, course, and sub-category
+    // TODO: Add subcategory
+    var displayableCourseCuisine: String
+    {
+        // Don't bother displaying "All Categories" or "All Cuisines"
+        if cuisine != .All && category != .All {
+            return "\(cuisine.rawValue), \(category.rawValue)"
+        }
+        else if cuisine != .All {
+            return cuisine.rawValue
+        }
+        else if category != .All {
+            return category.rawValue
+        }
+        else {
+            return ""
+        }
+    }
 }
