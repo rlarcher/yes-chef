@@ -30,7 +30,7 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
         // TODO: Reenable when we restore full command handling
 //        let searchRecognizer = YesChefSearchCuisineCourseCommandRecognizer(responseTarget: self, action: "handleSearchCommand:")
         let searchRecognizer = SAYCustomCommandRecognizer(customType: "basicSearch", responseTarget: self, action: #selector(handleSearchCommand))
-        searchRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPattern: "Search for @\(YesChefSearchCuisineCourseCommandRecognizerParameterQuery)"))
+        searchRecognizer.addTextMatcher(SAYPatternCommandMatcher(forPattern: "search for @basicSearchQuery"))
         searchRecognizer.addMenuItemWithLabel("Search...")
         addCommandRecognizer(searchRecognizer)
         self.searchRecognizer = searchRecognizer
@@ -238,7 +238,9 @@ class HomeConversationTopic: SAYConversationTopic, PlaybackControlsDelegate
     
     func handleSearchCommand(command: SAYCommand)
     {
-        let searchQuery = command.parameters[YesChefSearchCuisineCourseCommandRecognizerParameterQuery] as? String ?? nil
+        // TODO: Restore this when we reenable full command recognition
+//        let searchQuery = command.parameters[YesChefSearchCuisineCourseCommandRecognizerParameterQuery] as? String ?? nil
+        let searchQuery = command.parameters["basicSearchQuery"] as? String ?? nil
         let cuisine = parseCuisineFromCommand(command)
         let course = parseCourseFromCommand(command)
         
