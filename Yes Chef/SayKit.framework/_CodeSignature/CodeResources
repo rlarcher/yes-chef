@@ -6,7 +6,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		1sz5PuaY6Ah7K8EjceKzlgc5VMg=
+		xSEsor4EGfJJAfgE3Kwx/xwrz7Q=
 		</data>
 		<key>Headers/SAYAPIKeyManager.h</key>
 		<data>
@@ -366,7 +366,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		e7CqPuLKyEFbwAgm/mQfBeexGF0=
+		AB9rVCji4CW0XKFZRZylf0V8d7c=
 		</data>
 		<key>LICENSE</key>
 		<data>
@@ -406,15 +406,15 @@
 		</data>
 		<key>SAYCommandBar.nib</key>
 		<data>
-		a1psenes6dei7BENu9cjIGTpHdk=
+		lwWk0ZcVkCr5pRWIzdeztk2PGlY=
 		</data>
 		<key>SAYConfirmationContentViewController.nib</key>
 		<data>
-		nHGhDR/ogl3TUifcMm+uA8rktXM=
+		IWY3qaSfIjDFVglFisvdF2WYYFA=
 		</data>
 		<key>SAYVoiceRequestView.nib</key>
 		<data>
-		9iYRpbDfE0nFj1+2zBwbxvAvmbg=
+		A3Pn3phGH2ZLFitG8Z0ulJCZRDI=
 		</data>
 		<key>SayKitAPIServer.cer</key>
 		<data>
@@ -441,7 +441,7 @@
 	<dict>
 		<key>Assets.car</key>
 		<data>
-		1sz5PuaY6Ah7K8EjceKzlgc5VMg=
+		xSEsor4EGfJJAfgE3Kwx/xwrz7Q=
 		</data>
 		<key>Headers/SAYAPIKeyManager.h</key>
 		<data>
@@ -837,15 +837,15 @@
 		</data>
 		<key>SAYCommandBar.nib</key>
 		<data>
-		a1psenes6dei7BENu9cjIGTpHdk=
+		lwWk0ZcVkCr5pRWIzdeztk2PGlY=
 		</data>
 		<key>SAYConfirmationContentViewController.nib</key>
 		<data>
-		nHGhDR/ogl3TUifcMm+uA8rktXM=
+		IWY3qaSfIjDFVglFisvdF2WYYFA=
 		</data>
 		<key>SAYVoiceRequestView.nib</key>
 		<data>
-		9iYRpbDfE0nFj1+2zBwbxvAvmbg=
+		A3Pn3phGH2ZLFitG8Z0ulJCZRDI=
 		</data>
 		<key>SayKitAPIServer.cer</key>
 		<data>
